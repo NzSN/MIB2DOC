@@ -3,7 +3,5 @@ inactiveUsTrafficTable  OBJECT-TYPE
         SYNTAX  INTEGER
         MAX-ACCESS  not-accessible
         DESCRIPTION
-            "af
-            as
-            df"
+            "asfjlsjdlkf"
         ::= { inactiveTrafficConfig 2 }
