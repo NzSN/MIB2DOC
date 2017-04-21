@@ -1,7 +1,44 @@
-inactiveUsTrafficTable  OBJECT-TYPE
-        STATUS  current
-        SYNTAX  INTEGER
-        MAX-ACCESS  not-accessible
-        DESCRIPTION
-            "asfjlsjdlkf"
-        ::= { inactiveTrafficConfig 2 }
+NGPON-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, Counter32, Unsigned32,
+    TimeTicks                                   FROM SNMPv2-SMI
+    TimeInterval, RowStatus, TruthValue,
+    TEXTUAL-CONVENTION, MacAddress              FROM SNMPv2-TC
+    dataCom                                     FROM GREENNET-MASTER-MIB
+    MODULE-COMPLIANCE, OBJECT-GROUP             FROM SNMPv2-CONF;
+
+deployInactive OBJECT_IDENTIFIER ::= { configDevice 2 }
+
+deployPermission  OBJECT-TYPE
+    SYNTAX      INTEGER (0..1)
+    MAX-ACCESS  read-write
+    STATUS      current
+    DESCRIPTION
+        "Set deployPermission = 0 to request permission.
+         Set deployPermission = 1 to release permission.
+         When read, the value is always 0."
+    ::= { deployControl 1 }
+
+deployPermission  OBJECT-TYPE
+    SYNTAX      INTEGER (0..1)
+    MAX-ACCESS  read-write
+    STATUS      current
+    DESCRIPTION
+        "Set deployPermission = 0 to request permission.
+         Set deployPermission = 1 to release permission.
+         When read, the value is always 0."
+    ::= { deployControl 1 }
+
+deployAction    OBJECT-TYPE
+    SYNTAX      INTEGER (0..2)
+    MAX-ACCESS  read-write
+    STATUS      current
+    DESCRIPTION
+        "Set deployAction = 0 to active the deploy.
+         Set deployAction = 1 to rebuild the deploy.
+         Set deployAction = 2 to clear the deploy.
+         When read, the value is always 0."
+    ::= { deployControl 2 }
+
+END

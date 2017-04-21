@@ -15,7 +15,6 @@ int main() {
         printf("%s\n", "open failed");
 
     yyparse();
-
     return 0;
 }
 
