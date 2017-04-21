@@ -33,14 +33,15 @@ enum yytokentype {
     SEQ = 272,
     COMMA = 273,
     SEMICOLON = 274,
-    OBJ_IDEN_ = 275,
-    L_BRACE = 276,
-    R_BRACE = 277,
-    TYPE = 278,
-    NUM = 279,
-    FROM_ = 280,
-    IMPORTS_ = 281,
-    COMMENT = 282
+    INDEX_ = 275,
+    OBJ_IDEN_ = 276,
+    L_BRACE = 277,
+    R_BRACE = 278,
+    TYPE = 279,
+    NUM = 280,
+    FROM_ = 281,
+    IMPORTS_ = 282,
+    COMMENT = 283
 };
 #endif
 

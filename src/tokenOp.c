@@ -32,9 +32,6 @@ int tokenOperation(int token, MIB_NODE_INFO *nodeInfo) {
         case SYNTAX_SPECIFIER:
             ret = synSpecOp(nodeInfo);
             break;
-        case SYNTAX_VALUE:
-            ret = synValOp(nodeInfo);
-            break;
         case ACCESS_SPECIFIER:
             ret = accessSpecOp(nodeInfo);
             break;

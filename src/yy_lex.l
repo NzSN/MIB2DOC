@@ -7,16 +7,20 @@
 %%
 [\n ]+
 [\t ]+
-[\s ]+
-OBJECT_IDENTIFIER                   { return OBJ_IDEN_; }
+OBJECT[ \n\t\r]+IDENTIFIER          { return OBJ_IDEN_; }
 OBJECT-TYPE                         { return OBJ_SPECIFIER; }
 SYNTAX                              { return SYNTAX_SPECIFIER; }
-INTEGER |
-RowStatus                           { return TYPE; }
+INTEGER([ \n\t\r]*\(*.*\))* |
+IpAddress |
+MacAddress |
+OCTET[ \n\t\r]+STRING([ \n\t\r]*\(.*\))* |
+SEQUENCE[ \n\t\r]+OF[ \n\t\r]*[a-zA-Z]* |
+RowStatus                           { printf("%s\n", "TYPE"); return TYPE; }
+SEQUENCE                            { printf("%s\n", "SEQ"); return SEQ; }
+
+INDEX                               { return INDEX_; }
 MAX-ACCESS                          { return ACCESS_SPECIFIER; }
-
 DEFINITIONS                         { return DEF; }
-
 BEGIN                               { return BEGIN_; }
 IMPORTS                             { printf("%s\n", "IMPORTS"); return IMPORTS_; }
 FROM                                { return FROM_; }
@@ -24,11 +28,11 @@ FROM                                { return FROM_; }
 \;                                  { return SEMICOLON; }
 "--".*                              { printf("%s:%s\n", "COMMENT", yytext); return COMMENT; }
 END                                 { return END_; }
-SEQUENCE                            { printf("%s\n", "SEQ"); return SEQ; }
 
 read-only |
 write |
 read-write |
+accessible-for-notify |
 not-accessible                      { return ACCESS_VALUE; }
 
 STATUS                              { return STATUS_SPECIFIER; }
