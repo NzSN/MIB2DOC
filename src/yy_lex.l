@@ -9,6 +9,8 @@
 [\t ]+
 OBJECT[ \n\t\r]+IDENTIFIER          { return OBJ_IDEN_; }
 OBJECT-TYPE                         { return OBJ_SPECIFIER; }
+OBJECTS                             { return OBJECTS_; }
+NOTIFICATION-TYPE                   { return TRAP_SPECIFIER; }
 SYNTAX                              { return SYNTAX_SPECIFIER; }
 INTEGER([ \n\t\r]*\(*.*\))* |
 IpAddress |

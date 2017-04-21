@@ -5,8 +5,8 @@
 %token DESC_SPECIFIER DESC_VALUE
 %token MOUNT_POINT ASSIGNED
 %token BEGIN_ END_ DEF SEQ
-%token COMMA SEMICOLON INDEX_
-%token OBJ_IDEN_ L_BRACE R_BRACE
+%token COMMA SEMICOLON INDEX_ TRAP_SPECIFIER
+%token OBJ_IDEN_ L_BRACE R_BRACE OBJECTS_
 %token TYPE NUM FROM_ IMPORTS_ COMMENT
 
 %{
@@ -24,6 +24,7 @@
 MIB : DEFINITION IMPORT MAIN_PART               { printf("%s\n", "MIB"); };
 MAIN_PART : OBJ_IDENTIFIER MAIN_PART |
             OBJ MAIN_PART |
+            TRAP MAIN_PART |
             SEQUENCE MAIN_PART |
             COMMENT MAIN_PART |
             END_                                { printf("%s\n", "MAIN_PART"); } ;
@@ -43,8 +44,10 @@ SEQ_ITEM : IDENTIFIER TYPE COMMA SEQ_ITEM |
 
 OBJ_IDENTIFIER : IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE     { printf("%s\n", "OBJ_IDENTIFIER"); };
 
-OBJ :  HEAD BODY                                { printf("%s\n", "OBJ"); } ;
+OBJ : HEAD BODY                                 { printf("%s\n", "OBJ"); } ;
+TRAP :  TRAP_HEAD PROPERTY                      { printf("%s\n", "TRAP"); };
 
+TRAP_HEAD : IDENTIFIER TRAP_SPECIFIER
 HEAD : IDENTIFIER OBJ_SPECIFIER                 { printf("%s\n", "HEAD"); } ;
 BODY : PROPERTY                                 { printf("%s\n", "BODY"); } ;
 PROPERTY :  SYNTAX PROPERTY |
@@ -53,7 +56,11 @@ PROPERTY :  SYNTAX PROPERTY |
             DESCRIPTION PROPERTY |
             INDEX PROPERTY |
             MOUNT PROPERTY |
+            OBJECT PROPERTY |
             /* empty */                         { printf("%s\n", "PROPERTY"); };
+OBJECT : OBJECTS_ L_BRACE OBJECT_ITEM R_BRACE
+OBJECT_ITEM : IDENTIFIER COMMA OBJECT_ITEM  |
+              IDENTIFIER ;
 SYNTAX : SYNTAX_SPECIFIER SYNTAX_VALUE          { printf("%s: %s\n", "SYNTAX", yylval); };
 SYNTAX_VALUE : TYPE |
                IDENTIFIER ;

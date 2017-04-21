@@ -9249,6 +9249,240 @@ ontGemportSentBlock  OBJECT-TYPE
          "ontGemportSentBlock"
     ::= { ontGemportStatisticsEntry 11 }
 
+------------------------------------------------------------
+------------------ 2.5. status trap ------------------------
+------------------------------------------------------------
+-- 2.5.1. deviceTrap
+-- 2.5.2. slotTrap
+-- 2.5.3. portTrap
+-- 2.5.4. ontTrap
+-- 2.5.5. ontPortTrap
+-- 2.5.6. trapInfo
+-- 2.5.7. trapSetThreshold
+-- 2.5.8. trapClearThreshold
+
+
+---- deviceTrap ------------------------------------------
+deviceTrap        OBJECT IDENTIFIER ::= { statusTrap 1 }
+
+oltSwitchOverTrap NOTIFICATION-TYPE
+        STATUS  current
+        DESCRIPTION
+            "olt contrl-board switchover trap."
+        ::= { deviceTrap 1 }
+
+oltFanStatusTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapExtraInfo }
+        STATUS  current
+        DESCRIPTION
+            "olt fan status change trap.
+            gponTrapExtraInfo:
+            1  stop
+            2  start
+            3  remove
+            4  insert"
+        ::= { deviceTrap 2 }
+
+oltPowerStatusTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapExtraInfo }
+        STATUS  current
+        DESCRIPTION
+            "olt power status trap."
+        ::= { deviceTrap 3 }
+
+oltTemperatureTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapStatus, gponTrapExtraInfo }
+        STATUS  current
+        DESCRIPTION
+            "olt switch chip temperature trap.
+            gponTrapExtraInfo:
+            1  low
+            2  high"
+        ::= { deviceTrap 4 }
+
+oltPonTemperatureTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapStatus, gponTrapExtraInfo }
+        STATUS  current
+        DESCRIPTION
+            "olt pon chip temperature trap.
+            gponTrapExtraInfo:
+            1  low
+            2  high"
+        ::= { deviceTrap 5 }
+
+unitOfflineAlarmTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapStatus }
+        STATUS  current
+        DESCRIPTION
+            "unit offline alarm trap."
+        ::= { deviceTrap 6 }
+
+---- slotTrap --------------------------------------------
+slotTrap          OBJECT IDENTIFIER ::= { statusTrap 2 }
+
+oltBoardStatusTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapExtraInfo }
+        STATUS  current
+        DESCRIPTION
+            "olt board status trap."
+        ::= { slotTrap 1 }
+
+---- portTrap -------------------------------------------
+portTrap          OBJECT IDENTIFIER ::= { statusTrap 3 }
+
+oltPortRingTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPortId, gponTrapStatus }
+        STATUS  current
+        DESCRIPTION
+            "olt port ring trap."
+        ::= { portTrap 1 }
+
+oltPortSdTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPortId, gponTrapStatus }
+        STATUS  current
+        DESCRIPTION
+            "olt port sd trap."
+        ::= { portTrap 2 }
+
+oltPportLOSTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPortId, gponTrapStatus }
+        STATUS  current
+        DESCRIPTION
+            "olt pon port LOS trap. "
+        ::= { portTrap 3 }
+
+oltPortSfpTcrossTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPortId, gponTrapOntId, gponTrapStatus, gponTrapExtraInfo }
+        STATUS  current
+        DESCRIPTION
+            "olt sfp threshold crossing alert trap.
+             gponTrapExtraInfo:
+             1  recieve high
+             2  recieve low
+             3  send high
+             4  send low"
+        ::= { portTrap 4 }
+
+oltPortSfpUnplugTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPortId, gponTrapStatus, gponTrapSn }
+        STATUS  current
+        DESCRIPTION
+            "olt pon port sfp unplug trap. "
+        ::= { portTrap 5 }
+
+oltPortUdldTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPortId, gponTrapExtraInfo }
+        STATUS  current
+        DESCRIPTION
+            "UniDirectional Link Detection trap.
+            gponTrapExtraInfo:
+            1  Undetermined
+            2  Unidirectional
+            3  Bidirectional"
+        ::= { portTrap 6 }
+
+oltPportLOFTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPortId, gponTrapStatus }
+        STATUS  current
+        DESCRIPTION
+            "olt pon port LOF trap. "
+        ::= { portTrap 7 }
+
+---- ontTrap ---------------------------------------------
+ontTrap           OBJECT IDENTIFIER ::= { statusTrap 4 }
+
+ontOnlineStatusTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPportId, gponTrapOntId, gponTrapStatus, gponTrapSn, gponTrapLoid }
+        STATUS  current
+        DESCRIPTION
+            "ont online status trap."
+        ::= { ontTrap 1 }
+
+ont9843Trap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPportId, gponTrapOntId, gponTrapExtraInfo }
+        STATUS  current
+        DESCRIPTION
+            "ont 984.3 warning trap.
+             gponTrapExtraInfo: warning type:
+             1  LOSi
+             2  LOFi
+             3  DOWi
+             4  SFi
+             5  SDi
+             6  LCDGi
+             7  RDIi
+             8  SUFi
+             9  DFi
+             10 LOAi
+             11 LOKi
+             12 TIWi
+             13 DGi
+             14 LOAMi
+             15 MEMi
+             16 MISi
+             17 PEEi
+             18 ERRi
+             19 REIi"
+        ::= { ontTrap 2 }
+
+ontRogueTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPportId, gponTrapOntId, gponTrapStatus, gponTrapExtraInfo }
+        STATUS  current
+        DESCRIPTION
+            "Rogue ont trap.
+             gponTrapExtraInfo: rogue type:
+             1  continuous
+             2  intermittent "
+        ::= { ontTrap 3 }
+
+ontAuthConflictTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPportId, gponTrapOntId, gponTrapStatus, gponTrapExtraInfo }
+        STATUS  current
+        DESCRIPTION
+            "ont authentication conflict trap.
+             gponTrapExtraInfo: conflict mode:
+             1  sn
+             2  sn + pw
+             3  loid
+             4  loid + lopw"
+        ::= { ontTrap 4 }
+
+ontSfpTcrossTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPortId, gponTrapOntId, gponTrapStatus, gponTrapExtraInfo }
+        STATUS  current
+        DESCRIPTION
+            "ont sfp threshold crossing alert trap.
+             gponTrapExtraInfo:
+             1  recieve high
+             2  recieve low
+             3  send high
+             4  send low"
+        ::= { ontTrap 5 }
+
+---- ontPortTrap ------------------------------------------
+ontPortTrap       OBJECT IDENTIFIER ::= { statusTrap 5 }
+
+ontEthPortStatusTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPportId, gponTrapOntId, gponTrapOntEthportId, gponTrapStatus }
+        STATUS  current
+        DESCRIPTION
+            "ont ethernet port status trap."
+        ::= { ontPortTrap 1 }
+
+ontEthPortRingTrap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPportId, gponTrapOntId, gponTrapOntEthportId, gponTrapStatus }
+        STATUS  current
+        DESCRIPTION
+            "ont ethernet port ring trap."
+        ::= { ontPortTrap 2 }
+
+ontPotsH248Trap NOTIFICATION-TYPE
+        OBJECTS { gponTrapSlotId, gponTrapPportId, gponTrapOntId, gponTrapExtraId, gponTrapStatus }
+        STATUS  current
+        DESCRIPTION
+            "ont pots h248 link trap.
+            gponTrapExtraId: ont pots number"
+        ::= { ontPortTrap 3 }
 
 ------ trapInfo ---------------------------------------
 trapInfo          OBJECT IDENTIFIER ::= { statusTrap 6 }
