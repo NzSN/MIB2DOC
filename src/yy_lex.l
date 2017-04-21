@@ -11,31 +11,38 @@
 OBJECT_IDENTIFIER                   { return OBJ_IDEN_; }
 OBJECT-TYPE                         { return OBJ_SPECIFIER; }
 SYNTAX                              { return SYNTAX_SPECIFIER; }
-INTEGER.*                           { yylval = yytext; return SYNTAX_VALUE; }
+INTEGER |
+RowStatus                           { return TYPE; }
 MAX-ACCESS                          { return ACCESS_SPECIFIER; }
 
 DEFINITIONS                         { return DEF; }
 
 BEGIN                               { return BEGIN_; }
-IMPORTS                             { return IMPORTS_; }
+IMPORTS                             { printf("%s\n", "IMPORTS"); return IMPORTS_; }
 FROM                                { return FROM_; }
-\,                                  { return COMMA; }
+\,                                  { printf("%s\n", "COMMA"); return COMMA; }
 \;                                  { return SEMICOLON; }
+"--".*                              { printf("%s:%s\n", "COMMENT", yytext); return COMMENT; }
 END                                 { return END_; }
+SEQUENCE                            { printf("%s\n", "SEQ"); return SEQ; }
 
-read |
+read-only |
 write |
 read-write |
-not-accessible                      { yylval = yytext; return ACCESS_VALUE; }
+not-accessible                      { return ACCESS_VALUE; }
 
 STATUS                              { return STATUS_SPECIFIER; }
-current                             { yylval = yytext; return STATUS_VALUE; }
+current                             { return STATUS_VALUE; }
 DESCRIPTION                         { return DESC_SPECIFIER; }
-\"[^\"]*\"{1}                       { yylval = yytext; return DESC_VALUE; }
-::=                                 { return ASSIGNED; }
+\"[^\"]*\"{1}                       { return DESC_VALUE; }
+::=                                 { printf("%s\n", "ASSIGNED"); return ASSIGNED; }
 
-\{.*\}                              { yylval = yytext; return MOUNT_POINT; }
-([a-zA-Z0-9]|"-")+                  { yylval = yytext; return IDENTIFIER; }
+\{                                  { printf("%s\n", "LB"); return L_BRACE; }
+\}                                  { printf("%s\n", "RB"); return R_BRACE; }
+
+[0-9]+                              { printf("%s\n", "NUM"); return NUM; }
+
+([a-zA-Z0-9]|"-")+                  { printf("%s\n", "IDENTIFIER"); return IDENTIFIER; }
 %%
 #define YYSTYPE char*
 YYSTYPE yylval;
