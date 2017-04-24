@@ -262,6 +262,7 @@ inactiveUsTrafficCbs OBJECT-TYPE
     MAX-ACCESS  read-write
     STATUS      current
     DESCRIPTION
+        -- gogogogo
         "The gemport committed burst size, should be inputted with <2000-10240000>."
     ::= { inactiveUsTrafficEntry 6 }
 

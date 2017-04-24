@@ -7,6 +7,10 @@
 
 #include <stdio.h>
 
+/* define */
+#define SIZE_OF_CURRENT_TABLE 64
+#define IS_PTR_NULL(PTR) (PTR?0:1)
+
 /* Necesary Declaration */
 extern int yylex(void);
 extern FILE *yyin;
@@ -15,7 +19,7 @@ extern int yyparse (void);
 /* Token Id Definition */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-enum yytokentype {
+typedef enum yytokentype {
     IDENTIFIER = 258,
     OBJ_SPECIFIER = 259,
     SYNTAX_SPECIFIER = 260,
@@ -42,10 +46,16 @@ enum yytokentype {
     TYPE = 281,
     NUM = 282,
     FROM_ = 283,
-    IMPORTS_ = 284,
-    COMMENT = 285
-};
+    IMPORTS_ = 284
+} tokenType;
 #endif
+
+typedef enum unitType {
+    OBJECT = 1,
+    TRAP,
+    OBJECT_IDENTIFIER,
+    SEQUENCE
+} unitType;
 
 /* Structure used to store Info of MIB node */
 typedef struct {

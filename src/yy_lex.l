@@ -7,6 +7,7 @@
 %%
 [\n ]+
 [\t ]+
+"--".*
 OBJECT[ \n\t\r]+IDENTIFIER          { return OBJ_IDEN_; }
 OBJECT-TYPE                         { return OBJ_SPECIFIER; }
 OBJECTS                             { return OBJECTS_; }
@@ -28,7 +29,6 @@ IMPORTS                             { printf("%s\n", "IMPORTS"); return IMPORTS_
 FROM                                { return FROM_; }
 \,                                  { printf("%s\n", "COMMA"); return COMMA; }
 \;                                  { return SEMICOLON; }
-"--".*                              { printf("%s:%s\n", "COMMENT", yytext); return COMMENT; }
 END                                 { return END_; }
 
 read-only |
@@ -50,6 +50,7 @@ DESCRIPTION                         { return DESC_SPECIFIER; }
 
 ([a-zA-Z0-9]|"-")+                  { printf("%s\n", "IDENTIFIER"); return IDENTIFIER; }
 %%
+
 #define YYSTYPE char*
 YYSTYPE yylval;
 int yywrap() {

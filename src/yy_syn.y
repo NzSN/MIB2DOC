@@ -7,7 +7,7 @@
 %token BEGIN_ END_ DEF SEQ
 %token COMMA SEMICOLON INDEX_ TRAP_SPECIFIER
 %token OBJ_IDEN_ L_BRACE R_BRACE OBJECTS_
-%token TYPE NUM FROM_ IMPORTS_ COMMENT
+%token TYPE NUM FROM_ IMPORTS_
 
 %{
     #include <stdio.h>
@@ -26,7 +26,6 @@ MAIN_PART : OBJ_IDENTIFIER MAIN_PART |
             OBJ MAIN_PART |
             TRAP MAIN_PART |
             SEQUENCE MAIN_PART |
-            COMMENT MAIN_PART |
             END_                                { printf("%s\n", "MAIN_PART"); } ;
 
 DEFINITION : IDENTIFIER DEF ASSIGNED BEGIN_     { printf("%s\n", "DEFINITIONS"); };

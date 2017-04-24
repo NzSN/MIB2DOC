@@ -4,7 +4,7 @@ project(GL5610_MIB_DOC_GEN)
 set(SRC_DIR E:/CODE/GL5610_MIB_DOC_GEN/src)
 set(CMAKE_C_STANDARD 11)
 set(SOURCE_FILES src/main.c include/type.h src/tokenOp.c include/type.h
-        src/lex.yy.c src/yy_syn.tab.c include/tokenOp.h)
+        src/lex.yy.c src/yy_syn.tab.c include/tokenOp.h include/queue.h src/queue.c include/tree.h src/tree.c include/stack.h src/stack.c)
 
 add_custom_target(lexBison ALL DEPENDS)
 add_custom_command(TARGET lexBison

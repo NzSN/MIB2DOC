@@ -435,34 +435,34 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[261] =
     {   0,
-        0,    0,   40,   39,    2,    1,    1,   39,   21,   38,
-       37,   39,   22,   38,   38,   38,   38,   38,   38,   38,
+        0,    0,   40,   39,    2,    1,    1,   39,   22,   38,
+       37,   39,   23,   38,   38,   38,   38,   38,   38,   38,
        38,   38,   38,   38,   38,   38,   38,   38,   38,   35,
-       36,    2,    1,    1,    0,   33,   23,   38,   37,    0,
+       36,    2,    1,    1,    0,   33,    3,   38,   37,    0,
        38,   38,   38,   38,   38,   38,   38,   38,   38,   38,
        38,   38,   38,   38,   38,   38,   38,   38,   38,   38,
-       38,   23,   23,   34,   38,   38,   38,   24,   38,   38,
+       38,    3,    3,   34,   38,   38,   38,   24,   38,   38,
        38,   38,   38,   38,   38,   38,   38,   38,   38,   38,
        38,   38,   38,   38,   38,   38,   38,   38,   38,   38,
-       20,   38,   38,   38,   38,   38,   38,   38,   38,   38,
+       21,   38,   38,   38,   38,   38,   38,   38,   38,   38,
 
-       38,   38,   38,   38,   38,   38,   38,   38,   38,   18,
-       38,   38,   38,   15,   38,   38,   38,   38,   38,   38,
+       38,   38,   38,   38,   38,   38,   38,   38,   38,   19,
+       38,   38,   38,   16,   38,   38,   38,   38,   38,   38,
        38,   38,   38,   38,   38,   38,   38,   38,   38,   26,
        38,   38,   38,   38,   38,   38,   38,   38,   38,    0,
-       38,   38,   30,    7,   38,   38,   38,   38,   38,   38,
-       38,   19,    8,   38,   38,   38,   38,    0,   38,    5,
+       38,   38,   30,    8,   38,   38,   38,   38,   38,   38,
+       38,   20,    9,   38,   38,   38,   38,    0,   38,    6,
         0,   38,   38,   38,   31,   38,   38,   38,   38,   38,
-        0,    0,    0,    0,    8,   38,   38,   38,   38,   38,
-        0,   38,    0,   38,   14,   38,   38,   38,   38,   38,
-       38,    9,   38,   38,   38,    0,   38,    0,   13,    0,
+        0,    0,    0,    0,    9,   38,   38,   38,   38,   38,
+        0,   38,    0,   38,   15,   38,   38,   38,   38,   38,
+       38,   10,   38,   38,   38,    0,   38,    0,   14,    0,
 
-       38,   38,   25,   38,   38,   38,   16,   10,   38,    0,
-       38,    0,    0,   38,   38,   27,   17,   32,   38,    0,
-        4,    0,   12,   38,   38,   38,    0,   11,   12,   12,
+       38,   38,   25,   38,   38,   38,   17,   11,   38,    0,
+       38,    0,    0,   38,   38,   27,   18,   32,   38,    0,
+        5,    0,   13,   38,   38,   38,    0,   12,   13,   13,
        38,   38,   38,    0,    0,    0,   38,   38,   38,    0,
-        0,   11,   38,   29,   38,    0,    0,    0,   38,   38,
-        0,   38,    6,    3,   38,   38,   38,   38,   28,    0
+        0,   12,   38,   29,   38,    0,    0,    0,   38,   38,
+        0,   38,    7,    4,   38,   38,   38,   38,   28,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -999,34 +999,36 @@ YY_RULE_SETUP
 
 	YY_BREAK
 case 3:
-/* rule 3 can match eol */
 YY_RULE_SETUP
 #line 10 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ return OBJ_IDEN_; }
+
 	YY_BREAK
 case 4:
+/* rule 4 can match eol */
 YY_RULE_SETUP
 #line 11 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ return OBJ_SPECIFIER; }
+{ return OBJ_IDEN_; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 12 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ return OBJECTS_; }
+{ return OBJ_SPECIFIER; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 13 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ return TRAP_SPECIFIER; }
+{ return OBJECTS_; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 14 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ return SYNTAX_SPECIFIER; }
+{ return TRAP_SPECIFIER; }
 	YY_BREAK
 case 8:
-/* rule 8 can match eol */
-#line 16 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
+YY_RULE_SETUP
+#line 15 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
+{ return SYNTAX_SPECIFIER; }
+	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 #line 17 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
@@ -1041,59 +1043,57 @@ case 12:
 #line 20 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
 case 13:
 /* rule 13 can match eol */
-YY_RULE_SETUP
-#line 20 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ printf("%s\n", "TYPE"); return TYPE; }
-	YY_BREAK
+#line 21 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
 case 14:
+/* rule 14 can match eol */
 YY_RULE_SETUP
 #line 21 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ printf("%s\n", "SEQ"); return SEQ; }
+{ printf("%s\n", "TYPE"); return TYPE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 23 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ return INDEX_; }
+#line 22 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
+{ printf("%s\n", "SEQ"); return SEQ; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 24 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ return ACCESS_SPECIFIER; }
+{ return INDEX_; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 25 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ return DEF; }
+{ return ACCESS_SPECIFIER; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 26 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ return BEGIN_; }
+{ return DEF; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
 #line 27 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ printf("%s\n", "IMPORTS"); return IMPORTS_; }
+{ return BEGIN_; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 28 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ return FROM_; }
+{ printf("%s\n", "IMPORTS"); return IMPORTS_; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 29 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ printf("%s\n", "COMMA"); return COMMA; }
+{ return FROM_; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 30 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ return SEMICOLON; }
+{ printf("%s\n", "COMMA"); return COMMA; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 31 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
-{ printf("%s:%s\n", "COMMENT", yytext); return COMMENT; }
+{ return SEMICOLON; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
@@ -2166,6 +2166,7 @@ void yyfree (void * ptr )
 #define YYTABLES_NAME "yytables"
 
 #line 52 "E:/CODE/GL5610_MIB_DOC_GEN/src/yy_lex.l"
+
 
 #define YYSTYPE char*
 YYSTYPE yylval;

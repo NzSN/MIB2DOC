@@ -2,82 +2,78 @@
 // Created by ayden on 2017/4/19.
 //
 
+#include <mem.h>
 #include "../include/type.h"
+#include "../include/queue.h"
+#include "../include/tree.h"
+#include "../include/stack.h"
 
-/* Declaration of static functions define in this file */
-static int nameOp(MIB_NODE_INFO *nodeInfo);
-static int objSpecOp(MIB_NODE_INFO *nodeInfo);
-static int objValOp(MIB_NODE_INFO *nodeInfo);
-static int synSpecOp(MIB_NODE_INFO *nodeInfo);
-static int synValOp(MIB_NODE_INFO *nodeInfo);
-static int accessSpecOp(MIB_NODE_INFO *nodeInfo);
-static int accessValOp(MIB_NODE_INFO *nodeInfo);
-static int statusSpecOp(MIB_NODE_INFO *nodeInfo);
-static int statusValOp(MIB_NODE_INFO *nodeInfo);
-static int descSpecOp(MIB_NODE_INFO *nodeInfo);
-static int descValOp(MIB_NODE_INFO *nodeInfo);
-static int mountSpecOp(MIB_NODE_INFO *nodeInfo);
-static int mountValOp(MIB_NODE_INFO *nodeInfo);
+/* Declaration */
+static int sectionLatex(char *secName, char *OID, FILE *writeTo);
 
-int tokenOperation(int token, MIB_NODE_INFO *nodeInfo) {
-    int ret = 0;
+extern Queue dataQueue;
+char currentTable[64];
+extern mibObjectTreeNode root;
 
-    switch (token) {
-        case IDENTIFIER:
-            ret = nameOp(nodeInfo);
+void deal_with(int type) {
+    switch (type) {
+        case OBJECT:
             break;
-        case OBJ_SPECIFIER:
-            ret = objSpecOp(nodeInfo);
+        case TRAP:
             break;
-        case SYNTAX_SPECIFIER:
-            ret = synSpecOp(nodeInfo);
+        case OBJECT_IDENTIFIER:
             break;
-        case ACCESS_SPECIFIER:
-            ret = accessSpecOp(nodeInfo);
-            break;
-        case ACCESS_VALUE:
-            ret = accessValOp(nodeInfo);
-            break;
-        case STATUS_SPECIFIER:
-            ret = statusSpecOp(nodeInfo);
-            break;
-        case STATUS_VALUE:
-            ret = statusValOp(nodeInfo);
-            break;
-        case DESC_SPECIFIER:
-            ret = descSpecOp(nodeInfo);
-            break;
-        case DESC_VALUE:
-            ret = descValOp(nodeInfo);
-            break;
-        case ASSIGNED:
-            ret = mountSpecOp(nodeInfo);
-            break;
-        case MOUNT_POINT:
-            ret = mountValOp(nodeInfo);
+        case SEQUENCE:
             break;
         default:
-            ret = -1;
             break;
     }
-    return ret;
 }
 
-static int nameOp(MIB_NODE_INFO *nodeInfo) {}
-static int objSpecOp(MIB_NODE_INFO *nodeInfo) {}
-static int objValOp(MIB_NODE_INFO *nodeInfo) {}
-static int synSpecOp(MIB_NODE_INFO *nodeInfo) {}
-static int synValOp(MIB_NODE_INFO *nodeInfo) {}
-static int accessSpecOp(MIB_NODE_INFO *nodeInfo) {}
-static int accessValOp(MIB_NODE_INFO *nodeInfo) {}
-static int statusSpecOp(MIB_NODE_INFO *nodeInfo) {}
-static int statusValOp(MIB_NODE_INFO *nodeInfo) {}
-static int descSpecOp(MIB_NODE_INFO *nodeInfo) {}
-static int descValOp(MIB_NODE_INFO *nodeInfo) {}
-static int mountSpecOp(MIB_NODE_INFO *nodeInfo) {}
-static int mountValOp(MIB_NODE_INFO *nodeInfo) {}
+void deal_with_object(FILE *writeTo) {
+    char *ident, *type, *rw, *desc, *mount, *suffix;
+    identStack stack;
+    mibObjectTreeNode *parent;
+    memset(&stack, 0, sizeof(&stack));
 
-/* Functions convert info in MIB_NODE_INFO to LaTex code */
-int fromMibToLaTex(MIB_NODE_INFO *nodeinfo) {
+    ident = getQueue(&dataQueue);
+    type = getQueue(&dataQueue);
+    rw = getQueue(&dataQueue);
+    desc = getQueue(&dataQueue);
+    mount = getQueue(&dataQueue);
+    suffix = getQueue(&dataQueue);
 
+    if (strlen(currentTable) == 0) {
+        /* no table is processing, need to build table */
+        push(&stack, mount);
+        while (parent = getParent_mt(&root, mount)) {
+            push(&stack, parent->ident);
+            push(&stack, parent->oid);
+        }
+        while (IS_STACK_EMPTY(&stack)) {
+            sectionLatex(pop(&stack), pop(&stack), writeTo);
+        }
+    }
+
+    /* A node belong to the table we are processing */
+    if (strncmp(currentTable, mount, SIZE_OF_CURRENT_TABLE) == 0) {
+
+    } else {
+        /* Need to build a new table */
+
+    }
+}
+void deal_with_trap() {}
+void deal_with_objIdent() {}
+void deal_with_sequence() {}
+
+
+static int tablePrint(char *ident, char *oid, char *rw, char *detail, FILE *output) {
+    if (IS_PTR_NULL(ident) || IS_PTR_NULL(oid) ||
+        IS_PTR_NULL(rw) || IS_PTR_NULL(detail))
+        return -1;
+}
+
+static int sectionLatex(char *secName, char *OID, FILE *writeTo) {
+    fprintf(writeTo, "\\section*{%s (%s)}\n", secName, OID);
 }
