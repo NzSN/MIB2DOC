@@ -9,7 +9,11 @@
 
 /* define */
 #define SIZE_OF_CURRENT_TABLE 64
-#define IS_PTR_NULL(PTR) (PTR?0:1)
+#define SIZE_OF_SECTION_RECORD 1024
+#define IS_PTR_NULL(PTR) (PTR ? 0:1)
+
+/* Extern */
+extern char *sectionRecord[SIZE_OF_SECTION_RECORD];
 
 /* Necesary Declaration */
 extern int yylex(void);

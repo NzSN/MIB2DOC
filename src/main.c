@@ -11,6 +11,7 @@ extern int yyparse (void);
 Queue dataQueue;
 char currentTable[SIZE_OF_CURRENT_TABLE];
 mibObjectTreeNode root;
+char *sectionRecord[SIZE_OF_SECTION_RECORD];
 
 int main() {
     int token;
