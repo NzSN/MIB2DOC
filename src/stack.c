@@ -6,11 +6,12 @@
 #include "../include/type.h"
 
 int push(identStack *ps, char *ident) {
-    int top = ps->top;
+    int top;
     if (IS_PTR_NULL(ps) || IS_PTR_NULL(ident))
         return -1;
     if (IS_STACK_FULL(ps))
         return -2;
+    top = ps->top;
     top++;
     ps->stack[top] = ident;
     ps->top = top;
@@ -18,11 +19,14 @@ int push(identStack *ps, char *ident) {
 }
 
 char *pop(identStack *ps) {
-    int top = ps->top;
+    int top;
     char *ident;
 
     if (IS_PTR_NULL(ps))
         return NULL;
+    
+    top = ps->top;
+    
     if (IS_STACK_EMPTY(ps))
         return NULL;
     else

@@ -9,6 +9,8 @@ IMPORTS
     MODULE-COMPLIANCE, OBJECT-GROUP            FROM SNMPv2-CONF;
 
 
+greenet OBJECT IDENTIFIER::= { enterprises 13464 }
+dataCom OBJECT IDENTIFIER ::= { greennet 1}
 ngpon OBJECT IDENTIFIER ::= { dataCom 14 }
 
 

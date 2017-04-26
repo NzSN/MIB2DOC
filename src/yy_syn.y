@@ -16,7 +16,7 @@
     #define YYSTYPE char *
     extern char *yylval;
     void yyerror(char const *s) {
-        fprintf(stderr, "%d %s: %s\n", s, yylval);
+        fprintf(stderr, "%s: %s\n", s, yylval);
     }
 %}
 

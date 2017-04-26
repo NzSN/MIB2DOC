@@ -6,15 +6,18 @@
 #define GL5610_MIB_DOC_GEN_TYPE_H
 
 #include <stdio.h>
+#include "mibTreeObjTree.h"
 
 /* define */
 #define SIZE_OF_CURRENT_TABLE 64
 #define SIZE_OF_SECTION_RECORD 1024
+#define SIZE_OF_OID_STRING 256
 #define IS_PTR_NULL(PTR) (PTR ? 0:1)
+#define RELEASE_PTR(PTR) ({free(PTR); PTR=NULL;})
 
 /* Extern */
 extern char *sectionRecord[SIZE_OF_SECTION_RECORD];
-
+extern mibObjectTreeNode *mibObjectTreeRoot;
 /* Necesary Declaration */
 extern int yylex(void);
 extern FILE *yyin;

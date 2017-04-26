@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "../include/type.h"
-#include "../include/tokenOp.h"
+#include "../include/mibTreeGen.h"
 #include "../include/queue.h"
-#include "../include/tree.h"
+#include "../include/mibTreeObjTree.h"
 
 extern int yylex(void);
 extern FILE *yyin;
@@ -10,7 +10,6 @@ extern int yyparse (void);
 
 Queue dataQueue;
 char currentTable[SIZE_OF_CURRENT_TABLE];
-mibObjectTreeNode root;
 char *sectionRecord[SIZE_OF_SECTION_RECORD];
 
 int main() {
