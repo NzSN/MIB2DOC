@@ -18,14 +18,24 @@ mibObjectTreeNode *mibObjectTreeRoot;
 
 /* Declaration */
 static mibObjectTreeNode * next_mt(mibObjectTreeNode *obj);
-static mibObjectTreeNode * mibNodeBuild(char *ident, char *oid);
+mibObjectTreeNode * mibNodeBuild(char *ident, char *oid);
+mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid);
 
 void mibObjectTreeInit(mibObjectTreeNode *root) {
+    mibNodeInfo *rootInfo;
     mibObjectTreeNode *obj;
 
     memset(root, 0, sizeof(mibObjectTreeNode));
 
-    insert_mot(root, mibNodeBuild("iso", "1"), NULL);
+    rootInfo = (mibNodeInfo *)malloc(sizeof(mibNodeInfo));
+    memset(rootInfo, 0, sizeof(mibNodeInfo));
+    rootInfo->ident = "root";
+    rootInfo->oid = "root";
+
+    root->isNode = 1;
+    root->info = (void *)rootInfo;
+
+    insert_mot(root, mibNodeBuild("iso", "1"), "root");
     insert_mot(root, mibNodeBuild("org", "1.3"), "iso");
     insert_mot(root, mibNodeBuild("dod", "1.3.6"), "org");
     insert_mot(root, mibNodeBuild("internet", "1.3.6.1"), "dod");
@@ -43,7 +53,6 @@ mibObjectTreeNode * mibNodeBuild(char *ident, char *oid) {
     info = (mibNodeInfo *)malloc(sizeof(mibNodeInfo));
     memset(info, 0, sizeof(mibNodeInfo));
 
-    info->oid = (char *)malloc(OID_LENGTH);
     info->ident = ident;
     info->oid = oid;
 
@@ -65,6 +74,8 @@ mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, 
 
     info = (mibLeaveInfo *)malloc(sizeof(mibLeaveInfo));
     memset(info, 0, sizeof(mibLeaveInfo));
+    info->nodeInfo = (mibNodeInfo *)malloc(sizeof(mibNodeInfo));
+    memset(info->nodeInfo, 0, sizeof(mibNodeInfo));
 
     info->nodeInfo->ident = ident;
     info->nodeInfo->oid = oid;
@@ -75,7 +86,7 @@ mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, 
 
     obj = (mibObjectTreeNode *)malloc(sizeof(mibObjectTreeNode));
     memset(obj, 0, sizeof(mibObjectTreeNode));
-    obj->info = info;
+    obj->info = (void *)info;
     obj->isNode = 0;
 
     return obj;
@@ -85,7 +96,7 @@ mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, 
 int insert_mot(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ident) {
     mibObjectTreeNode *parentNode, *child, *current;
 
-    if (IS_PTR_NULL(root) || IS_PTR_NULL(obj))
+    if (IS_PTR_NULL(root) || IS_PTR_NULL(obj) || IS_PTR_NULL(parent_ident))
         return -1;
 
     parentNode = search_mot(root, parent_ident);
@@ -101,7 +112,7 @@ int insert_mot(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ide
                 obj->parent = parentNode;
                 obj->head = child;
             }
-            return -1;
+            return 0;
         }
 
         child->sibling = obj;
@@ -113,7 +124,7 @@ int insert_mot(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ide
     }
 }
 
-mibObjectTreeNode *getParent_mot(mibObjectTreeNode *root, char *ident) {
+mibObjectTreeNode *parent_mot(mibObjectTreeNode *root, char *ident) {
     mibObjectTreeNode *node;
 
     node = search_mot(root, ident);
@@ -126,15 +137,11 @@ mibObjectTreeNode *getParent_mot(mibObjectTreeNode *root, char *ident) {
 mibObjectTreeNode * search_mot(mibObjectTreeNode *root, char *const ident) {
     mibObjectTreeNode *current;
 
-    if (IS_PTR_NULL(root)) {
+    if (IS_PTR_NULL(root) || IS_PTR_NULL(ident)) {
         return NULL;
     }
 
-    if (ident == NULL) {
-        return root;
-    }
-
-    for (current = next_mt(root); current != NULL; current = next_mt(current)) {
+    for (current = root; current != NULL; current = next_mt(current)) {
         if (strncmp(current->info, ident, strlen(ident)) == 0) {
             return current;
         }
