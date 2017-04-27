@@ -16,6 +16,7 @@ mibObjectTreeNode root;
 static int sectionLatex(char *secName, char *OID, int depth, FILE *writeTo);
 static int mibTreeLeaveAdd(char *ident, char *type, char *rw, char *desc, char *parent, char *suffix);
 static int mibTreeNodeAdd(char *ident, char *oid, char *parent);
+static char * oidComplement(char *parent, char *suffix);
 
 extern Queue dataQueue;
 char currentTable[64];

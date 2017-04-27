@@ -31,7 +31,7 @@ typedef struct mibObjectTreeNode {
 
 void mibObjectTreeInit(mibObjectTreeNode *root);
 int insert_mot(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent);
-mibObjectTreeNode * getParent_mot(mibObjectTreeNode *root, char *ident);
+mibObjectTreeNode * parent_mot(mibObjectTreeNode *root, char *ident);
 mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid);
 mibObjectTreeNode * mibNodeBuild(char *ident, char *oid);
 mibObjectTreeNode * search_mot(mibObjectTreeNode *root, char *const ident);
