@@ -2,12 +2,12 @@
 // Created by ayden on 2017/4/19.
 //
 
-#include <mem.h>
 #include <malloc.h>
+#include <string.h>
+#include "../include/mibTreeGen.h"
 #include "../include/type.h"
+#include "../include/list.h"
 #include "../include/queue.h"
-#include "../include/mibTreeObjTree.h"
-#include "../include/stack.h"
 
 /* Global */
 mibObjectTreeNode root;
@@ -18,11 +18,11 @@ static int mibTreeLeaveAdd(char *ident, char *type, char *rw, char *desc, char *
 static int mibTreeNodeAdd(char *ident, char *oid, char *parent);
 static char * oidComplement(char *parent, char *suffix);
 
-extern Queue dataQueue;
 char currentTable[64];
 extern mibObjectTreeNode root;
+extern elementList elistHead;
 
-void deal_with(int type) {
+int deal_with(int type) {
     switch (type) {
         case OBJECT:
             deal_with_object();
@@ -37,17 +37,18 @@ void deal_with(int type) {
         default:
             break;
     }
+    return 0;
 }
 
 int deal_with_object() {
     char *ident, *type, *rw, *desc, *parent, *suffix, *oid;
 
-    ident = getQueue(&dataQueue);
-    type = getQueue(&dataQueue);
-    rw = getQueue(&dataQueue);
-    desc = getQueue(&dataQueue);
-    parent = getQueue(&dataQueue);
-    suffix = getQueue(&dataQueue);
+    ident = getElement_el(&elistHead, IDENTIFIER_EL)->content;
+    type = getElement_el(&elistHead, TYPE_EL)->content;
+    rw = getElement_el(&elistHead, RW_EL)->content;
+    desc = getElement_el(&elistHead, DESCRIPTION_EL)->content;
+    parent = getElement_el(&elistHead, PARENT_EL)->content;
+    suffix = getElement_el(&elistHead, SUFFIX_EL)->content;
 
     if (IS_PTR_NULL(ident) || IS_PTR_NULL(type) ||
             IS_PTR_NULL(rw) || IS_PTR_NULL(desc) ||
@@ -67,9 +68,9 @@ int deal_with_object() {
 int deal_with_objIdent() {
     char *ident, *parent, *suffix, *oid;
 
-    ident = getQueue(&dataQueue);
-    parent = getQueue(&dataQueue);
-    suffix = getQueue(&dataQueue);
+    ident = getElement_el(&elistHead, IDENTIFIER_EL)->content;
+    parent = getElement_el(&elistHead, PARENT_EL)->content;
+    suffix = getElement_el(&elistHead, SUFFIX_EL)->content;
 
     if (IS_PTR_NULL(ident) || IS_PTR_NULL(parent) || IS_PTR_NULL(suffix))
         return -1;
@@ -85,10 +86,10 @@ int deal_with_objIdent() {
 void deal_with_trap() {
     char *ident, *parent, *suffix, *oid, *desc;
 
-    ident = getQueue(&dataQueue);
-
+    ident = getElement_el(&elistHead, IDENTIFIER_EL)->content;
 
 }
+
 void deal_with_sequence() {}
 
 static int tablePrint(char *ident, char *oid, char *rw, char *detail, FILE *output) {

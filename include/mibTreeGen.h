@@ -7,6 +7,8 @@
 
 #include "type.h"
 
-int tokenOperation(int token, MIB_NODE_INFO *nodeInfo);
+int deal_with(int type);
+int deal_with_object();
+int deal_with_objIdent();
 
 #endif //GL5610_MIB_DOC_GEN_TOKENOP_H

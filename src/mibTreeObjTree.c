@@ -2,8 +2,8 @@
 // Created by ayden on 2017/4/24.
 //
 
-#include <mem.h>
 #include <malloc.h>
+#include <string.h>
 #include "../include/mibTreeObjTree.h"
 #include "../include/type.h"
 

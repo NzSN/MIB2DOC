@@ -64,12 +64,13 @@ typedef enum unitType {
     SEQUENCE
 } unitType;
 
-/* Structure used to store Info of MIB node */
-typedef struct {
-    char name[200];
-    char OID[200];
-    char RW[10];
-    char type[32];
-    char DESC[32][255];
-} MIB_NODE_INFO;
+typedef enum elementType {
+    IDENTIFIER_EL = 1,
+    TYPE_EL,
+    RW_EL,
+    DESCRIPTION_EL,
+    PARENT_EL,
+    SUFFIX_EL
+};
+
 #endif //GL5610_MIB_DOC_GEN_TYPE_H
