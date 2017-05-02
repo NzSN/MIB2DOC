@@ -5,7 +5,7 @@ project(GL5610_MIB_DOC_GEN)
 set(SRC_DIR /home/ayden/CLionProjects/MIB2DOC/src)
 set(CMAKE_C_STANDARD 11)
 set(SOURCE_FILES src/main.c include/type.h src/mibTreeGen.c
-        src/lex.yy.c src/yy_syn.tab.c src/queue.c src/mibTreeObjTree.c include/stack.h src/stack.c src/docGen.c src/list.c)
+        src/lex.yy.c src/yy_syn.tab.c src/queue.c src/mibTreeObjTree.c include/stack.h src/stack.c src/docGen.c src/list.c src/lexDeal.c include/lexDeal.h)
 
 add_custom_target(lexBison ALL DEPENDS)
 add_custom_command(TARGET lexBison
