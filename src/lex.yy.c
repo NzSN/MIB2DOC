@@ -660,9 +660,10 @@ char *yytext;
 #line 1 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 #line 2 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
     #include "../include/type.h"
+    #include "../include/list.h"
     #define YYSTYPE char*
     extern YYSTYPE yylval;
-#line 666 "/home/ayden/CLionProjects/MIB2DOC/src/lex.yy.c"
+#line 667 "/home/ayden/CLionProjects/MIB2DOC/src/lex.yy.c"
 
 #define INITIAL 0
 
@@ -880,9 +881,9 @@ YY_DECL
 		}
 
 	{
-#line 7 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 8 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 
-#line 886 "/home/ayden/CLionProjects/MIB2DOC/src/lex.yy.c"
+#line 887 "/home/ayden/CLionProjects/MIB2DOC/src/lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -942,181 +943,181 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 8 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 9 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 9 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 10 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 10 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 11 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 11 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 12 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return OBJ_IDEN_; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 12 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 13 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return OBJ_SPECIFIER; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 13 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 14 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return OBJECTS_; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 14 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 15 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return TRAP_SPECIFIER; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 15 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 16 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return SYNTAX_SPECIFIER; }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
-#line 17 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 18 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 case 10:
 /* rule 10 can match eol */
-#line 18 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 19 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 case 11:
 /* rule 11 can match eol */
-#line 19 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 20 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 case 12:
 /* rule 12 can match eol */
-#line 20 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 21 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 case 13:
 /* rule 13 can match eol */
-#line 21 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 22 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 21 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
-{ printf("%s\n", "TYPE"); return TYPE; }
+#line 22 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+{ return TYPE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 22 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
-{ printf("%s\n", "SEQ"); return SEQ; }
+#line 23 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+{ return SEQ; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 24 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 25 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return INDEX_; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 25 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 26 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return ACCESS_SPECIFIER; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 26 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 27 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return DEF; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 27 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 28 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return BEGIN_; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 28 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
-{ printf("%s\n", "IMPORTS"); return IMPORTS_; }
+#line 29 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+{ return IMPORTS_; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 29 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 30 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return FROM_; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 30 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
-{ printf("%s\n", "COMMA"); return COMMA; }
+#line 31 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+{ return COMMA; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 31 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 32 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return SEMICOLON; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 32 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 33 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return END_; }
 	YY_BREAK
 case 25:
-#line 35 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
-case 26:
 #line 36 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
-case 27:
+case 26:
 #line 37 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
-case 28:
+case 27:
 #line 38 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+case 28:
+#line 39 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 case 29:
 YY_RULE_SETUP
-#line 38 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 39 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return ACCESS_VALUE; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 40 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 41 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return STATUS_SPECIFIER; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 41 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 42 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return STATUS_VALUE; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 42 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 43 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return DESC_SPECIFIER; }
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 43 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 44 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 { return DESC_VALUE; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 44 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
-{ printf("%s\n", "ASSIGNED"); return ASSIGNED; }
+#line 45 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+{  return ASSIGNED; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 46 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
-{ printf("%s\n", "LB"); return L_BRACE; }
+#line 47 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+{ return L_BRACE; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 47 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
-{ printf("%s\n", "RB"); return R_BRACE; }
+#line 48 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+{ return R_BRACE; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 49 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
-{ printf("%s\n", "NUM"); return NUM; }
+#line 50 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+{ return NUM; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 51 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
-{ printf("%s\n", "IDENTIFIER"); return IDENTIFIER; }
+#line 52 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+{ return IDENTIFIER; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 52 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 53 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 ECHO;
 	YY_BREAK
-#line 1120 "/home/ayden/CLionProjects/MIB2DOC/src/lex.yy.c"
+#line 1121 "/home/ayden/CLionProjects/MIB2DOC/src/lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2117,7 +2118,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 52 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
+#line 53 "/home/ayden/CLionProjects/MIB2DOC/src/yy_lex.l"
 
 
 

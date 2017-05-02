@@ -8,7 +8,7 @@
 #include "../include/type.h"
 
 /* Global */
-mibObjectTreeNode *mibObjectTreeRoot;
+mibObjectTreeNode mibObjectTreeRoot;
 
 /* Define */
 #define OID_LENGTH 256
@@ -34,6 +34,7 @@ void mibObjectTreeInit(mibObjectTreeNode *root) {
 
     root->isNode = 1;
     root->info = (void *)rootInfo;
+    root->head = root;
 
     insert_mot(root, mibNodeBuild("iso", "1"), "root");
     insert_mot(root, mibNodeBuild("org", "1.3"), "iso");
@@ -100,6 +101,10 @@ int insert_mot(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ide
         return -1;
 
     parentNode = search_mot(root, parent_ident);
+
+    if (parentNode == NULL)
+        return -1;
+
     child = parentNode->child;
     current = child;
 
@@ -142,10 +147,27 @@ mibObjectTreeNode * search_mot(mibObjectTreeNode *root, char *const ident) {
     }
 
     for (current = root; current != NULL; current = next_mt(current)) {
-        if (strncmp(current->info, ident, strlen(ident)) == 0) {
+        if (strncmp(getIdentFromInfo(current), ident, strlen(ident)) == 0) {
             return current;
         }
     }
+    return NULL;
+}
+
+char * getIdentFromInfo(mibObjectTreeNode *node) {
+    if (node->isNode)
+        return ((mibNodeInfo *)node->info)->ident;
+    else
+        return ((mibLeaveInfo *)node->info)->nodeInfo->ident;
+
+}
+
+char *getOidFromInfo(mibObjectTreeNode *node) {
+    if (node->isNode)
+        return ((mibNodeInfo *)node->info)->oid;
+    else
+        return ((mibLeaveInfo *)node->info)->nodeInfo->oid;
+
 }
 
 static mibObjectTreeNode * next_mt(mibObjectTreeNode *obj) {
@@ -157,3 +179,4 @@ static mibObjectTreeNode * next_mt(mibObjectTreeNode *obj) {
         return obj->head->child;
     }
 }
+

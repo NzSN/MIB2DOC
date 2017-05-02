@@ -35,5 +35,6 @@ mibObjectTreeNode * parent_mot(mibObjectTreeNode *root, char *ident);
 mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid);
 mibObjectTreeNode * mibNodeBuild(char *ident, char *oid);
 mibObjectTreeNode * search_mot(mibObjectTreeNode *root, char *const ident);
-
+char * getIdentFromInfo(mibObjectTreeNode *node);
+char * getOidFromInfo(mibObjectTreeNode *node);
 #endif //GL5610_MIB_DOC_GEN_TREE_H

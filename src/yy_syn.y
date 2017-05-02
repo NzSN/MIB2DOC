@@ -12,8 +12,11 @@
 %{
     #include <stdio.h>
     #include "../include/type.h"
+    #include "../include/mibTreeGen.h"
+    #include "../include/mibTreeObjTree.h"
 
     #define YYSTYPE char *
+
     extern char *yylval;
     void yyerror(char const *s) {
         fprintf(stderr, "%s: %s\n", s, yylval);
@@ -21,34 +24,34 @@
 %}
 
 %%
-MIB : DEFINITION IMPORT MAIN_PART               { printf("%s\n", "MIB"); };
+MIB : DEFINITION IMPORT MAIN_PART               { };
 MAIN_PART : OBJ_IDENTIFIER MAIN_PART |
             OBJ MAIN_PART |
             TRAP MAIN_PART |
             SEQUENCE MAIN_PART |
-            END_                                { printf("%s\n", "MAIN_PART"); } ;
+            END_                                { } ;
 
-DEFINITION : IDENTIFIER DEF ASSIGNED BEGIN_     { printf("%s\n", "DEFINITIONS"); };
+DEFINITION : IDENTIFIER DEF ASSIGNED BEGIN_     { };
 
-IMPORT : IMPORTS_ MODULES SEMICOLON             { printf("%s\n", "IMPORT"); };
+IMPORT : IMPORTS_ MODULES SEMICOLON             { };
 MODULES : ITEMS FROM_ IDENTIFIER MODULES |
           /* empty */  ;
 ITEMS : IDENTIFIER |
         IDENTIFIER COMMA ITEMS |
         /* empty */ ;
 
-SEQUENCE : IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE { printf("%s\n", "SEQUENCE"); };
+SEQUENCE : IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE { };
 SEQ_ITEM : IDENTIFIER TYPE COMMA SEQ_ITEM |
            IDENTIFIER TYPE ;
 
-OBJ_IDENTIFIER : IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE      { printf("%s\n", "OBJ_IDENTIFIER"); };
+OBJ_IDENTIFIER : IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE { };
 
-OBJ : HEAD BODY                                 { printf("%s\n", "OBJ"); } ;
-TRAP :  TRAP_HEAD PROPERTY                      { printf("%s\n", "TRAP"); };
+OBJ : HEAD BODY                                 { };
+TRAP :  TRAP_HEAD PROPERTY                      { };
 
 TRAP_HEAD : IDENTIFIER TRAP_SPECIFIER
-HEAD : IDENTIFIER OBJ_SPECIFIER                 { printf("%s\n", "HEAD"); } ;
-BODY : PROPERTY                                 { printf("%s\n", "BODY"); } ;
+HEAD : IDENTIFIER OBJ_SPECIFIER                 { } ;
+BODY : PROPERTY                                 { } ;
 PROPERTY :  SYNTAX PROPERTY |
             ACCESS PROPERTY |
             STATUS PROPERTY |
@@ -56,19 +59,19 @@ PROPERTY :  SYNTAX PROPERTY |
             INDEX PROPERTY |
             MOUNT PROPERTY |
             OBJECT PROPERTY |
-            /* empty */                         { printf("%s\n", "PROPERTY"); };
+            /* empty */                         { };
 OBJECT : OBJECTS_ L_BRACE OBJECT_ITEM R_BRACE
 OBJECT_ITEM : IDENTIFIER COMMA OBJECT_ITEM  |
               IDENTIFIER ;
-SYNTAX : SYNTAX_SPECIFIER SYNTAX_VALUE          { printf("%s: %s\n", "SYNTAX", yylval); };
+SYNTAX : SYNTAX_SPECIFIER SYNTAX_VALUE          { };
 SYNTAX_VALUE : TYPE |
                IDENTIFIER ;
-ACCESS : ACCESS_SPECIFIER ACCESS_VALUE          { printf("%s: %s\n", "ACCESS", yylval); };
-STATUS : STATUS_SPECIFIER STATUS_VALUE          { printf("%s: %s\n", "STATUS", yylval); };
-DESCRIPTION : DESC_SPECIFIER DESC_VALUE         { printf("%s: %s\n", "DESCRIPTION", yylval); };
-INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE       { printf("%s\n", "INDEX"); };
+ACCESS : ACCESS_SPECIFIER ACCESS_VALUE          { appendElement_el(&elistHead, $2); };
+STATUS : STATUS_SPECIFIER STATUS_VALUE          { };
+DESCRIPTION : DESC_SPECIFIER DESC_VALUE         { };
+INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE       { };
 INDEX_ITEM : IDENTIFIER COMMA INDEX_ITEM |
              IDENTIFIER ;
-MOUNT : ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE { printf("%s: %s\n", "MOUNT", $IDENTIFIER); };
+MOUNT : ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE { };
 %%
 

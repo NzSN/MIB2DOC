@@ -13,6 +13,8 @@ char *sectionRecord[SIZE_OF_SECTION_RECORD];
 int main() {
     int token;
 
+    mibObjectTreeInit(&mibObjectTreeRoot);
+
     yyin = fopen("../src/case", "r");
     if (yyin == NULL)
         printf("%s\n", "open failed");

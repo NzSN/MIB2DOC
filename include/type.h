@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include "mibTreeObjTree.h"
+#include "list.h"
 
 /* define */
 #define SIZE_OF_CURRENT_TABLE 64
@@ -17,7 +18,8 @@
 
 /* Extern */
 extern char *sectionRecord[SIZE_OF_SECTION_RECORD];
-extern mibObjectTreeNode *mibObjectTreeRoot;
+extern mibObjectTreeNode mibObjectTreeRoot;
+extern elementList elistHead;
 /* Necesary Declaration */
 extern int yylex(void);
 extern FILE *yyin;

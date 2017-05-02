@@ -152,7 +152,7 @@ static int mibTreeLeaveAdd(char *ident, char *type, char *rw, char *desc, char *
     if (IS_PTR_NULL(obj))
         return -1;
 
-    insert_mot(mibObjectTreeRoot, obj, parent);
+    insert_mot(&mibObjectTreeRoot, obj, parent);
 
 }
 
@@ -166,7 +166,7 @@ static int mibTreeNodeAdd(char *ident, char *oid, char *parent) {
     if (IS_PTR_NULL(obj))
         return -1;
 
-    insert_mot(mibObjectTreeRoot, obj, parent);
+    insert_mot(&mibObjectTreeRoot, obj, parent);
 }
 
 static char * oidComplement(char *parent, char *suffix) {
@@ -176,13 +176,14 @@ static char * oidComplement(char *parent, char *suffix) {
 
     oid = (char *)malloc(SIZE_OF_OID_STRING);
     memset(oid, 0, SIZE_OF_OID_STRING);
-    parentNode = search_mot(mibObjectTreeRoot, parent);
+    parentNode = search_mot(&mibObjectTreeRoot, parent);
 
     if (parentNode == NULL)
         return NULL;
     nodeInfo = parentNode->info;
 
     strncpy(oid, nodeInfo->oid, SIZE_OF_OID_STRING);
+    strncat(oid, ".", 1);
     strncat(oid, suffix, strlen(suffix));
 
     return oid;

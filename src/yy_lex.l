@@ -1,5 +1,6 @@
 %{
     #include "../include/type.h"
+    #include "../include/list.h"
     #define YYSTYPE char*
     extern YYSTYPE yylval;
 %}
@@ -18,16 +19,16 @@ IpAddress |
 MacAddress |
 OCTET[ \n\t\r]+STRING([ \n\t\r]*\(.*\))* |
 SEQUENCE[ \n\t\r]+OF[ \n\t\r]*[a-zA-Z]* |
-RowStatus                           { printf("%s\n", "TYPE"); return TYPE; }
-SEQUENCE                            { printf("%s\n", "SEQ"); return SEQ; }
+RowStatus                           { yylval = strDuplicate(yytext); return TYPE; }
+SEQUENCE                            { return SEQ; }
 
 INDEX                               { return INDEX_; }
 MAX-ACCESS                          { return ACCESS_SPECIFIER; }
 DEFINITIONS                         { return DEF; }
 BEGIN                               { return BEGIN_; }
-IMPORTS                             { printf("%s\n", "IMPORTS"); return IMPORTS_; }
+IMPORTS                             { return IMPORTS_; }
 FROM                                { return FROM_; }
-\,                                  { printf("%s\n", "COMMA"); return COMMA; }
+\,                                  { return COMMA; }
 \;                                  { return SEMICOLON; }
 END                                 { return END_; }
 
@@ -35,20 +36,20 @@ read-only |
 write |
 read-write |
 accessible-for-notify |
-not-accessible                      { return ACCESS_VALUE; }
+not-accessible                      { yylval = strDuplicate(yytext); return ACCESS_VALUE; }
 
 STATUS                              { return STATUS_SPECIFIER; }
 current                             { return STATUS_VALUE; }
 DESCRIPTION                         { return DESC_SPECIFIER; }
-\"[^\"]*\"{1}                       { return DESC_VALUE; }
-::=                                 { printf("%s\n", "ASSIGNED"); return ASSIGNED; }
+\"[^\"]*\"{1}                       { yylval = strDuplicate(yytext); return DESC_VALUE; }
+::=                                 { return ASSIGNED; }
 
-\{                                  { printf("%s\n", "LB"); return L_BRACE; }
-\}                                  { printf("%s\n", "RB"); return R_BRACE; }
+\{                                  { return L_BRACE; }
+\}                                  { return R_BRACE; }
 
-[0-9]+                              { printf("%s\n", "NUM"); return NUM; }
+[0-9]+                              { yylval = strDuplicate(yytext); return NUM; }
 
-([a-zA-Z0-9]|"-")+                  { printf("%s\n", "IDENTIFIER"); return IDENTIFIER; }
+([a-zA-Z0-9]|"-")+                  { yylval = strDuplicate(yytext); return IDENTIFIER; }
 %%
 
 #define YYSTYPE char*

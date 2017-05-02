@@ -1286,103 +1286,103 @@ yyreduce:
     {
         case 2:
 #line 24 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s\n", "MIB"); }
+    { }
 #line 1291 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
 #line 29 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s\n", "MAIN_PART"); }
+    { }
 #line 1297 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 31 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s\n", "DEFINITIONS"); }
+    { }
 #line 1303 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 33 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s\n", "IMPORT"); }
+    { }
 #line 1309 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 40 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s\n", "SEQUENCE"); }
+    { }
 #line 1315 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
 #line 44 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s\n", "OBJ_IDENTIFIER"); }
+    { }
 #line 1321 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 46 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s\n", "OBJ"); }
+    { }
 #line 1327 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 47 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s\n", "TRAP"); }
+    { }
 #line 1333 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 50 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s\n", "HEAD"); }
+    { }
 #line 1339 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
 #line 51 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s\n", "BODY"); }
+    { }
 #line 1345 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
 #line 59 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s\n", "PROPERTY"); }
+    { }
 #line 1351 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
 #line 63 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s: %s\n", "SYNTAX", yylval); }
+    { }
 #line 1357 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
 #line 66 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s: %s\n", "ACCESS", yylval); }
+    { }
 #line 1363 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
 #line 67 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s: %s\n", "STATUS", yylval); }
+    { }
 #line 1369 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
 #line 68 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s: %s\n", "DESCRIPTION", yylval); }
+    { }
 #line 1375 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
 #line 69 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s\n", "INDEX"); }
+    { }
 #line 1381 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
 #line 72 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
-    { printf("%s: %s\n", "MOUNT", (yyvsp[-2])); }
+    { }
 #line 1387 "/home/ayden/CLionProjects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
