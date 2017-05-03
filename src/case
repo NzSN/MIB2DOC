@@ -9,7 +9,7 @@ IMPORTS
     MODULE-COMPLIANCE, OBJECT-GROUP            FROM SNMPv2-CONF;
 
 
-greenet OBJECT IDENTIFIER::= { enterprises 13464 }
+greennet OBJECT IDENTIFIER::= { enterprises 13464 }
 dataCom OBJECT IDENTIFIER ::= { greennet 1}
 ngpon OBJECT IDENTIFIER ::= { dataCom 14 }
 
@@ -6081,7 +6081,7 @@ loggingDisplaySwitch   OBJECT-TYPE
         1  on"
     ::= { configDeviceBaseInfo 2 }
 
-ontLoggingDisplaySwitch  OBJECT-TYPE    
+ontLoggingDisplaySwitch  OBJECT-TYPE
     SYNTAX      INTEGER(0..1)
     MAX-ACCESS  read-write
     STATUS      current
@@ -6416,6 +6416,8 @@ ontAdminState   OBJECT-TYPE
 
 -- 1.4.2. ontUpgradeTable ----------------------------------
 ontUpgradeTable OBJECT-TYPE
+      SYNTAX SEQUENCE OF OntUpgradeEntry
+      MAX-ACCESS read-only
       STATUS current
       DESCRIPTION 
         "ont upgrade table"

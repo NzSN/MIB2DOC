@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../include/list.h"
 #include "../include/type.h"
+#include "../include/mibTreeObjTree.h"
 
 extern int yylex(void);
 extern FILE *yyin;
@@ -12,14 +13,17 @@ char *sectionRecord[SIZE_OF_SECTION_RECORD];
 
 int main() {
     int token;
-
+    mibObjectTreeNode *node;
     mibObjectTreeInit(&mibObjectTreeRoot);
-
-    yyin = fopen("../src/case", "r");
+    node = &mibObjectTreeRoot;
+    yyin = fopen("src/case", "r");
     if (yyin == NULL)
         printf("%s\n", "open failed");
 
     yyparse();
+
+    showTree(&mibObjectTreeRoot);
+
     return 0;
 }
 

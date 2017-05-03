@@ -10,6 +10,9 @@
 /* Global */
 mibObjectTreeNode mibObjectTreeRoot;
 
+/* Local */
+static int nodeCmp(void *arg, mibObjectTreeNode *node);
+static int Treeprint(void *arg, mibObjectTreeNode *node);
 /* Define */
 #define OID_LENGTH 256
 
@@ -19,6 +22,7 @@ mibObjectTreeNode mibObjectTreeRoot;
 /* Declaration */
 mibObjectTreeNode * mibNodeBuild(char *ident, char *oid);
 mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid);
+mibObjectTreeNode * travel_mt(mibObjectTreeNode *obj, int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
 
 void mibObjectTreeInit(mibObjectTreeNode *root) {
     mibNodeInfo *rootInfo;
@@ -59,6 +63,7 @@ mibObjectTreeNode * mibNodeBuild(char *ident, char *oid) {
     obj = (mibObjectTreeNode *)malloc(sizeof(mibObjectTreeNode));
     memset(obj, 0, sizeof(mibObjectTreeNode));
 
+    obj->identifier = ident;
     obj->isNode = 1;
     obj->info = (void *)info;
     return obj;
@@ -68,8 +73,7 @@ mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, 
     mibObjectTreeNode *obj;
     mibLeaveInfo *info;
 
-    if (IS_PTR_NULL(ident) || IS_PTR_NULL(type) || IS_PTR_NULL(rw) ||
-            IS_PTR_NULL(desc) || IS_PTR_NULL(oid))
+    if (IS_PTR_NULL(ident) || IS_PTR_NULL(type) ||  IS_PTR_NULL(oid))
         return NULL;
 
     info = (mibLeaveInfo *)malloc(sizeof(mibLeaveInfo));
@@ -83,9 +87,9 @@ mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, 
     info->rw = rw;
     info->desc = desc;
 
-
     obj = (mibObjectTreeNode *)malloc(sizeof(mibObjectTreeNode));
     memset(obj, 0, sizeof(mibObjectTreeNode));
+    obj->identifier = ident;
     obj->info = (void *)info;
     obj->isNode = 0;
 
@@ -107,21 +111,15 @@ int insert_mot(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ide
     child = parentNode->child;
 
     if (IS_NODE_HAS_CHILD_MT(parentNode)) {
-        if (IS_NODE_HAS_SIBLING_MT(child)) {
-            for (current = child; current != NULL; current = next_mt(current)) {
-                if (IS_NODE_HAS_SIBLING_MT(current)) {
-                    continue;
-                }
-                current->sibling = obj;
-                obj->parent = parentNode;
-                obj->head = child;
-                return 0;
+        for (current = child; current != NULL; current = current->sibling ) {
+            if (IS_NODE_HAS_SIBLING_MT(current)) {
+                continue;
             }
-        }
-
-        child->sibling = obj;
-        obj->parent = parentNode;
-        obj->head = child;
+            current->sibling = obj;
+            obj->parent = parentNode;
+            obj->head = child;
+            return 0;
+            }
     } else {
         parentNode->child = obj;
         obj->head = obj;
@@ -139,19 +137,45 @@ mibObjectTreeNode *parent_mot(mibObjectTreeNode *root, char *ident) {
 }
 
 mibObjectTreeNode * search_mot(mibObjectTreeNode *root, char *const ident) {
-    mibObjectTreeNode *current;
-    char *test;
-    int ret;
-    if (IS_PTR_NULL(root) || IS_PTR_NULL(ident)) {
-        return NULL;
-    }
+    mibObjectTreeNode *target;
 
-    for (current = root; current != NULL; current = next_mt(current)) {
-        if (strncmp(getIdentFromInfo(current), ident, strlen(ident)) == 0) {
-            return current;
-        }
-    }
-    return NULL;
+    target = travel_mt(root, nodeCmp, ident);
+
+    return target;
+}
+
+void showTree(mibObjectTreeNode *root) {
+    travel_mt(root, Treeprint, NULL);
+}
+
+static int Treeprint(void *arg, mibObjectTreeNode *node) {
+    printf("%s : %s", getIdentFromInfo(node), getOidFromInfo(node));
+    if (!node->isNode)
+        printf(" -- %s\n", ((mibLeaveInfo *)node->info)->type);
+    else
+        printf("\n");
+    return 0;
+}
+
+int nodeCmp(void *arg, mibObjectTreeNode *node) {
+    char *ident;
+    char *targetIdent;
+    int size, size1, size2;
+    ident = arg;
+
+    targetIdent = getIdentFromInfo(node);
+    size1 = strlen(ident);
+    size2 = strlen(targetIdent);
+
+    if (size1 < size2)
+        size = size1;
+    else
+        size = size2;
+
+    if (strncmp(ident, getIdentFromInfo(node), size) == 0)
+        return 1;
+    else
+        return 0;
 }
 
 char * getIdentFromInfo(mibObjectTreeNode *node) {
@@ -170,17 +194,25 @@ char *getOidFromInfo(mibObjectTreeNode *node) {
 
 }
 
-mibObjectTreeNode * next_mt(mibObjectTreeNode *obj) {
-    if (IS_PTR_NULL(obj))
+
+mibObjectTreeNode * travel_mt(mibObjectTreeNode *obj, int (*func)(void *argu, mibObjectTreeNode *node), void *arg) {
+    int ret;
+    mibObjectTreeNode *targetC, *targetS;
+
+    if (IS_PTR_NULL(obj) || IS_PTR_NULL(func))
         return NULL;
-    if (obj->sibling != NULL) {
-        return obj->sibling;
-    } else if (obj->child != NULL) {
-        return obj->head->child;
+
+
+    ret = func(arg, obj);
+    if (ret == 1) {
+        return obj;
     }
-    return NULL;
-}
 
-mibObjectTreeNode * travel_mt(mibObjectTreeNode *obj) {
+    targetC = travel_mt(obj->child, func, arg);
+    targetS = travel_mt(obj->sibling, func, arg);
 
+    if (targetC != NULL)
+        return targetC;
+    else
+        return targetS;
 }

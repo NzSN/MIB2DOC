@@ -11,6 +11,7 @@
 #include "../../include/type.h"
 #include "../../include/list.h"
 #include "../../include/mibTreeGen.h"
+#include "../../include/queue.h"
 
 elementList elistHead;
 char *sectionRecord[SIZE_OF_SECTION_RECORD];
@@ -72,10 +73,15 @@ static void mibTree_test(void **state) {
     printf("%s\n", getIdentFromInfo(pNode));
 }
 
+static void tableInfoQueue_test(void **state) {
+    tableInfoQueue queue;
+}
+
 int main(void) {
     const struct CMUnitTest tests[] = {
-          //  cmocka_unit_test(list_test),
-            cmocka_unit_test(mibTree_test)
+            cmocka_unit_test(list_test),
+            cmocka_unit_test(mibTree_test),
+            cmocka_unit_test(tableInfoQueue_test)
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

@@ -66,7 +66,7 @@ typedef enum unitType {
     SEQUENCE
 } unitType;
 
-typedef enum elementType {
+enum elementType {
     IDENTIFIER_EL = 1,
     TYPE_EL,
     RW_EL,

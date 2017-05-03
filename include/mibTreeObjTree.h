@@ -10,7 +10,7 @@ typedef struct mibNodeInfo {
     char *oid;
 } mibNodeInfo;
 
-typedef union mibInfo {
+typedef struct mibInfo {
     mibNodeInfo *nodeInfo;
     char *rw;
     char *type;
@@ -21,6 +21,7 @@ typedef union mibInfo {
 typedef struct mibObjectTreeNode {
     int isNode;
     void *info;
+    char *identifier;
     struct mibObjectTreeNode *parent;
     /* chaild point to first child of children */
     struct mibObjectTreeNode *child;
@@ -37,4 +38,5 @@ mibObjectTreeNode * mibNodeBuild(char *ident, char *oid);
 mibObjectTreeNode * search_mot(mibObjectTreeNode *root, char *const ident);
 char * getIdentFromInfo(mibObjectTreeNode *node);
 char * getOidFromInfo(mibObjectTreeNode *node);
+void showTree(mibObjectTreeNode *root);
 #endif //GL5610_MIB_DOC_GEN_TREE_H

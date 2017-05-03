@@ -10,4 +10,5 @@
 int deal_with(int type);
 int deal_with_object();
 int deal_with_objIdent();
+int deal_with_trap();
 #endif //GL5610_MIB_DOC_GEN_TOKENOP_H

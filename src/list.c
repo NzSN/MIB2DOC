@@ -56,3 +56,9 @@ void flushAll_el(elementList *el) {
         pel = nPel;
     }
 }
+
+int reset_el(elementList *el) {
+    if (IS_PTR_NULL(el))
+        return -1;
+    el->next = NULL;
+}

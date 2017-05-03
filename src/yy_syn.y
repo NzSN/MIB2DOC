@@ -44,14 +44,19 @@ SEQUENCE : IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE { };
 SEQ_ITEM : IDENTIFIER TYPE COMMA SEQ_ITEM |
            IDENTIFIER TYPE ;
 
-OBJ_IDENTIFIER : IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE { };
+OBJ_IDENTIFIER : IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
+                                                                                appendElement_el(&elistHead, buildElement(IDENTIFIER_EL, $1));
+                                                                                appendElement_el(&elistHead, buildElement(PARENT_EL, $5));
+                                                                                appendElement_el(&elistHead, buildElement(SUFFIX_EL, $6));
+                                                                                deal_with(OBJECT_IDENTIFIER);
+                                                                              };
 
-OBJ : HEAD BODY                                 { };
-TRAP :  TRAP_HEAD PROPERTY                      { };
+OBJ : HEAD BODY                                 { deal_with(OBJECT); };
+TRAP :  TRAP_HEAD PROPERTY                      { deal_with(TRAP); };
 
-TRAP_HEAD : IDENTIFIER TRAP_SPECIFIER
-HEAD : IDENTIFIER OBJ_SPECIFIER                 { } ;
-BODY : PROPERTY                                 { } ;
+TRAP_HEAD : IDENTIFIER TRAP_SPECIFIER           { appendElement_el(&elistHead, buildElement(IDENTIFIER_EL, $1)); } ;
+HEAD : IDENTIFIER OBJ_SPECIFIER                 { appendElement_el(&elistHead, buildElement(IDENTIFIER_EL, $1)); } ;
+BODY : PROPERTY ;
 PROPERTY :  SYNTAX PROPERTY |
             ACCESS PROPERTY |
             STATUS PROPERTY |
@@ -63,15 +68,18 @@ PROPERTY :  SYNTAX PROPERTY |
 OBJECT : OBJECTS_ L_BRACE OBJECT_ITEM R_BRACE
 OBJECT_ITEM : IDENTIFIER COMMA OBJECT_ITEM  |
               IDENTIFIER ;
-SYNTAX : SYNTAX_SPECIFIER SYNTAX_VALUE          { };
-SYNTAX_VALUE : TYPE |
-               IDENTIFIER ;
-ACCESS : ACCESS_SPECIFIER ACCESS_VALUE          { appendElement_el(&elistHead, $2); };
-STATUS : STATUS_SPECIFIER STATUS_VALUE          { };
-DESCRIPTION : DESC_SPECIFIER DESC_VALUE         { };
-INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE       { };
+SYNTAX : SYNTAX_SPECIFIER SYNTAX_VALUE ;
+SYNTAX_VALUE : TYPE                            { appendElement_el(&elistHead, buildElement(TYPE_EL, $1)); };
+               | IDENTIFIER                       { appendElement_el(&elistHead, buildElement(TYPE_EL, $1)); };
+ACCESS : ACCESS_SPECIFIER ACCESS_VALUE          { appendElement_el(&elistHead, buildElement(RW_EL, $2)); };
+STATUS : STATUS_SPECIFIER STATUS_VALUE ;
+DESCRIPTION : DESC_SPECIFIER DESC_VALUE         { appendElement_el(&elistHead, buildElement(DESCRIPTION_EL, $2)); };
+INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE  ;
 INDEX_ITEM : IDENTIFIER COMMA INDEX_ITEM |
              IDENTIFIER ;
-MOUNT : ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE { };
+MOUNT : ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
+                                                  appendElement_el(&elistHead, buildElement(PARENT_EL, $3));
+                                                  appendElement_el(&elistHead, buildElement(SUFFIX_EL, $4));
+                                                };
 %%
 

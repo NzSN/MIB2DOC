@@ -14,26 +14,26 @@
     ret; \
 })
 
-static int isQueueFull(Queue *q);
-static int isQueueEmpty(Queue *q);
+static int isQueueFull(tableInfoQueue *q);
+static int isQueueEmpty(tableInfoQueue *q);
 
-int appendQueue(Queue *q, void *pData) {
+int appendQueue(tableInfoQueue *q, tableInfo *pData) {
     if (isQueueFull(q))
         return -1;
-    q->buffer[q->tail] = pData;
+    q->tableBuffer[q->tail] = pData;
     q->tail++;
 }
 
-void *getQueue(Queue *q) {
+void *getQueue(tableInfoQueue *q) {
     void *ret;
     if (isQueueEmpty(q))
         return 0;
-    ret = q->buffer[q->head];
+    ret = q->tableBuffer[q->head];
     q->head++;
     return ret;
 }
 
-static int isQueueFull(Queue *q) {
+static int isQueueFull(tableInfoQueue *q) {
     int head = q->head;
     int tail = q->tail;
 
@@ -43,7 +43,7 @@ static int isQueueFull(Queue *q) {
         return 0;
 }
 
-static int isQueueEmpty(Queue *q) {
+static int isQueueEmpty(tableInfoQueue *q) {
     if (q->head == q->tail)
         return 1;
     else

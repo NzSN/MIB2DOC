@@ -1,0 +1,984 @@
+root : root
+iso : 1
+org : 1.3
+dod : 1.3.6
+internet : 1.3.6.1
+private : 1.3.6.1.4
+enterprises : 1.3.6.1.4.1
+greennet : 1.3.6.1.4.1.13464
+dataCom : 1.3.6.1.4.1.13464.1
+ngpon : 1.3.6.1.4.1.13464.1.14
+gponConfig : 1.3.6.1.4.1.13464.1.14.1
+configDevice : 1.3.6.1.4.1.13464.1.14.1.1
+deployControl : 1.3.6.1.4.1.13464.1.14.1.1.1
+deployPermission : 1.3.6.1.4.1.13464.1.14.1.1.1.1 -- INTEGER (0..1)
+deployAction : 1.3.6.1.4.1.13464.1.14.1.1.1.2 -- INTEGER (0..2)
+deployInactive : 1.3.6.1.4.1.13464.1.14.1.1.2
+inactiveTrafficConfig : 1.3.6.1.4.1.13464.1.14.1.1.2.1
+inactiveVlanTable : 1.3.6.1.4.1.13464.1.14.1.1.2.1.1 -- SEQUENCE OF InactiveVlanEntry
+inactiveVlanEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.1.1.1 -- InactiveVlanEntry
+inactiveVlanIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.1.1.1.1 -- INTEGER(0..2047)
+inactiveVlanSubIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.1.1.1.2 -- INTEGER(1..32)
+inactiveVlanAction : 1.3.6.1.4.1.13464.1.14.1.1.2.1.1.1.3 -- INTEGER(0..2)
+inactiveVlanOldVid : 1.3.6.1.4.1.13464.1.14.1.1.2.1.1.1.4 -- INTEGER(1..4094)
+inactiveVlanOldPriority : 1.3.6.1.4.1.13464.1.14.1.1.2.1.1.1.5 -- INTEGER(0..7)
+inactiveVlanNewVid : 1.3.6.1.4.1.13464.1.14.1.1.2.1.1.1.6 -- INTEGER(1..4094)
+inactiveVlanNewPriority : 1.3.6.1.4.1.13464.1.14.1.1.2.1.1.1.7 -- INTEGER(0..7)
+inactiveVlanRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.1.1.1.8 -- RowStatus
+inactiveUsTrafficTable : 1.3.6.1.4.1.13464.1.14.1.1.2.1.2 -- SEQUENCE OF InactiveUsTrafficEntry
+inactiveUsTrafficEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.1.2.1 -- InactiveUsTrafficEntry
+inactiveUsTrafficIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.1.2.1.1 -- INTEGER(0..2047)
+inactiveUsTrafficName : 1.3.6.1.4.1.13464.1.14.1.1.2.1.2.1.2 -- OCTET STRING (SIZE(0..255))
+inactiveUsTrafficPq : 1.3.6.1.4.1.13464.1.14.1.1.2.1.2.1.3 -- INTEGER(0..7)
+inactiveUsTrafficCir : 1.3.6.1.4.1.13464.1.14.1.1.2.1.2.1.4 -- INTEGER(64..1310720)
+inactiveUsTrafficPir : 1.3.6.1.4.1.13464.1.14.1.1.2.1.2.1.5 -- INTEGER(64..1310720)
+inactiveUsTrafficCbs : 1.3.6.1.4.1.13464.1.14.1.1.2.1.2.1.6 -- INTEGER(2000..1310720)
+inactiveUsTrafficPbs : 1.3.6.1.4.1.13464.1.14.1.1.2.1.2.1.7 -- INTEGER(2000..1310720)
+inactiveUsTrafficRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.1.2.1.8 -- RowStatus
+inactiveDsTrafficTable : 1.3.6.1.4.1.13464.1.14.1.1.2.1.3 -- SEQUENCE OF InactiveDsTrafficEntry
+inactiveDsTrafficEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.1.3.1 -- InactiveDsTrafficEntry
+inactiveDsTrafficIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.1.3.1.1 -- INTEGER(0..2047)
+inactiveDsTrafficName : 1.3.6.1.4.1.13464.1.14.1.1.2.1.3.1.2 -- OCTET STRING (SIZE(0..255))
+inactiveDsTrafficRate : 1.3.6.1.4.1.13464.1.14.1.1.2.1.3.1.3 -- INTEGER(0..1677215)
+inactiveDsTrafficBurst : 1.3.6.1.4.1.13464.1.14.1.1.2.1.3.1.4 -- INTEGER(0..1677215)
+inactiveDsTrafficRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.1.3.1.5 -- RowStatus
+inactiveVlanPrimaryTable : 1.3.6.1.4.1.13464.1.14.1.1.2.1.4 -- SEQUENCE OF InactiveVlanPrimaryEntry
+inactiveVlanPrimaryEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.1.4.1 -- InactiveVlanPrimaryEntry
+inactiveVlanPriIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.1.4.1.1 -- INTEGER(0..2047)
+inactiveVlanPriName : 1.3.6.1.4.1.13464.1.14.1.1.2.1.4.1.2 -- OCTET STRING (SIZE(0..255))
+inactiveVlanPriRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.1.4.1.3 -- RowStatus
+inactiveDbaTable : 1.3.6.1.4.1.13464.1.14.1.1.2.2 -- SEQUENCE OF InactiveDbaEntry
+inactiveDbaEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.2.1 -- InactiveDbaEntry
+inactiveDbaIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.2.1.1 -- INTEGER(0..127)
+inactiveDbaName : 1.3.6.1.4.1.13464.1.14.1.1.2.2.1.2 -- OCTET STRING(SIZE(0..255))
+inactiveDbaType : 1.3.6.1.4.1.13464.1.14.1.1.2.2.1.3 -- INTEGER(1..5)
+inactiveDbaFixBandwidth : 1.3.6.1.4.1.13464.1.14.1.1.2.2.1.4 -- INTEGER(128..1310720)
+inactiveDbaAssuredBandwidth : 1.3.6.1.4.1.13464.1.14.1.1.2.2.1.5 -- INTEGER(0..1310592)
+inactiveDbaMaxBandwidth : 1.3.6.1.4.1.13464.1.14.1.1.2.2.1.6 -- INTEGER(0..1310720)
+inactiveDbaRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.2.1.7 -- RowStatus
+inactiveLineCommonConfig : 1.3.6.1.4.1.13464.1.14.1.1.2.3
+inactiveLinePrimaryTable : 1.3.6.1.4.1.13464.1.14.1.1.2.3.1 -- SEQUENCE OF InactiveLinePrimaryEntry
+inactiveLinePrimaryEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.3.1.1 -- InactiveLinePrimaryEntry
+inactiveLineIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.3.1.1.1 -- INTEGER(0..2047)
+inactiveLineDeviceType : 1.3.6.1.4.1.13464.1.14.1.1.2.3.1.1.2 -- OCTET STRING(SIZE(7..7))
+inactiveLineName : 1.3.6.1.4.1.13464.1.14.1.1.2.3.1.1.3 -- OCTET STRING (SIZE(0..255))
+inactiveLineTrafficMode : 1.3.6.1.4.1.13464.1.14.1.1.2.3.1.1.4 -- INTEGER(0..1)
+inactiveLineMappingMode : 1.3.6.1.4.1.13464.1.14.1.1.2.3.1.1.5 -- INTEGER(0..6)
+inactiveLineRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.3.1.1.6 -- RowStatus
+inactiveLineTcontTable : 1.3.6.1.4.1.13464.1.14.1.1.2.3.2 -- SEQUENCE OF InactiveLineTcontEntry
+inactiveLineTcontEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.3.2.1 -- InactiveLineTcontEntry
+inactiveLineIndexI : 1.3.6.1.4.1.13464.1.14.1.1.2.3.2.1.1 -- INTEGER(0..2047)
+inactiveLineTcontIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.3.2.1.2 -- INTEGER(1..8)
+inactiveLineTcontDbaIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.3.2.1.3 -- INTEGER(0..127)
+inactiveLineTcontRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.3.2.1.4 -- RowStatus
+inactiveLineGemportTable : 1.3.6.1.4.1.13464.1.14.1.1.2.3.3 -- SEQUENCE OF InactiveLineGemportEntry
+inactiveLineGemportEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.3.3.1 -- InactiveLineGemportEntry
+inactiveLineIndexII : 1.3.6.1.4.1.13464.1.14.1.1.2.3.3.1.1 -- INTEGER(0..2047)
+inactiveLineGemportIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.3.3.1.2 -- INTEGER(1..24)
+inactiveLineGemportTcontId : 1.3.6.1.4.1.13464.1.14.1.1.2.3.3.1.3 -- INTEGER(1..8)
+inactiveLineGemportVlanProfileId : 1.3.6.1.4.1.13464.1.14.1.1.2.3.3.1.4 -- INTEGER(0..4095)
+inactiveLineGemportUsProfileId : 1.3.6.1.4.1.13464.1.14.1.1.2.3.3.1.5 -- INTEGER(0..4095)
+inactiveLineGemportDsProfileId : 1.3.6.1.4.1.13464.1.14.1.1.2.3.3.1.6 -- INTEGER(0..4095)
+inactiveLineGemportRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.3.3.1.7 -- RowStatus
+inactiveLineFlowmappingTable : 1.3.6.1.4.1.13464.1.14.1.1.2.3.4 -- SEQUENCE OF InactiveLineFlowmappingEntry
+inactiveLineFlowmappingEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.3.4.1 -- InactiveLineFlowmappingEntry
+inactiveLineIndexIII : 1.3.6.1.4.1.13464.1.14.1.1.2.3.4.1.1 -- INTEGER(0..2047)
+inactiveLineFlowmappingIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.3.4.1.2 -- INTEGER(0..47)
+inactiveLineFlowmappingVid : 1.3.6.1.4.1.13464.1.14.1.1.2.3.4.1.3 -- INTEGER(1..4094)
+inactiveLineFlowmappingPriority : 1.3.6.1.4.1.13464.1.14.1.1.2.3.4.1.4 -- INTEGER(0..8)
+inactiveLineFlowmappingEthport : 1.3.6.1.4.1.13464.1.14.1.1.2.3.4.1.5 -- INTEGER(1..8)
+inactiveLineFlowmappingGemport : 1.3.6.1.4.1.13464.1.14.1.1.2.3.4.1.6 -- INTEGER(1..24)
+inactiveLineFlowmappingType : 1.3.6.1.4.1.13464.1.14.1.1.2.3.4.1.7 -- INTEGER(0..3)
+inactiveLineFlowmappingRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.3.4.1.8 -- RowStatus
+inactiveLineAttrMgmtTable : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5 -- SEQUENCE OF InactiveLineAttrMgmtEntry
+inactiveLineAttrMgmtEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5.1 -- InactiveLineAttrMgmtEntry
+inactiveLineIndexIV : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5.1.1 -- INTEGER(0..2047)
+inactiveLineAttrMgmtIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5.1.2 -- INTEGER(0..63)
+inactiveLineAttrMgmtNportType : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5.1.3 -- INTEGER(1..3)
+inactiveLineAttrMgmtNport : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5.1.4 -- INTEGER(1..64)
+inactiveLineAttrMgmtEtypeFilter : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5.1.5 -- INTEGER(0..3)
+inactiveLineAttrMgmtVlanMode : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5.1.6 -- INTEGER(0..4)
+inactiveLineAttrMgmtCvlanVid : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5.1.7 -- INTEGER(1..4094)
+inactiveLineAttrMgmtCvlanPri : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5.1.8 -- INTEGER(0..8)
+inactiveLineAttrMgmtSvlanVid : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5.1.9 -- INTEGER(1..4094)
+inactiveLineAttrMgmtSvlanPri : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5.1.10 -- INTEGER(0..8)
+inactiveLineAttrMgmtRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.3.5.1.11 -- RowStatus
+inactiveLineCportTable : 1.3.6.1.4.1.13464.1.14.1.1.2.3.6 -- SEQUENCE OF InactiveLineCportEntry
+inactiveLineCportEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.3.6.1 -- InactiveLineCportEntry
+inactiveLineIndexX : 1.3.6.1.4.1.13464.1.14.1.1.2.3.6.1.1 -- INTEGER(0..2047)
+inactiveLineCportIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.3.6.1.2 -- INTEGER(1..4)
+inactiveLineCportSwitch : 1.3.6.1.4.1.13464.1.14.1.1.2.3.6.1.3 -- INTEGER(0..1)
+inactiveLineCportAgcMode : 1.3.6.1.4.1.13464.1.14.1.1.2.3.6.1.4 -- INTEGER(0..2)
+inactiveLineCportAgcRange : 1.3.6.1.4.1.13464.1.14.1.1.2.3.6.1.5 -- INTEGER(-120..60)
+inactiveLineSFUConfig : 1.3.6.1.4.1.13464.1.14.1.1.2.4
+inactiveLineSFUTable : 1.3.6.1.4.1.13464.1.14.1.1.2.4.1 -- SEQUENCE OF InactiveLineSFUEntry
+inactiveLineSFUEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.4.1.1 -- InactiveLineSFUEntry
+inactiveLineIndexV : 1.3.6.1.4.1.13464.1.14.1.1.2.4.1.1.1 -- INTEGER(0..4095)
+inactiveLineSfuLocalSwitch : 1.3.6.1.4.1.13464.1.14.1.1.2.4.1.1.2 -- INTEGER(0..1)
+inactiveLineSfuLoopDetectSwitch : 1.3.6.1.4.1.13464.1.14.1.1.2.4.1.1.3 -- INTEGER(0..1)
+inactiveLineSFUEthportTable : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2 -- SEQUENCE OF InactiveLineSFUEthportEntry
+inactiveLineSFUEthportEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1 -- InactiveLineSFUEthportEntry
+inactiveLineIndexVI : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.1 -- INTEGER(0..2047)
+inactiveLineSfuEthportIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.2 -- INTEGER(1..8)
+inactiveLineSfuEthportSwitch : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.3 -- INTEGER(0..1)
+inactiveLineSfuEthportFlowCtrlSwitch : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.4 -- INTEGER(0..1)
+inactiveLineSfuEthportLoopbackSwitch : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.5 -- INTEGER(0..1)
+inactiveLineSfuEthportFastLeaveSwitch : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.6 -- INTEGER(0..1)
+inactiveLineSfuEthportMaxGroups : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.7 -- INTEGER(1..128)
+inactiveLineSfuEthportMaxMacCount : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.8 -- INTEGER(1..255)
+inactiveLineSfuEthportMcastMode : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.9 -- INTEGER(0..2)
+inactiveLineSfuEthportDsIgmpControlType : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.10 -- INTEGER(0..5)
+inactiveLineSfuEthportDsIgmpVid : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.11 -- INTEGER(1..4094)
+inactiveLineSfuEthportDsIgmpPri : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.12 -- INTEGER(0..7)
+inactiveLineSfuEthportDsIgmpRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.13 -- RowStatus
+inactiveLineSfuEthportUsIgmpControlType : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.14 -- INTEGER(0..4)
+inactiveLineSfuEthportUsIgmpVid : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.15 -- INTEGER(1..4094)
+inactiveLineSfuEthportUsIgmpPri : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.16 -- INTEGER(0..7)
+inactiveLineSfuEthportUsIgmpRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.17 -- RowStatus
+inactiveLineSfuEthportBwCir : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.18 -- INTEGER(64..1024000)
+inactiveLineSfuEthportBwCbs : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.19 -- INTEGER(2..32000)
+inactiveLineSfuEthportBwPir : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.20 -- INTEGER(64..1024000)
+inactiveLineSfuEthportBwPbs : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.21 -- INTEGER(2..32000)
+inactiveLineSfuEthportBwRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.4.2.1.22 -- RowStatus
+inactiveLineSFUCtrlMcastTable : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3 -- SEQUENCE OF InactiveLineSFUCtrlMcastEntry
+inactiveLineSFUCtrlMcastEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1 -- InactiveLineSFUCtrlMcastEntry
+inactiveLineIndexVII : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.1 -- INTEGER(0..2047)
+inactiveLineSfuEthportIndexI : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.2 -- INTEGER(1..8)
+inactiveLineSfuCtrlMcastIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.3 -- INTEGER(0..31)
+inactiveLineSfuCtrlMcastAccessType : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.4 -- INTEGER(2..3)
+inactiveLineSfuCtrlMcastVid : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.5 -- INTEGER(1..4094)
+inactiveLineSfuCtrlMcastSrcIp : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.6 -- IpAddress
+inactiveLineSfuCtrlMcastDstStartIp : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.7 -- IpAddress
+inactiveLineSfuCtrlMcastDstEndIp : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.8 -- IpAddress
+inactiveLineSfuCtrlMcastGroupBw : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.9 -- INTEGER(1..1024000)
+inactiveLineSfuCtrlMcastDurationTimes : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.10 -- INTEGER(10..6000)
+inactiveLineSfuCtrlMcastNumOfTimes : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.11 -- INTEGER(1..255)
+inactiveLineSfuCtrlMcastTimeInterval : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.12 -- INTEGER(1..7200)
+inactiveLineSfuCtrlMcastResetTime : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.13 -- INTEGER(1..24)
+inactiveLineSfuCtrlMcastRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.4.3.1.14 -- RowStatus
+inactiveLineHGUConfig : 1.3.6.1.4.1.13464.1.14.1.1.2.5
+inactiveLineHGUTable : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1 -- SEQUENCE OF InactiveLineHGUEntry
+inactiveLineHGUEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1 -- InactiveLineHGUEntry
+inactiveLineIndexVIII : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.1 -- INTEGER(0..2047)
+inactiveLineHguSwitch : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.2 -- INTEGER(0..1)
+inactiveLineHguFastLeaveSwitch : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.3 -- INTEGER(0..1)
+inactiveLineHguMaxGroups : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.4 -- INTEGER(1..128)
+inactiveLineHguMaxMacCount : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.5 -- INTEGER(1..255)
+inactiveLineHguMcastMode : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.6 -- INTEGER(0..2)
+inactiveLineHguDsIgmpControlType : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.7 -- INTEGER(0..5)
+inactiveLineHguDsIgmpVid : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.8 -- INTEGER(1..4094)
+inactiveLineHguDsIgmpPri : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.9 -- INTEGER(0..7)
+inactiveLineHguDsIgmpRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.10 -- RowStatus
+inactiveLineHguUsIgmpControlType : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.11 -- INTEGER(0..4)
+inactiveLineHguUsIgmpVid : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.12 -- INTEGER(1..4094)
+inactiveLineHguUsIgmpPri : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.13 -- INTEGER(0..7)
+inactiveLineHguUsIgmpRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.5.1.1.14 -- RowStatus
+inactiveLineHGUCtrlMcastTable : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2 -- SEQUENCE OF InactiveLineHGUCtrlMcastEntry
+inactiveLineHGUCtrlMcastEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1 -- InactiveLineHGUCtrlMcastEntry
+inactiveLineIndexIX : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.1 -- INTEGER(0..2047)
+inactiveLineHguCtrlMcastIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.2 -- INTEGER(1..16)
+inactiveLineHguCtrlMcastAccessType : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.3 -- INTEGER(0..3)
+inactiveLineHguCtrlMcastVid : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.4 -- INTEGER(1..4094)
+inactiveLineHguCtrlMcastSrcIp : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.5 -- IpAddress
+inactiveLineHguCtrlMcastDstStartIp : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.6 -- IpAddress
+inactiveLineHguCtrlMcastDstEndIp : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.7 -- IpAddress
+inactiveLineHguCtrlMcastGroupBw : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.8 -- INTEGER(1..1024000)
+inactiveLineHguCtrlMcastDurationTimes : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.9 -- INTEGER(10..6000)
+inactiveLineHguCtrlMcastNumOfTimes : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.10 -- INTEGER(1..255)
+inactiveLineHguCtrlMcastTimeInterval : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.11 -- INTEGER(1..7200)
+inactiveLineHguCtrlMcastResetTime : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.12 -- INTEGER(1..24)
+inactiveLineHguCtrlMcastRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.5.2.1.13 -- RowStatus
+inactiveRuleTable : 1.3.6.1.4.1.13464.1.14.1.1.2.6 -- SEQUENCE OF InactiveRuleEntry
+inactiveRuleEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1 -- InactiveRuleEntry
+inactiveRuleIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.1 -- INTEGER(0..2047)
+inactiveRuleName : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.2 -- OCTET STRING (SIZE(0..255))
+inactiveRuleAction : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.3 -- INTEGER(0..1)
+inactiveRuleAuthMode : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.4 -- INTEGER(0..5)
+inactiveRuleAuthSn : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.5 -- OCTET STRING (SIZE(0..255))
+inactiveRuleAuthPw : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.6 -- OCTET STRING (SIZE(0..255))
+inactiveRuleAuthLoid : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.7 -- OCTET STRING (SIZE(0..255))
+inactiveRuleAuthLopw : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.8 -- OCTET STRING (SIZE(0..255))
+inactiveRuleAssignedSlot : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.9 -- OCTET STRING (SIZE(0..255))
+inactiveRuleAssignedPport : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.10 -- OCTET STRING (SIZE(0..255))
+inactiveRuleAssignedOnt : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.11 -- OCTET STRING (SIZE(0..255))
+inactiveRuleLineIndexesStr : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.12 -- OCTET STRING (SIZE(0..255))
+inactiveRuleDefaultLine : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.13 -- INTEGER(0..2047)
+inactiveRuleRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.6.1.14 -- RowStatus
+inactiveUniqueConfig : 1.3.6.1.4.1.13464.1.14.1.1.2.7
+inactiveUniquePrimaryTable : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1 -- SEQUENCE OF InactiveUniquePrimaryEntry
+inactiveUniquePrimaryEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1 -- InactiveUniquePrimaryEntry
+inactiveUniqueIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1.1 -- INTEGER(0..2047)
+inactiveUniqueName : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1.2 -- OCTET STRING (SIZE(0..255))
+inactiveUniqueSignFlag : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1.3 -- INTEGER(1..3)
+inactiveUniqueSn : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1.4 -- OCTET STRING (SIZE(0..255))
+inactiveUniqueLoid : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1.5 -- OCTET STRING (SIZE(0..255))
+inactiveUniqueSlotId : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1.6 -- INTEGER(0..0)
+inactiveUniquePportId : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1.7 -- INTEGER(1..16)
+inactiveUniqueOntId : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1.8 -- INTEGER(1..128)
+inactiveUniqueOntDesc : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1.9 -- OCTET STRING (SIZE(0..255))
+inactiveUniqueRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1.10 -- RowStatus
+inactiveUniqueOnceOnSwitch : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1.11 -- INTEGER(0..1)
+inactiveUniqueOnceOnAgingTime : 1.3.6.1.4.1.13464.1.14.1.1.2.7.1.1.12 -- INTEGER(0..168)
+inactiveUniqueSipAgentInfoTable : 1.3.6.1.4.1.13464.1.14.1.1.2.7.2 -- SEQUENCE OF InactiveUniqueSipAgentInfoEntry
+inactiveUniqueSipAgentInfoEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.7.2.1 -- InactiveUniqueSipAgentInfoEntry
+inactiveUniqueIndexI : 1.3.6.1.4.1.13464.1.14.1.1.2.7.2.1.1 -- INTEGER(0..2047)
+inactiveUniqueSipProxyServerIp : 1.3.6.1.4.1.13464.1.14.1.1.2.7.2.1.2 -- IpAddress
+inactiveUniqueSipOutboundProxyIp : 1.3.6.1.4.1.13464.1.14.1.1.2.7.2.1.3 -- IpAddress
+inactiveUniqueSipRegisterServerIp : 1.3.6.1.4.1.13464.1.14.1.1.2.7.2.1.4 -- IpAddress
+inactiveUniqueSipAgentInfoPort : 1.3.6.1.4.1.13464.1.14.1.1.2.7.2.1.5 -- INTEGER(1..65535)
+inactiveUniqueSipAgentInfoRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.7.2.1.6 -- RowStatus
+inactiveUniqueSipUserAddrTable : 1.3.6.1.4.1.13464.1.14.1.1.2.7.3 -- SEQUENCE OF InactiveUniqueSipUserAddrEntry
+inactiveUniqueSipUserAddrEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.7.3.1 -- InactiveUniqueSipUserAddrEntry
+inactiveUniqueIndexII : 1.3.6.1.4.1.13464.1.14.1.1.2.7.3.1.1 -- INTEGER(0..2047)
+inactiveUniqueSipuAddressIp : 1.3.6.1.4.1.13464.1.14.1.1.2.7.3.1.2 -- IpAddress
+inactiveUniqueSipuAddressMask : 1.3.6.1.4.1.13464.1.14.1.1.2.7.3.1.3 -- IpAddress
+inactiveUniqueSipuAddressVlan : 1.3.6.1.4.1.13464.1.14.1.1.2.7.3.1.4 -- INTEGER(1..4094)
+inactiveUniqueSipuAddressPri : 1.3.6.1.4.1.13464.1.14.1.1.2.7.3.1.5 -- INTEGER(0..7)
+inactiveUniqueSipuAddressRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.7.3.1.6 -- RowStatus
+inactiveUniqueSipUserInfoTable : 1.3.6.1.4.1.13464.1.14.1.1.2.7.4 -- SEQUENCE OF InactiveUniqueSipUserInfoEntry
+inactiveUniqueSipUserInfoEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.7.4.1 -- InactiveUniqueSipUserInfoEntry
+inactiveUniqueIndexIII : 1.3.6.1.4.1.13464.1.14.1.1.2.7.4.1.1 -- INTEGER(0..2047)
+inactiveUniqueSipuInfoIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.7.4.1.2 -- INTEGER(1..2)
+inactiveUniqueSipuInfoUserName : 1.3.6.1.4.1.13464.1.14.1.1.2.7.4.1.3 -- OCTET STRING (SIZE(0..25))
+inactiveUniqueSipuInfoPassword : 1.3.6.1.4.1.13464.1.14.1.1.2.7.4.1.4 -- OCTET STRING (SIZE(0..25))
+inactiveUniqueSipuInfoTelephone : 1.3.6.1.4.1.13464.1.14.1.1.2.7.4.1.5 -- OCTET STRING (SIZE(0..25))
+inactiveUniqueSipuInfoRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.7.4.1.6 -- RowStatus
+inactiveUniqueSipDigitMapTable : 1.3.6.1.4.1.13464.1.14.1.1.2.7.5 -- SEQUENCE OF InactiveUniqueSipDigitMapEntry
+inactiveUniqueSipDigitMapEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.7.5.1 -- InactiveUniqueSipDigitMapEntry
+inactiveUniqueIndexIV : 1.3.6.1.4.1.13464.1.14.1.1.2.7.5.1.1 -- INTEGER(0..2047)
+inactiveUniqueSipdMapIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.7.5.1.2 -- INTEGER(1..10)
+inactiveUniqueSipdMapDialPlanToken : 1.3.6.1.4.1.13464.1.14.1.1.2.7.5.1.3 -- OCTET STRING (SIZE(0..28))
+inactiveUniqueSipdMapRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.7.5.1.4 -- RowStatus
+inactiveUniqueGemportTable : 1.3.6.1.4.1.13464.1.14.1.1.2.7.6 -- SEQUENCE OF InactiveUniqueGemportEntry
+inactiveUniqueGemportEntry : 1.3.6.1.4.1.13464.1.14.1.1.2.7.6.1 -- InactiveUniqueGemportEntry
+inactiveUniqueIndexV : 1.3.6.1.4.1.13464.1.14.1.1.2.7.6.1.1 -- INTEGER(0..2047)
+inactiveUniqueGemportIndex : 1.3.6.1.4.1.13464.1.14.1.1.2.7.6.1.2 -- INTEGER(1..24)
+inactiveUniqueGemportVlanProfileId : 1.3.6.1.4.1.13464.1.14.1.1.2.7.6.1.3 -- INTEGER(0..4095)
+inactiveUniqueGemportUsProfileId : 1.3.6.1.4.1.13464.1.14.1.1.2.7.6.1.4 -- INTEGER(0..4095)
+inactiveUniqueGemportDsProfileId : 1.3.6.1.4.1.13464.1.14.1.1.2.7.6.1.5 -- INTEGER(0..4095)
+inactiveUniqueGemportRowStatus : 1.3.6.1.4.1.13464.1.14.1.1.2.7.6.1.6 -- RowStatus
+deployActive : 1.3.6.1.4.1.13464.1.14.1.1.3
+activeAuthTable : 1.3.6.1.4.1.13464.1.14.1.1.3.1 -- SEQUENCE OF ActiveAuthEntry
+activeAuthEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.1.1 -- ActiveAuthEntry
+activeAuthIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.1.1.1 -- INTEGER(0..4095)
+activeAuthDescription : 1.3.6.1.4.1.13464.1.14.1.1.3.1.1.2 -- OCTET STRING (SIZE(0..255))
+activeAuthMode : 1.3.6.1.4.1.13464.1.14.1.1.3.1.1.3 -- INTEGER(0..5)
+activeAuthSn : 1.3.6.1.4.1.13464.1.14.1.1.3.1.1.4 -- OCTET STRING (SIZE(0..255))
+activeAuthPw : 1.3.6.1.4.1.13464.1.14.1.1.3.1.1.5 -- OCTET STRING (SIZE(0..255))
+activeAuthLoid : 1.3.6.1.4.1.13464.1.14.1.1.3.1.1.6 -- OCTET STRING (SIZE(0..255))
+activeAuthLopw : 1.3.6.1.4.1.13464.1.14.1.1.3.1.1.7 -- OCTET STRING (SIZE(0..255))
+activeAuthAssignedSlot : 1.3.6.1.4.1.13464.1.14.1.1.3.1.1.8 -- OCTET STRING (SIZE(0..255))
+activeAuthAssignedPport : 1.3.6.1.4.1.13464.1.14.1.1.3.1.1.9 -- OCTET STRING (SIZE(0..255))
+activeAuthAssignedOnt : 1.3.6.1.4.1.13464.1.14.1.1.3.1.1.10 -- OCTET STRING (SIZE(0..255))
+activeDbaTable : 1.3.6.1.4.1.13464.1.14.1.1.3.2 -- SEQUENCE OF ActiveDbaEntry
+activeDbaEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.2.1 -- ActiveDbaEntry
+activeDbaIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.2.1.1 -- INTEGER(0..127)
+activeDbaDescription : 1.3.6.1.4.1.13464.1.14.1.1.3.2.1.2 -- OCTET STRING(SIZE(0..255))
+activeDbaType : 1.3.6.1.4.1.13464.1.14.1.1.3.2.1.3 -- INTEGER(1..5)
+activeDbaFixBandwidth : 1.3.6.1.4.1.13464.1.14.1.1.3.2.1.4 -- INTEGER(128..1310720)
+activeDbaAssuredBandwidth : 1.3.6.1.4.1.13464.1.14.1.1.3.2.1.5 -- INTEGER(0..1310592)
+activeDbaMaxBandwidth : 1.3.6.1.4.1.13464.1.14.1.1.3.2.1.6 -- INTEGER(0..1310720)
+activeLineCommonConfig : 1.3.6.1.4.1.13464.1.14.1.1.3.3
+activeLinePrimaryTable : 1.3.6.1.4.1.13464.1.14.1.1.3.3.1 -- SEQUENCE OF ActiveLinePrimaryEntry
+activeLinePrimaryEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.3.1.1 -- ActiveLinePrimaryEntry
+activeLineIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.3.1.1.1 -- INTEGER(0..4095)
+activeLineDeviceType : 1.3.6.1.4.1.13464.1.14.1.1.3.3.1.1.2 -- OCTET STRING (SIZE(7..7))
+activeLineDescription : 1.3.6.1.4.1.13464.1.14.1.1.3.3.1.1.3 -- OCTET STRING (SIZE(0..255))
+activeLineTrafficMode : 1.3.6.1.4.1.13464.1.14.1.1.3.3.1.1.4 -- INTEGER(0..1)
+activeLineMappingMode : 1.3.6.1.4.1.13464.1.14.1.1.3.3.1.1.5 -- INTEGER(0..6)
+activeLineTcontTable : 1.3.6.1.4.1.13464.1.14.1.1.3.3.2 -- SEQUENCE OF ActiveLineTcontEntry
+activeLineTcontEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.3.2.1 -- ActiveLineTcontEntry
+activeLineIndexI : 1.3.6.1.4.1.13464.1.14.1.1.3.3.2.1.1 -- INTEGER(0..4095)
+activeLineTcontIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.3.2.1.2 -- INTEGER(1..8)
+activeLineTcontDbaIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.3.2.1.3 -- INTEGER(0..127)
+activeLineGemportTable : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3 -- SEQUENCE OF ActiveLineGemportEntry
+activeLineGemportEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3.1 -- ActiveLineGemportEntry
+activeLineIndexII : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3.1.1 -- INTEGER(0..4095)
+activeLineGemportIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3.1.2 -- INTEGER(1..24)
+activeLineGemportVpStagged : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3.1.3 -- INTEGER(0..1)
+activeLineGemportSvid : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3.1.4 -- INTEGER(1..4094)
+activeLineGemportPriority : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3.1.5 -- INTEGER(0..7)
+activeLineGemportTcontId : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3.1.6 -- INTEGER(1..8)
+activeLineGemportPq : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3.1.7 -- INTEGER(0..7)
+activeLineGemportCir : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3.1.8 -- INTEGER(64..1310720)
+activeLineGemportPir : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3.1.9 -- INTEGER(64..1310720)
+activeLineGemportCbs : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3.1.10 -- INTEGER(2000..1310720)
+activeLineGemportPbs : 1.3.6.1.4.1.13464.1.14.1.1.3.3.3.1.11 -- INTEGER(2000..1310720)
+activeLineFlowmappingTable : 1.3.6.1.4.1.13464.1.14.1.1.3.3.4 -- SEQUENCE OF ActiveLineFlowmappingEntry
+activeLineFlowmappingEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.3.4.1 -- ActiveLineFlowmappingEntry
+activeLineIndexIII : 1.3.6.1.4.1.13464.1.14.1.1.3.3.4.1.1 -- INTEGER(0..4095)
+activeLineFlowmappingIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.3.4.1.2 -- INTEGER(1..48)
+activeLineFlowmappingVid : 1.3.6.1.4.1.13464.1.14.1.1.3.3.4.1.3 -- INTEGER(1..4094)
+activeLineFlowmappingPriority : 1.3.6.1.4.1.13464.1.14.1.1.3.3.4.1.4 -- INTEGER(0..8)
+activeLineFlowmappingEthport : 1.3.6.1.4.1.13464.1.14.1.1.3.3.4.1.5 -- INTEGER(1..8)
+activeLineFlowmappingGemport : 1.3.6.1.4.1.13464.1.14.1.1.3.3.4.1.6 -- INTEGER(1..24)
+activeLineFlowmappingType : 1.3.6.1.4.1.13464.1.14.1.1.3.3.4.1.7 -- INTEGER(0..3)
+activeLineAttrMgmtTable : 1.3.6.1.4.1.13464.1.14.1.1.3.3.5 -- SEQUENCE OF ActiveLineAttrMgmtEntry
+activeLineAttrMgmtEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.3.5.1 -- ActiveLineAttrMgmtEntry
+activeLineIndexIV : 1.3.6.1.4.1.13464.1.14.1.1.3.3.5.1.1 -- INTEGER(0..4095)
+activeLineAttrMgmtIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.3.5.1.2 -- INTEGER(1..64)
+activeLineAttrMgmtNportType : 1.3.6.1.4.1.13464.1.14.1.1.3.3.5.1.3 -- INTEGER(1..3)
+activeLineAttrMgmtNport : 1.3.6.1.4.1.13464.1.14.1.1.3.3.5.1.4 -- INTEGER(1..64)
+activeLineAttrMgmtEtypeFilter : 1.3.6.1.4.1.13464.1.14.1.1.3.3.5.1.5 -- INTEGER(0..3)
+activeLineAttrMgmtVlanMode : 1.3.6.1.4.1.13464.1.14.1.1.3.3.5.1.6 -- INTEGER(0..4)
+activeLineAttrMgmtCvlanVid : 1.3.6.1.4.1.13464.1.14.1.1.3.3.5.1.7 -- INTEGER(1..4094)
+activeLineAttrMgmtCvlanPri : 1.3.6.1.4.1.13464.1.14.1.1.3.3.5.1.8 -- INTEGER(0..8)
+activeLineAttrMgmtSvlanVid : 1.3.6.1.4.1.13464.1.14.1.1.3.3.5.1.9 -- INTEGER(1..4094)
+activeLineAttrMgmtSvlanPri : 1.3.6.1.4.1.13464.1.14.1.1.3.3.5.1.10 -- INTEGER(0..8)
+activeLineSFUConfig : 1.3.6.1.4.1.13464.1.14.1.1.3.4
+activeLineSFUTable : 1.3.6.1.4.1.13464.1.14.1.1.3.4.1 -- SEQUENCE OF ActiveLineSFUEntry
+activeLineSFUEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.4.1.1 -- ActiveLineSFUEntry
+activeLineIndexV : 1.3.6.1.4.1.13464.1.14.1.1.3.4.1.1.1 -- INTEGER(0..4095)
+activeLineSfuLocalSwitch : 1.3.6.1.4.1.13464.1.14.1.1.3.4.1.1.2 -- INTEGER(0..1)
+activeLineSfuLoopDetectSwitch : 1.3.6.1.4.1.13464.1.14.1.1.3.4.1.1.3 -- INTEGER(0..1)
+activeLineSFUEthportTable : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2 -- SEQUENCE OF ActiveLineSFUEthportEntry
+activeLineSFUEthportEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1 -- ActiveLineSFUEthportEntry
+activeLineIndexVI : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.1 -- INTEGER(0..4095)
+activeLineSfuEthportIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.2 -- INTEGER(1..8)
+activeLineSfuEthportSwitch : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.3 -- INTEGER(0..1)
+activeLineSfuEthportFlowCtrlSwitch : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.4 -- INTEGER(0..1)
+activeLineSfuEthportLoopbackSwitch : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.5 -- INTEGER(0..1)
+activeLineSfuEthportFastLeaveSwitch : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.6 -- INTEGER(0..1)
+activeLineSfuEthportMaxGroups : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.7 -- INTEGER(1..128)
+activeLineSfuEthportMaxMacCount : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.8 -- INTEGER(1..255)
+activeLineSfuEthportMcastMode : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.9 -- INTEGER(0..2)
+activeLineSfuEthportDsIgmpControlType : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.10 -- INTEGER(0..5)
+activeLineSfuEthportDsIgmpVid : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.11 -- INTEGER(1..4094)
+activeLineSfuEthportDsIgmpPri : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.12 -- INTEGER(0..7)
+activeLineSfuEthportUsIgmpControlType : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.13 -- INTEGER(0..4)
+activeLineSfuEthportUsIgmpVid : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.14 -- INTEGER(1..4094)
+activeLineSfuEthportUsIgmpPri : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.15 -- INTEGER(0..7)
+activeLineSfuEthportBwCir : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.16 -- INTEGER(64..1024000)
+activeLineSfuEthportBwCbs : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.17 -- INTEGER(2..32000)
+activeLineSfuEthportBwPir : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.18 -- INTEGER(64..1024000)
+activeLineSfuEthportBwPbs : 1.3.6.1.4.1.13464.1.14.1.1.3.4.2.1.19 -- INTEGER(2..32000)
+activeLineSFUCtrlMcastTable : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3 -- SEQUENCE OF ActiveLineSFUCtrlMcastEntry
+activeLineSFUCtrlMcastEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1 -- ActiveLineSFUCtrlMcastEntry
+activeLineIndexVII : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.1 -- INTEGER(0..4095)
+activeLineSfuEthportIndexI : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.2 -- INTEGER(1..8)
+activeLineSfuCtrlMcastIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.3 -- INTEGER(0..31)
+activeLineSfuCtrlMcastAccessType : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.4 -- INTEGER(2..3)
+activeLineSfuCtrlMcastVid : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.5 -- INTEGER(1..4094)
+activeLineSfuCtrlMcastSrcIp : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.6 -- IpAddress
+activeLineSfuCtrlMcastDstStartIp : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.7 -- IpAddress
+activeLineSfuCtrlMcastDstEndIp : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.8 -- IpAddress
+activeLineSfuCtrlMcastGroupBw : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.9 -- INTEGER(1..1024000)
+activeLineSfuCtrlMcastDurationTimes : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.10 -- INTEGER(10..6000)
+activeLineSfuCtrlMcastNumOfTimes : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.11 -- INTEGER(1..255)
+activeLineSfuCtrlMcastTimeInterval : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.12 -- INTEGER(1..7200)
+activeLineSfuCtrlMcastResetTime : 1.3.6.1.4.1.13464.1.14.1.1.3.4.3.1.13 -- INTEGER(1..24)
+activeLineHGUConfig : 1.3.6.1.4.1.13464.1.14.1.1.3.5
+activeLineHGUTable : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1 -- SEQUENCE OF ActiveLineHGUEntry
+activeLineHGUEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1 -- ActiveLineHGUEntry
+activeLineIndexVIII : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1.1 -- INTEGER(0..4095)
+activeLineHguSwitch : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1.2 -- INTEGER(0..1)
+activeLineHguFastLeaveSwitch : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1.3 -- INTEGER(0..1)
+activeLineHguMaxGroups : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1.4 -- INTEGER(1..128)
+activeLineHguMaxMacCount : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1.5 -- INTEGER(1..255)
+activeLineHguMcastMode : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1.6 -- INTEGER(0..2)
+activeLineHguDsIgmpControlType : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1.7 -- INTEGER(0..5)
+activeLineHguDsIgmpVid : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1.8 -- INTEGER(1..4094)
+activeLineHguDsIgmpPri : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1.9 -- INTEGER(0..7)
+activeLineHguUsIgmpControlType : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1.10 -- INTEGER(0..4)
+activeLineHguUsIgmpVid : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1.11 -- INTEGER(1..4094)
+activeLineHguUsIgmpPri : 1.3.6.1.4.1.13464.1.14.1.1.3.5.1.1.12 -- INTEGER(0..7)
+activeLineHGUCtrlMcastTable : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2 -- SEQUENCE OF ActiveLineHGUCtrlMcastEntry
+activeLineHGUCtrlMcastEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1 -- ActiveLineHGUCtrlMcastEntry
+activeLineIndexIX : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1.1 -- INTEGER(0..4095)
+activeLineHguCtrlMcastIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1.2 -- INTEGER(1..16)
+activeLineHguCtrlMcastAccessType : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1.3 -- INTEGER(0..3)
+activeLineHguCtrlMcastVid : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1.4 -- INTEGER(1..4094)
+activeLineHguCtrlMcastSrcIp : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1.5 -- IpAddress
+activeLineHguCtrlMcastDstStartIp : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1.6 -- IpAddress
+activeLineHguCtrlMcastDstEndIp : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1.7 -- IpAddress
+activeLineHguCtrlMcastGroupBw : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1.8 -- INTEGER(1..16)
+activeLineHguCtrlMcastDurationTimes : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1.9 -- INTEGER(1..16)
+activeLineHguCtrlMcastNumOfTimes : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1.10 -- INTEGER(1..16)
+activeLineHguCtrlMcastTimeInterval : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1.11 -- INTEGER(1..16)
+activeLineHguCtrlMcastResetTime : 1.3.6.1.4.1.13464.1.14.1.1.3.5.2.1.12 -- INTEGER(1..16)
+activeRuleTable : 1.3.6.1.4.1.13464.1.14.1.1.3.6 -- SEQUENCE OF ActiveRuleEntry
+activeRuleEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.6.1 -- ActiveRuleEntry
+activeRuleIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.6.1.1 -- INTEGER(1..4096)
+activeRuleDescription : 1.3.6.1.4.1.13464.1.14.1.1.3.6.1.2 -- OCTET STRING (SIZE(0..255))
+activeRuleAction : 1.3.6.1.4.1.13464.1.14.1.1.3.6.1.3 -- INTEGER(0..1)
+activeRuleAuthIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.6.1.4 -- INTEGER(1..4096)
+activeRuleLineIndexesStr : 1.3.6.1.4.1.13464.1.14.1.1.3.6.1.5 -- OCTET STRING (SIZE(0..255))
+activeRuleDefaultLine : 1.3.6.1.4.1.13464.1.14.1.1.3.6.1.6 -- INTEGER(1..4096)
+activeUniqueConfig : 1.3.6.1.4.1.13464.1.14.1.1.3.7
+activeUniquePrimaryTable : 1.3.6.1.4.1.13464.1.14.1.1.3.7.1 -- SEQUENCE OF ActiveUniquePrimaryEntry
+activeUniquePrimaryEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.7.1.1 -- ActiveUniquePrimaryEntry
+activeUniqueIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.7.1.1.1 -- INTEGER(1..4096)
+activeUniqueDescription : 1.3.6.1.4.1.13464.1.14.1.1.3.7.1.1.2 -- OCTET STRING (SIZE(0..255))
+activeUniqueSn : 1.3.6.1.4.1.13464.1.14.1.1.3.7.1.1.3 -- OCTET STRING (SIZE(0..255))
+activeUniqueSipAgentInfoTable : 1.3.6.1.4.1.13464.1.14.1.1.3.7.2 -- SEQUENCE OF ActiveUniqueSipAgentInfoEntry
+activeUniqueSipAgentInfoEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.7.2.1 -- ActiveUniqueSipAgentInfoEntry
+activeUniqueIndexI : 1.3.6.1.4.1.13464.1.14.1.1.3.7.2.1.1 -- INTEGER(1..4096)
+activeUniqueSipProxyServerIp : 1.3.6.1.4.1.13464.1.14.1.1.3.7.2.1.2 -- IpAddress
+activeUniqueSipOutboundProxyIp : 1.3.6.1.4.1.13464.1.14.1.1.3.7.2.1.3 -- IpAddress
+activeUniqueSipRegisterServerIp : 1.3.6.1.4.1.13464.1.14.1.1.3.7.2.1.4 -- IpAddress
+activeUniqueSipAgentInfoPort : 1.3.6.1.4.1.13464.1.14.1.1.3.7.2.1.5 -- INTEGER(1..65535)
+activeUniqueSipUserAddrTable : 1.3.6.1.4.1.13464.1.14.1.1.3.7.3 -- SEQUENCE OF ActiveUniqueSipUserAddrEntry
+activeUniqueSipUserAddrEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.7.3.1 -- ActiveUniqueSipUserAddrEntry
+activeUniqueIndexII : 1.3.6.1.4.1.13464.1.14.1.1.3.7.3.1.1 -- INTEGER(1..4096)
+activeUniqueSipuAddressIp : 1.3.6.1.4.1.13464.1.14.1.1.3.7.3.1.2 -- IpAddress
+activeUniqueSipuAddressMask : 1.3.6.1.4.1.13464.1.14.1.1.3.7.3.1.3 -- IpAddress
+activeUniqueSipuAddressVlan : 1.3.6.1.4.1.13464.1.14.1.1.3.7.3.1.4 -- INTEGER(1..4094)
+activeUniqueSipuAddressPri : 1.3.6.1.4.1.13464.1.14.1.1.3.7.3.1.5 -- INTEGER(0..7)
+activeUniqueSipUserInfoTable : 1.3.6.1.4.1.13464.1.14.1.1.3.7.4 -- SEQUENCE OF ActiveUniqueSipUserInfoEntry
+activeUniqueSipUserInfoEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.7.4.1 -- ActiveUniqueSipUserInfoEntry
+activeUniqueIndexIII : 1.3.6.1.4.1.13464.1.14.1.1.3.7.4.1.1 -- INTEGER(1..4096)
+activeUniqueSipuInfoIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.7.4.1.2 -- INTEGER(1..2)
+activeUniqueSipuInfoUserName : 1.3.6.1.4.1.13464.1.14.1.1.3.7.4.1.3 -- OCTET STRING (SIZE(0..25))
+activeUniqueSipuInfoPassword : 1.3.6.1.4.1.13464.1.14.1.1.3.7.4.1.4 -- OCTET STRING (SIZE(0..25))
+activeUniqueSipuInfoTelephone : 1.3.6.1.4.1.13464.1.14.1.1.3.7.4.1.5 -- OCTET STRING (SIZE(0..25))
+activeUniqueSipDigitMapTable : 1.3.6.1.4.1.13464.1.14.1.1.3.7.5 -- SEQUENCE OF ActiveUniqueSipDigitMapEntry
+activeUniqueSipDigitMapEntry : 1.3.6.1.4.1.13464.1.14.1.1.3.7.5.1 -- ActiveUniqueSipDigitMapEntry
+activeUniqueIndexIV : 1.3.6.1.4.1.13464.1.14.1.1.3.7.5.1.1 -- INTEGER(1..4096)
+activeUniqueSipdMapIndex : 1.3.6.1.4.1.13464.1.14.1.1.3.7.5.1.2 -- INTEGER(1..10)
+activeUniqueSipdMapDialPlanToken : 1.3.6.1.4.1.13464.1.14.1.1.3.7.5.1.3 -- OCTET STRING (SIZE(0..28))
+deployDemo : 1.3.6.1.4.1.13464.1.14.1.1.4
+demoAuthTable : 1.3.6.1.4.1.13464.1.14.1.1.4.1 -- SEQUENCE OF DemoAuthEntry
+demoAuthEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.1.1 -- DemoAuthEntry
+demoAuthIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.1.1.1 -- INTEGER(0..4095)
+demoAuthDescription : 1.3.6.1.4.1.13464.1.14.1.1.4.1.1.2 -- OCTET STRING (SIZE(0..255))
+demoAuthMode : 1.3.6.1.4.1.13464.1.14.1.1.4.1.1.3 -- INTEGER(0..5)
+demoAuthSn : 1.3.6.1.4.1.13464.1.14.1.1.4.1.1.4 -- OCTET STRING (SIZE(0..255))
+demoAuthPw : 1.3.6.1.4.1.13464.1.14.1.1.4.1.1.5 -- OCTET STRING (SIZE(0..255))
+demoAuthLoid : 1.3.6.1.4.1.13464.1.14.1.1.4.1.1.6 -- OCTET STRING (SIZE(0..255))
+demoAuthLopw : 1.3.6.1.4.1.13464.1.14.1.1.4.1.1.7 -- OCTET STRING (SIZE(0..255))
+demoAuthAssignedSlot : 1.3.6.1.4.1.13464.1.14.1.1.4.1.1.8 -- OCTET STRING (SIZE(0..255))
+demoAuthAssignedPport : 1.3.6.1.4.1.13464.1.14.1.1.4.1.1.9 -- OCTET STRING (SIZE(0..255))
+demoAuthAssignedOnt : 1.3.6.1.4.1.13464.1.14.1.1.4.1.1.10 -- OCTET STRING (SIZE(0..255))
+demoDbaTable : 1.3.6.1.4.1.13464.1.14.1.1.4.2 -- SEQUENCE OF DemoDbaEntry
+demoDbaEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.2.1 -- DemoDbaEntry
+demoDbaIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.2.1.1 -- INTEGER(0..127)
+demoDbaDescription : 1.3.6.1.4.1.13464.1.14.1.1.4.2.1.2 -- OCTET STRING(SIZE(0..255))
+demoDbaType : 1.3.6.1.4.1.13464.1.14.1.1.4.2.1.3 -- INTEGER(1..5)
+demoDbaFixBandwidth : 1.3.6.1.4.1.13464.1.14.1.1.4.2.1.4 -- INTEGER(128..1310720)
+demoDbaAssuredBandwidth : 1.3.6.1.4.1.13464.1.14.1.1.4.2.1.5 -- INTEGER(0..1310592)
+demoDbaMaxBandwidth : 1.3.6.1.4.1.13464.1.14.1.1.4.2.1.6 -- INTEGER(0..1310720)
+demoLineCommonConfig : 1.3.6.1.4.1.13464.1.14.1.1.4.3
+demoLinePrimaryTable : 1.3.6.1.4.1.13464.1.14.1.1.4.3.1 -- SEQUENCE OF DemoLinePrimaryEntry
+demoLinePrimaryEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.3.1.1 -- DemoLinePrimaryEntry
+demoLineIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.3.1.1.1 -- INTEGER(0..4095)
+demoLineDeviceType : 1.3.6.1.4.1.13464.1.14.1.1.4.3.1.1.2 -- OCTET STRING(SIZE(7..7))
+demoLineDescription : 1.3.6.1.4.1.13464.1.14.1.1.4.3.1.1.3 -- OCTET STRING (SIZE(0..255))
+demoLineTrafficMode : 1.3.6.1.4.1.13464.1.14.1.1.4.3.1.1.4 -- INTEGER(0..1)
+demoLineMappingMode : 1.3.6.1.4.1.13464.1.14.1.1.4.3.1.1.5 -- INTEGER(0..6)
+demoLineTcontTable : 1.3.6.1.4.1.13464.1.14.1.1.4.3.2 -- SEQUENCE OF DemoLineTcontEntry
+demoLineTcontEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.3.2.1 -- DemoLineTcontEntry
+demoLineTcontIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.3.2.1.1 -- INTEGER(1..8)
+demoLineTcontDbaIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.3.2.1.2 -- INTEGER(0..127)
+demoLineGemportTable : 1.3.6.1.4.1.13464.1.14.1.1.4.3.3 -- SEQUENCE OF DemoLineGemportEntry
+demoLineGemportEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.3.3.1 -- DemoLineGemportEntry
+demoLineGemportIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.3.3.1.1 -- INTEGER(1..24)
+demoLineGemportSvid : 1.3.6.1.4.1.13464.1.14.1.1.4.3.3.1.2 -- INTEGER(1..4094)
+demoLineGemportTcontId : 1.3.6.1.4.1.13464.1.14.1.1.4.3.3.1.3 -- INTEGER(1..8)
+demoLineGemportCir : 1.3.6.1.4.1.13464.1.14.1.1.4.3.3.1.4 -- INTEGER(64..1310720)
+demoLineGemportPir : 1.3.6.1.4.1.13464.1.14.1.1.4.3.3.1.5 -- INTEGER(64..1310720)
+demoLineGemportCbs : 1.3.6.1.4.1.13464.1.14.1.1.4.3.3.1.6 -- INTEGER(2000..1310720)
+demoLineGemportPbs : 1.3.6.1.4.1.13464.1.14.1.1.4.3.3.1.7 -- INTEGER(2000..1310720)
+demoLineGemportPq : 1.3.6.1.4.1.13464.1.14.1.1.4.3.3.1.8 -- INTEGER(0..7)
+demoLineFlowmappingTable : 1.3.6.1.4.1.13464.1.14.1.1.4.3.4 -- SEQUENCE OF DemoLineFlowmappingEntry
+demoLineFlowmappingEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.3.4.1 -- DemoLineFlowmappingEntry
+demoLineFlowmappingIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.3.4.1.1 -- INTEGER(1..48)
+demoLineFlowmappingVid : 1.3.6.1.4.1.13464.1.14.1.1.4.3.4.1.2 -- INTEGER(1..4094)
+demoLineFlowmappingPriority : 1.3.6.1.4.1.13464.1.14.1.1.4.3.4.1.3 -- INTEGER(0..8)
+demoLineFlowmappingEthport : 1.3.6.1.4.1.13464.1.14.1.1.4.3.4.1.4 -- INTEGER(1..8)
+demoLineFlowmappingGemport : 1.3.6.1.4.1.13464.1.14.1.1.4.3.4.1.5 -- INTEGER(1..24)
+demoLineFlowmappingType : 1.3.6.1.4.1.13464.1.14.1.1.4.3.4.1.6 -- INTEGER(0..3)
+demoLineAttrMgmtTable : 1.3.6.1.4.1.13464.1.14.1.1.4.3.5 -- SEQUENCE OF DemoLineAttrMgmtEntry
+demoLineAttrMgmtEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.3.5.1 -- DemoLineAttrMgmtEntry
+demoLineAttrMgmtIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.3.5.1.1 -- INTEGER(1..64)
+demoLineAttrMgmtNport : 1.3.6.1.4.1.13464.1.14.1.1.4.3.5.1.2 -- INTEGER(1..64)
+demoLineAttrMgmtVlanMode : 1.3.6.1.4.1.13464.1.14.1.1.4.3.5.1.3 -- INTEGER(0..4)
+demoLineAttrMgmtNportType : 1.3.6.1.4.1.13464.1.14.1.1.4.3.5.1.4 -- INTEGER(1..3)
+demoLineAttrMgmtEtypeFilter : 1.3.6.1.4.1.13464.1.14.1.1.4.3.5.1.5 -- INTEGER(0..3)
+demoLineAttrMgmtCvlanVid : 1.3.6.1.4.1.13464.1.14.1.1.4.3.5.1.6 -- INTEGER(1..4094)
+demoLineAttrMgmtCvlanPri : 1.3.6.1.4.1.13464.1.14.1.1.4.3.5.1.7 -- INTEGER(0..8)
+demoLineAttrMgmtSvlanVid : 1.3.6.1.4.1.13464.1.14.1.1.4.3.5.1.8 -- INTEGER(1..4094)
+demoLineAttrMgmtSvlanPri : 1.3.6.1.4.1.13464.1.14.1.1.4.3.5.1.9 -- INTEGER(0..8)
+demoLineSFUConfig : 1.3.6.1.4.1.13464.1.14.1.1.4.4
+demoLineSFUTable : 1.3.6.1.4.1.13464.1.14.1.1.4.4.1 -- SEQUENCE OF DemoLineSFUEntry
+demoLineSFUEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.4.1.1 -- DemoLineSFUEntry
+demoLineSfuLocalSwitch : 1.3.6.1.4.1.13464.1.14.1.1.4.4.1.1.1 -- INTEGER(0..1)
+demoLineSfuLoopDetectSwitch : 1.3.6.1.4.1.13464.1.14.1.1.4.4.1.1.2 -- INTEGER(0..1)
+demoLineSFUEthportTable : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2 -- SEQUENCE OF DemoLineSFUEthportEntry
+demoLineSFUEthportEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1 -- DemoLineSFUEthportEntry
+demoLineSfuEthportIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.1 -- INTEGER(1..8)
+demoLineSfuEthportSwitch : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.2 -- INTEGER(0..1)
+demoLineSfuEthportFlowCtrlSwitch : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.3 -- INTEGER(0..1)
+demoLineSfuEthportLoopbackSwitch : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.4 -- INTEGER(0..1)
+demoLineSfuEthportBwEgress : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.5 -- INTEGER(64..1023936)
+demoLineSfuEthportFastLeaveSwitch : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.6 -- INTEGER(0..1)
+demoLineSfuEthportMaxGroups : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.7 -- INTEGER(1..128)
+demoLineSfuEthportMaxMacCount : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.8 -- INTEGER(1..255)
+demoLineSfuEthportMcastMode : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.9 -- INTEGER(0..2)
+demoLineSfuEthportDsIgmpControlType : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.10 -- INTEGER(0..5)
+demoLineSfuEthportDsIgmpVid : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.11 -- INTEGER(1..4094)
+demoLineSfuEthportDsIgmpPri : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.12 -- INTEGER(0..7)
+demoLineSfuEthportUsIgmpControlType : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.13 -- INTEGER(0..5)
+demoLineSfuEthportUsIgmpVid : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.14 -- INTEGER(1..4094)
+demoLineSfuEthportUsIgmpPri : 1.3.6.1.4.1.13464.1.14.1.1.4.4.2.1.15 -- INTEGER(0..7)
+demoLineSFUCtrlMcastTable : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3 -- SEQUENCE OF DemoLineSFUCtrlMcastEntry
+demoLineSFUCtrlMcastEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3.1 -- DemoLineSFUCtrlMcastEntry
+demoLineSfuCtrlMcastIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3.1.1 -- INTEGER(1..16)
+demoLineSfuCtrlMcastAccessType : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3.1.2 -- INTEGER(0..3)
+demoLineSfuCtrlMcastVid : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3.1.3 -- INTEGER(1..4094)
+demoLineSfuCtrlMcastSrcIp : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3.1.4 -- IpAddress
+demoLineSfuCtrlMcastDstStartIp : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3.1.5 -- IpAddress
+demoLineSfuCtrlMcastDstEndIp : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3.1.6 -- IpAddress
+demoLineSfuCtrlMcastGroupBw : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3.1.7 -- INTEGER(1..16)
+demoLineSfuCtrlMcastDurationTimes : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3.1.8 -- INTEGER(1..16)
+demoLineSfuCtrlMcastNumOfTimes : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3.1.9 -- INTEGER(1..16)
+demoLineSfuCtrlMcastTimeInterval : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3.1.10 -- INTEGER(1..16)
+demoLineSfuCtrlMcastResetTime : 1.3.6.1.4.1.13464.1.14.1.1.4.4.3.1.11 -- INTEGER(1..16)
+demoLineHGUConfig : 1.3.6.1.4.1.13464.1.14.1.1.4.5
+demoLineHGUTable : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1 -- SEQUENCE OF DemoLineHGUEntry
+demoLineHGUEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1.1 -- DemoLineHGUEntry
+demoLineHguSwitch : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1.1.1 -- INTEGER(0..1)
+demoLineHguFastLeaveSwitch : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1.1.2 -- INTEGER(0..1)
+demoLineHguMaxGroups : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1.1.3 -- INTEGER(1..128)
+demoLineHguMaxMacCount : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1.1.4 -- INTEGER(1..255)
+demoLineHguMcastMode : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1.1.5 -- INTEGER(0..2)
+demoLineHguDsIgmpControlType : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1.1.6 -- INTEGER(0..5)
+demoLineHguDsIgmpVid : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1.1.7 -- INTEGER(1..4094)
+demoLineHguDsIgmpPri : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1.1.8 -- INTEGER(0..7)
+demoLineHguUsIgmpControlType : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1.1.9 -- INTEGER(0..5)
+demoLineHguUsIgmpVid : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1.1.10 -- INTEGER(1..4094)
+demoLineHguUsIgmpPri : 1.3.6.1.4.1.13464.1.14.1.1.4.5.1.1.11 -- INTEGER(0..7)
+demoLineHGUCtrlMcastTable : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2 -- SEQUENCE OF DemoLineHGUCtrlMcastEntry
+demoLineHGUCtrlMcastEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2.1 -- DemoLineHGUCtrlMcastEntry
+demoLineHguCtrlMcastIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2.1.1 -- INTEGER(1..16)
+demoLineHguCtrlMcastAccessType : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2.1.2 -- INTEGER(0..3)
+demoLineHguCtrlMcastVid : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2.1.3 -- INTEGER(1..4094)
+demoLineHguCtrlMcastSrcIp : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2.1.4 -- IpAddress
+demoLineHguCtrlMcastDstStartIp : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2.1.5 -- IpAddress
+demoLineHguCtrlMcastDstEndIp : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2.1.6 -- IpAddress
+demoLineHguCtrlMcastGroupBw : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2.1.7 -- INTEGER(1..16)
+demoLineHguCtrlMcastDurationTimes : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2.1.8 -- INTEGER(1..16)
+demoLineHguCtrlMcastNumOfTimes : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2.1.9 -- INTEGER(1..16)
+demoLineHguCtrlMcastTimeInterval : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2.1.10 -- INTEGER(1..16)
+demoLineHguCtrlMcastResetTime : 1.3.6.1.4.1.13464.1.14.1.1.4.5.2.1.11 -- INTEGER(1..16)
+demoRuleTable : 1.3.6.1.4.1.13464.1.14.1.1.4.6 -- SEQUENCE OF DemoRuleEntry
+demoRuleEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.6.1 -- DemoRuleEntry
+demoRuleIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.6.1.1 -- INTEGER(1..4096)
+demoRuleDescription : 1.3.6.1.4.1.13464.1.14.1.1.4.6.1.2 -- OCTET STRING (SIZE(0..255))
+demoRuleAction : 1.3.6.1.4.1.13464.1.14.1.1.4.6.1.3 -- INTEGER(0..1)
+demoRuleAuthIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.6.1.4 -- INTEGER(1..4096)
+demoRuleLineIndexesStr : 1.3.6.1.4.1.13464.1.14.1.1.4.6.1.5 -- OCTET STRING (SIZE(0..255))
+demoUniqueConfig : 1.3.6.1.4.1.13464.1.14.1.1.4.7
+demoUniquePrimaryTable : 1.3.6.1.4.1.13464.1.14.1.1.4.7.1 -- SEQUENCE OF DemoUniquePrimaryEntry
+demoUniquePrimaryEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.7.1.1 -- DemoUniquePrimaryEntry
+demoUniqueIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.7.1.1.1 -- INTEGER(1..4096)
+demoUniqueDescription : 1.3.6.1.4.1.13464.1.14.1.1.4.7.1.1.2 -- OCTET STRING (SIZE(0..255))
+demoUniqueSn : 1.3.6.1.4.1.13464.1.14.1.1.4.7.1.1.3 -- OCTET STRING (SIZE(0..255))
+demoUniqueSipAgentInfoTable : 1.3.6.1.4.1.13464.1.14.1.1.4.7.2 -- SEQUENCE OF DemoUniqueSipAgentInfoEntry
+demoUniqueSipAgentInfoEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.7.2.1 -- DemoUniqueSipAgentInfoEntry
+demoUniqueSipProxyServerIp : 1.3.6.1.4.1.13464.1.14.1.1.4.7.2.1.1 -- IpAddress
+demoUniqueSipOutboundProxyIp : 1.3.6.1.4.1.13464.1.14.1.1.4.7.2.1.2 -- IpAddress
+demoUniqueSipRegisterServerIp : 1.3.6.1.4.1.13464.1.14.1.1.4.7.2.1.3 -- IpAddress
+demoUniqueSipAgentInfoPort : 1.3.6.1.4.1.13464.1.14.1.1.4.7.2.1.4 -- INTEGER(1..65535)
+demoUniqueSipUserAddrTable : 1.3.6.1.4.1.13464.1.14.1.1.4.7.3 -- SEQUENCE OF DemoUniqueSipUserAddrEntry
+demoUniqueSipUserAddrEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.7.3.1 -- DemoUniqueSipUserAddrEntry
+demoUniqueSipuAddressIp : 1.3.6.1.4.1.13464.1.14.1.1.4.7.3.1.1 -- IpAddress
+demoUniqueSipuAddressMask : 1.3.6.1.4.1.13464.1.14.1.1.4.7.3.1.2 -- IpAddress
+demoUniqueSipuAddressVlan : 1.3.6.1.4.1.13464.1.14.1.1.4.7.3.1.3 -- INTEGER(1..4094)
+demoUniqueSipUserInfoTable : 1.3.6.1.4.1.13464.1.14.1.1.4.7.4 -- SEQUENCE OF DemoUniqueSipUserInfoEntry
+demoUniqueSipUserInfoEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.7.4.1 -- DemoUniqueSipUserInfoEntry
+demoUniqueSipuInfoIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.7.4.1.1 -- INTEGER(1..2)
+demoUniqueSipuInfoUserName : 1.3.6.1.4.1.13464.1.14.1.1.4.7.4.1.2 -- OCTET STRING (SIZE(0..25))
+demoUniqueSipuInfoPassword : 1.3.6.1.4.1.13464.1.14.1.1.4.7.4.1.3 -- OCTET STRING (SIZE(0..25))
+demoUniqueSipuInfoTelephone : 1.3.6.1.4.1.13464.1.14.1.1.4.7.4.1.4 -- OCTET STRING (SIZE(0..25))
+demoUniqueSipDigitMapTable : 1.3.6.1.4.1.13464.1.14.1.1.4.7.5 -- SEQUENCE OF DemoUniqueSipDigitMapEntry
+demoUniqueSipDigitMapEntry : 1.3.6.1.4.1.13464.1.14.1.1.4.7.5.1 -- DemoUniqueSipDigitMapEntry
+demoUniqueSipdMapIndex : 1.3.6.1.4.1.13464.1.14.1.1.4.7.5.1.1 -- INTEGER(1..10)
+demoUniqueSipdMapDialPlanToken : 1.3.6.1.4.1.13464.1.14.1.1.4.7.5.1.2 -- OCTET STRING (SIZE(0..28))
+configDeviceBaseInfo : 1.3.6.1.4.1.13464.1.14.1.1.5
+idleTimeout : 1.3.6.1.4.1.13464.1.14.1.1.1 -- INTEGER(0..480)
+loggingDisplaySwitch : 1.3.6.1.4.1.13464.1.14.1.1.2 -- INTEGER(0..1)
+ontLoggingDisplaySwitch : 1.3.6.1.4.1.13464.1.14.1.1.3 -- INTEGER(0..1)
+configSlot : 1.3.6.1.4.1.13464.1.14.1.2
+configPport : 1.3.6.1.4.1.13464.1.14.1.3
+ontFindConfigTable : 1.3.6.1.4.1.13464.1.14.1.3.1 -- SEQUENCE OF OntFindConfigEntry
+ontFindConfigEntry : 1.3.6.1.4.1.13464.1.14.1.3.1.1 -- OntFindConfigEntry
+cpSlotIndex : 1.3.6.1.4.1.13464.1.14.1.3.1.1.1 -- INTEGER(0..5)
+cpPportIndex : 1.3.6.1.4.1.13464.1.14.1.3.1.1.2 -- INTEGER(1..16)
+ontFindConfigEnable : 1.3.6.1.4.1.13464.1.14.1.3.1.1.3 -- INTEGER(0..1)
+ontFindConfigInterval : 1.3.6.1.4.1.13464.1.14.1.3.1.1.4 -- INTEGER(3..30)
+ontFindConfigAgeEnable : 1.3.6.1.4.1.13464.1.14.1.3.1.1.5 -- INTEGER(0..1)
+ontFindConfigAgingTime : 1.3.6.1.4.1.13464.1.14.1.3.1.1.6 -- INTEGER(1..86400)
+ontSilentConfigTable : 1.3.6.1.4.1.13464.1.14.1.3.2 -- SEQUENCE OF OntSilentConfigEntry
+ontSilentConfigEntry : 1.3.6.1.4.1.13464.1.14.1.3.2.1 -- OntSilentConfigEntry
+cpSlotIndexI : 1.3.6.1.4.1.13464.1.14.1.3.2.1.1 -- INTEGER(0..5)
+cpPportIndexI : 1.3.6.1.4.1.13464.1.14.1.3.2.1.2 -- INTEGER(1..16)
+ontSilentConfigAuthFailEnable : 1.3.6.1.4.1.13464.1.14.1.3.2.1.3 -- INTEGER(0..1)
+ontSilentConfigAuthFailTime : 1.3.6.1.4.1.13464.1.14.1.3.2.1.4 -- INTEGER(1..86400)
+ontSilentConfigOfflineEnable : 1.3.6.1.4.1.13464.1.14.1.3.2.1.5 -- INTEGER(0..1)
+ontSilentConfigOfflineTime : 1.3.6.1.4.1.13464.1.14.1.3.2.1.6 -- INTEGER(1..86400)
+configPportPrimaryTable : 1.3.6.1.4.1.13464.1.14.1.3.3 -- SEQUENCE OF ConfigPportPrimaryEntry
+configPportPrimaryEntry : 1.3.6.1.4.1.13464.1.14.1.3.1 -- ConfigPportPrimaryEntry
+cpSlotIndexII : 1.3.6.1.4.1.13464.1.14.1.3.1 -- INTEGER(0..5)
+cpPportIndexII : 1.3.6.1.4.1.13464.1.14.1.3.2 -- INTEGER(1..16)
+pportLaserEnable : 1.3.6.1.4.1.13464.1.14.1.3.3 -- INTEGER(0..1)
+configOnt : 1.3.6.1.4.1.13464.1.14.1.4
+ontManageTable : 1.3.6.1.4.1.13464.1.14.1.4.1 -- SEQUENCE OF OntManageEntry
+ontManageEntry : 1.3.6.1.4.1.13464.1.14.1.4.1.1 -- OntManageEntry
+coSlotIndex : 1.3.6.1.4.1.13464.1.14.1.4.1.1.1 -- INTEGER(0..5)
+coPportIndex : 1.3.6.1.4.1.13464.1.14.1.4.1.1.2 -- INTEGER(1..16)
+coOntOnlineIndex : 1.3.6.1.4.1.13464.1.14.1.4.1.1.3 -- INTEGER(1..128)
+ontStatisticsEth : 1.3.6.1.4.1.13464.1.14.1.4.1.1.4 -- INTEGER(0..1)
+ontStatisticsGem : 1.3.6.1.4.1.13464.1.14.1.4.1.1.5 -- INTEGER(0..1)
+ontReboot : 1.3.6.1.4.1.13464.1.14.1.4.1.1.6 -- INTEGER(0..1)
+ontAdminState : 1.3.6.1.4.1.13464.1.14.1.4.1.1.7 -- INTEGER(0..1)
+ontUpgradeTable : 1.3.6.1.4.1.13464.1.14.1.4.2 -- SEQUENCE OF OntUpgradeEntry
+ontUpgradeEntry : 1.3.6.1.4.1.13464.1.14.1.4.2.1
+ontUpgradeMode : 1.3.6.1.4.1.13464.1.14.1.4.2.1.1 -- INTEGER(0..1)
+ontUpgradeWindowSize : 1.3.6.1.4.1.13464.1.14.1.4.2.1.2 -- INTEGER(1..256)
+ontUpgradeIdList : 1.3.6.1.4.1.13464.1.14.1.4.2.1.3 -- OCTET STRING (SIZE(0..255))
+ontUpgradeSn : 1.3.6.1.4.1.13464.1.14.1.4.2.1.4 -- OCTET STRING (SIZE(0..8))
+ontUpgradeIsCommit : 1.3.6.1.4.1.13464.1.14.1.4.2.1.5 -- INTEGER(0..1)
+ontUpgradeRowStatus : 1.3.6.1.4.1.13464.1.14.1.4.2.1.6 -- RowStatus
+gponStatus : 1.3.6.1.4.1.13464.1.14.2
+statusDevice : 1.3.6.1.4.1.13464.1.14.2.1
+deployStatus : 1.3.6.1.4.1.13464.1.14.2.1.1
+deployStatusUserName : 1.3.6.1.4.1.13464.1.14.2.1.1.1 -- OCTET STRING (SIZE(0..255))
+deployStatusTerminal : 1.3.6.1.4.1.13464.1.14.2.1.1.2 -- OCTET STRING (SIZE(0..255))
+deployStatusUserIp : 1.3.6.1.4.1.13464.1.14.2.1.1.3 -- IpAddress
+deployStatusRequestTime : 1.3.6.1.4.1.13464.1.14.2.1.1.4 -- OCTET STRING (SIZE(0..255))
+deployStatusLastActiveTime : 1.3.6.1.4.1.13464.1.14.2.1.1.5 -- OCTET STRING (SIZE(0..255))
+deployHistoryTable : 1.3.6.1.4.1.13464.1.14.2.1.2 -- SEQUENCE OF DeployHistoryEntry
+deployHistoryEntry : 1.3.6.1.4.1.13464.1.14.2.1.2.1 -- DeployHistoryEntry
+deployHistoryIndex : 1.3.6.1.4.1.13464.1.14.2.1.2.1.1 -- INTEGER(0..19)
+deployHistoryUserName : 1.3.6.1.4.1.13464.1.14.2.1.2.1.2 -- OCTET STRING (SIZE(0..255))
+deployHistoryTerminal : 1.3.6.1.4.1.13464.1.14.2.1.2.1.3 -- OCTET STRING (SIZE(0..255))
+deployHistoryUserIp : 1.3.6.1.4.1.13464.1.14.2.1.2.1.4 -- IpAddress
+deployHistoryRequestTime : 1.3.6.1.4.1.13464.1.14.2.1.2.1.5 -- OCTET STRING (SIZE(0..255))
+deployHistoryActiveTimeList : 1.3.6.1.4.1.13464.1.14.2.1.2.1.6 -- OCTET STRING (SIZE(0..255))
+deployHistoryReleaseTime : 1.3.6.1.4.1.13464.1.14.2.1.2.1.7 -- OCTET STRING (SIZE(0..255))
+statusDeviceBaseInfo : 1.3.6.1.4.1.13464.1.14.2.1.3
+cpuUsePercent : 1.3.6.1.4.1.13464.1.14.2.1.1 -- INTEGER(0..100)
+memUsePercent : 1.3.6.1.4.1.13464.1.14.2.1.2 -- INTEGER(0..100)
+switchChipTemperature : 1.3.6.1.4.1.13464.1.14.2.1.3 -- INTEGER(0..100)
+ponChipTemperature : 1.3.6.1.4.1.13464.1.14.2.1.4 -- INTEGER(0..100)
+statusSlot : 1.3.6.1.4.1.13464.1.14.2.2
+statusSlotPrimaryTable : 1.3.6.1.4.1.13464.1.14.2.2.1 -- SEQUENCE OF StatusSlotPrimaryEntry
+statusSlotPrimaryEntry : 1.3.6.1.4.1.13464.1.14.2.2.1 -- StatusSlotPrimaryEntry
+ssSlotIndex : 1.3.6.1.4.1.13464.1.14.2.2.1 -- INTEGER(0..5)
+slotState : 1.3.6.1.4.1.13464.1.14.2.2.2 -- INTEGER(0..10)
+slotConfigType : 1.3.6.1.4.1.13464.1.14.2.2.3 -- INTEGER(0..10)
+slotTrueType : 1.3.6.1.4.1.13464.1.14.2.2.4 -- INTEGER(0..10)
+slotTypeIsPon : 1.3.6.1.4.1.13464.1.14.2.2.5 -- INTEGER(0..1)
+slotConnected : 1.3.6.1.4.1.13464.1.14.2.2.6 -- INTEGER(0..1)
+slotMac : 1.3.6.1.4.1.13464.1.14.2.2.7 -- MacAddress
+slotSwVersion : 1.3.6.1.4.1.13464.1.14.2.2.8 -- OCTET STRING (SIZE(0..255))
+slotHwVersion : 1.3.6.1.4.1.13464.1.14.2.2.9 -- OCTET STRING (SIZE(0..255))
+statusPport : 1.3.6.1.4.1.13464.1.14.2.3
+ontFindListTable : 1.3.6.1.4.1.13464.1.14.2.3.1 -- SEQUENCE OF OntFindListEntry
+ontFindListEntry : 1.3.6.1.4.1.13464.1.14.2.3.1.1 -- OntFindListEntry
+spSlotIndex : 1.3.6.1.4.1.13464.1.14.2.3.1.1.1 -- INTEGER(0..5)
+spPportIndex : 1.3.6.1.4.1.13464.1.14.2.3.1.1.2 -- INTEGER(1..16)
+ontFindListListId : 1.3.6.1.4.1.13464.1.14.2.3.1.1.3 -- INTEGER(0..255)
+ontFindListSn : 1.3.6.1.4.1.13464.1.14.2.3.1.1.4 -- OCTET STRING (SIZE(0..255))
+ontFindListPw : 1.3.6.1.4.1.13464.1.14.2.3.1.1.5 -- OCTET STRING (SIZE(0..255))
+ontFindListLoid : 1.3.6.1.4.1.13464.1.14.2.3.1.1.6 -- OCTET STRING (SIZE(0..255))
+ontFindListLopw : 1.3.6.1.4.1.13464.1.14.2.3.1.1.7 -- OCTET STRING (SIZE(0..255))
+ontFindListVendorId : 1.3.6.1.4.1.13464.1.14.2.3.1.1.8 -- OCTET STRING (SIZE(0..255))
+ontFindListPriSwVer : 1.3.6.1.4.1.13464.1.14.2.3.1.1.9 -- OCTET STRING (SIZE(0..255))
+ontFindListSecSwVer : 1.3.6.1.4.1.13464.1.14.2.3.1.1.10 -- OCTET STRING (SIZE(0..255))
+ontFindListHwVer : 1.3.6.1.4.1.13464.1.14.2.3.1.1.11 -- OCTET STRING (SIZE(0..255))
+ontFindListEquipId : 1.3.6.1.4.1.13464.1.14.2.3.1.1.12 -- OCTET STRING (SIZE(0..255))
+ontFindListFirstFindTime : 1.3.6.1.4.1.13464.1.14.2.3.1.1.13 -- OCTET STRING (SIZE(0..255))
+ontFindListLastFindTime : 1.3.6.1.4.1.13464.1.14.2.3.1.1.14 -- OCTET STRING (SIZE(0..255))
+ontFindListFindCnt : 1.3.6.1.4.1.13464.1.14.2.3.1.1.15 -- OCTET STRING (SIZE(0..255))
+ontSilentListTable : 1.3.6.1.4.1.13464.1.14.2.3.2 -- SEQUENCE OF OntSilentListEntry
+ontSilentListEntry : 1.3.6.1.4.1.13464.1.14.2.3.2.1 -- OntSilentListEntry
+spSlotIndexI : 1.3.6.1.4.1.13464.1.14.2.3.2.1.1 -- INTEGER(0..5)
+spPportIndexI : 1.3.6.1.4.1.13464.1.14.2.3.2.1.2 -- INTEGER(1..16)
+ontSilentListListId : 1.3.6.1.4.1.13464.1.14.2.3.2.1.3 -- INTEGER(1..128)
+ontSilentListSn : 1.3.6.1.4.1.13464.1.14.2.3.2.1.4 -- OCTET STRING (SIZE(0..255))
+ontSilentListTime : 1.3.6.1.4.1.13464.1.14.2.3.2.1.5 -- INTEGER(1..86400)
+ontSilentListReason : 1.3.6.1.4.1.13464.1.14.2.3.2.1.6 -- OCTET STRING (SIZE(0..255))
+pportSfpTable : 1.3.6.1.4.1.13464.1.14.2.3.3 -- SEQUENCE OF PportSfpEntry
+pportSfpEntry : 1.3.6.1.4.1.13464.1.14.2.3.3.1 -- PportSfpEntry
+spSlotIndexII : 1.3.6.1.4.1.13464.1.14.2.3.3.1.1 -- INTEGER(0..5)
+spPportIndexII : 1.3.6.1.4.1.13464.1.14.2.3.3.1.2 -- INTEGER(1..16)
+sfpTransceiverType : 1.3.6.1.4.1.13464.1.14.2.3.3.1.3 -- OCTET STRING (SIZE(0..255))
+sfpCompliance : 1.3.6.1.4.1.13464.1.14.2.3.3.1.4 -- OCTET STRING (SIZE(0..255))
+sfpConnectorType : 1.3.6.1.4.1.13464.1.14.2.3.3.1.5 -- OCTET STRING (SIZE(0..255))
+sfpWaveLength : 1.3.6.1.4.1.13464.1.14.2.3.3.1.6 -- OCTET STRING (SIZE(0..255))
+sfpTransferDistance : 1.3.6.1.4.1.13464.1.14.2.3.3.1.7 -- OCTET STRING (SIZE(0..255))
+sfpDigitalDiagMonitor : 1.3.6.1.4.1.13464.1.14.2.3.3.1.8 -- OCTET STRING (SIZE(0..255))
+sfpManuSerialNumber : 1.3.6.1.4.1.13464.1.14.2.3.3.1.9 -- OCTET STRING (SIZE(0..255))
+sfpManufacturingDate : 1.3.6.1.4.1.13464.1.14.2.3.3.1.10 -- OCTET STRING (SIZE(0..255))
+sfpVendorName : 1.3.6.1.4.1.13464.1.14.2.3.3.1.11 -- OCTET STRING (SIZE(0..255))
+sfpTemperature : 1.3.6.1.4.1.13464.1.14.2.3.3.1.12 -- OCTET STRING (SIZE(0..255))
+sfpVoltage : 1.3.6.1.4.1.13464.1.14.2.3.3.1.13 -- OCTET STRING (SIZE(0..255))
+sfpBiasCurrent : 1.3.6.1.4.1.13464.1.14.2.3.3.1.14 -- OCTET STRING (SIZE(0..255))
+sfpBiasHighThreshold : 1.3.6.1.4.1.13464.1.14.2.3.3.1.15 -- OCTET STRING (SIZE(0..255))
+sfpBiasLowThreshold : 1.3.6.1.4.1.13464.1.14.2.3.3.1.16 -- OCTET STRING (SIZE(0..255))
+sfpRXPower : 1.3.6.1.4.1.13464.1.14.2.3.3.1.17 -- OCTET STRING (SIZE(0..255))
+sfpRXPowerHighThreshold : 1.3.6.1.4.1.13464.1.14.2.3.3.1.18 -- OCTET STRING (SIZE(0..255))
+sfpRXPowerLowThreshold : 1.3.6.1.4.1.13464.1.14.2.3.3.1.19 -- OCTET STRING (SIZE(0..255))
+sfpTXPower : 1.3.6.1.4.1.13464.1.14.2.3.3.1.20 -- OCTET STRING (SIZE(0..255))
+sfpTXPowerHighThreshold : 1.3.6.1.4.1.13464.1.14.2.3.3.1.21 -- OCTET STRING (SIZE(0..255))
+sfpTXPowerLowThreshold : 1.3.6.1.4.1.13464.1.14.2.3.3.1.22 -- OCTET STRING (SIZE(0..255))
+sfpExist : 1.3.6.1.4.1.13464.1.14.2.3.3.1.23 -- INTEGER(0..1)
+sfpLinkState : 1.3.6.1.4.1.13464.1.14.2.3.3.1.24 -- INTEGER(0..1)
+sfpModuleType : 1.3.6.1.4.1.13464.1.14.2.3.3.1.25 -- INTEGER(0..1)
+sfpModuleSubType : 1.3.6.1.4.1.13464.1.14.2.3.3.1.26 -- INTEGER(0..2)
+sfpUsedType : 1.3.6.1.4.1.13464.1.14.2.3.3.1.27 -- INTEGER(0..1)
+statusPportPrimaryTable : 1.3.6.1.4.1.13464.1.14.2.3.4 -- SEQUENCE OF StatusPportPrimaryEntry
+statusPportPrimaryEntry : 1.3.6.1.4.1.13464.1.14.2.3.1 -- StatusPportPrimaryEntry
+spSlotIndexIII : 1.3.6.1.4.1.13464.1.14.2.3.1 -- INTEGER(0..5)
+spPportIndexIII : 1.3.6.1.4.1.13464.1.14.2.3.2 -- INTEGER(1..16)
+pportLinkStatus : 1.3.6.1.4.1.13464.1.14.2.3.3 -- INTEGER(0..1)
+portUtilizationTable : 1.3.6.1.4.1.13464.1.14.2.3.5 -- SEQUENCE OF PortUtilizationEntry
+portUtilizationEntry : 1.3.6.1.4.1.13464.1.14.2.3.5.1 -- PortUtilizationEntry
+spSlotIndexPort : 1.3.6.1.4.1.13464.1.14.2.3.5.1.1 -- INTEGER(0..5)
+spPortIndex : 1.3.6.1.4.1.13464.1.14.2.3.5.1.2 -- INTEGER(1..16)
+spUtilizeTxOctetsRate : 1.3.6.1.4.1.13464.1.14.2.3.5.1.3 -- INTEGER(0..10000)
+spUtilizeRxOctetsRate : 1.3.6.1.4.1.13464.1.14.2.3.5.1.4 -- INTEGER(0..10000)
+spUtilizeTxBwThoughput : 1.3.6.1.4.1.13464.1.14.2.3.5.1.5 -- INTEGER(0..100)
+spUtilizeRxBwThoughput : 1.3.6.1.4.1.13464.1.14.2.3.5.1.6 -- INTEGER(0..100)
+spUtilizeTxPktsRate : 1.3.6.1.4.1.13464.1.14.2.3.5.1.7 -- INTEGER(0..1600000000)
+spUtilizeRxPktsRate : 1.3.6.1.4.1.13464.1.14.2.3.5.1.8 -- INTEGER(0..1600000000)
+spUtilizeTxOctetsMaxRate : 1.3.6.1.4.1.13464.1.14.2.3.5.1.9 -- INTEGER(0..10000)
+spUtilizeRxOctetsMaxRate : 1.3.6.1.4.1.13464.1.14.2.3.5.1.10 -- INTEGER(0..10000)
+statusOnt : 1.3.6.1.4.1.13464.1.14.2.4
+ontInfo : 1.3.6.1.4.1.13464.1.14.2.4.1
+ontBaseInfoTable : 1.3.6.1.4.1.13464.1.14.2.4.1.1 -- SEQUENCE OF OntBaseInfoEntry
+ontBaseInfoEntry : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1 -- OntBaseInfoEntry
+soSlotIndex : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.1 -- INTEGER(0..5)
+soPportIndex : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.2 -- INTEGER(1..16)
+soOntIndex : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.3 -- INTEGER(1..128)
+ontDescription : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.4 -- OCTET STRING (SIZE(0..255))
+ontDeviceType : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.5 -- OCTET STRING (SIZE(0..255))
+ontRunStatus : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.6 -- INTEGER(0..1)
+ontDistance : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.7 -- OCTET STRING (SIZE(0..255))
+ontSn : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.8 -- OCTET STRING (SIZE(0..255))
+ontPw : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.9 -- OCTET STRING (SIZE(0..255))
+ontLoid : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.10 -- OCTET STRING (SIZE(0..255))
+ontLopw : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.11 -- OCTET STRING (SIZE(0..255))
+ontOfflineReason : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.12 -- OCTET STRING (SIZE(0..255))
+ontOnOfflineTime : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.13 -- OCTET STRING (SIZE(0..255))
+ontUpDownTime : 1.3.6.1.4.1.13464.1.14.2.4.1.1.1.14 -- OCTET STRING (SIZE(0..255))
+ontVersionInfoTable : 1.3.6.1.4.1.13464.1.14.2.4.1.2 -- SEQUENCE OF OntVersionInfoEntry
+ontVersionInfoEntry : 1.3.6.1.4.1.13464.1.14.2.4.1.2.1 -- OntVersionInfoEntry
+soSlotIndexI : 1.3.6.1.4.1.13464.1.14.2.4.1.2.1.1 -- INTEGER(0..5)
+soPportIndexI : 1.3.6.1.4.1.13464.1.14.2.4.1.2.1.2 -- INTEGER(1..16)
+soOntIndexI : 1.3.6.1.4.1.13464.1.14.2.4.1.2.1.3 -- INTEGER(1..128)
+ontVendorId : 1.3.6.1.4.1.13464.1.14.2.4.1.2.1.4 -- OCTET STRING (SIZE(0..255))
+ontVersion : 1.3.6.1.4.1.13464.1.14.2.4.1.2.1.5 -- OCTET STRING (SIZE(0..255))
+ontEquipmentId : 1.3.6.1.4.1.13464.1.14.2.4.1.2.1.6 -- OCTET STRING (SIZE(0..255))
+ontMainSwVersion : 1.3.6.1.4.1.13464.1.14.2.4.1.2.1.7 -- OCTET STRING (SIZE(0..255))
+ontSecondSwVersion : 1.3.6.1.4.1.13464.1.14.2.4.1.2.1.8 -- OCTET STRING (SIZE(0..255))
+ontCapabilityTable : 1.3.6.1.4.1.13464.1.14.2.4.1.3 -- SEQUENCE OF OntCapabilityEntry
+ontCapabilityEntry : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1 -- OntCapabilityEntry
+soSlotIndexII : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.1 -- INTEGER(0..5)
+soPportIndexII : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.2 -- INTEGER(1..16)
+soOntIndexII : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.3 -- INTEGER(1..128)
+ontCapEquipId : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.4 -- OCTET STRING (SIZE(0..255))
+ontUplinkPonPortsNum : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.5 -- INTEGER(1..8)
+ontPotsPortsNum : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.6 -- INTEGER(1..8)
+ontEthPortsNum : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.7 -- INTEGER(1..8)
+ontTdmPortsNum : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.8 -- INTEGER(1..8)
+ontMocaPortsNum : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.9 -- INTEGER(1..8)
+ontCatvAniPortsNum : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.10 -- INTEGER(1..8)
+ontCatvUniPortsNum : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.11 -- INTEGER(1..8)
+ontTcontsNum : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.12 -- INTEGER(1..8)
+ontGemPortsNum : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.13 -- INTEGER(1..8)
+ontTrafficSchedulersNum : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.14 -- INTEGER(1..8)
+ontPqsInTconts : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.15 -- OCTET STRING (SIZE(0..255))
+ontIpConfigSupport : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.16 -- OCTET STRING (SIZE(0..255))
+ontFlowCtrlType : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.17 -- OCTET STRING (SIZE(0..255))
+ontTXpowerCutOffSupport : 1.3.6.1.4.1.13464.1.14.2.4.1.3.1.18 -- OCTET STRING (SIZE(0..255))
+ontOpticalInfoTable : 1.3.6.1.4.1.13464.1.14.2.4.1.4 -- SEQUENCE OF OntOpticalInfoEntry
+ontOpticalInfoEntry : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1 -- OntOpticalInfoEntry
+soSlotIndexIII : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1.1 -- INTEGER(0..5)
+soPportIndexIII : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1.2 -- INTEGER(1..16)
+soOntIndexIII : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1.3 -- INTEGER(1..128)
+ontVoltage : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1.4 -- OCTET STRING (SIZE(0..255))
+ontRXPower : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1.5 -- OCTET STRING (SIZE(0..255))
+ontTXPower : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1.6 -- OCTET STRING (SIZE(0..255))
+ontBiasCurrent : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1.7 -- OCTET STRING (SIZE(0..255))
+ontTemperature : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1.8 -- OCTET STRING (SIZE(0..255))
+ontRxCatvPower : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1.9 -- OCTET STRING (SIZE(0..255))
+ontTxCatvPower : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1.10 -- OCTET STRING (SIZE(0..255))
+ontOltRxPower : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1.11 -- OCTET STRING (SIZE(0..255))
+ontOltTxPower : 1.3.6.1.4.1.13464.1.14.2.4.1.4.1.12 -- OCTET STRING (SIZE(0..255))
+ontProfileInfoTable : 1.3.6.1.4.1.13464.1.14.2.4.1.5 -- SEQUENCE OF OntProfileInfoEntry
+ontProfileInfoEntry : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1 -- OntProfileInfoEntry
+soSlotIndexIV : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.1 -- INTEGER(0..5)
+soPportIndexIV : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.2 -- INTEGER(1..16)
+soOntIndexIV : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.3 -- INTEGER(1..128)
+ontProfileSn : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.4 -- OCTET STRING (SIZE(0..255))
+ontProfileVlanIdxes : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.5 -- OCTET STRING (SIZE(0..255))
+ontProfileVlanNames : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.6 -- OCTET STRING (SIZE(0..255))
+ontProfileUsIdxes : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.7 -- OCTET STRING (SIZE(0..255))
+ontProfileUsNames : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.8 -- OCTET STRING (SIZE(0..255))
+ontProfileDsIdxes : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.9 -- OCTET STRING (SIZE(0..255))
+ontProfileDsNames : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.10 -- OCTET STRING (SIZE(0..255))
+ontProfileDbaIdxes : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.11 -- OCTET STRING (SIZE(0..255))
+ontProfileDbaNames : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.12 -- OCTET STRING (SIZE(0..255))
+ontProfileLineIdx : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.13 -- INTEGER(1..4096)
+ontProfileLineName : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.14 -- OCTET STRING (SIZE(0..255))
+ontProfileRuleIdx : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.15 -- INTEGER(1..4096)
+ontProfileRuleName : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.16 -- OCTET STRING (SIZE(0..255))
+ontProfileUniqueIdx : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.17 -- OCTET STRING (SIZE(0..255))
+ontProfileUniqueName : 1.3.6.1.4.1.13464.1.14.2.4.1.5.1.18 -- OCTET STRING (SIZE(0..255))
+ontUpgradeStatusTable : 1.3.6.1.4.1.13464.1.14.2.4.1.6 -- SEQUENCE OF OntUpgradeStatusEntry
+ontUpgradeStatusEntry : 1.3.6.1.4.1.13464.1.14.2.4.1.6.1 -- OntUpgradeStatusEntry
+soSlotIndexV : 1.3.6.1.4.1.13464.1.14.2.4.1.6.1.1 -- INTEGER(0..5)
+soPportIndexV : 1.3.6.1.4.1.13464.1.14.2.4.1.6.1.2 -- INTEGER(1..16)
+soOntIndexV : 1.3.6.1.4.1.13464.1.14.2.4.1.6.1.3 -- INTEGER(1..128)
+ontUpgradeActiveVer : 1.3.6.1.4.1.13464.1.14.2.4.1.6.1.4 -- OCTET STRING (SIZE(0..255))
+ontUpgradeInactiveVer : 1.3.6.1.4.1.13464.1.14.2.4.1.6.1.5 -- OCTET STRING (SIZE(0..255))
+ontUpgradeStatus : 1.3.6.1.4.1.13464.1.14.2.4.1.6.1.6 -- OCTET STRING (SIZE(0..255))
+ontStatisticsTable : 1.3.6.1.4.1.13464.1.14.2.4.1.7 -- SEQUENCE OF OntStatisticsEntry
+ontStatisticsEntry : 1.3.6.1.4.1.13464.1.14.2.4.1.7.1 -- OntStatisticsEntry
+soSlotIndexX : 1.3.6.1.4.1.13464.1.14.2.4.1.7.1.1 -- INTEGER(0..5)
+soPportIndexX : 1.3.6.1.4.1.13464.1.14.2.4.1.7.1.2 -- INTEGER(1..16)
+soOntIndexX : 1.3.6.1.4.1.13464.1.14.2.4.1.7.1.3 -- INTEGER(1..128)
+ontUsFrames : 1.3.6.1.4.1.13464.1.14.2.4.1.7.1.4 -- OCTET STRING (SIZE(0..255))
+ontUsBytes : 1.3.6.1.4.1.13464.1.14.2.4.1.7.1.5 -- OCTET STRING (SIZE(0..255))
+ontDsFrames : 1.3.6.1.4.1.13464.1.14.2.4.1.7.1.6 -- OCTET STRING (SIZE(0..255))
+ontDsBytes : 1.3.6.1.4.1.13464.1.14.2.4.1.7.1.7 -- OCTET STRING (SIZE(0..255))
+ontUsRate : 1.3.6.1.4.1.13464.1.14.2.4.1.7.1.8 -- OCTET STRING (SIZE(0..255))
+ontDsRate : 1.3.6.1.4.1.13464.1.14.2.4.1.7.1.9 -- OCTET STRING (SIZE(0..255))
+ontEthPortInfo : 1.3.6.1.4.1.13464.1.14.2.4.2
+ontEthportStateTable : 1.3.6.1.4.1.13464.1.14.2.4.2.1 -- SEQUENCE OF OntEthportStateEntry
+ontEthportStateEntry : 1.3.6.1.4.1.13464.1.14.2.4.2.1.1 -- OntEthportStateEntry
+soSlotIndexVI : 1.3.6.1.4.1.13464.1.14.2.4.2.1.1.1 -- INTEGER(0..5)
+soPportIndexVI : 1.3.6.1.4.1.13464.1.14.2.4.2.1.1.2 -- INTEGER(1..16)
+soOntIndexVI : 1.3.6.1.4.1.13464.1.14.2.4.2.1.1.3 -- INTEGER(1..128)
+soOntEthportIndex : 1.3.6.1.4.1.13464.1.14.2.4.2.1.1.4 -- INTEGER(1..8)
+ontEthportAdminStatus : 1.3.6.1.4.1.13464.1.14.2.4.2.1.1.5 -- OCTET STRING (SIZE(0..255))
+ontEthportConnectState : 1.3.6.1.4.1.13464.1.14.2.4.2.1.1.6 -- OCTET STRING (SIZE(0..255))
+ontEthportPortSpeed : 1.3.6.1.4.1.13464.1.14.2.4.2.1.1.7 -- OCTET STRING (SIZE(0..255))
+ontEthportStatisRecTable : 1.3.6.1.4.1.13464.1.14.2.4.2.2 -- SEQUENCE OF OntEthportStatisRecEntry
+ontEthportStatisRecEntry : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1 -- OntEthportStatisRecEntry
+soSlotIndexVII : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.1 -- INTEGER(0..5)
+soPportIndexVII : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.2 -- INTEGER(1..16)
+soOntIndexVII : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.3 -- INTEGER(1..128)
+soOntEthportIndexI : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.4 -- INTEGER(1..8)
+ontEthportRecFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.5 -- INTEGER (0..4294967295UL)
+ontEthportRecUniFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.6 -- INTEGER (0..4294967295UL)
+ontEthportRecMulFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.7 -- INTEGER (0..4294967295UL)
+ontEthportRecBroFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.8 -- INTEGER (0..4294967295UL)
+ontEthportRec64Frames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.9 -- INTEGER (0..4294967295UL)
+ontEthportRec65Frames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.10 -- INTEGER (0..4294967295UL)
+ontEthportRec128Frames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.11 -- INTEGER (0..4294967295UL)
+ontEthportRec256Frames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.12 -- INTEGER (0..4294967295UL)
+ontEthportRec512Frames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.13 -- INTEGER (0..4294967295UL)
+ontEthportRec1024Frames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.14 -- INTEGER (0..4294967295UL)
+ontEthportRecUndFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.15 -- INTEGER (0..4294967295UL)
+ontEthportRecOveFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.16 -- INTEGER (0..4294967295UL)
+ontEthportRecFragments : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.17 -- INTEGER (0..4294967295UL)
+ontEthportRecJabbers : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.18 -- INTEGER (0..4294967295UL)
+ontEthportRecFcsFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.19 -- INTEGER (0..4294967295UL)
+ontEthportDisFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.20 -- INTEGER (0..4294967295UL)
+ontEthportRecAliFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.21 -- INTEGER (0..4294967295UL)
+ontEthportMacRecFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.22 -- INTEGER (0..4294967295UL)
+ontEthportPppFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.23 -- INTEGER (0..4294967295UL)
+ontEthportBufReceive : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.24 -- INTEGER (0..4294967295UL)
+ontEthportRecBytes : 1.3.6.1.4.1.13464.1.14.2.4.2.2.1.25 -- INTEGER (0..4294967295UL)
+ontEthportStatisSentTable : 1.3.6.1.4.1.13464.1.14.2.4.2.3 -- SEQUENCE OF OntEthportStatisSentEntry
+ontEthportStatisSentEntry : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1 -- OntEthportStatisSentEntry
+soSlotIndexXI : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.1 -- INTEGER(0..5)
+soPportIndexXI : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.2 -- INTEGER(1..16)
+soOntIndexXI : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.3 -- INTEGER(1..128)
+soOntEthportIndexIII : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.4 -- INTEGER(1..8)
+ontEthportSenFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.5 -- INTEGER (0..4294967295UL)
+ontEthportSenUniFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.6 -- INTEGER (0..4294967295UL)
+ontEthportSenMulFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.7 -- INTEGER (0..4294967295UL)
+ontEthportSenBroFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.8 -- INTEGER (0..4294967295UL)
+ontEthportCarFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.9 -- INTEGER (0..4294967295UL)
+ontEthportSqeMessages : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.10 -- INTEGER (0..4294967295UL)
+ontEthportSenSinFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.11 -- INTEGER (0..4294967295UL)
+ontEthportSenMulColFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.12 -- INTEGER (0..4294967295UL)
+ontEthportSenExcFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.13 -- INTEGER (0..4294967295UL)
+ontEthportLatFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.14 -- INTEGER (0..4294967295UL)
+ontEthportMacSenFrames : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.15 -- INTEGER (0..4294967295UL)
+ontEthportBufTransmit : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.16 -- INTEGER (0..4294967295UL)
+ontEthportSentBytes : 1.3.6.1.4.1.13464.1.14.2.4.2.3.1.17 -- INTEGER (0..4294967295UL)
+ontEthportMulticastTable : 1.3.6.1.4.1.13464.1.14.2.4.2.4 -- SEQUENCE OF OntEthportMulticastEntry
+ontEthportMulticastEntry : 1.3.6.1.4.1.13464.1.14.2.4.2.4.1 -- OntEthportMulticastEntry
+soSlotIndexVIII : 1.3.6.1.4.1.13464.1.14.2.4.2.4.1.1 -- INTEGER(0..5)
+soPportIndexVIII : 1.3.6.1.4.1.13464.1.14.2.4.2.4.1.2 -- INTEGER(1..16)
+soOntIndexVIII : 1.3.6.1.4.1.13464.1.14.2.4.2.4.1.3 -- INTEGER(1..128)
+soOntEthportIndexII : 1.3.6.1.4.1.13464.1.14.2.4.2.4.1.4 -- INTEGER(1..8)
+ontEthportMultiUpdateData : 1.3.6.1.4.1.13464.1.14.2.4.2.4.1.5 -- INTEGER(0..2)
+ontEthportMac : 1.3.6.1.4.1.13464.1.14.2.4.2.4.1.6 -- OCTET STRING (SIZE(0..255))
+ontEthportIp : 1.3.6.1.4.1.13464.1.14.2.4.2.4.1.7 -- IpAddress
+ontEthportVlan : 1.3.6.1.4.1.13464.1.14.2.4.2.4.1.8 -- INTEGER(0..3600)
+ontEthportClientIp : 1.3.6.1.4.1.13464.1.14.2.4.2.4.1.9 -- IpAddress
+ontEthportAgeTime : 1.3.6.1.4.1.13464.1.14.2.4.2.4.1.10 -- INTEGER(0..3600)
+ontEthportIgmpVer : 1.3.6.1.4.1.13464.1.14.2.4.2.4.1.11 -- INTEGER(0..3)
+ontGemPortInfo : 1.3.6.1.4.1.13464.1.14.2.4.3
+ontGemportStatisticsTable : 1.3.6.1.4.1.13464.1.14.2.4.3.1 -- SEQUENCE OF OntGemportStatisticsEntry
+ontGemportStatisticsEntry : 1.3.6.1.4.1.13464.1.14.2.4.3.1.1 -- OntGemportStatisticsEntry
+soSlotIndexIX : 1.3.6.1.4.1.13464.1.14.2.4.3.1.1.1 -- INTEGER(0..5)
+soPportIndexIX : 1.3.6.1.4.1.13464.1.14.2.4.3.1.1.2 -- INTEGER(1..16)
+soOntIndexIX : 1.3.6.1.4.1.13464.1.14.2.4.3.1.1.3 -- INTEGER(1..128)
+ontGemportStaFrameType : 1.3.6.1.4.1.13464.1.14.2.4.3.1.1.4 -- INTEGER(0..2)
+ontGemportStaIndex : 1.3.6.1.4.1.13464.1.14.2.4.3.1.1.5 -- INTEGER(1..24)
+ontGemportStaUpdateData : 1.3.6.1.4.1.13464.1.14.2.4.3.1.1.6 -- INTEGER(0..2)
+ontGemportLostFrame : 1.3.6.1.4.1.13464.1.14.2.4.3.1.1.7 -- INTEGER (0..4294967295UL)
+ontGemportRecFrame : 1.3.6.1.4.1.13464.1.14.2.4.3.1.1.8 -- INTEGER (0..4294967295UL)
+ontGemportRecBlock : 1.3.6.1.4.1.13464.1.14.2.4.3.1.1.9 -- INTEGER (0..4294967295UL)
+ontGemportSentFrame : 1.3.6.1.4.1.13464.1.14.2.4.3.1.1.10 -- INTEGER (0..4294967295UL)
+ontGemportSentBlock : 1.3.6.1.4.1.13464.1.14.2.4.3.1.1.11 -- INTEGER (0..4294967295UL)
+statusTrap : 1.3.6.1.4.1.13464.1.14.2.5
+deviceTrap : 1.3.6.1.4.1.13464.1.14.2.5.1
+oltSwitchOverTrap : 1.3.6.1.4.1.13464.1.14.2.5.1.1 -- trap
+oltFanStatusTrap : 1.3.6.1.4.1.13464.1.14.2.5.1.2 -- trap
+oltPowerStatusTrap : 1.3.6.1.4.1.13464.1.14.2.5.1.3 -- trap
+oltTemperatureTrap : 1.3.6.1.4.1.13464.1.14.2.5.1.4 -- trap
+oltPonTemperatureTrap : 1.3.6.1.4.1.13464.1.14.2.5.1.5 -- trap
+unitOfflineAlarmTrap : 1.3.6.1.4.1.13464.1.14.2.5.1.6 -- trap
+slotTrap : 1.3.6.1.4.1.13464.1.14.2.5.2
+oltBoardStatusTrap : 1.3.6.1.4.1.13464.1.14.2.5.2.1 -- trap
+portTrap : 1.3.6.1.4.1.13464.1.14.2.5.3
+oltPortRingTrap : 1.3.6.1.4.1.13464.1.14.2.5.3.1 -- trap
+oltPortSdTrap : 1.3.6.1.4.1.13464.1.14.2.5.3.2 -- trap
+oltPportLOSTrap : 1.3.6.1.4.1.13464.1.14.2.5.3.3 -- trap
+oltPortSfpTcrossTrap : 1.3.6.1.4.1.13464.1.14.2.5.3.4 -- trap
+oltPortSfpUnplugTrap : 1.3.6.1.4.1.13464.1.14.2.5.3.5 -- trap
+oltPortUdldTrap : 1.3.6.1.4.1.13464.1.14.2.5.3.6 -- trap
+oltPportLOFTrap : 1.3.6.1.4.1.13464.1.14.2.5.3.7 -- trap
+ontTrap : 1.3.6.1.4.1.13464.1.14.2.5.4
+ontOnlineStatusTrap : 1.3.6.1.4.1.13464.1.14.2.5.4.1 -- trap
+ont9843Trap : 1.3.6.1.4.1.13464.1.14.2.5.4.2 -- trap
+ontRogueTrap : 1.3.6.1.4.1.13464.1.14.2.5.4.3 -- trap
+ontAuthConflictTrap : 1.3.6.1.4.1.13464.1.14.2.5.4.4 -- trap
+ontSfpTcrossTrap : 1.3.6.1.4.1.13464.1.14.2.5.4.5 -- trap
+ontPortTrap : 1.3.6.1.4.1.13464.1.14.2.5.5
+ontEthPortStatusTrap : 1.3.6.1.4.1.13464.1.14.2.5.5.1 -- trap
+ontEthPortRingTrap : 1.3.6.1.4.1.13464.1.14.2.5.5.2 -- trap
+ontPotsH248Trap : 1.3.6.1.4.1.13464.1.14.2.5.5.3 -- trap
+trapInfo : 1.3.6.1.4.1.13464.1.14.2.5.6
+gponTrapSlotId : 1.3.6.1.4.1.13464.1.14.2.5.6.1 -- INTEGER
+gponTrapPortId : 1.3.6.1.4.1.13464.1.14.2.5.6.2 -- INTEGER
+gponTrapOntId : 1.3.6.1.4.1.13464.1.14.2.5.6.3 -- INTEGER
+gponTrapOntEthportId : 1.3.6.1.4.1.13464.1.14.2.5.6.4 -- INTEGER
+gponTrapExtraId : 1.3.6.1.4.1.13464.1.14.2.5.6.5 -- INTEGER
+gponTrapStatus : 1.3.6.1.4.1.13464.1.14.2.5.6.6 -- INTEGER
+gponTrapExtraInfo : 1.3.6.1.4.1.13464.1.14.2.5.6.7 -- INTEGER
+gponTrapSn : 1.3.6.1.4.1.13464.1.14.2.5.6.8 -- OCTET STRING
+gponTrapLoid : 1.3.6.1.4.1.13464.1.14.2.5.6.9 -- OCTET STRING
+trapSetThreshold : 1.3.6.1.4.1.13464.1.14.2.5.7
+trapClearThreshold : 1.3.6.1.4.1.13464.1.14.2.5.8
+oemTrue : 1.3.6.1.4.1.13464.1.14.3
+trueXmlOntConfig : 1.3.6.1.4.1.13464.1.14.3.1
+txocSlotId : 1.3.6.1.4.1.13464.1.14.3.1.1 -- INTEGER
+txocPportId : 1.3.6.1.4.1.13464.1.14.3.1.2 -- INTEGER
+txocOntId : 1.3.6.1.4.1.13464.1.14.3.1.3 -- INTEGER
+txocServerIp : 1.3.6.1.4.1.13464.1.14.3.1.4 -- IpAddress
+txocSn : 1.3.6.1.4.1.13464.1.14.3.1.5 -- OCTET STRING (SIZE(0..255))
+txocCrc : 1.3.6.1.4.1.13464.1.14.3.1.6 -- INTEGER
+trueNameToIndex : 1.3.6.1.4.1.13464.1.14.3.2
+tntiName : 1.3.6.1.4.1.13464.1.14.3.2.1 -- OCTET STRING (SIZE(0..255))
+tntiType : 1.3.6.1.4.1.13464.1.14.3.2.2 -- INTEGER
+tntiStatus : 1.3.6.1.4.1.13464.1.14.3.2.3 -- INTEGER
+tntiIndex : 1.3.6.1.4.1.13464.1.14.3.2.4 -- INTEGER
