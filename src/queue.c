@@ -14,17 +14,17 @@
     ret; \
 })
 
-static int isQueueFull(tableInfoQueue *q);
-static int isQueueEmpty(tableInfoQueue *q);
+static int isQueueFull(mibNodeInfoQueue *q);
+static int isQueueEmpty(mibNodeInfoQueue *q);
 
-int appendQueue(tableInfoQueue *q, tableInfo *pData) {
+int appendQueue(mibNodeInfoQueue *q, tableInfo *pData) {
     if (isQueueFull(q))
         return -1;
     q->tableBuffer[q->tail] = pData;
     q->tail++;
 }
 
-void *getQueue(tableInfoQueue *q) {
+void *getQueue(mibNodeInfoQueue *q) {
     void *ret;
     if (isQueueEmpty(q))
         return 0;
@@ -33,7 +33,7 @@ void *getQueue(tableInfoQueue *q) {
     return ret;
 }
 
-static int isQueueFull(tableInfoQueue *q) {
+static int isQueueFull(mibNodeInfoQueue *q) {
     int head = q->head;
     int tail = q->tail;
 
@@ -43,7 +43,7 @@ static int isQueueFull(tableInfoQueue *q) {
         return 0;
 }
 
-static int isQueueEmpty(tableInfoQueue *q) {
+static int isQueueEmpty(mibNodeInfoQueue *q) {
     if (q->head == q->tail)
         return 1;
     else

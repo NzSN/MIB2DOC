@@ -9,13 +9,14 @@
 
 #define SIZE_OF_QUEUE 512
 
-typedef struct tableInfoQueue {
+typedef struct mibNodeInfoQueue {
     int head;
     int tail;
+    int count;
     tableInfo *tableBuffer[SIZE_OF_QUEUE];
-} tableInfoQueue;
+} mibNodeInfoQueue;
 
-int appendQueue(tableInfoQueue *q, tableInfo *f);
-void *getQueue(tableInfoQueue *q);
+int appendQueue(mibNodeInfoQueue *q, tableInfo *f);
+void *getQueue(mibNodeInfoQueue *q);
 
 #endif //GL5610_MIB_DOC_GEN_QUEUE_H

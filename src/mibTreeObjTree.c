@@ -22,7 +22,7 @@ static int Treeprint(void *arg, mibObjectTreeNode *node);
 /* Declaration */
 mibObjectTreeNode * mibNodeBuild(char *ident, char *oid);
 mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid);
-mibObjectTreeNode * travel_mt(mibObjectTreeNode *obj, int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
+mibObjectTreeNode * travel_mot(mibObjectTreeNode *obj, int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
 
 void mibObjectTreeInit(mibObjectTreeNode *root) {
     mibNodeInfo *rootInfo;
@@ -139,13 +139,13 @@ mibObjectTreeNode *parent_mot(mibObjectTreeNode *root, char *ident) {
 mibObjectTreeNode * search_mot(mibObjectTreeNode *root, char *const ident) {
     mibObjectTreeNode *target;
 
-    target = travel_mt(root, nodeCmp, ident);
+    target = travel_mot(root, nodeCmp, ident);
 
     return target;
 }
 
 void showTree(mibObjectTreeNode *root) {
-    travel_mt(root, Treeprint, NULL);
+    travel_mot(root, Treeprint, NULL);
 }
 
 static int Treeprint(void *arg, mibObjectTreeNode *node) {
@@ -195,7 +195,7 @@ char *getOidFromInfo(mibObjectTreeNode *node) {
 }
 
 
-mibObjectTreeNode * travel_mt(mibObjectTreeNode *obj, int (*func)(void *argu, mibObjectTreeNode *node), void *arg) {
+mibObjectTreeNode * travel_mot(mibObjectTreeNode *obj, int (*func)(void *argu, mibObjectTreeNode *node), void *arg) {
     int ret;
     mibObjectTreeNode *targetC, *targetS;
 
@@ -208,8 +208,8 @@ mibObjectTreeNode * travel_mt(mibObjectTreeNode *obj, int (*func)(void *argu, mi
         return obj;
     }
 
-    targetC = travel_mt(obj->child, func, arg);
-    targetS = travel_mt(obj->sibling, func, arg);
+    targetC = travel_mot(obj->child, func, arg);
+    targetS = travel_mot(obj->sibling, func, arg);
 
     if (targetC != NULL)
         return targetC;

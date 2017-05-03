@@ -29,7 +29,6 @@ typedef struct mibObjectTreeNode {
     struct mibObjectTreeNode *head;
 } mibObjectTreeNode;
 
-
 void mibObjectTreeInit(mibObjectTreeNode *root);
 int insert_mot(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent);
 mibObjectTreeNode * parent_mot(mibObjectTreeNode *root, char *ident);

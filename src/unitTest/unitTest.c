@@ -74,7 +74,7 @@ static void mibTree_test(void **state) {
 }
 
 static void tableInfoQueue_test(void **state) {
-    tableInfoQueue queue;
+    mibNodeInfoQueue queue;
 }
 
 int main(void) {

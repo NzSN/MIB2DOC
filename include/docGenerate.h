@@ -15,6 +15,6 @@ typedef struct tableInfo {
     char *desc;
 } tableInfo;
 
-int docGenerate(mibObjectTreeNode *root, char *beginNode, FILE *output);
+int docGenerate(void *arg, mibObjectTreeNode *root);
 
 #endif //UNIT_TEST_DOCGENERATE_H
