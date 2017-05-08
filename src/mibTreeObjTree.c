@@ -6,6 +6,7 @@
 #include <string.h>
 #include "../include/mibTreeObjTree.h"
 #include "../include/type.h"
+#include "../include/docGenerate.h"
 
 /* Global */
 mibObjectTreeNode mibObjectTreeRoot;
@@ -85,7 +86,7 @@ mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, 
     info->nodeInfo->oid = oid;
     info->type = type;
     info->rw = rw;
-    info->desc = desc;
+    info->detail = desc;
 
     obj = (mibObjectTreeNode *)malloc(sizeof(mibObjectTreeNode));
     memset(obj, 0, sizeof(mibObjectTreeNode));
@@ -118,12 +119,66 @@ int insert_mot(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ide
             current->sibling = obj;
             obj->parent = parentNode;
             obj->head = child;
-            return 0;
+            goto MISC;
             }
     } else {
         parentNode->child = obj;
         obj->head = obj;
+        obj->parent = parentNode;
     }
+MISC:
+    descriptionDeal(obj);
+    return 0;
+}
+
+#define LOWER_CASE(C) ({ \
+    int ret; \
+    if (C < 97) \
+        ret = C+32; \
+    else \
+        ret = C; \
+    ret; \
+})
+
+int descriptionDeal(mibObjectTreeNode *node) {
+
+    int i, pos, size, descSize, sumChild, sumParent;
+    char *ident = getIdentFromInfo(node);
+    char *parentIdent = getIdentFromInfo(node->parent);
+    mibLeaveInfo *info;
+
+    if (strlen(ident) > strlen(parentIdent))
+        size = strlen(parentIdent);
+    else
+        size = strlen(ident);
+
+    if (!node->isNode & !tableRecognize(ident, strlen(ident))) {
+        info = node->info;
+
+        pos = -1;
+        sumChild = 0;
+        sumParent = 0;
+        for (i=0; i<size; i++) {
+            sumChild += LOWER_CASE(ident[i]);
+            sumParent += LOWER_CASE(parentIdent[i]);
+
+            if (sumChild == sumParent) {
+                pos = i;
+                continue;
+            }
+            break;
+        }
+        if (pos == -1)
+            return 0;
+
+        size = strlen(ident);
+        descSize = size-(pos+1);
+
+        info->desc = (char *)malloc(descSize+1);
+        memset(info->desc, 0, descSize+1);
+        strncpy(info->desc, ident+pos+1, descSize);
+    }
+    return 0;
 }
 
 mibObjectTreeNode *parent_mot(mibObjectTreeNode *root, char *ident) {
@@ -149,9 +204,11 @@ void showTree(mibObjectTreeNode *root) {
 }
 
 static int Treeprint(void *arg, mibObjectTreeNode *node) {
+
     printf("%s : %s", getIdentFromInfo(node), getOidFromInfo(node));
     if (!node->isNode)
-        printf(" -- %s\n", ((mibLeaveInfo *)node->info)->type);
+        printf(" -- %s -- %s\n", ((mibLeaveInfo *)node->info)->type,
+               ((mibLeaveInfo *)node->info)->desc);
     else
         printf("\n");
     return 0;

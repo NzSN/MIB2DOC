@@ -38,4 +38,5 @@ mibObjectTreeNode * search_mot(mibObjectTreeNode *root, char *const ident);
 char * getIdentFromInfo(mibObjectTreeNode *node);
 char * getOidFromInfo(mibObjectTreeNode *node);
 void showTree(mibObjectTreeNode *root);
+mibObjectTreeNode * travel_mot(mibObjectTreeNode *obj, int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
 #endif //GL5610_MIB_DOC_GEN_TREE_H

@@ -17,6 +17,6 @@ typedef struct mibNodeInfoQueue {
 } mibNodeInfoQueue;
 
 int appendQueue(mibNodeInfoQueue *q, tableInfo *f);
-void *getQueue(mibNodeInfoQueue *q);
+tableInfo *getQueue(mibNodeInfoQueue *q);
 
 #endif //GL5610_MIB_DOC_GEN_QUEUE_H

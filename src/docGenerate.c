@@ -15,7 +15,7 @@
 /* Global */
 char *beginFrom;
 int beginOid;
-
+int isInitilized;
 /* enumeration */
 enum {
     TABLE = 1,
@@ -31,31 +31,39 @@ static int sectionLatex(char *secName, char *OID, FILE *writeTo);
 static int tableLaTex(mibNodeInfoQueue *info, char *parent, FILE *writeTo);
 static char * genTableItemLaTex(tableInfo *info, int index);
 static int infoPacket(tableInfo *info, mibObjectTreeNode *node);
+char *long2Short(char *str);
+/* static ** for test */ int tableRecognize(char *buffer, int size);
+/* static ** for test */ int entryRecognize(char *buffer, int size);
 
 int docGenerate(void *arg, mibObjectTreeNode *node) {
     FILE *writeTo;
     char *secname, *oid, *parent;
-    tableInfo info;
+    tableInfo *info;
     mibObjectTreeNode *pNode;
+    mibNodeInfoQueue *pQueue = &infoQueue;
 
     if (!beginFrom)
-        return -1;
+        return 0;
 
-    /* Initialization */
-    writeTo = (FILE *)arg;
+    writeTo = (FILE *) arg;
     pNode = search_mot(&mibObjectTreeRoot, beginFrom);
     beginOid = strlen(getOidFromInfo(pNode));
-    laTexStrBuffer = (char *)malloc(SIZE_OF_LATEX_BUFFER);
+    laTexStrBuffer = (char *) malloc(SIZE_OF_LATEX_BUFFER);
 
     switch(makeDecision(node)) {
         case TABLE:
+            info = (tableInfo *)malloc(sizeof(tableInfo));
+            infoPacket(info, node);
+            parent = getIdentFromInfo(node->parent);
+            if (entryRecognize(parent, strlen(parent)))
+                parent = getIdentFromInfo(node->parent->parent);
+            appendQueue(&infoQueue, info);
             tableLaTex(&infoQueue, parent, writeTo);
             break;
         case COLLECTING:
-            if (!parent)
-                parent = getIdentFromInfo(node->parent);
-            infoPacket(&info, node);
-            appendQueue(&infoQueue, &info);
+            info = (tableInfo *)malloc(sizeof(tableInfo));
+            infoPacket(info, node);
+            appendQueue(&infoQueue, info);
             break;
         case SECTION:
             secname = getIdentFromInfo(node);
@@ -70,7 +78,17 @@ int docGenerate(void *arg, mibObjectTreeNode *node) {
 }
 
 static int makeDecision(mibObjectTreeNode *node) {
+    int decision;
+    char *ident = getIdentFromInfo(node);
 
+    if (node->isNode || tableRecognize(ident, strlen(ident))) {
+        decision = SECTION;
+    } else if (node->sibling != NULL || entryRecognize(ident, strlen(ident))) {
+        decision = COLLECTING;
+    } else {
+        decision = TABLE;
+    }
+    return decision;
 }
 
 static int infoPacket(tableInfo *info, mibObjectTreeNode *node) {
@@ -81,7 +99,7 @@ static int infoPacket(tableInfo *info, mibObjectTreeNode *node) {
         return 1;
 
     info->desc = ((mibLeaveInfo *)(node->info))->desc;
-    info->type = ((mibLeaveInfo *)(node->info))->type;
+    info->type = long2Short(((mibLeaveInfo *)(node->info))->type);
     info->rw = ((mibLeaveInfo *)(node->info))->rw;
 
     return 0;
@@ -92,15 +110,14 @@ static int sectionLatex(char *secName, char *OID, FILE *writeTo) {
         section = 1,
         subsection = 2 ,
         subsubsection = 3,
-        subsubsubsection = 4,
-        paragraph = 5,
-        subparagraph = 6
+        paragraph = 4,
+        subparagraph = 5
     };
 
     int depth;
     char *prefix;
 
-    depth = (strlen(OID) - beginOid) / 2;
+    depth = (strlen(OID) - beginOid) / 2 + 1;
 
     switch (depth) {
         case section:
@@ -112,9 +129,6 @@ static int sectionLatex(char *secName, char *OID, FILE *writeTo) {
         case subsubsection:
             prefix = "subsubsection";
             break;
-        case subsubsubsection:
-            prefix = "subsubsubsection";
-            break;
         case paragraph:
             prefix = "paragraph";
             break;
@@ -125,7 +139,7 @@ static int sectionLatex(char *secName, char *OID, FILE *writeTo) {
             prefix = "subparagraph";
     }
 
-    fprintf(writeTo, "\\%s {%s (%s)}\n", prefix, secName, OID);
+    fprintf(writeTo, "\\%s {%s (%s)}.\n", prefix, secName, OID);
 
     return 0;
 }
@@ -137,16 +151,16 @@ static int tableLaTex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) {
         return -1;
 
     count = queue->count;
-    index = 0;
+    index = 1;
 
-    fprintf(writeTo, "\\begin{table}[!hbp]\n"
-                     "\\newcommand{\\tabincell}[2]{\\begin{tabular}{@{}#1@{}}#2\\end{tabular}}\n"
+    fprintf(writeTo, "\\begin{table}[H]\n"
                      "\\centerline {\n"
                      "\\begin{tabular} {|c|c|c|c|c|c|c|}\n"
                      "\\hline\n"
-                     "Index & Name & Desc & OID & RW & Type & Detail \\\\ \n");
-    for (i=0; i<count; i++) {
-        fprintf(writeTo, "%s\n", genTableItemLaTex((tableInfo *)getQueue(queue), index));
+                     "Index & Name & Desc & OID & RW & Type & Detail \\\\ \n"
+                     "\\hline\n");
+    for (i=0; i<count; i++, index++) {
+        fprintf(writeTo, "%s \\\\\n", genTableItemLaTex((tableInfo *)getQueue(queue), index));
         fprintf(writeTo, "\\hline\n");
     }
 
@@ -166,7 +180,196 @@ static char * genTableItemLaTex(tableInfo *info, int index) {
 
     memset(laTexStrBuffer, 0, SIZE_OF_LATEX_BUFFER);
     sprintf(laTexStrBuffer, "%d & %s & %s & %s & %s & %s & %s",
-            index, info->identifier, " ", info->oid, info->rw, info->type, " ");
+            index, info->identifier, info->desc, info->oid, info->rw, info->type, " ");
 
     return laTexStrBuffer;
+}
+
+/* static ** for test */ int tableRecognize(char *buffer, int size) {
+    int ret, index;
+    char current;
+
+S_init:
+    index = -1;
+    ret = -1;
+    goto S_0;
+
+S_0:
+    if (index < size)
+        index++;
+    else
+        goto S_out;
+
+    current = buffer[index];
+
+    if (current == 'T')
+        goto S_1;
+    else
+        goto S_0;
+
+S_1:
+    if (index < size)
+        index++;
+    else
+        goto S_out;
+
+    current = buffer[index];
+
+    if (current == 'a')
+        goto S_2;
+    else
+        goto S_0;
+
+S_2:
+    if (index < size)
+        index++;
+    else
+        goto S_out;
+
+    current = buffer[index];
+
+    if (current == 'b')
+        goto S_3;
+    else
+        goto S_0;
+
+S_3:
+    if (index < size)
+        index++;
+    else
+        goto S_out;
+
+    current = buffer[index];
+
+    if (current == 'l')
+        goto S_4;
+    else
+        goto S_0;
+
+S_4:
+    if (index < size)
+        index++;
+    else
+        goto S_out;
+
+    current = buffer[index];
+
+    if (current == 'e')
+        goto S_accept;
+    else
+        goto S_0;
+
+S_accept:
+    ret = 1;
+    goto S_finished;
+
+S_out:
+    ret = 0;
+
+S_finished:
+    return ret;
+}
+
+/* static ** for test */ int entryRecognize(char *buffer, int size) {
+    int ret, index;
+    char current;
+
+    S_init:
+    index = -1;
+    ret = -1;
+    goto S_0;
+
+    S_0:
+    if (index < size)
+        index++;
+    else
+        goto S_out;
+
+    current = buffer[index];
+
+    if (current == 'E')
+        goto S_1;
+    else
+        goto S_0;
+
+    S_1:
+    if (index < size)
+        index++;
+    else
+        goto S_out;
+
+    current = buffer[index];
+
+    if (current == 'n')
+        goto S_2;
+    else
+        goto S_0;
+
+    S_2:
+    if (index < size)
+        index++;
+    else
+        goto S_out;
+
+    current = buffer[index];
+
+    if (current == 't')
+        goto S_3;
+    else
+        goto S_0;
+
+    S_3:
+    if (index < size)
+        index++;
+    else
+        goto S_out;
+
+    current = buffer[index];
+
+    if (current == 'r')
+        goto S_4;
+    else
+        goto S_0;
+
+    S_4:
+    if (index < size)
+        index++;
+    else
+        goto S_out;
+
+    current = buffer[index];
+
+    if (current == 'y')
+        goto S_accept;
+    else
+        goto S_0;
+
+    S_accept:
+    ret = 1;
+    goto S_finished;
+
+    S_out:
+    ret = 0;
+
+    S_finished:
+    return ret;
+}
+
+char * long2Short(char *str) {
+    if (IS_PTR_NULL(str))
+        return NULL;
+
+    if (strncmp(str, "INTEGER", strlen("INTEGER")) == 0) {
+        return "INT";
+    }
+
+    if (strncmp(str, "OCTET", strlen("OCTET")) == 0) {
+        return "OCT";
+    }
+
+    if (entryRecognize(str, strlen(str))) {
+        return "Entry";
+    }
+
+    return str;
 }

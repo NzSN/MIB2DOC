@@ -16,5 +16,5 @@ typedef struct tableInfo {
 } tableInfo;
 
 int docGenerate(void *arg, mibObjectTreeNode *root);
-
+int tableRecognize(char *buffer, int size);
 #endif //UNIT_TEST_DOCGENERATE_H

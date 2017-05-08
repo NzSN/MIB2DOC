@@ -11,7 +11,7 @@
     else { \
         ret++; \
     } \
-    ret; \
+    idx = ret; \
 })
 
 static int isQueueFull(mibNodeInfoQueue *q);
@@ -21,15 +21,19 @@ int appendQueue(mibNodeInfoQueue *q, tableInfo *pData) {
     if (isQueueFull(q))
         return -1;
     q->tableBuffer[q->tail] = pData;
-    q->tail++;
+    Qnext(q->tail);
+    q->count++;
+
+    return 0;
 }
 
-void *getQueue(mibNodeInfoQueue *q) {
-    void *ret;
+tableInfo *getQueue(mibNodeInfoQueue *q) {
+    tableInfo *ret;
     if (isQueueEmpty(q))
         return 0;
     ret = q->tableBuffer[q->head];
-    q->head++;
+    Qnext(q->head);
+    q->count--;
     return ret;
 }
 
