@@ -1,3 +1,5 @@
+%option reentrant
+
 %{
     #include "../include/type.h"
     #include "../include/list.h"

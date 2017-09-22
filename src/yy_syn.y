@@ -1,3 +1,5 @@
+%define api.pure full
+%parse-param {int flag}
 %token IDENTIFIER OBJ_SPECIFIER
 %token SYNTAX_SPECIFIER
 %token ACCESS_SPECIFIER ACCESS_VALUE
