@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 /* Declaration Section */
-#define DECISION_FORMULA(DIS_MODE, DIS_MODE) ({ \
+#define DECISION_FORMULA(DIS_MODE, DIS_TYPE) ({ \
     int mode_ = DIS_MODE;   \
     int type_ = DIS_TYPE;   \
                             \
@@ -17,14 +17,14 @@ static int dispatchMakeChoice(dispatch_mode dMode, dispatch_type dType);
 /* Definition Section */
 errorType dispatch(dispatch_mode dMode, dispatch_type dType, params_t *param) {
     errorType ret = ok; 
-
+    
     switch (dispatchMakeChoice(dMode, dType)) {
         case DISPATCH_PARAM_STAGE:
-            appendElement_el(&elistHead, buildElement(*(int *)param->firstParam, 
-                                         (char *)param->secondParam));
+            appendElement_el(&elistHead, buildElement(*CAST((int *), paramListGet(&param)->param), 
+                                         CAST((char *), paramListGet(&param)->param)));
             break;
         case MIBTREE_GENERATION:
-            deal_with(*(int *)param->firstParam);
+            deal_with(*CAST((int *), paramListGet(&param)->param));
             break;
         case SYMBOL_COLLECTING:
             break;

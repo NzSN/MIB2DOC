@@ -4,8 +4,8 @@
 
 #include <malloc.h>
 #include <string.h>
-#include "../include/list.h"
-#include "../include/type.h"
+#include "list.h"
+#include "type.h"
 
 elementList * buildElement(int key, char *content) {
     elementList *newElement = (elementList *)malloc(sizeof(elementList));
@@ -61,4 +61,31 @@ int reset_el(elementList *el) {
     if (IS_PTR_NULL(el))
         return -1;
     el->next = NULL;
+}
+
+
+/* Operation for params_t */
+params_t * paramListAppend(params_t *head, params_t *pl) {
+    if (head == NULL || pl == NULL) {
+        return NULL;
+    }
+
+    while (head->next != NULL) {
+        head = head->next;
+    }
+    head->next = pl;
+    return pl;
+}
+
+params_t * paramListGet(params_t **head) {
+    params_t *ret;
+
+    if (head == NULL || *head == NULL) {
+        return NULL;
+    }
+    
+    ret = *head;
+    *head = *head->next;
+
+    return ret;
 }

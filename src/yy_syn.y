@@ -27,7 +27,7 @@
 
 %%
 MIB : DEFINITION IMPORT MAIN_PART               { };
-MAIN_PART : OBJ_IDENTIFIER MAIN_PART |
+MAIN_PART : OBJ_DEAL MAIN_PART |
             OBJ MAIN_PART |
             TRAP MAIN_PART |
             SEQUENCE MAIN_PART |
@@ -46,11 +46,11 @@ SEQUENCE : IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE { };
 SEQ_ITEM : IDENTIFIER TYPE COMMA SEQ_ITEM |
            IDENTIFIER TYPE ;
 
+OBJ_DEAL : OBJ_IDENTIFIER { deal_with(OBJECT_IDENTIFIER); }
 OBJ_IDENTIFIER : IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
                                                                                 appendElement_el(&elistHead, buildElement(IDENTIFIER_EL, $1));
                                                                                 appendElement_el(&elistHead, buildElement(PARENT_EL, $5));
-                                                                                appendElement_el(&elistHead, buildElement(SUFFIX_EL, $6));
-                                                                                deal_with(OBJECT_IDENTIFIER);
+                                                                                appendElement_el(&elistHead, buildElement(SUFFIX_EL, $6));                                                                                
                                                                               };
 
 OBJ : HEAD BODY                                 { deal_with(OBJECT); };
@@ -67,6 +67,7 @@ PROPERTY :  SYNTAX PROPERTY |
             MOUNT PROPERTY |
             OBJECT PROPERTY |
             /* empty */                         { };
+            
 OBJECT : OBJECTS_ L_BRACE OBJECT_ITEM R_BRACE
 OBJECT_ITEM : IDENTIFIER COMMA OBJECT_ITEM  |
               IDENTIFIER ;

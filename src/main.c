@@ -1,14 +1,12 @@
 #include <stdio.h>
-#include "../include/list.h"
-#include "../include/type.h"
-#include "../include/docGenerate.h"
+#include "list.h"
+#include "type.h"
+#include "docGenerate.h"
 
 extern int yylex(void);
 extern FILE *yyin;
 extern int yyparse (void);
 extern char *beginFrom;
-
-void documentGen(mibObjectTreeNode *root, FILE *writeTo);
 
 elementList elistHead;
 char currentTable[SIZE_OF_CURRENT_TABLE];
@@ -39,9 +37,4 @@ int main() {
     showTree(&mibObjectTreeRoot);
 
     return 0;
-}
-
-
-void documentGen(mibObjectTreeNode *root, FILE *writeTo) {
-    travel_mot(root, docGenerate, writeTo);
 }

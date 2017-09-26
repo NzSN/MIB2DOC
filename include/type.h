@@ -15,6 +15,7 @@
 #define SIZE_OF_OID_STRING 256
 #define IS_PTR_NULL(PTR) (PTR ? 0:1)
 #define RELEASE_PTR(PTR) ({free(PTR); PTR=NULL;})
+#define CAST(TO, FROM) ((TO)FROM)
 
 /* Extern */
 extern char *sectionRecord[SIZE_OF_SECTION_RECORD];
@@ -80,5 +81,11 @@ typedef enum errorType {
     error_null_reference,
     error_wrong_index
 } errorType;
+
+typedef struct params_t {
+    void *param;
+    struct params_t next;
+} params_t;
+
 
 #endif //GL5610_MIB_DOC_GEN_TYPE_H

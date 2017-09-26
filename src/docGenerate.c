@@ -32,10 +32,23 @@ static int tableLaTex(mibNodeInfoQueue *info, char *parent, FILE *writeTo);
 static char * genTableItemLaTex(tableInfo *info, int index);
 static int infoPacket(tableInfo *info, mibObjectTreeNode *node);
 char *long2Short(char *str);
+static int latexHeaderGen();
+static int latexTailGen();
+int documentGen(mibObjectTreeNode *root, FILE *writeTo);
+static int docGenerate(void *arg, mibObjectTreeNode *root);
+
 /* static ** for test */ int tableRecognize(char *buffer, int size);
 /* static ** for test */ int entryRecognize(char *buffer, int size);
 
-int docGenerate(void *arg, mibObjectTreeNode *node) {
+int documentGen(mibObjectTreeNode *root, FILE *writeTo) {
+    latexHeaderGen();
+    travel_mot(root, docGenerate, writeTo);
+    latexTailGen();
+
+    return Ok;
+}
+
+static int docGenerate(void *arg, mibObjectTreeNode *node) {
     FILE *writeTo;
     char *secname, *oid, *parent;
     tableInfo *info;
@@ -76,6 +89,11 @@ int docGenerate(void *arg, mibObjectTreeNode *node) {
 
     return 0;
 }
+
+
+static int latexHeaderGen() {}
+
+static int latexTailGen() {}
 
 static int makeDecision(mibObjectTreeNode *node) {
     int decision;
