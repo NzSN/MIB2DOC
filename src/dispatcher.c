@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 /* Declaration Section */
+dispatch_mode dispatchMode;
 #define DECISION_FORMULA(DIS_MODE, DIS_TYPE) ({ \
     int mode_ = DIS_MODE;   \
     int type_ = DIS_TYPE;   \
@@ -15,7 +16,11 @@
 static int dispatchMakeChoice(dispatch_mode dMode, dispatch_type dType);
 
 /* Definition Section */
-errorType dispatch(dispatch_mode dMode, dispatch_type dType, params_t *param) {
+int dispatchInit() {
+    dispatchMode = DISPATCH_MODE_DOC_GENERATING;
+    return ok;
+}
+errorType dispatch(dispatch_type dType, params_t *param) {
     errorType ret = ok; 
     
     switch (dispatchMakeChoice(dMode, dType)) {
@@ -27,7 +32,7 @@ errorType dispatch(dispatch_mode dMode, dispatch_type dType, params_t *param) {
             deal_with(*CAST((int *), paramListGet(&param)->param));
             break;
         case SYMBOL_COLLECTING:
-            symbolCollecting(paramListGet(&param)->param, paramListGet(&param)->param);
+            symbolCollecting(CAST(int, paramListGet(&param)->param), paramListGet(&param)->param);
             break;
         case IGNORE:
             /* Do nothing */
@@ -40,6 +45,6 @@ errorType dispatch(dispatch_mode dMode, dispatch_type dType, params_t *param) {
 }
 
 static int dispatchMakeChoice(dispatch_mode dMode, dispatch_type dType) {
-   return DECISION_FORMULA(dMode, dTYpe);
+   return DECISION_FORMULA(dispatchMode, dType);
 }
 

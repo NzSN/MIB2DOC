@@ -11,6 +11,7 @@
 
 /* Global */
 mibObjectTreeNode root;
+symbolTable symTable;
 
 /* Declaration */
 static int mibTreeLeaveAdd(char *ident, char *type, 
@@ -175,6 +176,9 @@ static char * oidComplement(char *parent, char *suffix) {
 
 
 
-int symbolCollecting(params_t symbol, char *searchFrom) {
-    
+int symbolCollecting(int type, params_t param) {
+
+    /* OBJECT be recognized */
+
+    /* SYMBOL identifier be recognized */
 }

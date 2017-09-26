@@ -104,3 +104,83 @@ params_t * paramListGet(params_t **head) {
 
     return ret;
 }
+
+/*****************************************************
+ * symbol_t and symbolTabl operation function define *
+ *****************************************************/
+int symbolModuleAdd(symbolTable *stbl, symbolTable *new) {
+    int ret = ok;
+
+    
+    if (IS_PTR_NULL(stbl) || IS_PTR_NULL(modName)) {
+        ret = -1;
+        return ret;
+    }
+
+    while (stbl->next != NULL) {
+        stbl = stbl->next;
+    }
+    stbl->next = new;
+    return ret;
+}
+
+int symbolAdd(char *modName, symbol_t *newSym) {
+    int ret;
+    symbolTable *pSymTbl = &symTable;
+    symbol_t pSym;
+    
+    if (IS_PTR_NULL(modName) || IS_PTR_NULL(newSym)) {
+        ret = -1;
+        return ret;
+    }
+    
+    while (!strncmp(modName, pSymTbl->modName, strlen(modName))) {
+        pSymTbl = pSymTbl->next;
+    }
+
+    /* no module match the modName */
+    if (pSymTbl == NULL) {
+        return 1;
+    }
+
+    pSym = pSymTbl->symbol;
+
+    while (pSym->next != NULL) {
+        pSym = pSym->next;
+    }
+
+    pSym->next = newSym;
+    return ret;
+}
+
+/*
+ *  return value:
+ *      0 -- not exist
+ *      1 -- exists
+ */
+int symbolSearching(char *symIdent) {
+    int ret = 0;
+    symbolTable *pSymTbl = &symTable;
+    symbol_t *pSym;
+
+    if (IS_PTR_NULL(symIdent)) {
+        ret = -1;
+        return ret;
+    }
+
+    while (pSymTbl->next != NULL) {
+        pSym = pSymTbl->symbol;
+
+        while (pSym->next != NULL) {
+            if (!strncmp(symIdent, pSym->identifier, strlen(symIdent))) {
+                ret = 1;
+                goto FINISHED;
+            }
+            pSym = pSym->next;
+        }
+        pSymTbl = pSymTbl->next;
+    }
+
+FINISHED:
+    return ret;
+}

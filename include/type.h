@@ -87,5 +87,17 @@ typedef struct params_t {
     struct params_t next;
 } params_t;
 
+typedef struct symbol_t {
+    char *identifier;
+    struct symbol_t *next;
+} symbol_t;
 
-#endif //GL5610_MIB_DOC_GEN_TYPE_H
+typedef struct symbolTable {
+    char *modName;
+    symbol_t symbol;
+    struct symbolTable next;
+} symbolTable;
+
+
+#endif /* GL5610_MIB_DOC_GEN_TYPE_H */
+
