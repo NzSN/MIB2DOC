@@ -169,3 +169,12 @@ static char * oidComplement(char *parent, char *suffix) {
     return oid;
 }
 
+/*
+ * Symbol Collecting
+ */
+
+
+
+int symbolCollecting(params_t symbol, char *searchFrom) {
+    
+}

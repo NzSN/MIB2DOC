@@ -16,12 +16,14 @@ OBJECT-TYPE                         { return OBJ_SPECIFIER; }
 OBJECTS                             { return OBJECTS_; }
 NOTIFICATION-TYPE                   { return TRAP_SPECIFIER; }
 SYNTAX                              { return SYNTAX_SPECIFIER; }
-INTEGER([ \n\t\r]*\(*.*\))* |
-IpAddress |
-MacAddress |
-OCTET[ \n\t\r]+STRING([ \n\t\r]*\(.*\))* |
-SEQUENCE[ \n\t\r]+OF[ \n\t\r]*[a-zA-Z]* |
-RowStatus                           { yylval = strDuplicate(yytext); return TYPE; }
+
+INTEGER([ \n\t\r]*\(*.*\))* 
+| IpAddress 
+| MacAddress 
+| OCTET[ \n\t\r]+STRING([ \n\t\r]*\(.*\))* 
+| SEQUENCE[ \n\t\r]+OF[ \n\t\r]*[a-zA-Z]* 
+| RowStatus    						{ yylval = strDuplicate(yytext); return TYPE; }
+
 SEQUENCE                            { return SEQ; }
 
 INDEX                               { return INDEX_; }

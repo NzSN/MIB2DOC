@@ -27,6 +27,7 @@ errorType dispatch(dispatch_mode dMode, dispatch_type dType, params_t *param) {
             deal_with(*CAST((int *), paramListGet(&param)->param));
             break;
         case SYMBOL_COLLECTING:
+            symbolCollecting(paramListGet(&param)->param, paramListGet(&param)->param);
             break;
         case IGNORE:
             /* Do nothing */
@@ -34,6 +35,7 @@ errorType dispatch(dispatch_mode dMode, dispatch_type dType, params_t *param) {
         default:
             ret = error_wrong_index;
     }
+    
     return ret; 
 }
 
