@@ -13,9 +13,9 @@
 
 %{
     #include <stdio.h>
-    #include "../include/type.h"
-    #include "../include/mibTreeGen.h"
-    #include "../include/mibTreeObjTree.h"
+    #include "type.h"
+    #include "mibTreeGen.h"
+    #include "mibTreeObjTree.h"
 
     #define YYSTYPE char *
 

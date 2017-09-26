@@ -75,4 +75,10 @@ enum elementType {
     SUFFIX_EL
 };
 
+typedef enum errorType {
+    ok,
+    error_null_reference,
+    error_wrong_index
+} errorType;
+
 #endif //GL5610_MIB_DOC_GEN_TYPE_H

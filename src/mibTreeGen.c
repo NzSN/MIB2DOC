@@ -4,16 +4,18 @@
 
 #include <malloc.h>
 #include <string.h>
-#include "../include/mibTreeGen.h"
-#include "../include/type.h"
-#include "../include/list.h"
-#include "../include/queue.h"
+#include "mibTreeGen.h"
+#include "type.h"
+#include "list.h"
+#include "queue.h"
 
 /* Global */
 mibObjectTreeNode root;
 
 /* Declaration */
-static int mibTreeLeaveAdd(char *ident, char *type, char *rw, char *desc, char *parent, char *suffix);
+static int mibTreeLeaveAdd(char *ident, char *type, 
+        char *rw, char *desc, 
+        char *parent, char *suffix);
 static int mibTreeNodeAdd(char *ident, char *oid, char *parent);
 static char * oidComplement(char *parent, char *suffix);
 
@@ -166,3 +168,4 @@ static char * oidComplement(char *parent, char *suffix) {
 
     return oid;
 }
+

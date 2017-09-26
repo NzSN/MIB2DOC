@@ -3,11 +3,11 @@
 //
 
 #include <stdio.h>
-#include <mem.h>
+#include <memory.h>
 #include <malloc.h>
-#include "../include/mibTreeObjTree.h"
-#include "../include/docGenerate.h"
-#include "../include/queue.h"
+#include "mibTreeObjTree.h"
+#include "docGenerate.h"
+#include "queue.h"
 
 /* Defines */
 #define SIZE_OF_LATEX_BUFFER 256
