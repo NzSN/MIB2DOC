@@ -179,6 +179,10 @@ static char * oidComplement(char *parent, char *suffix) {
 int symbolCollecting(int type, params_t param) {
 
     /* OBJECT be recognized */
+    if (type == OBJECT) {
 
-    /* SYMBOL identifier be recognized */
+    } else if (type == IDENTIFIER_EL) {
+        /* SYMBOL identifier be recognized */
+
+    }
 }
