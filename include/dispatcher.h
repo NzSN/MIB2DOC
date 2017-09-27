@@ -6,6 +6,7 @@ typedef enum dispatch_type {
     DISPATCH_PARAM_STAGE = 0,
     MIBTREE_GENERATION,
     SYMBOL_COLLECTING,
+    SWITCH_TO_INC_BUFFER,
     IGNORE
 } dispatch_type;
 

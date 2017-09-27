@@ -6,13 +6,6 @@
 
 /* Declaration Section */
 dispatch_mode dispatchMode;
-#define DECISION_FORMULA(DIS_MODE, DIS_TYPE) ({ \
-    int mode_ = DIS_MODE;   \
-    int type_ = DIS_TYPE;   \
-                            \
-    ((3 - type_) / 2 * 3) * abs(mode_ - 1) + (type_ * mode_);  \
-})
-
 static int dispatchMakeChoice(dispatch_mode dMode, dispatch_type dType);
 
 /* Definition Section */
@@ -34,6 +27,8 @@ errorType dispatch(dispatch_type dType, params_t *param) {
         case SYMBOL_COLLECTING:
             symbolCollecting(CAST(int, paramListGet(&param)->param), param);
             break;
+        case SWITCH_TO_INC_BUFFER:
+            
         case IGNORE:
             /* Do nothing */
             break;
@@ -45,6 +40,19 @@ errorType dispatch(dispatch_type dType, params_t *param) {
 }
 
 static int dispatchMakeChoice(dispatch_type dType) {
-   return DECISION_FORMULA(dispatchMode, dType);
+    int choice = -1;
+
+    if (dispatchMode == DISPATCH_MODE_DOC_GENERATING) {
+        choice = dType;
+    } else if (dispatchMode == DISPATCH_MODE_SYMBOL_COLLECTING) {
+        if (dType == DISPATCH_PARAM_STAGE || dType == MIBTREE_GENERATION) {
+            choice = SYMBOL_COLLECTING;
+        } else {
+            /* SYMBOL_COLLECTING, SWITCH_TO_INC_BUFFER no redirect */
+            choice = dType;
+        } 
+    }
+    
+    return choice;
 }
 
