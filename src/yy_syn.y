@@ -52,10 +52,24 @@ ITEMS :
 SEQUENCE : IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE { };
 SEQ_ITEM : IDENTIFIER TYPE COMMA SEQ_ITEM |
            IDENTIFIER TYPE ;
+SMI :
+    "SMI" IDENTIFIER {
+        params_t *param  = buildParam(IDENTIFIER_EL); 
+        params_t *paramNext = buildParam(NULL);
+        
+        paramNext->param = (void *)malloc(strlen($1));
+        strncpy(paramNext->param, $1, strlen($1));
+        param->next = paramNext;
+
+        dispatch(DISPATCH_PARAM_STAGE, param);
+        dispatch(SYMBOL_COLLECTING, buildParam(SMI_DEF));
+    };
+
 
 OBJ_DEAL : OBJ_IDENTIFIER { deal_with(OBJECT_IDENTIFIER); }
 OBJ_IDENTIFIER : 
 	IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
+        
  		appendElement_el(&elistHead, buildElement(IDENTIFIER_EL, $1));
         appendElement_el(&elistHead, buildElement(PARENT_EL, $5));
         appendElement_el(&elistHead, buildElement(SUFFIX_EL, $6));                                                                                

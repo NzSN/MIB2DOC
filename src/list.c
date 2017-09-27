@@ -75,6 +75,16 @@ int reset_el(elementList *el) {
  /*
   * append node to tail of list
   */
+params_t * buildParam(void *arg) {
+    params_t *ret;
+   
+    ret  = (params_t *)malloc(sizeof(params_t));    
+    memset(ret, 0, sizeof(params_t));
+    ret->param = arg; 
+
+    return ret;
+}
+
 params_t * paramListAppend(params_t *head, params_t *pl) {
     if (head == NULL || pl == NULL) {
         return NULL;
@@ -184,3 +194,4 @@ int symbolSearching(char *symIdent) {
 FINISHED:
     return ret;
 }
+

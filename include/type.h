@@ -64,7 +64,8 @@ typedef enum unitType {
     OBJECT = 1,
     TRAP,
     OBJECT_IDENTIFIER,
-    SEQUENCE
+    SEQUENCE,
+    SMI_DEF
 } unitType;
 
 enum elementType {
@@ -87,8 +88,19 @@ typedef struct params_t {
     struct params_t next;
 } params_t;
 
+typedef struct nodeMeta_t {
+    char *parentIdent;    
+} nodeMeta_t;
+
+typedef struct leaveMeta_t { } leaveMeta_t;
+
 typedef struct symbol_t {
+    int type;
     char *identifier;
+    typedef union {
+       leaveMeta_t leaveMeta;
+       nodeMeta_t nodeMeta;
+    } metadata;
     struct symbol_t *next;
 } symbol_t;
 

@@ -173,16 +173,17 @@ static char * oidComplement(char *parent, char *suffix) {
 /*
  * Symbol Collecting
  */
-
-
-
 int symbolCollecting(int type, params_t param) {
 
-    /* OBJECT be recognized */
-    if (type == OBJECT) {
+    /* Object be recognized */
+    if (type == OBJECT_IDENTIFIER) {
+        
+    } else if (type == OBJECT) {        
+        
+    } else if (type == TRAP) {
 
-    } else if (type == IDENTIFIER_EL) {
-        /* SYMBOL identifier be recognized */
-
+    } else if (type == SMI_DEF) {
+        /* Object info reserved */            
     }
 }
+
