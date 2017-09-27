@@ -80,9 +80,9 @@ OBJ_IDENTIFIER :
 };
 
 OBJ : 
-	HEAD BODY    { deal_with(OBJECT); };
+	HEAD BODY { dispatch(MIBTREE_GENERATION, buildParam(OBJECT)); };
 TRAP :  
-	TRAP_HEAD PROPERTY    { deal_with(TRAP); };
+	TRAP_HEAD PROPERTY    { dispatch(MIBTREE_GENERATION, buildParam(TRAP)); };
 TRAP_HEAD : 
 	IDENTIFIER TRAP_SPECIFIER    { appendElement_el(&elistHead, buildElement(IDENTIFIER_EL, $1)); } ;
 HEAD : 

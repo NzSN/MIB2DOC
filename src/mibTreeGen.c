@@ -200,6 +200,14 @@ int symbolCollecting(int type, params_t *param) {
     return symbolCollectRoutine[type](param);
 }
 
+/* Note: this mocro is only use for symbolCollect_XXX series function */
+#define PARAM_STORE_TO_SYM_LIST(type, param) ({ \
+    char *string; \ 
+    string = paramListGet(&param); \
+    appendElement_el(&symCollectList, buildElement(type, string)); \
+})
+
+
 int symbolCollect_OBJECT(params_t *param) {
     
 }
@@ -220,13 +228,6 @@ int symbolCollect_SEQUENCE(params_t *param) {
 int symbolCollect_SMI_DEF(params_t *param) {
 
 }
-
-/* Note: this mocro is only use for symbolCollect_XXX series function */
-#define PARAM_STORE_TO_SYM_LIST(type, param) ({ \
-    char *string; \ 
-    string = paramListGet(&param); \
-    appendElement_el(&symCollectList, buildElement(type, string)); \
-})
 
 int symbolCollect_IDENTIFIER(params_t *param) {   
 
