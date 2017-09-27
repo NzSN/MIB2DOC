@@ -94,10 +94,17 @@ typedef struct nodeMeta_t {
 
 typedef struct leaveMeta_t { } leaveMeta_t;
 
+#define MAX_CHAR_OF_MOD_IDENT 64
+
+typedef enum symbolType {
+    SYMBOL_TYPE_NODE,
+    SYMBOL_TYPE_LEAVE
+} symbolType;
+
 typedef struct symbol_t {
     int type;
     char *identifier;
-    typedef union {
+    union {
        leaveMeta_t leaveMeta;
        nodeMeta_t nodeMeta;
     } metadata;

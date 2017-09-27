@@ -180,12 +180,14 @@ int (*symbolCollectRoutine[NUM_OF_COLLECT_ROUTINE])(params_t *);
 
 /* Initialize symbolCollectRoutine array */
 int symbolCollectingInit() {
+    /* Symbol Table building function */
     symbolCollectRoutine[OBJECT] = symbolCollect_OBJECT;
     symbolCollectRoutine[TRAP] = symbolCollect_TRAP;
     symbolCollectRoutine[OBJECT_IDENTIFIER] = symbolCollect_OBJECT_IDENTIFIER;
     symbolCollectRoutine[SEQUENCE] = symbolCollect_OBJECT_IDENTIFIER;
     symbolCollectRoutine[SMI_DEF] = symbolCollect_SMI_DEF;
 
+    /* Parameter Collecting function */
     symbolCollectRoutine[IDENTIFIER_EL] = symbolCollect_IDENTIFIER;
     symbolCollectRoutine[TYPE_EL] = symbolCollect_TYPE;
     symbolCollectRoutine[RW_EL] = symbolCollect_RW;
@@ -209,7 +211,7 @@ int symbolCollecting(int type, params_t *param) {
 
 
 int symbolCollect_OBJECT(params_t *param) {
-    
+
 }
 
 
@@ -218,6 +220,38 @@ int symbolCollect_TRAP(params_t *param) {
 }
 
 int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
+    symbolTable *newMod;
+    symbol_t *newSymbol;
+    char *modIdent; 
+    char *symbolIdent;
+    char *parentIdent = getElement_el(&symCollectList, PARENT_EL);    
+
+    symbolIdent = getElement_el(&symCollectList, IDENTIFIER_EL);
+    
+    /* Is the symbol exists in symbol table ? */
+    if (symbolSearching(symbolIdent)) {
+        return 1;
+    }
+
+    modIdent = (char *)malloc(MAX_CHAR_OF_MOD_IDENT)
+    switch_CurrentMod(modIdent, MAX_CHAR_OF_MOD_IDENT);
+    parentIdent = getElement_el(&symCollectList, PARENT_EL);        
+        
+    /* Is the module specify by modIdent is exists ? */
+    if (!symbolModSearching(modIdent)) {
+        newMod = (symbolTable *)malloc(sizeof(symbolTable));
+        newMod->modName = modIdent;
+        symbolModuleAdd(&symTable, newMod);
+    }
+
+    newSymbol = (symbol_t *)malloc(sizeof(symbol_t));
+    newSymbol->identifier = symbolIdent;
+    newSymbol->type = SYMBOL_TYPE_NODE;
+    newSymbol->metadata.nodeMeta.parentIdent = parentIdent;
+
+    symbolAdd(modIdent, newSymbol);
+    
+    symbolModuleAdd(&symTable, );
 
 }
 

@@ -163,6 +163,8 @@ int symbolAdd(char *modName, symbol_t *newSym) {
     return ret;
 }
 
+int symbolModSearching(char *modIdent) {}
+
 /*
  *  return value:
  *      0 -- not exist

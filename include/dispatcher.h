@@ -15,6 +15,10 @@ typedef enum dispatch_mode {
     DISPATCH_MODE_DOC_GENERATING = 1
 } dispatch_mode;
 
+typedef struct switchingState {
+
+} switchingState;
+
 int dispatch(int type, params_t * param);
 
 #endif /* _DISPATCHER_H_ */

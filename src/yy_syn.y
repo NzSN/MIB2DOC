@@ -44,7 +44,12 @@ DEFINITION :
 IMPORT : 
 	IMPORTS_ MODULES SEMICOLON    { };
 MODULES : 
-	ITEMS FROM_ IDENTIFIER MODULES { /* Switch buffer */ }
+	ITEMS FROM_ IDENTIFIER MODULES { 
+		params_t *param = buildParam((void *)malloc(strlen($2)));
+		strncpy(param->param, $2, strlen($2));
+		
+		dispatch(SWITCH_TO_INC_BUFFER, param);
+	}
 	| /* empty */  ;
 ITEMS : 
 	IDENTIFIER 

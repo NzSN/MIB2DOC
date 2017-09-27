@@ -2,7 +2,13 @@
 
 #include "type.h"
 #include "dispatcher.h"
+#include "mibTreeGen.h"
 #include <stdlib.h>
+
+
+/* Global */
+switchingState swState;
+
 
 /* Declaration Section */
 dispatch_mode dispatchMode;
@@ -28,7 +34,7 @@ errorType dispatch(dispatch_type dType, params_t *param) {
             symbolCollecting(CAST(int, paramListGet(&param)->param), param);
             break;
         case SWITCH_TO_INC_BUFFER:
-            
+            switchToModule(CAST(char *, paramListGet(&param)->param)
         case IGNORE:
             /* Do nothing */
             break;
@@ -56,3 +62,6 @@ static int dispatchMakeChoice(dispatch_type dType) {
     return choice;
 }
 
+static int switchToModule(char *modName) {}
+
+char * switch_CurrentMod(char *modName, int len) {}
