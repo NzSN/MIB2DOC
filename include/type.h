@@ -69,7 +69,7 @@ typedef enum unitType {
 } unitType;
 
 enum elementType {
-    IDENTIFIER_EL = 1,
+    IDENTIFIER_EL = 6,
     TYPE_EL,
     RW_EL,
     DESCRIPTION_EL,

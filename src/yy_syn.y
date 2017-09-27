@@ -28,6 +28,7 @@
 }
 
 %%
+
 MIB : 
 	DEFINITION IMPORT MAIN_PART    { };
 MAIN_PART : 
@@ -37,7 +38,8 @@ MAIN_PART :
 	| SEQUENCE MAIN_PART 
 	| END_    { } ;
 
-DEFINITION : IDENTIFIER DEF ASSIGNED BEGIN_    { };
+DEFINITION : 
+	IDENTIFIER DEF ASSIGNED BEGIN_    { };
 
 IMPORT : 
 	IMPORTS_ MODULES SEMICOLON    { };
@@ -49,9 +51,11 @@ ITEMS :
 	| IDENTIFIER COMMA ITEMS 
 	| /* empty */ ;
 
-SEQUENCE : IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE { };
-SEQ_ITEM : IDENTIFIER TYPE COMMA SEQ_ITEM |
-           IDENTIFIER TYPE ;
+SEQUENCE : 
+	IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE { };
+SEQ_ITEM : 
+	IDENTIFIER TYPE COMMA SEQ_ITEM 
+	| IDENTIFIER TYPE    { };
 SMI :
     "SMI" IDENTIFIER {
         params_t *param  = buildParam(IDENTIFIER_EL); 
@@ -62,14 +66,14 @@ SMI :
         param->next = paramNext;
 
         dispatch(DISPATCH_PARAM_STAGE, param);
-        dispatch(SYMBOL_COLLECTING, buildParam(SMI_DEF));
+        dispatch(MIBTREE_GENERATION, buildParam(SMI_DEF));
     };
 
 
-OBJ_DEAL : OBJ_IDENTIFIER { deal_with(OBJECT_IDENTIFIER); }
+OBJ_DEAL : 
+	OBJ_IDENTIFIER { deal_with(OBJECT_IDENTIFIER); }
 OBJ_IDENTIFIER : 
 	IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
-        
  		appendElement_el(&elistHead, buildElement(IDENTIFIER_EL, $1));
         appendElement_el(&elistHead, buildElement(PARENT_EL, $5));
         appendElement_el(&elistHead, buildElement(SUFFIX_EL, $6));                                                                                
@@ -107,16 +111,34 @@ SYNTAX :
 SYNTAX_VALUE : 
 	TYPE    { appendElement_el(&elistHead, buildElement(TYPE_EL, $1)); };
  	| IDENTIFIER    { appendElement_el(&elistHead, buildElement(TYPE_EL, $1)); };
-ACCESS : ACCESS_SPECIFIER ACCESS_VALUE    { appendElement_el(&elistHead, buildElement(RW_EL, $2)); };
-STATUS : STATUS_SPECIFIER STATUS_VALUE    {};
-DESCRIPTION : DESC_SPECIFIER DESC_VALUE    { appendElement_el(&elistHead, buildElement(DESCRIPTION_EL, $2)); };
+ACCESS : 
+	ACCESS_SPECIFIER ACCESS_VALUE { 
+		appendElement_el(&elistHead, buildElement(RW_EL, $2)); 
+	};
+STATUS : 
+	STATUS_SPECIFIER STATUS_VALUE {};
+DESCRIPTION : 
+	DESC_SPECIFIER DESC_VALUE { 
+		appendElement_el(&elistHead, buildElement(DESCRIPTION_EL, $2)); 
+	};
 INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE    {};
 INDEX_ITEM : 
 	IDENTIFIER COMMA INDEX_ITEM 
-	| IDENTIFIER ;
-MOUNT : ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
-	appendElement_el(&elistHead, buildElement(PARENT_EL, $3));
-	appendElement_el(&elistHead, buildElement(SUFFIX_EL, $4));
-};
+	| IDENTIFIER    { };
+MOUNT : 
+	ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
+		params_t *param = buildParam(PARENT_EL);
+		params_t *paramNext = buildParam((void *)malloc(strlen($3)));
+		strncpy(paramNext->param, $3, strlen($3));
+		param->next = paramNext;
+		dipatch(DISPATCH_PARAM_STAGE, param);
+	
+		param = buildParam(SUFFIX_EL);
+		paramNext = buildParam((void *)malloc(strlen($4)));
+		strncpy(paramNext->param, $3, strlen($4));
+		param->next = paramNext;
+		dispatch(DISPATCH_PARAM_STAGE, param);
+	};
+
 %%
 

@@ -12,6 +12,7 @@
 /* Global */
 mibObjectTreeNode root;
 symbolTable symTable;
+elementList symCollectList;
 
 /* Declaration */
 static int mibTreeLeaveAdd(char *ident, char *type, 
@@ -173,17 +174,113 @@ static char * oidComplement(char *parent, char *suffix) {
 /*
  * Symbol Collecting
  */
-int symbolCollecting(int type, params_t param) {
+#define NUM_OF_COLLECT_ROUTINE 11
 
-    /* Object be recognized */
-    if (type == OBJECT_IDENTIFIER) {
-        
-    } else if (type == OBJECT) {        
-        
-    } else if (type == TRAP) {
+int (*symbolCollectRoutine[NUM_OF_COLLECT_ROUTINE])(params_t *);
 
-    } else if (type == SMI_DEF) {
-        /* Object info reserved */            
+/* Initialize symbolCollectRoutine array */
+int symbolCollectingInit() {
+    symbolCollectRoutine[OBJECT] = symbolCollect_OBJECT;
+    symbolCollectRoutine[TRAP] = symbolCollect_TRAP;
+    symbolCollectRoutine[OBJECT_IDENTIFIER] = symbolCollect_OBJECT_IDENTIFIER;
+    symbolCollectRoutine[SEQUENCE] = symbolCollect_OBJECT_IDENTIFIER;
+    symbolCollectRoutine[SMI_DEF] = symbolCollect_SMI_DEF;
+
+    symbolCollectRoutine[IDENTIFIER_EL] = symbolCollect_IDENTIFIER;
+    symbolCollectRoutine[TYPE_EL] = symbolCollect_TYPE;
+    symbolCollectRoutine[RW_EL] = symbolCollect_RW;
+    symbolCollectRoutine[DESCRIPTION_EL] = symbolCollect_DESCRIPTION;
+    symbolCollectRoutine[PARENT_EL] = symbolCollect_PARENT;
+    symbolCollectRoutine[SUFFIX_EL] = symbolCollect_SUFFIX;
+
+    return 0;
+}
+
+int symbolCollecting(int type, params_t *param) {
+    return symbolCollectRoutine[type](param);
+}
+
+int symbolCollect_OBJECT(params_t *param) {
+    
+}
+
+
+int symbolCollect_TRAP(params_t *param) {
+
+}
+
+int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
+
+}
+
+int symbolCollect_SEQUENCE(params_t *param) {
+
+}
+
+int symbolCollect_SMI_DEF(params_t *param) {
+
+}
+
+/* Note: this mocro is only use for symbolCollect_XXX series function */
+#define PARAM_STORE_TO_SYM_LIST(type, param) ({ \
+    char *string; \ 
+    string = paramListGet(&param); \
+    appendElement_el(&symCollectList, buildElement(type, string)); \
+})
+
+int symbolCollect_IDENTIFIER(params_t *param) {   
+
+    if (IS_PTR_NULL(param)) {
+        return -1;
     }
+
+    PARAM_STORE_TO_SYM_LIST(IDENTIFIER_EL, param);
+    return 0;
+}
+
+int symbolCollect_TYPE(params_t *param) {
+
+    if (IS_PTR_NULL(param)) {
+        return -1;
+    }
+
+    PARAM_STORE_TO_SYM_LIST(TYPE_EL, param);
+    return 0;
+}
+
+int symbolCollect_RW(params_t *param) {
+    if (IS_PTR_NULL(param)) {
+        return -1;
+    }
+
+    PARAM_STORE_TO_SYM_LIST(RW_EL, param);
+    return 0;
+}
+
+int symbolCollect_DESCRIPTION(params_t *param) {
+    if (IS_PTR_NULL(param)) {
+        return -1;
+    }
+
+    PARAM_STORE_TO_SYM_LIST(DESCRIPTION_EL, param);
+    return 0;
+}
+
+int symbolCollect_PARENT(params_t *param) {
+    if (IS_PTR_NULL(param)) {
+        return -1;
+    }
+
+    PARAM_STORE_TO_SYM_LIST(PARENT_EL, param);
+    return 0;
+}
+
+int symbolCollect_SUFFIX(params_t *param) {
+    if (IS_PTR_NULL(param)) {
+        return -1;
+    }
+
+    PARAM_STORE_TO_SYM_LIST(SUFFIX_EL, param);
+    return 0;
 }
 

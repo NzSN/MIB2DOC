@@ -23,7 +23,7 @@ int dispatchInit() {
 errorType dispatch(dispatch_type dType, params_t *param) {
     errorType ret = ok; 
     
-    switch (dispatchMakeChoice(dMode, dType)) {
+    switch (dispatchMakeChoice(dType)) {
         case DISPATCH_PARAM_STAGE:
             appendElement_el(&elistHead, buildElement(*CAST((int *), paramListGet(&param)->param), 
                                          CAST((char *), paramListGet(&param)->param)));
@@ -32,7 +32,7 @@ errorType dispatch(dispatch_type dType, params_t *param) {
             deal_with(*CAST((int *), paramListGet(&param)->param));
             break;
         case SYMBOL_COLLECTING:
-            symbolCollecting(CAST(int, paramListGet(&param)->param), paramListGet(&param)->param);
+            symbolCollecting(CAST(int, paramListGet(&param)->param), param);
             break;
         case IGNORE:
             /* Do nothing */
@@ -44,7 +44,7 @@ errorType dispatch(dispatch_type dType, params_t *param) {
     return ret; 
 }
 
-static int dispatchMakeChoice(dispatch_mode dMode, dispatch_type dType) {
+static int dispatchMakeChoice(dispatch_type dType) {
    return DECISION_FORMULA(dispatchMode, dType);
 }
 
