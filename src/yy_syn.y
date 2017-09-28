@@ -42,7 +42,7 @@ DEFINITION :
 	IDENTIFIER DEF ASSIGNED BEGIN_    { };
 
 IMPORT : 
-	IMPORTS_ MODULES SEMICOLON    { };
+	IMPORTS_ MODULES SEMICOLON    { /* Build upper layer */ };
 MODULES : 
 	ITEMS FROM_ IDENTIFIER MODULES { 
 		params_t *param = buildParam((void *)malloc(strlen($2)));

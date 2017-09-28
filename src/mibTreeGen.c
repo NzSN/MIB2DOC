@@ -250,9 +250,8 @@ int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
     newSymbol->metadata.nodeMeta.parentIdent = parentIdent;
 
     symbolAdd(modIdent, newSymbol);
-    
-    symbolModuleAdd(&symTable, );
-
+   
+    return 0;
 }
 
 int symbolCollect_SEQUENCE(params_t *param) {
