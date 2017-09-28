@@ -5,6 +5,7 @@
 #ifndef GL5610_MIB_DOC_GEN_TYPE_H
 #define GL5610_MIB_DOC_GEN_TYPE_H
 
+#include <stddef.h>
 #include <stdio.h>
 #include "mibTreeObjTree.h"
 #include "list.h"
@@ -16,6 +17,12 @@
 #define IS_PTR_NULL(PTR) (PTR ? 0:1)
 #define RELEASE_PTR(PTR) ({free(PTR); PTR=NULL;})
 #define CAST(TO, FROM) ((TO)FROM)
+
+#define container_of(ptr, type, member) ({                      \
+    const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
+    (type *)( (char *)__mptr - offsetof(type,member) );
+})
+
 
 /* Extern */
 extern char *sectionRecord[SIZE_OF_SECTION_RECORD];

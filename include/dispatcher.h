@@ -16,7 +16,8 @@ typedef enum dispatch_mode {
 } dispatch_mode;
 
 typedef struct switchingState {
-
+    int state;
+    int counter;
 } switchingState;
 
 int dispatch(int type, params_t * param);

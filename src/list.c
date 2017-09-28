@@ -7,6 +7,22 @@
 #include "list.h"
 #include "type.h"
 
+/************
+ * ListNode *
+ ************/
+listNode *listPrev(listNode *node) {
+    if (IS_PTR_NULL(node) || IS_PTR_NULL(node->next))
+        return NULL;
+    return node->next;
+}
+ 
+listNode * listNext(listNode *node) {
+    if (IS_PTR_NULL(node) || IS_PTR_NULL(node->prev)) 
+        return NULL;
+    return node->prev;
+}
+ 
+
 /*******************************************
  *  Element list Operation function define *
  *******************************************/
