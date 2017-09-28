@@ -1,5 +1,3 @@
-%define api.pure full
-%parse-param {int flag}
 %token IDENTIFIER OBJ_SPECIFIER
 %token SYNTAX_SPECIFIER
 %token ACCESS_SPECIFIER ACCESS_VALUE
@@ -42,11 +40,11 @@ DEFINITION :
 	IDENTIFIER DEF ASSIGNED BEGIN_    { };
 
 IMPORT : 
-	IMPORTS_ MODULES SEMICOLON    { };
+	IMPORTS_ MODULES SEMICOLON    { /* Build upper layer */ };
 MODULES : 
 	ITEMS FROM_ IDENTIFIER MODULES { 
-		params_t *param = buildParam((void *)malloc(strlen($2)));
-		strncpy(param->param, $2, strlen($2));
+		params_t param = buildParam($3);
+		param->next = buildParam($1);
 		
 		dispatch(SWITCH_TO_INC_BUFFER, param);
 	}
@@ -64,11 +62,7 @@ SEQ_ITEM :
 SMI :
     "SMI" IDENTIFIER {
         params_t *param  = buildParam(IDENTIFIER_EL); 
-        params_t *paramNext = buildParam(NULL);
-        
-        paramNext->param = (void *)malloc(strlen($1));
-        strncpy(paramNext->param, $1, strlen($1));
-        param->next = paramNext;
+        params_t *paramNext = buildParam($1);       
 
         dispatch(DISPATCH_PARAM_STAGE, param);
         dispatch(MIBTREE_GENERATION, buildParam(SMI_DEF));
@@ -79,9 +73,17 @@ OBJ_DEAL :
 	OBJ_IDENTIFIER { deal_with(OBJECT_IDENTIFIER); }
 OBJ_IDENTIFIER : 
 	IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
- 		appendElement_el(&elistHead, buildElement(IDENTIFIER_EL, $1));
-        appendElement_el(&elistHead, buildElement(PARENT_EL, $5));
-        appendElement_el(&elistHead, buildElement(SUFFIX_EL, $6));                                                                                
+		params_t param = buildParam(IDENTIFIER_EL);
+		param->next = buildParam($1);
+		dispatch(DISPATCH_PARAM_STAGE, param);
+
+		params_t param = buildParam(PARENT_EL);
+		param->next = buildParam($5);
+		dispatch(DISPATCH_PARAM_STAGE, param);
+
+		params_t param = buildParam(SUFFIX_EL);
+		param->next = buildParam($6);
+		dispatch(DISPATCH_PARAM_STAGE, param);		                                                                              
 };
 
 OBJ : 
@@ -89,9 +91,18 @@ OBJ :
 TRAP :  
 	TRAP_HEAD PROPERTY    { dispatch(MIBTREE_GENERATION, buildParam(TRAP)); };
 TRAP_HEAD : 
-	IDENTIFIER TRAP_SPECIFIER    { appendElement_el(&elistHead, buildElement(IDENTIFIER_EL, $1)); } ;
+	IDENTIFIER TRAP_SPECIFIER { 
+		params_t *param = buildParam(IDENTIFIER_EL);
+		param->next = buildParam($1);
+			
+		dispatch(DISPATCH_PARAM_STAGE, param);
+	};
 HEAD : 
-	IDENTIFIER OBJ_SPECIFIER    { appendElement_el(&elistHead, buildElement(IDENTIFIER_EL, $1)); } ;
+	IDENTIFIER OBJ_SPECIFIER { 
+		params_t param = buildParam(IDENTIFIER_EL);
+		param->next = buildParam($1);
+		dispatch(DISPATCH_PARAM_STAGE, param);
+	};
 BODY : 
 	PROPERTY    {};
 PROPERTY :  
@@ -114,17 +125,29 @@ OBJECT_ITEM :
 SYNTAX : 
 	SYNTAX_SPECIFIER SYNTAX_VALUE ;
 SYNTAX_VALUE : 
-	TYPE    { appendElement_el(&elistHead, buildElement(TYPE_EL, $1)); };
- 	| IDENTIFIER    { appendElement_el(&elistHead, buildElement(TYPE_EL, $1)); };
+	TYPE { 
+		params_t param = buildParam(TYPE_EL);
+		param->next = buildParam($1);
+		dispatch(DISPATCH_PARAM_STAGE, param);		
+	};
+ 	| IDENTIFIER { 
+ 		params_t param = buildParam(TYPE_EL);
+		param->next = buildParam($1);
+		dispatch(DISPATCH_PARAM_STAGE, param);
+ 	};
 ACCESS : 
 	ACCESS_SPECIFIER ACCESS_VALUE { 
-		appendElement_el(&elistHead, buildElement(RW_EL, $2)); 
+		params_t param = buildParam(RW_EL);
+		param->next = buildParam($2);
+		dispatch(DISPATCH_PARAM_STAGE, param);		
 	};
 STATUS : 
 	STATUS_SPECIFIER STATUS_VALUE {};
 DESCRIPTION : 
 	DESC_SPECIFIER DESC_VALUE { 
-		appendElement_el(&elistHead, buildElement(DESCRIPTION_EL, $2)); 
+		params_t param = buildParam(DESCRIPTION_EL);
+		param->next = buildParam($2);
+		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE    {};
 INDEX_ITEM : 
@@ -133,15 +156,11 @@ INDEX_ITEM :
 MOUNT : 
 	ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
 		params_t *param = buildParam(PARENT_EL);
-		params_t *paramNext = buildParam((void *)malloc(strlen($3)));
-		strncpy(paramNext->param, $3, strlen($3));
-		param->next = paramNext;
+		param->next = buildParam($3);
 		dipatch(DISPATCH_PARAM_STAGE, param);
 	
 		param = buildParam(SUFFIX_EL);
-		paramNext = buildParam((void *)malloc(strlen($4)));
-		strncpy(paramNext->param, $3, strlen($4));
-		param->next = paramNext;
+		param->next = buildParam($4);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 

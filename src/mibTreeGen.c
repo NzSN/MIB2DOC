@@ -9,11 +9,6 @@
 #include "list.h"
 #include "queue.h"
 
-/* Global */
-mibObjectTreeNode root;
-symbolTable symTable;
-elementList symCollectList;
-
 /* Declaration */
 static int mibTreeLeaveAdd(char *ident, char *type, 
         char *rw, char *desc, 
@@ -24,6 +19,13 @@ static char * oidComplement(char *parent, char *suffix);
 char currentTable[64];
 extern mibObjectTreeNode root;
 extern elementList elistHead;
+
+/* Global */
+mibObjectTreeNode root;
+symbolTable symTable;
+elementList symCollectList;
+targetSymbolList tSymListHead;
+
 
 int deal_with(int type) {
     switch (type) {
@@ -203,12 +205,12 @@ int symbolCollecting(int type, params_t *param) {
 }
 
 int symbolCollect_OBJECT(params_t *param) {
-
+    flushAll_el(&symCollectList);
 }
 
 
 int symbolCollect_TRAP(params_t *param) {
-
+    flushAll_el(&symCollectList);
 }
 
 int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
@@ -242,17 +244,16 @@ int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
     newSymbol->metadata.nodeMeta.parentIdent = parentIdent;
 
     symbolAdd(modIdent, newSymbol);
-    
-    symbolModuleAdd(&symTable, );
-
+   
+    return 0;
 }
 
 int symbolCollect_SEQUENCE(params_t *param) {
-
+    flushAll_el(&symCollectList);
 }
 
 int symbolCollect_SMI_DEF(params_t *param) {
-
+    /* Record into symtable */
 }
 
 int symbolCollect_IDENTIFIER(params_t *param) {   
@@ -310,4 +311,3 @@ int symbolCollect_SUFFIX(params_t *param) {
     PARAM_STORE_TO_SYM_LIST(SUFFIX_EL, param);
     return 0;
 }
-

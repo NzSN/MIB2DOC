@@ -8,6 +8,23 @@
 #include "type.h"
 #include "list.h"
 
+typedef enum {
+    SYMBOL_FOUND,
+    SYMBOL_NOT_FOUND
+};
+
+typedef struct targetSymbolList {
+    char *symbolName;
+    /* 
+     * VALUE : 
+     *     1. SYMBOL_FOUND
+     *     2. SYMBOL_NOT_FOUND
+     */
+    int state;
+    listNode node;
+} targetSymbolList;
+
+
 int deal_with(int type);
 int deal_with_object();
 int deal_with_objIdent();

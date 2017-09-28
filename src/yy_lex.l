@@ -1,10 +1,13 @@
-%option reentrant
-
 %{
     #include "../include/type.h"
     #include "../include/list.h"
     #define YYSTYPE char*
     extern YYSTYPE yylval;
+
+	#define MAX_INCLUDE_DEPTH 10
+	int importStackIndex = 0;
+	YY_BUFFER_STATE importStack[MAX_INCLUDE_DEPTH];
+	    
 %}
 
 %%
@@ -54,6 +57,9 @@ DESCRIPTION                         { return DESC_SPECIFIER; }
 [0-9]+                              { yylval = strDuplicate(yytext); return NUM; }
 
 ([a-zA-Z0-9]|"-")+                  { yylval = strDuplicate(yytext); return IDENTIFIER; }
+
+<<EOF>>								{ }
+
 %%
 
 #define YYSTYPE char*

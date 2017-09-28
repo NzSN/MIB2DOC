@@ -11,6 +11,11 @@ typedef struct elementList {
     struct elementList *next;
 } elementList;
 
+typedef struct listNode {
+    struct listNode next;
+    struct listNode prev;
+} listNode;
+
 elementList * buildElement(int key, char *content);
 elementList * getElement_el(elementList *el, int key);
 int appendElement_el(elementList *el, elementList *next);

@@ -6,13 +6,15 @@
 #include <stdlib.h>
 
 
-/* Global */
-switchingState swState;
-
-
 /* Declaration Section */
 dispatch_mode dispatchMode;
 static int dispatchMakeChoice(dispatch_mode dMode, dispatch_type dType);
+
+/* Global */
+switchingState swState;
+extern int importStackIndex;
+extern YY_BUFFER_STATE importStack[MAX_INCLUDE_DEPTH];
+
 
 /* Definition Section */
 int dispatchInit() {
@@ -34,7 +36,7 @@ errorType dispatch(dispatch_type dType, params_t *param) {
             symbolCollecting(CAST(int, paramListGet(&param)->param), param);
             break;
         case SWITCH_TO_INC_BUFFER:
-            switchToModule(CAST(char *, paramListGet(&param)->param)
+            switchToModule(param);
         case IGNORE:
             /* Do nothing */
             break;
@@ -62,6 +64,21 @@ static int dispatchMakeChoice(dispatch_type dType) {
     return choice;
 }
 
-static int switchToModule(char *modName) {}
+static int switchToModule(params_t *param) {
+    char *modName;
+    char *sCollection;
+    
+    if (IS_PTR_NULL(param)) {
+        return NULL;
+    }
+
+    modName = paramListGet(&param);
+    sCollection = paramListGet(&param);
+
+    
+}
 
 char * switch_CurrentMod(char *modName, int len) {}
+
+/* End of file */
+
