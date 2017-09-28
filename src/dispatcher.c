@@ -12,7 +12,8 @@ static int dispatchMakeChoice(dispatch_mode dMode, dispatch_type dType);
 
 /* Global */
 switchingState swState;
-
+extern int importStackIndex;
+extern YY_BUFFER_STATE importStack[MAX_INCLUDE_DEPTH];
 
 
 /* Definition Section */
@@ -66,7 +67,7 @@ static int dispatchMakeChoice(dispatch_type dType) {
 static int switchToModule(params_t *param) {
     char *modName;
     char *sCollection;
-
+    
     if (IS_PTR_NULL(param)) {
         return NULL;
     }
