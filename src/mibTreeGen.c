@@ -194,21 +194,13 @@ int symbolCollectingInit() {
     symbolCollectRoutine[DESCRIPTION_EL] = symbolCollect_DESCRIPTION;
     symbolCollectRoutine[PARENT_EL] = symbolCollect_PARENT;
     symbolCollectRoutine[SUFFIX_EL] = symbolCollect_SUFFIX;
-
+    
     return 0;
 }
 
 int symbolCollecting(int type, params_t *param) {
     return symbolCollectRoutine[type](param);
 }
-
-/* Note: this mocro is only use for symbolCollect_XXX series function */
-#define PARAM_STORE_TO_SYM_LIST(type, param) ({ \
-    char *string; \ 
-    string = paramListGet(&param); \
-    appendElement_el(&symCollectList, buildElement(type, string)); \
-})
-
 
 int symbolCollect_OBJECT(params_t *param) {
 
