@@ -1,6 +1,7 @@
 /* Created by Aydenlin at 2017/9/12 */
 
 #include "type.h"
+#include "stack.h"
 #include "dispatcher.h"
 #include "mibTreeGen.h"
 #include <stdlib.h>
@@ -8,7 +9,8 @@
 
 /* Declaration Section */
 dispatch_mode dispatchMode;
-static int dispatchMakeChoice(dispatch_mode dMode, dispatch_type dType);
+static int dispatchMakeChoice(dispatch_type dType);
+static int switchToModule(params_t *param);
 
 /* Global */
 switchingState swState;
@@ -21,19 +23,20 @@ int dispatchInit() {
     dispatchMode = DISPATCH_MODE_DOC_GENERATING;
     return ok;
 }
+
 errorType dispatch(dispatch_type dType, params_t *param) {
     errorType ret = ok; 
     
     switch (dispatchMakeChoice(dType)) {
         case DISPATCH_PARAM_STAGE:
-            appendElement_el(&elistHead, buildElement(*CAST((int *), paramListGet(&param)->param), 
-                                         CAST((char *), paramListGet(&param)->param)));
+            appendElement_el(&elistHead, buildElement((int)paramListGet(&param)->param, 
+                                    paramListGet(&param)->param));            
             break;
         case MIBTREE_GENERATION:
-            deal_with(*CAST((int *), paramListGet(&param)->param));
+            deal_with((int)paramListGet(&param)->param);
             break;
         case SYMBOL_COLLECTING:
-            symbolCollecting(CAST(int, paramListGet(&param)->param), param);
+            symbolCollecting((int)paramListGet(&param)->param, param);
             break;
         case SWITCH_TO_INC_BUFFER:
             switchToModule(param);
@@ -43,7 +46,7 @@ errorType dispatch(dispatch_type dType, params_t *param) {
         default:
             ret = error_wrong_index;
     }
-    
+
     return ret; 
 }
 
@@ -65,20 +68,21 @@ static int dispatchMakeChoice(dispatch_type dType) {
 }
 
 static int switchToModule(params_t *param) {
-    char *modName;
-    char *sCollection;
-    
+    char *moduleName;
+    char *sCollection;    
+
     if (IS_PTR_NULL(param)) {
-        return NULL;
+        return null;
     }
 
-    modName = paramListGet(&param);
+    moduleName = paramListGet(&param);
     sCollection = paramListGet(&param);
-
     
+     
 }
 
 char * switch_CurrentMod(char *modName, int len) {}
+
 
 /* End of file */
 

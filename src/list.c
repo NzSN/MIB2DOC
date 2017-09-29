@@ -126,13 +126,13 @@ params_t * paramListGet(params_t **head) {
     }
     
     ret = *head;
-    *head = *head->next;
+    *head = (*head)->next;
 
     return ret;
 }
 
 /*****************************************************
- * symbol_t and symbolTabl operation function define *
+ * symbol_t and symbolTable operation function define *
  *****************************************************/
 int symbolModuleAdd(symbolTable *stbl, symbolTable *new) {
     int ret = ok;

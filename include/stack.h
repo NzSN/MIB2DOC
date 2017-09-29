@@ -11,10 +11,10 @@
 
 typedef struct identStack {
     int top;
-    char *stack[SIZE_OF_IDENT_STACK];
-} identStack;
+    void *stack[SIZE_OF_IDENT_STACK];
+} genericStack;
 
 int push(identStack *ps, char *ident);
 char *pop(identStack *ps);
 
-#endif //GL5610_MIB_DOC_GEN_STACK_H
+#endif /* GL5610_MIB_DOC_GEN_STACK_H */

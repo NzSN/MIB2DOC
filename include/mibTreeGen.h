@@ -29,6 +29,7 @@ int deal_with(int type);
 int deal_with_object();
 int deal_with_objIdent();
 int deal_with_trap();
+int symbolCollecting(int type, params_t *param);
 
 /* Note: this macro is only use for symbolCollect_XXXX series function */
 #define PARAM_STORE_TO_SYM_LIST(type, param) ({ \

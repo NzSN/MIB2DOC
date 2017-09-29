@@ -2,6 +2,8 @@
 #define _DISPATCHER_H_
 
 #include "type.h"
+#include "stack.h"
+
 typedef enum dispatch_type {
     DISPATCH_PARAM_STAGE = 0,
     MIBTREE_GENERATION,
@@ -15,15 +17,26 @@ typedef enum dispatch_mode {
     DISPATCH_MODE_DOC_GENERATING = 1
 } dispatch_mode;
 
+typedef struct identList {
+    int found;
+    char *symName;
+    listNode *next;
+} identList;
+
+typedef struct collectInfo {
+    char *modName;
+    identList *symbols;
+} collectInfo;
+
 typedef struct switchingState {
     int state;
     int counter;
+    genericStack modStack;
 } switchingState;
 
-struct yy_buffer_state
-	{
+struct yy_buffer_state {
 	FILE *yy_input_file;
-
+     
 	char *yy_ch_buf;		/* input buffer */
 	char *yy_buf_pos;		/* current position in input buffer */
 
@@ -78,14 +91,13 @@ struct yy_buffer_state
 	 * (via yyrestart()), so that the user can continue scanning by
 	 * just pointing yyin at a new input file.
 	 */
-#define YY_BUFFER_EOF_PENDING 2
+#define YY_BUFFER_EOF_PENDING {
 
 };
 
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
 
-
-int dispatch(int type, params_t * param);
+errorType dispatch(dispatch_type dType, params_t * param);
 
 #endif /* _DISPATCHER_H_ */
 

@@ -3,20 +3,19 @@ project(GL5610_MIB_DOC_GEN)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(SRC_DIR /home/ayden/CLionProjects/MIB2DOC/src)
 set(CMAKE_C_STANDARD 11)
-set(SOURCE_FILES src/main.c include/type.h 
+set(SOURCE_FILES src/main.c 
     src/mibTreeGen.c
     src/lex.yy.c src/yy_syn.tab.c 
     src/queue.c src/mibTreeObjTree.c 
-    include/stack.h src/stack.c 
-    src/list.c src/lexDeal.c include/lexDeal.h)
+    src/stack.c src/list.c src/lexDeal.c)
 set(HEADER_PATH include)
 include_directories(${HEADER_PATH})
 
 project(UNIT_TEST)
 set(UNIT_TEST_SRC src/unitTest/unitTest.c 
-    include/type.h src/mibTreeGen.c
-    src/lex.yy.c src/yy_syn.tab.c 
-    src/queue.c src/mibTreeObjTree.c include/stack.h src/stack.c 
+    src/mibTreeGen.c src/lex.yy.c 
+    src/yy_syn.tab.c src/queue.c 
+    src/mibTreeObjTree.c src/stack.c 
     src/list.c)
 link_libraries(cmocka)
 

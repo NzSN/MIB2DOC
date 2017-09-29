@@ -38,7 +38,8 @@ int deal_with(int type) {
         case OBJECT_IDENTIFIER:
             deal_with_objIdent();
             break;
-        case SEQUENCE:
+        case SEQUENCE:            
+            /* ignore */
             break;
         default:
             break;
@@ -48,7 +49,7 @@ int deal_with(int type) {
 
 int deal_with_object() {
     char *ident, *type, *rw, *desc, *parent, *suffix, *oid;
-
+    
     ident = getElement_el(&elistHead, IDENTIFIER_EL)->content;
     type = getElement_el(&elistHead, TYPE_EL)->content;
     rw = getElement_el(&elistHead, RW_EL)->content;
@@ -65,7 +66,7 @@ int deal_with_object() {
 
     oid = oidComplement(parent, suffix);
     mibTreeLeaveAdd(ident, type, rw, desc, parent, oid);
-
+    
     reset_el(&elistHead);
     RELEASE_PTR(suffix);
     RELEASE_PTR(parent);
@@ -143,7 +144,7 @@ static int mibTreeLeaveAdd(char *ident, char *type, char *rw, char *desc, char *
 
 static int mibTreeNodeAdd(char *ident, char *oid, char *parent) {
     mibObjectTreeNode *obj;
-
+    
     if (IS_PTR_NULL(ident) || IS_PTR_NULL(oid))
         return -1;
 
@@ -176,7 +177,18 @@ static char * oidComplement(char *parent, char *suffix) {
 /*
  * Symbol Collecting
  */
-#define NUM_OF_COLLECT_ROUTINE 11
+
+static int symbolCollect_OBJECT(params_t *param);
+static int symbolCollect_DESCRIPTION(params_t *param);
+static int symbolCollect_IDENTIFIER(params_t *param);
+static int symbolCollect_OBJECT_IDENTIFIER(params_t *param);
+static int symbolCollect_PARENT(params_t *param);
+static int symbolCollect_RW(params_t *param);
+static int symbolCollect_SEQUENCE(params_t *param);
+static int symbolCollect_SMI_DEF(params_t *param);
+static int symbolCollect_SUFFIX(params_t *param);
+static int symbolCollect_TRAP(params_t *param);
+static int symbolCollect_TYPE(params_t *param);
 
 int (*symbolCollectRoutine[NUM_OF_COLLECT_ROUTINE])(params_t *);
 
@@ -204,23 +216,23 @@ int symbolCollecting(int type, params_t *param) {
     return symbolCollectRoutine[type](param);
 }
 
-int symbolCollect_OBJECT(params_t *param) {
+static int symbolCollect_OBJECT(params_t *param) {
     flushAll_el(&symCollectList);
 }
 
 
-int symbolCollect_TRAP(params_t *param) {
+static int symbolCollect_TRAP(params_t *param) {
     flushAll_el(&symCollectList);
 }
 
-int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
+static int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
     symbolTable *newMod;
     symbol_t *newSymbol;
     char *modIdent; 
     char *symbolIdent;
-    char *parentIdent = getElement_el(&symCollectList, PARENT_EL);    
+    char *parentIdent = getElement_el(&symCollectList, PARENT_EL)->content;    
 
-    symbolIdent = getElement_el(&symCollectList, IDENTIFIER_EL);
+    symbolIdent = getElement_el(&symCollectList, IDENTIFIER_EL)->content;
     
     /* Is the symbol exists in symbol table ? */
     if (symbolSearching(symbolIdent)) {
@@ -248,15 +260,15 @@ int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
     return 0;
 }
 
-int symbolCollect_SEQUENCE(params_t *param) {
+static int symbolCollect_SEQUENCE(params_t *param) {
     flushAll_el(&symCollectList);
 }
 
-int symbolCollect_SMI_DEF(params_t *param) {
+static int symbolCollect_SMI_DEF(params_t *param) {
     /* Record into symtable */
 }
 
-int symbolCollect_IDENTIFIER(params_t *param) {   
+static int symbolCollect_IDENTIFIER(params_t *param) {   
 
     if (IS_PTR_NULL(param)) {
         return -1;
@@ -266,7 +278,7 @@ int symbolCollect_IDENTIFIER(params_t *param) {
     return 0;
 }
 
-int symbolCollect_TYPE(params_t *param) {
+static int symbolCollect_TYPE(params_t *param) {
 
     if (IS_PTR_NULL(param)) {
         return -1;
@@ -276,7 +288,7 @@ int symbolCollect_TYPE(params_t *param) {
     return 0;
 }
 
-int symbolCollect_RW(params_t *param) {
+static int symbolCollect_RW(params_t *param) {
     if (IS_PTR_NULL(param)) {
         return -1;
     }
@@ -285,7 +297,7 @@ int symbolCollect_RW(params_t *param) {
     return 0;
 }
 
-int symbolCollect_DESCRIPTION(params_t *param) {
+static int symbolCollect_DESCRIPTION(params_t *param) {
     if (IS_PTR_NULL(param)) {
         return -1;
     }
@@ -294,7 +306,7 @@ int symbolCollect_DESCRIPTION(params_t *param) {
     return 0;
 }
 
-int symbolCollect_PARENT(params_t *param) {
+static int symbolCollect_PARENT(params_t *param) {
     if (IS_PTR_NULL(param)) {
         return -1;
     }
@@ -303,7 +315,7 @@ int symbolCollect_PARENT(params_t *param) {
     return 0;
 }
 
-int symbolCollect_SUFFIX(params_t *param) {
+static int symbolCollect_SUFFIX(params_t *param) {
     if (IS_PTR_NULL(param)) {
         return -1;
     }

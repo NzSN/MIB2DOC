@@ -8,3 +8,4 @@
 char * strDuplicate(char *src);
 
 #endif //UNIT_TEST_LEXDEAL_H
+

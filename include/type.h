@@ -11,18 +11,12 @@
 #include "list.h"
 
 /* define */
+#define null (0)
 #define SIZE_OF_CURRENT_TABLE 64
 #define SIZE_OF_SECTION_RECORD 1024
 #define SIZE_OF_OID_STRING 256
 #define IS_PTR_NULL(PTR) (PTR ? 0:1)
 #define RELEASE_PTR(PTR) ({free(PTR); PTR=NULL;})
-#define CAST(TO, FROM) ((TO)FROM)
-
-#define container_of(ptr, type, member) ({                      \
-    const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
-    (type *)( (char *)__mptr - offsetof(type,member) );
-})
-
 
 /* Extern */
 extern char *sectionRecord[SIZE_OF_SECTION_RECORD];
@@ -81,7 +75,8 @@ enum elementType {
     RW_EL,
     DESCRIPTION_EL,
     PARENT_EL,
-    SUFFIX_EL
+    SUFFIX_EL,
+    NUM_OF_COLLECT_ROUTINE
 };
 
 typedef enum errorType {
@@ -99,7 +94,9 @@ typedef struct nodeMeta_t {
     char *parentIdent;    
 } nodeMeta_t;
 
-typedef struct leaveMeta_t { } leaveMeta_t;
+typedef struct leaveMeta_t { 
+
+} leaveMeta_t;
 
 #define MAX_CHAR_OF_MOD_IDENT 64
 
@@ -121,7 +118,7 @@ typedef struct symbol_t {
 typedef struct symbolTable {
     char *modName;
     symbol_t symbol;
-    struct symbolTable next;
+    struct symbolTable next; 
 } symbolTable;
 
 
