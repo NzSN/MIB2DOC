@@ -18,7 +18,7 @@
     #define YYSTYPE char *
 
 	params_t paramHead;
-	
+
     extern char *yylval;
     void yyerror(char const *s) {
         fprintf(stderr, "%s: %s\n", s, yylval);
@@ -27,51 +27,51 @@
 
 %%
 
-MIB : 
+MIB :
 	DEFINITION IMPORT MAIN_PART    { };
-MAIN_PART : 
-	OBJ_DEAL MAIN_PART 
-	| OBJ MAIN_PART 
-	| TRAP MAIN_PART 
-	| SEQUENCE MAIN_PART 
+MAIN_PART :
+	OBJ_DEAL MAIN_PART
+	| OBJ MAIN_PART
+	| TRAP MAIN_PART
+	| SEQUENCE MAIN_PART
 	| END_    { } ;
 
-DEFINITION : 
+DEFINITION :
 	IDENTIFIER DEF ASSIGNED BEGIN_    { };
 
-IMPORT : 
-	IMPORTS_ MODULES SEMICOLON    { /* Build upper layer */ };
-MODULES : 
-	ITEMS FROM_ IDENTIFIER MODULES { 
+IMPORT :
+	IMPORTS_ MODULES SEMICOLON    { /* Build upper layer of mibtree */ };
+MODULES :
+	ITEMS FROM_ IDENTIFIER MODULES {
 		params_t param = buildParam($3);
 		param->next = buildParam($1);
-		
+
 		dispatch(SWITCH_TO_INC_BUFFER, param);
 	}
 	| /* empty */  ;
-ITEMS : 
-	IDENTIFIER 
-	| IDENTIFIER COMMA ITEMS 
+ITEMS :
+	IDENTIFIER
+	| IDENTIFIER COMMA ITEMS
 	| /* empty */ ;
 
-SEQUENCE : 
+SEQUENCE :
 	IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE { };
-SEQ_ITEM : 
-	IDENTIFIER TYPE COMMA SEQ_ITEM 
+SEQ_ITEM :
+	IDENTIFIER TYPE COMMA SEQ_ITEM
 	| IDENTIFIER TYPE    { };
 SMI :
     "SMI" IDENTIFIER {
-        params_t *param  = buildParam(IDENTIFIER_EL); 
-        params_t *paramNext = buildParam($1);       
+        params_t *param  = buildParam(IDENTIFIER_EL);
+        params_t *paramNext = buildParam($1);
 
         dispatch(DISPATCH_PARAM_STAGE, param);
         dispatch(MIBTREE_GENERATION, buildParam(SMI_DEF));
     };
 
 
-OBJ_DEAL : 
+OBJ_DEAL :
 	OBJ_IDENTIFIER { deal_with(OBJECT_IDENTIFIER); }
-OBJ_IDENTIFIER : 
+OBJ_IDENTIFIER :
 	IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
 		params_t param = buildParam(IDENTIFIER_EL);
 		param->next = buildParam($1);
@@ -83,86 +83,85 @@ OBJ_IDENTIFIER :
 
 		params_t param = buildParam(SUFFIX_EL);
 		param->next = buildParam($6);
-		dispatch(DISPATCH_PARAM_STAGE, param);		                                                                              
+		dispatch(DISPATCH_PARAM_STAGE, param);
 };
 
-OBJ : 
+OBJ :
 	HEAD BODY { dispatch(MIBTREE_GENERATION, buildParam(OBJECT)); };
-TRAP :  
+TRAP :
 	TRAP_HEAD PROPERTY    { dispatch(MIBTREE_GENERATION, buildParam(TRAP)); };
-TRAP_HEAD : 
-	IDENTIFIER TRAP_SPECIFIER { 
+TRAP_HEAD :
+	IDENTIFIER TRAP_SPECIFIER {
 		params_t *param = buildParam(IDENTIFIER_EL);
 		param->next = buildParam($1);
-			
+
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
-HEAD : 
-	IDENTIFIER OBJ_SPECIFIER { 
+HEAD :
+	IDENTIFIER OBJ_SPECIFIER {
 		params_t param = buildParam(IDENTIFIER_EL);
 		param->next = buildParam($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
-BODY : 
+BODY :
 	PROPERTY    {};
-PROPERTY :  
-	SYNTAX PROPERTY 
+PROPERTY :
+	SYNTAX PROPERTY
 	| ACCESS PROPERTY
-	| STATUS PROPERTY 
+	| STATUS PROPERTY
 	| DESCRIPTION PROPERTY
-	| INDEX PROPERTY 
- 	| MOUNT PROPERTY 
- 	| OBJECT PROPERTY 
+	| INDEX PROPERTY
+ 	| MOUNT PROPERTY
+ 	| OBJECT PROPERTY
  	| /* empty */    { };
-            
-OBJECT : 
+
+OBJECT :
 	OBJECTS_ L_BRACE OBJECT_ITEM R_BRACE
-	
-OBJECT_ITEM : 
-	IDENTIFIER COMMA OBJECT_ITEM  
+
+OBJECT_ITEM :
+	IDENTIFIER COMMA OBJECT_ITEM
 	| IDENTIFIER ;
-	
-SYNTAX : 
+
+SYNTAX :
 	SYNTAX_SPECIFIER SYNTAX_VALUE ;
-SYNTAX_VALUE : 
-	TYPE { 
+SYNTAX_VALUE :
+	TYPE {
 		params_t param = buildParam(TYPE_EL);
 		param->next = buildParam($1);
-		dispatch(DISPATCH_PARAM_STAGE, param);		
+		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
- 	| IDENTIFIER { 
+ 	| IDENTIFIER {
  		params_t param = buildParam(TYPE_EL);
 		param->next = buildParam($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
  	};
-ACCESS : 
-	ACCESS_SPECIFIER ACCESS_VALUE { 
+ACCESS :
+	ACCESS_SPECIFIER ACCESS_VALUE {
 		params_t param = buildParam(RW_EL);
 		param->next = buildParam($2);
-		dispatch(DISPATCH_PARAM_STAGE, param);		
+		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
-STATUS : 
+STATUS :
 	STATUS_SPECIFIER STATUS_VALUE {};
-DESCRIPTION : 
-	DESC_SPECIFIER DESC_VALUE { 
+DESCRIPTION :
+	DESC_SPECIFIER DESC_VALUE {
 		params_t param = buildParam(DESCRIPTION_EL);
 		param->next = buildParam($2);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE    {};
-INDEX_ITEM : 
-	IDENTIFIER COMMA INDEX_ITEM 
+INDEX_ITEM :
+	IDENTIFIER COMMA INDEX_ITEM
 	| IDENTIFIER    { };
-MOUNT : 
+MOUNT :
 	ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
 		params_t *param = buildParam(PARENT_EL);
 		param->next = buildParam($3);
 		dipatch(DISPATCH_PARAM_STAGE, param);
-	
+
 		param = buildParam(SUFFIX_EL);
 		param->next = buildParam($4);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 
 %%
-

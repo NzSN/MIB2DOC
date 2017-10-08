@@ -40,12 +40,16 @@ void mibObjectTreeInit(mibObjectTreeNode *root) {
     root->info = (void *)rootInfo;
     root->head = root;
 
+    /* instead of method that mib tree complete by symbol import */
+    #if null
     insert_mot(root, mibNodeBuild("iso", "1"), "root");
     insert_mot(root, mibNodeBuild("org", "1.3"), "iso");
     insert_mot(root, mibNodeBuild("dod", "1.3.6"), "org");
     insert_mot(root, mibNodeBuild("internet", "1.3.6.1"), "dod");
     insert_mot(root, mibNodeBuild("private", "1.3.6.1.4"), "internet");
     insert_mot(root, mibNodeBuild("enterprises", "1.3.6.1.4.1"), "private");
+    #endif
+
 }
 
 mibObjectTreeNode * mibNodeBuild(char *ident, char *oid) {

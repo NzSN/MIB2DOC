@@ -15,13 +15,13 @@ listNode *listPrev(listNode *node) {
         return NULL;
     return node->next;
 }
- 
+
 listNode * listNext(listNode *node) {
-    if (IS_PTR_NULL(node) || IS_PTR_NULL(node->prev)) 
+    if (IS_PTR_NULL(node) || IS_PTR_NULL(node->prev))
         return NULL;
     return node->prev;
 }
- 
+
 
 /*******************************************
  *  Element list Operation function define *
@@ -93,10 +93,10 @@ int reset_el(elementList *el) {
   */
 params_t * buildParam(void *arg) {
     params_t *ret;
-   
-    ret  = (params_t *)malloc(sizeof(params_t));    
+
+    ret  = (params_t *)malloc(sizeof(params_t));
     memset(ret, 0, sizeof(params_t));
-    ret->param = arg; 
+    ret->param = arg;
 
     return ret;
 }
@@ -124,7 +124,7 @@ params_t * paramListGet(params_t **head) {
     if (IS_PTR_NULL(head) || IS_PTR_NULL(*head)) {
         return NULL;
     }
-    
+
     ret = *head;
     *head = (*head)->next;
 
@@ -137,7 +137,6 @@ params_t * paramListGet(params_t **head) {
 int symbolModuleAdd(symbolTable *stbl, symbolTable *new) {
     int ret = ok;
 
-    
     if (IS_PTR_NULL(stbl) || IS_PTR_NULL(modName)) {
         ret = -1;
         return ret;
@@ -154,12 +153,12 @@ int symbolAdd(char *modName, symbol_t *newSym) {
     int ret;
     symbolTable *pSymTbl = &symTable;
     symbol_t pSym;
-    
+
     if (IS_PTR_NULL(modName) || IS_PTR_NULL(newSym)) {
         ret = -1;
         return ret;
     }
-    
+
     while (!strncmp(modName, pSymTbl->modName, strlen(modName))) {
         pSymTbl = pSymTbl->next;
     }
@@ -212,4 +211,3 @@ int symbolSearching(char *symIdent) {
 FINISHED:
     return ret;
 }
-

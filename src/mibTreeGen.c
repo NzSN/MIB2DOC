@@ -10,8 +10,8 @@
 #include "queue.h"
 
 /* Declaration */
-static int mibTreeLeaveAdd(char *ident, char *type, 
-        char *rw, char *desc, 
+static int mibTreeLeaveAdd(char *ident, char *type,
+        char *rw, char *desc,
         char *parent, char *suffix);
 static int mibTreeNodeAdd(char *ident, char *oid, char *parent);
 static char * oidComplement(char *parent, char *suffix);
@@ -38,7 +38,7 @@ int deal_with(int type) {
         case OBJECT_IDENTIFIER:
             deal_with_objIdent();
             break;
-        case SEQUENCE:            
+        case SEQUENCE:
             /* ignore */
             break;
         default:
@@ -49,7 +49,7 @@ int deal_with(int type) {
 
 int deal_with_object() {
     char *ident, *type, *rw, *desc, *parent, *suffix, *oid;
-    
+
     ident = getElement_el(&elistHead, IDENTIFIER_EL)->content;
     type = getElement_el(&elistHead, TYPE_EL)->content;
     rw = getElement_el(&elistHead, RW_EL)->content;
@@ -66,7 +66,7 @@ int deal_with_object() {
 
     oid = oidComplement(parent, suffix);
     mibTreeLeaveAdd(ident, type, rw, desc, parent, oid);
-    
+
     reset_el(&elistHead);
     RELEASE_PTR(suffix);
     RELEASE_PTR(parent);
@@ -139,12 +139,11 @@ static int mibTreeLeaveAdd(char *ident, char *type, char *rw, char *desc, char *
         return -1;
 
     insert_mot(&mibObjectTreeRoot, obj, parent);
-
 }
 
 static int mibTreeNodeAdd(char *ident, char *oid, char *parent) {
     mibObjectTreeNode *obj;
-    
+
     if (IS_PTR_NULL(ident) || IS_PTR_NULL(oid))
         return -1;
 
@@ -208,7 +207,7 @@ int symbolCollectingInit() {
     symbolCollectRoutine[DESCRIPTION_EL] = symbolCollect_DESCRIPTION;
     symbolCollectRoutine[PARENT_EL] = symbolCollect_PARENT;
     symbolCollectRoutine[SUFFIX_EL] = symbolCollect_SUFFIX;
-    
+
     return 0;
 }
 
@@ -228,12 +227,12 @@ static int symbolCollect_TRAP(params_t *param) {
 static int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
     symbolTable *newMod;
     symbol_t *newSymbol;
-    char *modIdent; 
+    char *modIdent;
     char *symbolIdent;
-    char *parentIdent = getElement_el(&symCollectList, PARENT_EL)->content;    
+    char *parentIdent = getElement_el(&symCollectList, PARENT_EL)->content;
 
     symbolIdent = getElement_el(&symCollectList, IDENTIFIER_EL)->content;
-    
+
     /* Is the symbol exists in symbol table ? */
     if (symbolSearching(symbolIdent)) {
         return 1;
@@ -241,8 +240,8 @@ static int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
 
     modIdent = (char *)malloc(MAX_CHAR_OF_MOD_IDENT)
     switch_CurrentMod(modIdent, MAX_CHAR_OF_MOD_IDENT);
-    parentIdent = getElement_el(&symCollectList, PARENT_EL);        
-        
+    parentIdent = getElement_el(&symCollectList, PARENT_EL);
+
     /* Is the module specify by modIdent is exists ? */
     if (!symbolModSearching(modIdent)) {
         newMod = (symbolTable *)malloc(sizeof(symbolTable));
@@ -256,7 +255,7 @@ static int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
     newSymbol->metadata.nodeMeta.parentIdent = parentIdent;
 
     symbolAdd(modIdent, newSymbol);
-   
+
     return 0;
 }
 
@@ -268,7 +267,7 @@ static int symbolCollect_SMI_DEF(params_t *param) {
     /* Record into symtable */
 }
 
-static int symbolCollect_IDENTIFIER(params_t *param) {   
+static int symbolCollect_IDENTIFIER(params_t *param) {
 
     if (IS_PTR_NULL(param)) {
         return -1;

@@ -29,14 +29,17 @@ typedef struct collectInfo {
 } collectInfo;
 
 typedef struct switchingState {
+    /* Include status or Non-Include status */
     int state;
+    /* Number of modules in stack */
     int counter;
+    /* Stack of struct collectInfo */
     genericStack modStack;
 } switchingState;
 
 struct yy_buffer_state {
 	FILE *yy_input_file;
-     
+
 	char *yy_ch_buf;		/* input buffer */
 	char *yy_buf_pos;		/* current position in input buffer */
 
@@ -100,4 +103,3 @@ typedef struct yy_buffer_state * YY_BUFFER_STATE;
 errorType dispatch(dispatch_type dType, params_t * param);
 
 #endif /* _DISPATCHER_H_ */
-
