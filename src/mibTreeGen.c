@@ -8,6 +8,7 @@
 #include "type.h"
 #include "list.h"
 #include "queue.h"
+#include "dispatcher.h"
 
 /* Declaration */
 static int mibTreeLeaveAdd(char *ident, char *type,
@@ -19,6 +20,7 @@ static char * oidComplement(char *parent, char *suffix);
 char currentTable[64];
 extern mibObjectTreeNode root;
 extern elementList elistHead;
+extern mibObjectTreeNode mibObjectTreeRoot;
 
 /* Global */
 mibObjectTreeNode root;
@@ -238,9 +240,9 @@ static int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
         return 1;
     }
 
-    modIdent = (char *)malloc(MAX_CHAR_OF_MOD_IDENT)
+    modIdent = (char *)malloc(MAX_CHAR_OF_MOD_IDENT);
     switch_CurrentMod(modIdent, MAX_CHAR_OF_MOD_IDENT);
-    parentIdent = getElement_el(&symCollectList, PARENT_EL);
+    parentIdent = getElement_el(&symCollectList, PARENT_EL)->content;
 
     /* Is the module specify by modIdent is exists ? */
     if (!symbolModSearching(modIdent)) {

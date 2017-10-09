@@ -22,6 +22,7 @@ enum {
     COLLECTING,
     SECTION
 };
+extern mibObjectTreeNode mibObjectTreeRoot;
 
 /* Local */
 char *laTexStrBuffer;
@@ -45,7 +46,7 @@ int documentGen(mibObjectTreeNode *root, FILE *writeTo) {
     travel_mot(root, docGenerate, writeTo);
     latexTailGen();
 
-    return Ok;
+    return 0;
 }
 
 static int docGenerate(void *arg, mibObjectTreeNode *node) {

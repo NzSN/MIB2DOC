@@ -11,7 +11,8 @@
 dispatch_mode dispatchMode;
 static int dispatchMakeChoice(dispatch_type dType);
 static int switchToModule(params_t *param);
-
+extern elementList elistHead; 
+static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo);
 /* Global */
 switchingState swState;
 
@@ -21,7 +22,8 @@ int dispatchInit() {
     return ok;
 }
 
-errorType dispatch(dispatch_type dType, params_t *param) {
+int dispatch(dispatch_type dType, params_t *param) {
+  
     errorType ret = ok;
 
     switch (dispatchMakeChoice(dType)) {

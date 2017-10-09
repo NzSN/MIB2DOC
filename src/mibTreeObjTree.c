@@ -4,9 +4,9 @@
 
 #include <malloc.h>
 #include <string.h>
-#include "../include/mibTreeObjTree.h"
-#include "../include/type.h"
-#include "../include/docGenerate.h"
+#include "mibTreeObjTree.h"
+#include "type.h"
+#include "docGenerate.h"
 
 /* Global */
 mibObjectTreeNode mibObjectTreeRoot;

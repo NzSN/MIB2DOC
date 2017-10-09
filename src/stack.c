@@ -5,16 +5,16 @@
 #include "stack.h"
 #include "type.h"
 
-int push(identStack *ps, void *ident) {
+int push(genericStack *ps, void *ident) {
     int top;
     if (IS_PTR_NULL(ps) || IS_PTR_NULL(ident))
         return -1;
-    top = ps->top
-    pushByIndex(ps->stack, ident, top, SIZE_OF_IDENT_STACK-1)
+    top = ps->top;
+    pushByIndex(ps->stack, ident, top, SIZE_OF_IDENT_STACK-1);
     return 0;
 }
 
-void *pop(identStack *ps) {
+void *pop(genericStack *ps) {
     int top;
     void *retVal;
 
@@ -25,3 +25,4 @@ void *pop(identStack *ps) {
     popByIndex(ps->stack, top, retVal);
     return retVal;
 }
+

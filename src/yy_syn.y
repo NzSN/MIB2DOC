@@ -14,10 +14,8 @@
     #include "type.h"
     #include "mibTreeGen.h"
     #include "mibTreeObjTree.h"
-
+    #include "dispatcher.h"
     #define YYSTYPE char *
-
-	params_t paramHead;
 
     extern char *yylval;
     void yyerror(char const *s) {
@@ -34,6 +32,7 @@ MAIN_PART :
 	| OBJ MAIN_PART
 	| TRAP MAIN_PART
 	| SEQUENCE MAIN_PART
+    | SMI MAIN_PART
 	| END_    { } ;
 
 DEFINITION :
@@ -43,9 +42,8 @@ IMPORT :
 	IMPORTS_ MODULES SEMICOLON    { /* Build upper layer of mibtree */ };
 MODULES :
 	ITEMS FROM_ IDENTIFIER MODULES {
-		params_t param = buildParam($3);
+		params_t *param = buildParam($3);
 		param->next = buildParam($1);
-
 		dispatch(SWITCH_TO_INC_BUFFER, param);
 	}
 	| /* empty */  ;
@@ -73,15 +71,15 @@ OBJ_DEAL :
 	OBJ_IDENTIFIER { deal_with(OBJECT_IDENTIFIER); }
 OBJ_IDENTIFIER :
 	IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
-		params_t param = buildParam(IDENTIFIER_EL);
+		params_t *param = buildParam(IDENTIFIER_EL);
 		param->next = buildParam($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
-		params_t param = buildParam(PARENT_EL);
+		param = buildParam(PARENT_EL);
 		param->next = buildParam($5);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
-		params_t param = buildParam(SUFFIX_EL);
+		param = buildParam(SUFFIX_EL);
 		param->next = buildParam($6);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 };
@@ -99,7 +97,7 @@ TRAP_HEAD :
 	};
 HEAD :
 	IDENTIFIER OBJ_SPECIFIER {
-		params_t param = buildParam(IDENTIFIER_EL);
+		params_t *param = buildParam(IDENTIFIER_EL);
 		param->next = buildParam($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
@@ -126,18 +124,18 @@ SYNTAX :
 	SYNTAX_SPECIFIER SYNTAX_VALUE ;
 SYNTAX_VALUE :
 	TYPE {
-		params_t param = buildParam(TYPE_EL);
+		params_t *param = buildParam(TYPE_EL);
 		param->next = buildParam($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
  	| IDENTIFIER {
- 		params_t param = buildParam(TYPE_EL);
+ 		params_t *param = buildParam(TYPE_EL);
 		param->next = buildParam($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
  	};
 ACCESS :
 	ACCESS_SPECIFIER ACCESS_VALUE {
-		params_t param = buildParam(RW_EL);
+		params_t *param = buildParam(RW_EL);
 		param->next = buildParam($2);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
@@ -145,7 +143,7 @@ STATUS :
 	STATUS_SPECIFIER STATUS_VALUE {};
 DESCRIPTION :
 	DESC_SPECIFIER DESC_VALUE {
-		params_t param = buildParam(DESCRIPTION_EL);
+		params_t *param = buildParam(DESCRIPTION_EL);
 		param->next = buildParam($2);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
@@ -157,7 +155,7 @@ MOUNT :
 	ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
 		params_t *param = buildParam(PARENT_EL);
 		param->next = buildParam($3);
-		dipatch(DISPATCH_PARAM_STAGE, param);
+		dispatch(DISPATCH_PARAM_STAGE, param);
 
 		param = buildParam(SUFFIX_EL);
 		param->next = buildParam($4);

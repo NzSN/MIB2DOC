@@ -5,6 +5,8 @@
 #ifndef UNIT_TEST_LSIT_H
 #define UNIT_TEST_LSIT_H
 
+#include "type.h"
+
 typedef struct elementList {
     int key;
     char *content;
@@ -12,14 +14,14 @@ typedef struct elementList {
 } elementList;
 
 typedef struct listNode {
-    struct listNode next;
-    struct listNode prev;
+    struct listNode *next;
+    struct listNode *prev;
 } listNode;
 
 /* ListNode */
 listNode *listPrev(listNode *node);
 listNode *listNext(listNode *node);
-
+listNode *listAppend(listNode *head, listNode *node);
 /* Element List */
 elementList * buildElement(int key, char *content);
 elementList * getElement_el(elementList *el, int key);

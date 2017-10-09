@@ -3,6 +3,7 @@
 
 #include "type.h"
 #include "stack.h"
+#include "list.h"
 
 typedef enum dispatch_type {
     DISPATCH_PARAM_STAGE = 0,
@@ -20,7 +21,7 @@ typedef enum dispatch_mode {
 typedef struct identList {
     int found;
     char *symName;
-    listNode *next;
+    listNode next;
 } identList;
 
 struct yy_buffer_state {
@@ -106,6 +107,7 @@ typedef struct switchingState {
 
 
 YY_BUFFER_STATE * getCurrentBufferState();
-errorType dispatch(dispatch_type dType, params_t * param);
+char * switch_CurrentMod(char *modName, int len);
+int dispatch(dispatch_type dType, params_t * param);
 
 #endif /* _DISPATCHER_H_ */

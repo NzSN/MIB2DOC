@@ -7,8 +7,8 @@
 
 #include <stddef.h>
 #include <stdio.h>
+#include <stddef.h>
 #include "mibTreeObjTree.h"
-#include "list.h"
 
 /* define */
 #define null (0)
@@ -17,15 +17,10 @@
 #define SIZE_OF_OID_STRING 256
 #define IS_PTR_NULL(PTR) (PTR ? 0:1)
 #define RELEASE_PTR(PTR) ({free(PTR); PTR=NULL;})
-
-/* Extern */
-extern char *sectionRecord[SIZE_OF_SECTION_RECORD];
-extern mibObjectTreeNode mibObjectTreeRoot;
-extern elementList elistHead;
-/* Necesary Declaration */
-extern int yylex(void);
-extern FILE *yyin;
-extern int yyparse (void);
+#define containerOf(ptr, ConType, member) ({\
+    const typeof( ((ConType *)(0))->member) *__mptr = ptr;\
+    (ConType *)((char *)__mptr - offsetof(ConType, member));\
+})
 
 /* Token Id Definition */
 #ifndef YYTOKENTYPE
@@ -87,7 +82,7 @@ typedef enum errorType {
 
 typedef struct params_t {
     void *param;
-    struct params_t next;
+    struct params_t *next;
 } params_t;
 
 typedef struct nodeMeta_t {
@@ -117,8 +112,8 @@ typedef struct symbol_t {
 
 typedef struct symbolTable {
     char *modName;
-    symbol_t symbol;
-    struct symbolTable next; 
+    symbol_t *symbol;
+    struct symbolTable *next; 
 } symbolTable;
 
 

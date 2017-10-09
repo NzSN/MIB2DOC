@@ -11,7 +11,7 @@ extern char *beginFrom;
 elementList elistHead;
 char currentTable[SIZE_OF_CURRENT_TABLE];
 char *sectionRecord[SIZE_OF_SECTION_RECORD];
-
+extern mibObjectTreeNode mibObjectTreeRoot;
 
 int main() {
     int token;

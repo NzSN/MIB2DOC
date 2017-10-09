@@ -8,7 +8,7 @@
 #include "type.h"
 #include "list.h"
 
-typedef enum {
+enum {
     SYMBOL_FOUND,
     SYMBOL_NOT_FOUND
 };
@@ -32,9 +32,9 @@ int deal_with_trap();
 int symbolCollecting(int type, params_t *param);
 
 /* Note: this macro is only use for symbolCollect_XXXX series function */
-#define PARAM_STORE_TO_SYM_LIST(type, param) ({ \
+#define PARAM_STORE_TO_SYM_LIST(type, param) ({\
     char *string; \
-    string = paramListGet(&param); \
+    string = (char *)paramListGet(&param)->param; \
     appendElement_el(&symCollectList, buildElement(type, string)); \
 })
 

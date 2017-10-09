@@ -1,7 +1,11 @@
 /* options.c */
 
 #include <stdio.h>
+#include "type.h"
 #include "options.h"
+#include "malloc.h"
+#include "list.h"
+#include "string.h"
 
 /* Declaration */
 static int paramMapping(char *param);
@@ -42,25 +46,25 @@ int optionsInit(char *argv[], int argc) {
      *        an option, such as only give a "-s" but not
      *        with the value should after the "-s".
      */
-    while (param = argv[i++]) {
+    while (param = argv[i++]) {        
         switch(paramMapping(param)) {
             case SourceMibFile:
                 /* Deal with param */
                 paramVal = argv[i++];
-                optionsManager.SourceMibFile = paramVal;
+                optionsManager.sourceMibFilePath = paramVal;
                 break;
             case TargetPdfFile:
                 /* Deal with param */
                 paramVal = argv[i++];
                 optionsManager.targetPdfPATH = paramVal;
                 break;
-            case includePath:
+            case IncludePath:
                 /* Deal with inc path */
                 paramVal = argv[i++];
                 incNode = (incPathList *)malloc(sizeof(incPathList));
                 memset(incNode, 0, sizeof(incPathList));
                 incNode->path = paramVal;
-                listAppend(&optionsManager->includePath.node, &incNode->node);
+                listAppend(&optionsManager.includePath.node, &incNode->node);
                 break;
         }
 
@@ -72,7 +76,7 @@ int optionsInit(char *argv[], int argc) {
 static void mappingTableInit() {
     mappingTable[SourceMibFile] = "-s";
     mappingTable[TargetPdfFile] = "-t";
-    mappingTable[includePath] = "-I";
+    mappingTable[IncludePath] = "-I";
 
     return;
 }
@@ -94,11 +98,11 @@ static int paramMapping(char *param) {
 }
 
 char * getOption_SourceMibFilePath() {
-    return optionManager.sourceMibFilePath;
+    return optionsManager.sourceMibFilePath;
 }
 
 char * getOption_targetPdfPath() {
-    return optionManager.targetPdfPATH;
+    return optionsManager.targetPdfPATH;
 }
 
 /*
@@ -116,18 +120,18 @@ const char * getOption_includePath(int *index) {
     incPathList *head;
     listNode *node;
     if (IS_PTR_NULL(index) || i < 0) {
-        return -1;
+        return null;
     }
 
-    head = &optionManager.includePath;
+    head = &optionsManager.includePath;
 
     while (i--) {
         node = listNext(&head->node);
     }
     head = containerOf(node, incPathList, node);
 
-    *index++;
-    return (const char *)head.path;
+    (*index)++;
+    return (const char *)head->path;
 }
 
 /* options.c */

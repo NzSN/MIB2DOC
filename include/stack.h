@@ -16,24 +16,24 @@
  *     * TOP - index of TOP of stack
  *     * MAX - max index that can use for the stack
  */
-#define pushByIndex(STACK, ELEMENT, /* int */TOP, /* int */MAX) {(\
-    int ret;
+#define pushByIndex(STACK, ELEMENT, /* int */TOP, /* int */MAX) ({\
+    int ret;\
     if (TOP >= MAX) {\
         /* Stack is full just do nothing */\
-        ret = 0;
+        ret = 0;\
     } else {\
         STACK[TOP++] = ELEMENT;\
-        ret = 1;
+        ret = 1;\
     }\
-    ret;
-)}
+    ret;\
+})
 
 /*
  * Parameter
  *     * STACK - pointer of stack
  *     * TOP - index of TOP of stack
  */
-#define popByIndex(STACK, /* int */TOP, retVal) {(\
+#define popByIndex(STACK, /* int */TOP, retVal) ({\
     int ret;\
     if (TOP <= 0) {\
         ret = 0;\
@@ -42,14 +42,14 @@
         ret = 1;\
     }\
     ret;\
-)}
+})
 
 typedef struct identStack {
     int top;
     void *stack[SIZE_OF_IDENT_STACK];
 } genericStack;
 
-int push(identStack *ps, void *ident);
-char *pop(identStack *ps);
+int push(genericStack *ps, void *ident);
+void *pop(genericStack *ps);
 
 #endif /* GL5610_MIB_DOC_GEN_STACK_H */

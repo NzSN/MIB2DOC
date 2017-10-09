@@ -137,10 +137,12 @@ params_t * paramListGet(params_t **head) {
 /*****************************************************
  * symbol_t and symbolTable operation function define *
  *****************************************************/
+extern symbolTable symTable; 
+
 int symbolModuleAdd(symbolTable *stbl, symbolTable *new) {
     int ret = ok;
 
-    if (IS_PTR_NULL(stbl) || IS_PTR_NULL(modName)) {
+    if (IS_PTR_NULL(stbl) || IS_PTR_NULL(new)) {
         ret = -1;
         return ret;
     }
@@ -155,7 +157,7 @@ int symbolModuleAdd(symbolTable *stbl, symbolTable *new) {
 int symbolAdd(char *modName, symbol_t *newSym) {
     int ret;
     symbolTable *pSymTbl = &symTable;
-    symbol_t pSym;
+    symbol_t *pSym;
 
     if (IS_PTR_NULL(modName) || IS_PTR_NULL(newSym)) {
         ret = -1;
