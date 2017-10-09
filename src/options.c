@@ -40,7 +40,7 @@ int optionsInit(char *argv[], int argc) {
     /*
      * Note : should deal with error that no paramVal for
      *        an option, such as only give a "-s" but not
-     *        the value of "-s".
+     *        with the value should after the "-s".
      */
     while (param = argv[i++]) {
         switch(paramMapping(param)) {
