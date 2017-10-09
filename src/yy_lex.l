@@ -64,3 +64,7 @@ YYSTYPE yylval;
 int yywrap() {
     return 1;
 }
+
+YY_BUFFER_STATE * getCUrrentBufferState() {
+    return YY_CURRENT_BUFFER;
+}

@@ -81,14 +81,18 @@ static int switchToModule(params_t *param) {
     collectInfoInit(moduleName, sCollection, cInfo);
 
     push(swState.modStack, cInfo);
-    pushBYIndex(swState.importStack,
-        /* need Define a function inside lex.yy.c to get current buffer */,
-        swState.importStackIndex,MAX_INCLUDE_DEPTH-1);
+    pushByIndex(swState.importStack,
+                getCurrentBufferState(),
+                swState.importStackIndex,
+                MAX_INCLUDE_DEPTH-1);
     lexBufferSwitching(moduleName);
+
+    return 0;
 }
 
 void lexBufferSwitching(char *newModule) {
-    /* complete of this function should
+    /*
+     * complete of this function should
      * after option module complete
      * cause the path of include file
      * path is hold by option module

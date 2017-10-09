@@ -101,11 +101,11 @@ typedef struct switchingState {
     genericStack *modStack;
     /* Buffer stack */
     YY_BUFFER_STATE importStack[MAX_INCLUDE_DEPTH];
-    int importStackIndex
+    int importStackIndex;
 } switchingState;
 
 
-
+YY_BUFFER_STATE * getCurrentBufferState();
 errorType dispatch(dispatch_type dType, params_t * param);
 
 #endif /* _DISPATCHER_H_ */
