@@ -22,6 +22,9 @@ listNode * listNext(listNode *node) {
     return node->prev;
 }
 
+listNode * listAppend(listNode *head, listNode *node) {
+    
+}
 
 /*******************************************
  *  Element list Operation function define *

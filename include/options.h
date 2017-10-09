@@ -3,12 +3,17 @@
 
 #include "list.h"
 
+typedef struct incPathList {
+    char *path;
+    listNode node;
+} incPathList;
+
 typedef struct options {
-    listNode *includePath;
+    incPathList includePath;
     char *sourceMibFilePath;
-    cahr *targetPdfPATH;
+    char *targetPdfPATH;
     int fontSize;
-} options;
+} options_t;
 
 int optionsInit(char *argv[], int argc);
 
