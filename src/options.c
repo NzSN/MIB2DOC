@@ -78,7 +78,56 @@ static void mappingTableInit() {
 }
 
 static int paramMapping(char *param) {
+    int index = 0;
 
+    if (IS_PTR_NULL(param)) {
+        return -1;
+    }
+
+    while (index < NumOfOptions) {
+        if (strncmp(param, mappingTable[index], strlen(param)) == 0) {
+            break;
+        }
+        index++;
+    }
+    return index;
+}
+
+char * getOption_SourceMibFilePath() {
+    return optionManager.sourceMibFilePath;
+}
+
+char * getOption_targetPdfPath() {
+    return optionManager.targetPdfPATH;
+}
+
+/*
+ * Parameter
+ *     - index : is used to track where to
+ *               start to get next include path
+ * Return Value
+ *     - null : no more include path to get
+ *     - string : a string that describe the path
+ *                of include path.
+ *     - val < 0 : error
+ */
+const char * getOption_includePath(int *index) {
+    int i = *index;
+    incPathList *head;
+    listNode *node;
+    if (IS_PTR_NULL(index) || i < 0) {
+        return -1;
+    }
+
+    head = &optionManager.includePath;
+
+    while (i--) {
+        node = listNext(&head->node);
+    }
+    head = containerOf(node, incPathList, node);
+
+    *index++;
+    return (const char *)head.path;
 }
 
 /* options.c */
