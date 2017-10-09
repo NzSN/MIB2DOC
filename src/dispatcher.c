@@ -14,9 +14,6 @@ static int switchToModule(params_t *param);
 
 /* Global */
 switchingState swState;
-extern int importStackIndex;
-extern YY_BUFFER_STATE importStack[MAX_INCLUDE_DEPTH];
-
 
 /* Definition Section */
 int dispatchInit() {
@@ -83,12 +80,41 @@ static int switchToModule(params_t *param) {
     cInfo = (collectInfo *)malloc(sizeof(collectInfo));
     collectInfoInit(moduleName, sCollection, cInfo);
 
+    push(swState.modStack, cInfo);
+    pushBYIndex(swState.importStack,
+        /* need Define a function inside lex.yy.c to get current buffer */,
+        swState.importStackIndex,MAX_INCLUDE_DEPTH-1);
+    lexBufferSwitching(moduleName);
 }
 
-static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo) {
-
+void lexBufferSwitching(char *newModule) {
+    /* complete of this function should
+     * after option module complete
+     * cause the path of include file
+     * path is hold by option module
+     */
 }
 
 char * switch_CurrentMod(char *modName, int len) {}
+
+/**************************
+ *  collectInfo functions *
+ **************************/
+#define SYMBOL_SEPERATOR ','
+
+static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo) {
+      identList *head;
+
+      if (IS_PTR_NULL(modName) || IS_PTR_NULL(sString) || IS_PTR_NULL(cInfo))
+          return -1;
+
+      head = (identList *)malloc(sizeof(identList));
+      stringToIdentList(sString, head, SYMBOL_SEPERATOR);
+
+      cInfo->modName = modName;
+      cInfo->symbols = head;
+
+      return 0;
+}
 
 /* End of file */

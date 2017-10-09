@@ -23,20 +23,6 @@ typedef struct identList {
     listNode *next;
 } identList;
 
-typedef struct collectInfo {
-    char *modName;
-    identList *symbols;
-} collectInfo;
-
-typedef struct switchingState {
-    /* Include status or Non-Include status */
-    int state;
-    /* Number of modules in stack */
-    int counter;
-    /* Stack of struct collectInfo */
-    genericStack modStack;
-} switchingState;
-
 struct yy_buffer_state {
 	FILE *yy_input_file;
 
@@ -99,6 +85,26 @@ struct yy_buffer_state {
 };
 
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
+
+typedef struct collectInfo {
+    char *modName;
+    identList *symbols;
+} collectInfo;
+
+#define MAX_INCLUDE_DEPTH 10
+typedef struct switchingState {
+    /* Include status or Non-Include status */
+    int state;
+    /* Number of modules in stack */
+    int counter;
+    /* Stack of struct collectInfo */
+    genericStack *modStack;
+    /* Buffer stack */
+    YY_BUFFER_STATE importStack[MAX_INCLUDE_DEPTH];
+    int importStackIndex
+} switchingState;
+
+
 
 errorType dispatch(dispatch_type dType, params_t * param);
 

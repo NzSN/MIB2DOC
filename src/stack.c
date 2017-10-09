@@ -2,36 +2,26 @@
 // Created by ayden on 2017/4/24.
 //
 
-#include "../include/stack.h"
-#include "../include/type.h"
+#include "stack.h"
+#include "type.h"
 
-int push(identStack *ps, char *ident) {
+int push(identStack *ps, void *ident) {
     int top;
     if (IS_PTR_NULL(ps) || IS_PTR_NULL(ident))
         return -1;
-    if (IS_STACK_FULL(ps))
-        return -2;
-    top = ps->top;
-    top++;
-    ps->stack[top] = ident;
-    ps->top = top;
+    top = ps->top
+    pushByIndex(ps->stack, ident, top, SIZE_OF_IDENT_STACK-1)
     return 0;
 }
 
-char *pop(identStack *ps) {
+void *pop(identStack *ps) {
     int top;
-    char *ident;
+    void *retVal;
 
     if (IS_PTR_NULL(ps))
         return NULL;
-    
+
     top = ps->top;
-    
-    if (IS_STACK_EMPTY(ps))
-        return NULL;
-    else
-        ident = ps->stack[top];
-    top--;
-    ps->top = top;
-    return ident;
+    popByIndex(ps->stack, top, retVal);
+    return retVal;
 }

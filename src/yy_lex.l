@@ -1,13 +1,10 @@
 %{
     #include "../include/type.h"
     #include "../include/list.h"
+    #include "dispatcher.h"
     #define YYSTYPE char*
     extern YYSTYPE yylval;
-
-	#define MAX_INCLUDE_DEPTH 10
-	int importStackIndex = 0;
-	YY_BUFFER_STATE importStack[MAX_INCLUDE_DEPTH];
-	    
+  extern switchingState swState;
 %}
 
 %%
@@ -20,12 +17,12 @@ OBJECTS                             { return OBJECTS_; }
 NOTIFICATION-TYPE                   { return TRAP_SPECIFIER; }
 SYNTAX                              { return SYNTAX_SPECIFIER; }
 
-INTEGER([ \n\t\r]*\(*.*\))* 
-| IpAddress 
-| MacAddress 
-| OCTET[ \n\t\r]+STRING([ \n\t\r]*\(.*\))* 
-| SEQUENCE[ \n\t\r]+OF[ \n\t\r]*[a-zA-Z]* 
-| RowStatus    						{ yylval = strDuplicate(yytext); return TYPE; }
+INTEGER([ \n\t\r]*\(*.*\))*
+| IpAddress
+| MacAddress
+| OCTET[ \n\t\r]+STRING([ \n\t\r]*\(.*\))*
+| SEQUENCE[ \n\t\r]+OF[ \n\t\r]*[a-zA-Z]*
+| RowStatus                         { yylval = strDuplicate(yytext); return TYPE; }
 
 SEQUENCE                            { return SEQ; }
 
