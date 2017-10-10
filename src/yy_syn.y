@@ -44,7 +44,9 @@ MODULES :
 	ITEMS FROM_ IDENTIFIER MODULES {
 		params_t *param = buildParam($3);
 		param->next = buildParam($1);
-		dispatch(SWITCH_TO_INC_BUFFER, param);
+		if (dispatch(SWITCH_TO_INC_BUFFER, param) == abort_terminate) {
+            return abort_terminate;
+        }
 	}
 	| /* empty */  ;
 ITEMS :

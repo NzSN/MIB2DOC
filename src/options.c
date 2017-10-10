@@ -18,25 +18,26 @@ options_t optionsManager;
 typedef enum optionNumber {
     SourceMibFile = 0,
     TargetPdfFile,
+    UNIQUE_PARAM, /* params above this line is unique another is not */
     IncludePath,
     NumOfOptions
 } optionNumber;
 
 static char * mappingTable[NumOfOptions];
 
-int optionsInit(char *argv[], int argc) {
+int optionsInit(int argc, char *argv[]) {
     char *param;
     char *paramVal;
     incPathList *incNode;
-    int i=0;
+    int i=0, paramIndex = 0;
 
     if (IS_PTR_NULL(argv)) {
-        return -1;
+        return error_null_reference;
     }
 
     if (argc == 0) {
-        printf("usage : mib2doc [options] <mibfilePath>");
-        return -1;
+        helpInfoPrint();
+        return error_param_mismatch;
     }
 
     mappingTableInit();
@@ -46,17 +47,26 @@ int optionsInit(char *argv[], int argc) {
      *        an option, such as only give a "-s" but not
      *        with the value should after the "-s".
      */
-    while (param = argv[i++]) {        
+    while (param = argv[i++]) {
+        if ((paramIndex = paramMapping(param)) < UNIQUE_PARAM) {
+            if (mappingTable[paramIndex] == null) {
+                return error_param_mismatch;
+            }
+        }
         switch(paramMapping(param)) {
             case SourceMibFile:
                 /* Deal with param */
                 paramVal = argv[i++];
                 optionsManager.sourceMibFilePath = paramVal;
+                mappingTable[SourceMibFile] = null;
                 break;
             case TargetPdfFile:
                 /* Deal with param */
+                if (TargetPdfFile < UNIQUE_PARAM && optionsManager.targetPdfPATH != null)
+                    return error_param_mismatch;
                 paramVal = argv[i++];
                 optionsManager.targetPdfPATH = paramVal;
+                mappingTable[TargetPdfFile] = null;
                 break;
             case IncludePath:
                 /* Deal with inc path */
@@ -66,12 +76,17 @@ int optionsInit(char *argv[], int argc) {
                 incNode->path = paramVal;
                 listAppend(&optionsManager.includePath.node, &incNode->node);
                 break;
+            default:
+                helpInfoPrint();
+                return error_wrong_index;
         }
 
         if (i > argc-1)
             break;
     }
 }
+
+static void helpInfoPrint() {}
 
 static void mappingTableInit() {
     mappingTable[SourceMibFile] = "-s";
@@ -85,7 +100,7 @@ static int paramMapping(char *param) {
     int index = 0;
 
     if (IS_PTR_NULL(param)) {
-        return -1;
+        return error_null_reference;
     }
 
     while (index < NumOfOptions) {
@@ -97,11 +112,11 @@ static int paramMapping(char *param) {
     return index;
 }
 
-char * getOption_SourceMibFilePath() {
+const char * getOption_SourceMibFilePath() {
     return optionsManager.sourceMibFilePath;
 }
 
-char * getOption_targetPdfPath() {
+const char * getOption_targetPdfPath() {
     return optionsManager.targetPdfPATH;
 }
 
@@ -119,7 +134,11 @@ const char * getOption_includePath(int *index) {
     int i = *index;
     incPathList *head;
     listNode *node;
-    if (IS_PTR_NULL(index) || i < 0) {
+
+    if (IS_PTR_NULL(index)) {
+        return null;
+    }
+    if (i <= 0) {
         return null;
     }
 
@@ -128,6 +147,11 @@ const char * getOption_includePath(int *index) {
     while (i--) {
         node = listNext(&head->node);
     }
+
+    if (node == null) {
+        return null;
+    }
+
     head = containerOf(node, incPathList, node);
 
     (*index)++;

@@ -76,8 +76,12 @@ enum elementType {
 
 typedef enum errorType {
     ok,
+    error,
     error_null_reference,
-    error_wrong_index
+    error_wrong_index,
+    error_param_mismatch,
+    error_open_file_failed,
+    abort_terminate
 } errorType;
 
 typedef struct params_t {
@@ -86,10 +90,10 @@ typedef struct params_t {
 } params_t;
 
 typedef struct nodeMeta_t {
-    char *parentIdent;    
+    char *parentIdent;
 } nodeMeta_t;
 
-typedef struct leaveMeta_t { 
+typedef struct leaveMeta_t {
 
 } leaveMeta_t;
 
@@ -113,9 +117,7 @@ typedef struct symbol_t {
 typedef struct symbolTable {
     char *modName;
     symbol_t *symbol;
-    struct symbolTable *next; 
+    struct symbolTable *next;
 } symbolTable;
 
-
 #endif /* GL5610_MIB_DOC_GEN_TYPE_H */
-

@@ -4,7 +4,7 @@
     #include "dispatcher.h"
     #define YYSTYPE char*
     extern YYSTYPE yylval;
-  extern switchingState swState;
+    extern switchingState swState;
 %}
 
 %%
@@ -55,7 +55,14 @@ DESCRIPTION                         { return DESC_SPECIFIER; }
 
 ([a-zA-Z0-9]|"-")+                  { yylval = strDuplicate(yytext); return IDENTIFIER; }
 
-<<EOF>>								{ }
+<<EOF>>                             {
+                                        if (--swState.importStackIndex < 0) {
+                                            yyterminate();
+                                        } else {
+                                            yy_delete_buffer(YY_CURRENT_BUFFER);
+                                            yy_switch_to_buffer(swState.importStack[swState.importStackIndex]);
+                                        }
+                                    }
 
 %%
 

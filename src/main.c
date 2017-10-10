@@ -13,20 +13,26 @@ char currentTable[SIZE_OF_CURRENT_TABLE];
 char *sectionRecord[SIZE_OF_SECTION_RECORD];
 extern mibObjectTreeNode mibObjectTreeRoot;
 
-int main() {
+int main(int argc, char *argv[]) {
     int token;
+    int ret;
     FILE *writeTo;
     mibObjectTreeNode *node;
     mibObjectTreeInit(&mibObjectTreeRoot);
     node = &mibObjectTreeRoot;
 
+    optionsInit(argc, argv);
     beginFrom = "gponConfig";
 
     yyin = fopen("src/case", "r");
     if (yyin == NULL)
         printf("%s\n", "open failed");
 
-    yyparse();
+    ret = yyparse();
+
+    if (ret == abort_terminate) {
+        return error;
+    }
 
     writeTo = fopen("src/result/result", "w");
     if (writeTo == NULL)

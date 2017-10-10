@@ -100,6 +100,7 @@ typedef struct switchingState {
     int counter;
     /* Stack of struct collectInfo */
     genericStack *modStack;
+    char *currentModule;
     /* Buffer stack */
     YY_BUFFER_STATE importStack[MAX_INCLUDE_DEPTH];
     int importStackIndex;

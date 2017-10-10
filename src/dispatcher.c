@@ -11,7 +11,7 @@
 dispatch_mode dispatchMode;
 static int dispatchMakeChoice(dispatch_type dType);
 static int switchToModule(params_t *param);
-extern elementList elistHead; 
+extern elementList elistHead;
 static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo);
 /* Global */
 switchingState swState;
@@ -23,7 +23,7 @@ int dispatchInit() {
 }
 
 int dispatch(dispatch_type dType, params_t *param) {
-  
+
     errorType ret = ok;
 
     switch (dispatchMakeChoice(dType)) {
@@ -39,7 +39,7 @@ int dispatch(dispatch_type dType, params_t *param) {
             symbolCollecting((int)paramListGet(&param)->param, param);
             break;
         case SWITCH_TO_INC_BUFFER:
-            switchToModule(param);
+            ret = switchToModule(param);
         case IGNORE:
             /* Do nothing */
             break;
@@ -87,21 +87,40 @@ static int switchToModule(params_t *param) {
                 getCurrentBufferState(),
                 swState.importStackIndex,
                 MAX_INCLUDE_DEPTH-1);
-    lexBufferSwitching(moduleName);
+    if (lexBufferSwitching(moduleName) == error) {
+        /* Terminate whole system */
+        return abort_terminate;
+    }
 
     return 0;
 }
 
-void lexBufferSwitching(char *newModule) {
-    /*
-     * complete of this function should
-     * after option module complete
-     * cause the path of include file
-     * path is hold by option module
-     */
+int lexBufferSwitching(char *newModule) {
+    int index = 0;
+    const char *path;
+    char *targetModulePath;
+
+    while (path = getOption_includePath(&index)) {
+        targetModulePath = (char *)malloc(strlen(path)+strlen(newModule)+1);
+        strncpy(targetModulePath, path, strlen(path));
+        strncat(targetModulePath, newModule, strlen(newModule));
+
+        yyin = fopen(targetModulePath, "r");
+        if (!yyin) {
+            continue;
+        }
+        yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
+    }
+    if (path == null) {
+        return error;
+    }
+
+    return ok;
 }
 
-char * switch_CurrentMod(char *modName, int len) {}
+char * switch_CurrentMod(char *modName, int len) {
+    return swState.currentModule;
+}
 
 /**************************
  *  collectInfo functions *

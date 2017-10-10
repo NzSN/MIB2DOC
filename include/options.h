@@ -15,6 +15,9 @@ typedef struct options {
     int fontSize;
 } options_t;
 
-int optionsInit(char *argv[], int argc);
+int optionsInit(int argc, char *argv[]);
+const char * getOption_SourceMibFilePath();
+const char * getOption_targetPdfPath();
+const char * getOption_includePath(int *index);
 
 #endif /* _OPTIONS_H_ */
