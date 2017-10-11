@@ -55,13 +55,11 @@ int optionsInit(int argc, char *argv[]) {
         }
         switch(paramMapping(param)) {
             case SourceMibFile:
-                /* Deal with param */
                 paramVal = argv[i++];
                 optionsManager.sourceMibFilePath = paramVal;
                 mappingTable[SourceMibFile] = null;
                 break;
             case TargetPdfFile:
-                /* Deal with param */
                 if (TargetPdfFile < UNIQUE_PARAM && optionsManager.targetPdfPATH != null)
                     return error_param_mismatch;
                 paramVal = argv[i++];
@@ -69,7 +67,6 @@ int optionsInit(int argc, char *argv[]) {
                 mappingTable[TargetPdfFile] = null;
                 break;
             case IncludePath:
-                /* Deal with inc path */
                 paramVal = argv[i++];
                 incNode = (incPathList *)malloc(sizeof(incPathList));
                 memset(incNode, 0, sizeof(incPathList));
@@ -143,6 +140,7 @@ const char * getOption_includePath(int *index) {
     }
 
     head = &optionsManager.includePath;
+    node = &head->node;
 
     while (i--) {
         node = listNext(&head->node);

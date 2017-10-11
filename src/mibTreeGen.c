@@ -28,7 +28,6 @@ symbolTable symTable;
 elementList symCollectList;
 targetSymbolList tSymListHead;
 
-
 int deal_with(int type) {
     switch (type) {
         case OBJECT:
@@ -235,6 +234,8 @@ static int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
 
     symbolIdent = getElement_el(&symCollectList, IDENTIFIER_EL)->content;
 
+    /* Is that
+
     /* Is the symbol exists in symbol table ? */
     if (symbolSearching(symbolIdent)) {
         return 1;
@@ -255,8 +256,9 @@ static int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
     newSymbol->identifier = symbolIdent;
     newSymbol->type = SYMBOL_TYPE_NODE;
     newSymbol->metadata.nodeMeta.parentIdent = parentIdent;
-
     symbolAdd(modIdent, newSymbol);
+
+    /* Need to remove the symbol found from list in thmodStack */
 
     return 0;
 }
