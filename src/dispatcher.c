@@ -40,6 +40,7 @@ int dispatch(dispatch_type dType, params_t *param) {
             break;
         case SWITCH_TO_INC_BUFFER:
             ret = switchToModule(param);
+            break;
         case IGNORE:
             /* Do nothing */
             break;
