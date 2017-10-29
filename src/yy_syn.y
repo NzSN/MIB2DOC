@@ -47,8 +47,8 @@ MODULES :
 		if (dispatch(SWITCH_TO_INC_BUFFER, param) == abort_terminate) {
             return abort_terminate;
         }
-	}
-	| /* empty */  ;
+	} | 
+    /* empty */  ;
 ITEMS :
 	IDENTIFIER
 	| IDENTIFIER COMMA ITEMS
@@ -129,8 +129,8 @@ SYNTAX_VALUE :
 		params_t *param = buildParam(TYPE_EL);
 		param->next = buildParam($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
-	};
- 	| IDENTIFIER {
+    } 
+    | IDENTIFIER {
  		params_t *param = buildParam(TYPE_EL);
 		param->next = buildParam($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
