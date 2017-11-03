@@ -8,7 +8,7 @@ int stringToIdentList(char *str, identList *list, char seperator) {
     int beginPoint[256] = {0};
     identList *listTmp;
 
-    if (IS_PTR_NULL(str) || IS_PTR_NULL(list)) {
+    if (isNullPtr(str) || isNullPtr(list)) {
         return error_null_reference;
     }
 

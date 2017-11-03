@@ -13,35 +13,35 @@
 #include "../../include/mibTreeGen.h"
 #include "../../include/queue.h"
 
-elementList elistHead;
+slice sliceContainer;
 char *sectionRecord[SIZE_OF_SECTION_RECORD];
 
 int tableRecognize(char *buffer, int size);
 
 /* A test case that does nothing and succeeds. */
 static void list_test(void **state) {
-    elementList *new1;
-    elementList *new2;
-    elementList *got;
+    slice *new1;
+    slice *new2;
+    slice *got;
 
-    memset(&elistHead, 0, sizeof(elementList));
+    memset(&sliceContainer, 0, sizeof(slice));
 
-    new1 = buildElement(IDENTIFIER_EL, "LLLL");
-    appendElement_el(&elistHead, new1);
+    new1 = sliceConstruct(SLICE_IDENTIFIER, "LLLL");
+    sliceStore(&sliceContainer, new1);
 
-    new2 = buildElement(TYPE_EL, "lllll");
-    appendElement_el(&elistHead, new2);
+    new2 = sliceConstruct(SLICE_TYPE, "lllll");
+    sliceStore(&sliceContainer, new2);
 
-    got = getElement_el(&elistHead, IDENTIFIER_EL);
-    if ( (got->content != new1->content) || (got->key != new1->key))
+    got = sliceGet(&sliceContainer, SLICE_IDENTIFIER);
+    if ( (got->sliVal != new1->sliVal) || (got->sliKey != new1->sliKey))
         fail();
 
-    got = getElement_el(&elistHead, TYPE_EL);
-    if ( (got->content != new2->content) || (got->key != new2->key))
+    got = sliceGet(&sliceContainer, SLICE_TYPE);
+    if ( (got->sliVal != new2->sliVal) || (got->sliKey != new2->sliKey))
         fail();
 
-    flushAll_el(&elistHead);
-    got = getElement_el(&elistHead, IDENTIFIER_EL);
+    sliceRelease(&sliceContainer);
+    got = sliceGet(&sliceContainer, SLICE_IDENTIFIER);
     if (got != NULL)
         fail();
 
@@ -64,9 +64,9 @@ static void mibTree_test(void **state) {
     strncpy(suffix, "1", strlen("1"));
     strncpy(parent, "enterprises", strlen("enterpises"));
 
-    appendElement_el(&elistHead, buildElement(IDENTIFIER_EL, ident));
-    appendElement_el(&elistHead, buildElement(SUFFIX_EL, suffix));
-    appendElement_el(&elistHead, buildElement(PARENT_EL, parent));
+    sliceStore(&sliceContainer, sliceConstruct(SLICE_IDENTIFIER, ident));
+    sliceStore(&sliceContainer, sliceConstruct(SLICE_OID_SUFFIX, suffix));
+    sliceStore(&sliceContainer, sliceConstruct(SLICE_PARENT, parent));
 
     deal_with_objIdent();
     pNode = search_mot(&mibObjectTreeRoot, "gogo");

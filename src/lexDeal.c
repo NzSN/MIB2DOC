@@ -11,7 +11,7 @@ char * strDuplicate(char *src) {
     size_t size;
     char *dst;
 
-    if (IS_PTR_NULL(src))
+    if (isNullPtr(src))
         return NULL;
 
     size = strlen(src)+1;

@@ -541,7 +541,7 @@ DEF	include/type.h	/^    DEF = 271,$/;"	e	language:C++	enum:yytokentype
 DEF	src/yy_syn.tab.c	/^    DEF = 271,$/;"	e	language:C	enum:yytokentype	file:
 DEFINITION	src/yy_syn.y	/^DEFINITION :$/;"	l	language:YACC
 DESCRIPTION	src/yy_syn.y	/^DESCRIPTION :$/;"	l	language:YACC
-DESCRIPTION_EL	include/type.h	/^    DESCRIPTION_EL,$/;"	e	language:C++	enum:elementType
+SLICE_DESCRIPTION	include/type.h	/^    SLICE_DESCRIPTION,$/;"	e	language:C++	enum:elementType
 DESC_SPECIFIER	include/type.h	/^    DESC_SPECIFIER = 265,$/;"	e	language:C++	enum:yytokentype
 DESC_SPECIFIER	src/yy_syn.tab.c	/^    DESC_SPECIFIER = 265,$/;"	e	language:C	enum:yytokentype	file:
 DESC_VALUE	include/type.h	/^    DESC_VALUE = 266,$/;"	e	language:C++	enum:yytokentype
@@ -576,7 +576,7 @@ HEX	CMakeFiles/3.9.4/CompilerIdC/CMakeCCompilerId.c	464;"	d	language:C	file:
 HEX	CMakeFiles/3.9.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	449;"	d	language:C++	file:
 IDENTIFIER	include/type.h	/^    IDENTIFIER = 258,$/;"	e	language:C++	enum:yytokentype
 IDENTIFIER	src/yy_syn.tab.c	/^    IDENTIFIER = 258,$/;"	e	language:C	enum:yytokentype	file:
-IDENTIFIER_EL	include/type.h	/^    IDENTIFIER_EL = 6,$/;"	e	language:C++	enum:elementType
+SLICE_IDENTIFIER	include/type.h	/^    SLICE_IDENTIFIER = 6,$/;"	e	language:C++	enum:elementType
 ID_VOID_MAIN	CMakeFiles/3.9.3/CompilerIdC/CMakeCCompilerId.c	6;"	d	language:C	file:
 ID_VOID_MAIN	CMakeFiles/3.9.4/CompilerIdC/CMakeCCompilerId.c	6;"	d	language:C	file:
 IGNORE	include/dispatcher.h	/^    IGNORE$/;"	e	language:C++	enum:dispatch_type
@@ -596,7 +596,7 @@ INT8_MAX	src/lex.yy.c	147;"	d	language:C	file:
 INT8_MIN	src/lex.yy.c	138;"	d	language:C	file:
 IS_NODE_HAS_CHILD_MT	src/mibTreeObjTree.c	20;"	d	language:C	file:
 IS_NODE_HAS_SIBLING_MT	src/mibTreeObjTree.c	21;"	d	language:C	file:
-IS_PTR_NULL	include/type.h	18;"	d	language:C++
+isNullPtr	include/type.h	18;"	d	language:C++
 IS_STACK_EMPTY	include/stack.h	9;"	d	language:C++
 IS_STACK_FULL	include/stack.h	10;"	d	language:C++
 ITEMS	src/yy_syn.y	/^ITEMS :$/;"	l	language:YACC
@@ -616,7 +616,7 @@ MOUNT_POINT	src/yy_syn.tab.c	/^    MOUNT_POINT = 267,$/;"	e	language:C	enum:yyto
 NGPON MIB	src/table.tex	/^Insert a picture here.$/;"	s	language:Tex
 NUM	include/type.h	/^    NUM = 282,$/;"	e	language:C++	enum:yytokentype
 NUM	src/yy_syn.tab.c	/^    NUM = 282,$/;"	e	language:C	enum:yytokentype	file:
-NUM_OF_COLLECT_ROUTINE	include/type.h	/^    NUM_OF_COLLECT_ROUTINE$/;"	e	language:C++	enum:elementType
+SLICE_TYPE_MAXIMUM	include/type.h	/^    SLICE_TYPE_MAXIMUM$/;"	e	language:C++	enum:elementType
 NumOfOptions	src/options.c	/^    NumOfOptions$/;"	e	language:C	enum:optionNumber	file:
 OBJ	src/yy_syn.y	/^OBJ :$/;"	l	language:YACC
 OBJECT	include/type.h	/^    OBJECT = 1,$/;"	e	language:C++	enum:unitType
@@ -634,7 +634,7 @@ OBJ_SPECIFIER	src/yy_syn.tab.c	/^    OBJ_SPECIFIER = 259,$/;"	e	language:C	enum:
 OHOHOH	src/table.tex	/^\\paragraph{GOGO}$/;"	G	language:Tex
 OID_LENGTH	src/mibTreeObjTree.c	18;"	d	language:C	file:
 PARAM_STORE_TO_SYM_LIST	include/mibTreeGen.h	35;"	d	language:C++
-PARENT_EL	include/type.h	/^    PARENT_EL,$/;"	e	language:C++	enum:elementType
+SLICE_PARENT	include/type.h	/^    SLICE_PARENT,$/;"	e	language:C++	enum:elementType
 PLATFORM_ID	CMakeFiles/3.9.3/CompilerIdC/CMakeCCompilerId.c	307;"	d	language:C	file:
 PLATFORM_ID	CMakeFiles/3.9.3/CompilerIdC/CMakeCCompilerId.c	310;"	d	language:C	file:
 PLATFORM_ID	CMakeFiles/3.9.3/CompilerIdC/CMakeCCompilerId.c	313;"	d	language:C	file:
@@ -762,9 +762,9 @@ PLATFORM_ID	CMakeFiles/3.9.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	384;"	d	langua
 PROPERTY	src/yy_syn.y	/^PROPERTY :$/;"	l	language:YACC
 Qnext	src/queue.c	6;"	d	language:C	file:
 REJECT	src/lex.yy.c	706;"	d	language:C	file:
-RELEASE_PTR	include/type.h	19;"	d	language:C++
+RELEASE_MEM	include/type.h	19;"	d	language:C++
 RM	Makefile	/^RM = \/usr\/bin\/cmake -E remove -f$/;"	m	language:Make
-RW_EL	include/type.h	/^    RW_EL,$/;"	e	language:C++	enum:elementType
+SLICE_PERMISSION	include/type.h	/^    SLICE_PERMISSION,$/;"	e	language:C++	enum:elementType
 R_BRACE	include/type.h	/^    R_BRACE = 279,$/;"	e	language:C++	enum:yytokentype
 R_BRACE	src/yy_syn.tab.c	/^    R_BRACE = 279,$/;"	e	language:C	enum:yytokentype	file:
 SECTION	src/docGenerate.c	/^    SECTION$/;"	e	language:C	enum:__anon1	file:
@@ -834,7 +834,7 @@ STRINGIFY_HELPER	CMakeFiles/3.9.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	287;"	d	l
 STRINGIFY_HELPER	CMakeFiles/3.9.4/CompilerIdC/CMakeCCompilerId.c	302;"	d	language:C	file:
 STRINGIFY_HELPER	CMakeFiles/3.9.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	287;"	d	language:C++	file:
 SUFFIXES	Makefile	/^SUFFIXES =$/;"	m	language:Make
-SUFFIX_EL	include/type.h	/^    SUFFIX_EL,$/;"	e	language:C++	enum:elementType
+SLICE_OID_SUFFIX	include/type.h	/^    SLICE_OID_SUFFIX,$/;"	e	language:C++	enum:elementType
 SWITCH_TO_INC_BUFFER	include/dispatcher.h	/^    SWITCH_TO_INC_BUFFER,$/;"	e	language:C++	enum:dispatch_type
 SYMBOL_COLLECTING	include/dispatcher.h	/^    SYMBOL_COLLECTING,$/;"	e	language:C++	enum:dispatch_type
 SYMBOL_FOUND	include/mibTreeGen.h	/^    SYMBOL_FOUND,$/;"	e	language:C++	enum:__anon2
@@ -855,7 +855,7 @@ TRAP_SPECIFIER	include/type.h	/^    TRAP_SPECIFIER = 276,$/;"	e	language:C++	enu
 TRAP_SPECIFIER	src/yy_syn.tab.c	/^    TRAP_SPECIFIER = 276,$/;"	e	language:C	enum:yytokentype	file:
 TYPE	include/type.h	/^    TYPE = 281,$/;"	e	language:C++	enum:yytokentype
 TYPE	src/yy_syn.tab.c	/^    TYPE = 281,$/;"	e	language:C	enum:yytokentype	file:
-TYPE_EL	include/type.h	/^    TYPE_EL,$/;"	e	language:C++	enum:elementType
+SLICE_TYPE	include/type.h	/^    SLICE_TYPE,$/;"	e	language:C++	enum:elementType
 TargetPdfFile	src/options.c	/^    TargetPdfFile,$/;"	e	language:C	enum:optionNumber	file:
 Treeprint	src/mibTreeObjTree.c	/^static int Treeprint(void *arg, mibObjectTreeNode *node) {$/;"	f	language:C	file:
 UINT16_MAX	src/lex.yy.c	159;"	d	language:C	file:
@@ -1013,12 +1013,12 @@ _UTIL_H	include/util.h	2;"	d	language:C++
 __STDC_LIMIT_MACROS	src/lex.yy.c	118;"	d	language:C	file:
 abort_terminate	include/type.h	/^    abort_terminate$/;"	e	language:C++	enum:errorType
 alloca	src/yy_syn.tab.c	285;"	d	language:C	file:
-appendElement_el	src/list.c	/^int appendElement_el(elementList *el, elementList *next) {$/;"	f	language:C
+sliceStore	src/list.c	/^int sliceStore(slice *sli, slice *next) {$/;"	f	language:C
 appendQueue	src/queue.c	/^int appendQueue(mibNodeInfoQueue *q, tableInfo *pData) {$/;"	f	language:C
 beginFrom	src/docGenerate.c	/^char *beginFrom;$/;"	v	language:C
 beginOid	src/docGenerate.c	/^int beginOid;$/;"	v	language:C
-buildElement	src/list.c	/^elementList * buildElement(int key, char *content) {$/;"	f	language:C
-buildParam	src/list.c	/^params_t * buildParam(void *arg) {$/;"	f	language:C
+sliceConstruct	src/list.c	/^slice * sliceConstruct(int sliKey, char *sliVal) {$/;"	f	language:C
+disParamConstruct	src/list.c	/^dispatchParam * disParamConstruct(void *arg) {$/;"	f	language:C
 child	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *child;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode::mibObjectTreeNode
 collectInfo	include/dispatcher.h	/^typedef struct collectInfo {$/;"	s	language:C++
 collectInfo	include/dispatcher.h	/^} collectInfo;$/;"	t	language:C++	typeref:struct:collectInfo
@@ -1027,7 +1027,7 @@ configDevice 1 3 6 1 4 1 13464 1 14 1 1	src/table.tex	/^\\section{NGPON MIB}$/;"
 const	CMakeFiles/3.9.3/CompilerIdC/CMakeCCompilerId.c	10;"	d	language:C	file:
 const	CMakeFiles/3.9.4/CompilerIdC/CMakeCCompilerId.c	10;"	d	language:C	file:
 containerOf	include/type.h	20;"	d	language:C++
-content	include/list.h	/^    char *content;$/;"	m	language:C++	struct:elementList
+sliVal	include/list.h	/^    char *sliVal;$/;"	m	language:C++	struct:slice
 count	include/queue.h	/^    int count;$/;"	m	language:C++	struct:mibNodeInfoQueue
 counter	include/dispatcher.h	/^    int counter;$/;"	m	language:C++	struct:switchingState
 currentModule	include/dispatcher.h	/^    char *currentModule;$/;"	m	language:C++	struct:switchingState
@@ -1044,7 +1044,7 @@ desc	include/mibTreeObjTree.h	/^    char *desc;$/;"	m	language:C++	struct:mibInf
 desc_test	src/unitTest/unitTest.c	/^static void desc_test(void ** state) {$/;"	f	language:C	file:
 descriptionDeal	src/mibTreeObjTree.c	/^int descriptionDeal(mibObjectTreeNode *node) {$/;"	f	language:C
 detail	include/mibTreeObjTree.h	/^    char *detail;$/;"	m	language:C++	struct:mibInfo
-dispatch	src/dispatcher.c	/^int dispatch(dispatch_type dType, params_t *param) {$/;"	f	language:C
+dispatch	src/dispatcher.c	/^int dispatch(dispatch_type dType, dispatchParam *param) {$/;"	f	language:C
 dispatchInit	src/dispatcher.c	/^int dispatchInit() {$/;"	f	language:C
 dispatchMakeChoice	src/dispatcher.c	/^static int dispatchMakeChoice(dispatch_type dType) {$/;"	f	language:C	file:
 dispatchMode	src/dispatcher.c	/^dispatch_mode dispatchMode;$/;"	v	language:C
@@ -1054,11 +1054,11 @@ dispatch_type	include/dispatcher.h	/^typedef enum dispatch_type {$/;"	g	language
 dispatch_type	include/dispatcher.h	/^} dispatch_type;$/;"	t	language:C++	typeref:enum:dispatch_type
 docGenerate	src/docGenerate.c	/^static int docGenerate(void *arg, mibObjectTreeNode *node) {$/;"	f	language:C	file:
 documentGen	src/docGenerate.c	/^int documentGen(mibObjectTreeNode *root, FILE *writeTo) {$/;"	f	language:C
-elementList	include/list.h	/^typedef struct elementList {$/;"	s	language:C++
-elementList	include/list.h	/^} elementList;$/;"	t	language:C++	typeref:struct:elementList
+slice	include/list.h	/^typedef struct slice {$/;"	s	language:C++
+slice	include/list.h	/^} slice;$/;"	t	language:C++	typeref:struct:slice
 elementType	include/type.h	/^enum elementType {$/;"	g	language:C++
-elistHead	src/main.c	/^elementList elistHead;$/;"	v	language:C
-elistHead	src/unitTest/unitTest.c	/^elementList elistHead;$/;"	v	language:C
+sliceContainer	src/main.c	/^slice sliceContainer;$/;"	v	language:C
+sliceContainer	src/unitTest/unitTest.c	/^slice sliceContainer;$/;"	v	language:C
 entryRecognize	src/docGenerate.c	/^\/* static ** for test *\/ int entryRecognize(char *buffer, int size) {$/;"	f	language:C
 error	include/type.h	/^    error,$/;"	e	language:C++	enum:errorType
 errorType	include/type.h	/^typedef enum errorType {$/;"	g	language:C++
@@ -1082,13 +1082,13 @@ flex_uint32_t	src/lex.yy.c	/^typedef uint32_t flex_uint32_t;$/;"	t	language:C	fi
 flex_uint32_t	src/lex.yy.c	/^typedef unsigned int flex_uint32_t;$/;"	t	language:C	file:
 flex_uint8_t	src/lex.yy.c	/^typedef uint8_t flex_uint8_t;$/;"	t	language:C	file:
 flex_uint8_t	src/lex.yy.c	/^typedef unsigned char flex_uint8_t;$/;"	t	language:C	file:
-flushAll_el	src/list.c	/^void flushAll_el(elementList *el) {$/;"	f	language:C
+sliceRelease	src/list.c	/^void sliceRelease(slice *sli) {$/;"	f	language:C
 fontSize	include/options.h	/^    int fontSize;$/;"	m	language:C++	struct:options
 found	include/dispatcher.h	/^    int found;$/;"	m	language:C++	struct:identList
 genTableItemLaTex	src/docGenerate.c	/^static char * genTableItemLaTex(tableInfo *info, int index) {$/;"	f	language:C	file:
 genericStack	include/stack.h	/^} genericStack;$/;"	t	language:C++	typeref:struct:identStack
 getCurrentBufferState	src/lex.yy.c	/^YY_BUFFER_STATE * getCurrentBufferState() {$/;"	f	language:C
-getElement_el	src/list.c	/^elementList * getElement_el(elementList *el, int key) {$/;"	f	language:C
+sliceGet	src/list.c	/^slice * sliceGet(slice *sli, int sliKey) {$/;"	f	language:C
 getIdentFromInfo	src/mibTreeObjTree.c	/^char * getIdentFromInfo(mibObjectTreeNode *node) {$/;"	f	language:C
 getOidFromInfo	src/mibTreeObjTree.c	/^char *getOidFromInfo(mibObjectTreeNode *node) {$/;"	f	language:C
 getOption_SourceMibFilePath	src/options.c	/^const char * getOption_SourceMibFilePath() {$/;"	f	language:C
@@ -1150,7 +1150,7 @@ isInitilized	src/docGenerate.c	/^int isInitilized;$/;"	v	language:C
 isNode	include/mibTreeObjTree.h	/^    int isNode;$/;"	m	language:C++	struct:mibObjectTreeNode
 isQueueEmpty	src/queue.c	/^static int isQueueEmpty(mibNodeInfoQueue *q) {$/;"	f	language:C	file:
 isQueueFull	src/queue.c	/^static int isQueueFull(mibNodeInfoQueue *q) {$/;"	f	language:C	file:
-key	include/list.h	/^    int key;$/;"	m	language:C++	struct:elementList
+sliKey	include/list.h	/^    int sliKey;$/;"	m	language:C++	struct:slice
 laTexStrBuffer	src/docGenerate.c	/^char *laTexStrBuffer;$/;"	v	language:C
 latexHeaderGen	src/docGenerate.c	/^static int latexHeaderGen() {}$/;"	f	language:C	file:
 latexTailGen	src/docGenerate.c	/^static int latexTailGen() {}$/;"	f	language:C	file:
@@ -1159,10 +1159,10 @@ leaveMeta_t	include/type.h	/^typedef struct leaveMeta_t {$/;"	s	language:C++
 leaveMeta_t	include/type.h	/^} leaveMeta_t;$/;"	t	language:C++	typeref:struct:leaveMeta_t
 lexBufferSwitching	src/dispatcher.c	/^int lexBufferSwitching(char *newModule) {$/;"	f	language:C
 listAppend	src/list.c	/^listNode * listAppend(listNode *head, listNode *node) {$/;"	f	language:C
-listNext	src/list.c	/^listNode * listNext(listNode *node) {$/;"	f	language:C
+listNodeNext	src/list.c	/^listNode * listNodeNext(listNode *node) {$/;"	f	language:C
 listNode	include/list.h	/^typedef struct listNode {$/;"	s	language:C++
 listNode	include/list.h	/^} listNode;$/;"	t	language:C++	typeref:struct:listNode
-listPrev	src/list.c	/^listNode *listPrev(listNode *node) {$/;"	f	language:C
+listNodePrev	src/list.c	/^listNode *listNodePrev(listNode *node) {$/;"	f	language:C
 list_test	src/unitTest/unitTest.c	/^static void list_test(void **state) {$/;"	f	language:C	file:
 long2Short	src/docGenerate.c	/^char * long2Short(char *str) {$/;"	f	language:C
 main	CMakeFiles/3.9.3/CompilerIdC/CMakeCCompilerId.c	/^int main(argc, argv) int argc; char *argv[];$/;"	f	language:C
@@ -1198,9 +1198,9 @@ modName	include/dispatcher.h	/^    char *modName;$/;"	m	language:C++	struct:coll
 modName	include/type.h	/^    char *modName;$/;"	m	language:C++	struct:symbolTable
 modStack	include/dispatcher.h	/^    genericStack *modStack;$/;"	m	language:C++	struct:switchingState
 next	include/dispatcher.h	/^    listNode next;$/;"	m	language:C++	struct:identList
-next	include/list.h	/^    struct elementList *next;$/;"	m	language:C++	struct:elementList	typeref:struct:elementList::elementList
+next	include/list.h	/^    struct slice *next;$/;"	m	language:C++	struct:slice	typeref:struct:slice::slice
 next	include/list.h	/^    struct listNode *next;$/;"	m	language:C++	struct:listNode	typeref:struct:listNode::listNode
-next	include/type.h	/^    struct params_t *next;$/;"	m	language:C++	struct:params_t	typeref:struct:params_t::params_t
+next	include/type.h	/^    struct dispatchParam *next;$/;"	m	language:C++	struct:dispatchParam	typeref:struct:dispatchParam::dispatchParam
 next	include/type.h	/^    struct symbolTable *next;$/;"	m	language:C++	struct:symbolTable	typeref:struct:symbolTable::symbolTable
 next	include/type.h	/^    struct symbol_t *next;$/;"	m	language:C++	struct:symbol_t	typeref:struct:symbol_t::symbol_t
 node	include/mibTreeGen.h	/^    listNode node;$/;"	m	language:C++	struct:targetSymbolList
@@ -1221,12 +1221,12 @@ options	include/options.h	/^typedef struct options {$/;"	s	language:C++
 optionsInit	src/options.c	/^int optionsInit(int argc, char *argv[]) {$/;"	f	language:C
 optionsManager	src/options.c	/^options_t optionsManager;$/;"	v	language:C
 options_t	include/options.h	/^} options_t;$/;"	t	language:C++	typeref:struct:options
-param	include/type.h	/^    void *param;$/;"	m	language:C++	struct:params_t
-paramListAppend	src/list.c	/^params_t * paramListAppend(params_t *head, params_t *pl) {$/;"	f	language:C
-paramListGet	src/list.c	/^params_t * paramListGet(params_t **head) {$/;"	f	language:C
+param	include/type.h	/^    void *param;$/;"	m	language:C++	struct:dispatchParam
+disParamStore	src/list.c	/^dispatchParam * disParamStore(dispatchParam *head, dispatchParam *pl) {$/;"	f	language:C
+disParamGet	src/list.c	/^dispatchParam * disParamGet(dispatchParam **head) {$/;"	f	language:C
 paramMapping	src/options.c	/^static int paramMapping(char *param) {$/;"	f	language:C	file:
-params_t	include/type.h	/^typedef struct params_t {$/;"	s	language:C++
-params_t	include/type.h	/^} params_t;$/;"	t	language:C++	typeref:struct:params_t
+dispatchParam	include/type.h	/^typedef struct dispatchParam {$/;"	s	language:C++
+dispatchParam	include/type.h	/^} dispatchParam;$/;"	t	language:C++	typeref:struct:dispatchParam
 parent	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *parent;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode::mibObjectTreeNode
 parentIdent	include/type.h	/^    char *parentIdent;$/;"	m	language:C++	struct:nodeMeta_t
 parent_mot	src/mibTreeObjTree.c	/^mibObjectTreeNode *parent_mot(mibObjectTreeNode *root, char *ident) {$/;"	f	language:C
@@ -1240,7 +1240,7 @@ qnxnto	CMakeFiles/3.9.3/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "I
 qnxnto	CMakeFiles/3.9.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v	language:C++
 qnxnto	CMakeFiles/3.9.4/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v	language:C
 qnxnto	CMakeFiles/3.9.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v	language:C++
-reset_el	src/list.c	/^int reset_el(elementList *el) {$/;"	f	language:C
+sliceReset	src/list.c	/^int sliceReset(slice *sli) {$/;"	f	language:C
 root	src/mibTreeGen.c	/^mibObjectTreeNode root;$/;"	v	language:C
 rw	include/docGenerate.h	/^    char *rw;$/;"	m	language:C++	struct:tableInfo
 rw	include/mibTreeObjTree.h	/^    char *rw;$/;"	m	language:C++	struct:mibInfo
@@ -1258,28 +1258,28 @@ state	include/mibTreeGen.h	/^    int state;$/;"	m	language:C++	struct:targetSymb
 strDuplicate	src/lexDeal.c	/^char * strDuplicate(char *src) {$/;"	f	language:C
 stringToIdentList	src/util.c	/^int stringToIdentList(char *str, identList *list, char seperator) {$/;"	f	language:C
 swState	src/dispatcher.c	/^switchingState swState;$/;"	v	language:C
-switchToModule	src/dispatcher.c	/^static int switchToModule(params_t *param) {$/;"	f	language:C	file:
+switchToModule	src/dispatcher.c	/^static int switchToModule(dispatchParam *param) {$/;"	f	language:C	file:
 switch_CurrentMod	src/dispatcher.c	/^char * switch_CurrentMod(char *modName, int len) {$/;"	f	language:C
 switchingState	include/dispatcher.h	/^typedef struct switchingState {$/;"	s	language:C++
 switchingState	include/dispatcher.h	/^} switchingState;$/;"	t	language:C++	typeref:struct:switchingState
-symCollectList	src/mibTreeGen.c	/^elementList symCollectList;$/;"	v	language:C
+symCollectList	src/mibTreeGen.c	/^slice symCollectList;$/;"	v	language:C
 symName	include/dispatcher.h	/^    char *symName;$/;"	m	language:C++	struct:identList
 symTable	src/mibTreeGen.c	/^symbolTable symTable;$/;"	v	language:C
 symbol	include/type.h	/^    symbol_t *symbol;$/;"	m	language:C++	struct:symbolTable
 symbolAdd	src/list.c	/^int symbolAdd(char *modName, symbol_t *newSym) {$/;"	f	language:C
-symbolCollectRoutine	src/mibTreeGen.c	/^int (*symbolCollectRoutine[NUM_OF_COLLECT_ROUTINE])(params_t *);$/;"	v	language:C
-symbolCollect_DESCRIPTION	src/mibTreeGen.c	/^static int symbolCollect_DESCRIPTION(params_t *param) {$/;"	f	language:C	file:
-symbolCollect_IDENTIFIER	src/mibTreeGen.c	/^static int symbolCollect_IDENTIFIER(params_t *param) {$/;"	f	language:C	file:
-symbolCollect_OBJECT	src/mibTreeGen.c	/^static int symbolCollect_OBJECT(params_t *param) {$/;"	f	language:C	file:
-symbolCollect_OBJECT_IDENTIFIER	src/mibTreeGen.c	/^static int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {$/;"	f	language:C	file:
-symbolCollect_PARENT	src/mibTreeGen.c	/^static int symbolCollect_PARENT(params_t *param) {$/;"	f	language:C	file:
-symbolCollect_RW	src/mibTreeGen.c	/^static int symbolCollect_RW(params_t *param) {$/;"	f	language:C	file:
-symbolCollect_SEQUENCE	src/mibTreeGen.c	/^static int symbolCollect_SEQUENCE(params_t *param) {$/;"	f	language:C	file:
-symbolCollect_SMI_DEF	src/mibTreeGen.c	/^static int symbolCollect_SMI_DEF(params_t *param) {$/;"	f	language:C	file:
-symbolCollect_SUFFIX	src/mibTreeGen.c	/^static int symbolCollect_SUFFIX(params_t *param) {$/;"	f	language:C	file:
-symbolCollect_TRAP	src/mibTreeGen.c	/^static int symbolCollect_TRAP(params_t *param) {$/;"	f	language:C	file:
-symbolCollect_TYPE	src/mibTreeGen.c	/^static int symbolCollect_TYPE(params_t *param) {$/;"	f	language:C	file:
-symbolCollecting	src/mibTreeGen.c	/^int symbolCollecting(int type, params_t *param) {$/;"	f	language:C
+symbolCollectRoutine	src/mibTreeGen.c	/^int (*symbolCollectRoutine[SLICE_TYPE_MAXIMUM])(dispatchParam *);$/;"	v	language:C
+symbolCollect_DESCRIPTION	src/mibTreeGen.c	/^static int symbolCollect_DESCRIPTION(dispatchParam *param) {$/;"	f	language:C	file:
+symbolCollect_IDENTIFIER	src/mibTreeGen.c	/^static int symbolCollect_IDENTIFIER(dispatchParam *param) {$/;"	f	language:C	file:
+symbolCollect_OBJECT	src/mibTreeGen.c	/^static int symbolCollect_OBJECT(dispatchParam *param) {$/;"	f	language:C	file:
+symbolCollect_OBJECT_IDENTIFIER	src/mibTreeGen.c	/^static int symbolCollect_OBJECT_IDENTIFIER(dispatchParam *param) {$/;"	f	language:C	file:
+symbolCollect_PARENT	src/mibTreeGen.c	/^static int symbolCollect_PARENT(dispatchParam *param) {$/;"	f	language:C	file:
+symbolCollect_RW	src/mibTreeGen.c	/^static int symbolCollect_RW(dispatchParam *param) {$/;"	f	language:C	file:
+symbolCollect_SEQUENCE	src/mibTreeGen.c	/^static int symbolCollect_SEQUENCE(dispatchParam *param) {$/;"	f	language:C	file:
+symbolCollect_SMI_DEF	src/mibTreeGen.c	/^static int symbolCollect_SMI_DEF(dispatchParam *param) {$/;"	f	language:C	file:
+symbolCollect_SUFFIX	src/mibTreeGen.c	/^static int symbolCollect_SUFFIX(dispatchParam *param) {$/;"	f	language:C	file:
+symbolCollect_TRAP	src/mibTreeGen.c	/^static int symbolCollect_TRAP(dispatchParam *param) {$/;"	f	language:C	file:
+symbolCollect_TYPE	src/mibTreeGen.c	/^static int symbolCollect_TYPE(dispatchParam *param) {$/;"	f	language:C	file:
+symbolCollecting	src/mibTreeGen.c	/^int symbolCollecting(int type, dispatchParam *param) {$/;"	f	language:C
 symbolCollectingInit	src/mibTreeGen.c	/^int symbolCollectingInit() {$/;"	f	language:C
 symbolModSearching	src/list.c	/^int symbolModSearching(char *modIdent) {}$/;"	f	language:C
 symbolModuleAdd	src/list.c	/^int symbolModuleAdd(symbolTable *stbl, symbolTable *new) {$/;"	f	language:C

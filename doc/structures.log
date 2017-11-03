@@ -27,7 +27,7 @@ File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+Package: keyval 2014/10/28 v1.15 sliKey=value parser (DPC)
 \KV@toks@=\toks14
 )
 (/usr/share/texmf-dist/tex/latex/graphics/graphics.sty
@@ -149,10 +149,10 @@ Package pdftex.def Info: Requested size: 415.75507pt x 227.62204pt on input lin
 e 11.
 
 Overfull \hbox (70.75507pt too wide) in paragraph at lines 11--12
- [][] 
+ [][]
  []
 
-[2 <./image/modules.png>] (./structures.aux) ) 
+[2 <./image/modules.png>] (./structures.aux) )
 Here is how much of TeX's memory you used:
  1440 strings out of 492990
  20248 string characters out of 6138687
@@ -172,4 +172,3 @@ PDF statistics:
  22 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
-

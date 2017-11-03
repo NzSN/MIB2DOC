@@ -10,109 +10,168 @@
 /************
  * ListNode *
  ************/
-listNode *listPrev(listNode *node) {
-    if (IS_PTR_NULL(node) || IS_PTR_NULL(node->next))
+listNode *listNodePrev(listNode *node) {
+    if (isNullPtr(node) || isNullPtr(node->next))
         return NULL;
     return node->next;
 }
 
-listNode * listNext(listNode *node) {
-    if (IS_PTR_NULL(node) || IS_PTR_NULL(node->prev))
+listNode * listNodeNext(listNode *node) {
+    if (isNullPtr(node) || isNullPtr(node->prev))
         return NULL;
     return node->prev;
 }
 
-listNode * listAppend(listNode *head, listNode *node) {
-    
+listNode * listNodeInsert(listNode *head, listNode *node) {
+    listNode *middle;
+
+    if (isNullPtr(head) || isNullPtr(node)) {
+        return NULL;
+    }
+    if (head->next == NULL) {
+        head->next = node;
+    } else {
+        middle = head->next;
+        head->next = node;
+        node->next = middle;
+    }
+    return node;
+}
+
+
+
+bool listNodeIsEmpty(listNode *head) {
+    int i = 0;
+    if (isNullPtr(head)) {
+        return FALSE;
+    }
+    if (head->next != NULL) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
 }
 
 /*******************************************
  *  Element list Operation function define *
  *******************************************/
 
-elementList * buildElement(int key, char *content) {
-    elementList *newElement = (elementList *)malloc(sizeof(elementList));
+slice * sliceConstruct(int sliKey, char *sliVal) {
+    slice *sli = (slice *)malloc(sizeof(slice));
 
-    memset(newElement, 0, sizeof(elementList));
-    newElement->key = key;
-    newElement->content = content;
+    memset(newSlice, 0, sizeof(slice));
+    sli->sliKey = sliKey;
+    sli->sliVal = sliVal;
 
-    return newElement;
+    return sli;
 }
 
-elementList * getElement_el(elementList *el, int key) {
-    elementList *pel;
+bool sliceDestruct(slice *sli) {
+    if (isNullPtr(sli)) {
+        return FALSE;
+    }
+    if (isNullPtr(sli->sliVal)) {
+        RELEASE_MEM(sli->sliVal);
+    }
+    RELEASE_MEM(sli);
+    return TRUE;
+}
 
-    if (IS_PTR_NULL(el))
+slice * slicePrev(slice *sli) {
+    if (isNullPtr(sli)) {
         return NULL;
+    }
+    return containerOf(sli->node.prev, slice, node);
+}
 
-    for (pel = el; pel != NULL; pel = pel->next) {
-        if (pel->key == key)
-            return pel;
+slice * sliceNext(slice *sli) {
+    if (isNullPtr(sli)) {
+        return NULL;
+    }
+    return containerOf(sli->node.next, slice, node);
+}
+
+slice * sliceGet(slice *sli, int sliKey) {
+    for (; sli != NULL; sli = sliceNext(sli)) {
+        if (sli->sliKey == sliKey)
+            return sli;
     }
     return NULL;
 }
 
-int appendElement_el(elementList *el, elementList *next) {
-    elementList *pel;
-
-    if (IS_PTR_NULL(el))
-        return -1;
-
-    for (pel = el; pel != NULL; pel = pel->next) {
-        if (pel->next == NULL) {
-            pel->next = next;
+int sliceStore(slice *sli, slice *next) {
+    for (; sli != NULL; sli = sliceNext(sli)) {
+        if (sliceNext(sli) == NULL) {
+            sli->node.next = &next->node;
             return 0;
         }
     }
     return 1;
 }
 
-void flushAll_el(elementList *el) {
-    elementList *pel;
-    elementList *nPel;
+bool sliceRelease(slice *sli) {
+    slice *pSli;
+    slice *pSli_next;
 
-    el->next = NULL;
-    for (pel = el->next; pel != NULL;) {
-        nPel = pel->next;
-        RELEASE_PTR(pel);
-        pel = nPel;
+    if (isNullPtr(sli)) {
+        return FALSE;
     }
+    for (pSli = sli; pSli != NULL; pSli = pSli_next;) {
+        pSli_next = sliceNext(pSli);
+        sliceDestruct(pSli);
+    }
+    return TRUE;
 }
 
-int reset_el(elementList *el) {
-    if (IS_PTR_NULL(el))
-        return -1;
-    el->next = NULL;
+bool sliceReset(slice *sli) {
+    if (isNullPtr(sli)) {
+        return FALSE;
+    }
+    sliceRelease(sliceNext(sli));
+    sli->node.next = NULL;
+
+    return TRUE;
 }
 
 
 /**************************************
- * params_t Operation function define *
+ * dispatchParam Operation function define *
  **************************************/
 
  /*
   * append node to tail of list
   */
-params_t * buildParam(void *arg) {
-    params_t *ret;
+dispatchParam * disParamConstruct(void *param) {
+    dispatchParam *ret;
 
-    ret  = (params_t *)malloc(sizeof(params_t));
-    memset(ret, 0, sizeof(params_t));
-    ret->param = arg;
+    if (isNullPtr(param)) {
+        return NULL;
+    }
+
+    ret  = (dispatchParam *)malloc(sizeof(dispatchParam));
+    memset(ret, 0, sizeof(dispatchParam));
+    ret->param = param;
 
     return ret;
 }
 
-params_t * paramListAppend(params_t *head, params_t *pl) {
+dispatchParam * dispatchParamPrev(dispatchParam *disparam) {
+    return containerOf(disparam->node.prev, dispatchParam, node);
+}
+
+dispatchParam * dispatchParamNext(dispatchParam *disparam) {
+    return cointainerOf(disparam->node.next, dispatchParam, node);
+}
+
+dispatchParam * disParamStore(dispatchParam *head, dispatchParam *pl) {
     if (head == NULL || pl == NULL) {
         return NULL;
     }
 
     while (head->next != NULL) {
-        head = head->next;
+        head = dispatchParamNext(head);
     }
-    head->next = pl;
+    head->node.next = &pl->node;
     return pl;
 }
 
@@ -121,15 +180,15 @@ params_t * paramListAppend(params_t *head, params_t *pl) {
  * after that the head will be
  * removed from list.
  */
-params_t * paramListGet(params_t **head) {
-    params_t *ret;
+dispatchParam * disParamGet(dispatchParam **head) {
+    dispatchParam *ret;
 
-    if (IS_PTR_NULL(head) || IS_PTR_NULL(*head)) {
+    if (isNullPtr(head) || isNullPtr(*head)) {
         return NULL;
     }
 
     ret = *head;
-    *head = (*head)->next;
+    *head = dispatchParamNext(*head);
 
     return ret;
 }
@@ -137,20 +196,42 @@ params_t * paramListGet(params_t **head) {
 /*****************************************************
  * symbol_t and symbolTable operation function define *
  *****************************************************/
-extern symbolTable symTable; 
+extern symbolTable symTable;
 
-int symbolModuleAdd(symbolTable *stbl, symbolTable *new) {
+symbolTable * symbolTableConstruct(char *name) {
+    symbolTable *newTable;
+
+    if (isNullPtr(name)) {
+        return NULL;
+    }
+    newTable = (symbolTable *)malloc(sizeof(symbolTable));
+    memset(newTable, NULL, sizeof(symbolTable));
+    newTable->modName = name;
+    return newTable;
+}
+
+symbolTable * symbolTablePrev(symbolTable *tbl) {
+    return containerOf(tbl->node.prev, symbolTable, node);
+}
+
+symbolTable * symbolTableNext(symbolTable *tbl) {
+    return containerOf(tbl->node.next, symbolTable, node);
+}
+
+int symbolModuleAdd(symbolTable *tblRoot, symbolTable *newTbl) {
     int ret = ok;
 
-    if (IS_PTR_NULL(stbl) || IS_PTR_NULL(new)) {
+    if (isNullPtr(tblRoot) || isNullPtr(newTbl)) {
         ret = -1;
         return ret;
     }
 
-    while (stbl->next != NULL) {
-        stbl = stbl->next;
+    while (!isNullPtr(tblRoot->node.next)) {
+        tblRoot = tsymTableNext(tblRoot);
     }
-    stbl->next = new;
+
+    tblRoot->node.next = newTbl->node;
+
     return ret;
 }
 
@@ -159,7 +240,7 @@ int symbolAdd(char *modName, symbol_t *newSym) {
     symbolTable *pSymTbl = &symTable;
     symbol_t *pSym;
 
-    if (IS_PTR_NULL(modName) || IS_PTR_NULL(newSym)) {
+    if (isNullPtr(modName) || isNullPtr(newSym)) {
         ret = -1;
         return ret;
     }
@@ -195,7 +276,7 @@ int symbolSearching(char *symIdent) {
     symbolTable *pSymTbl = &symTable;
     symbol_t *pSym;
 
-    if (IS_PTR_NULL(symIdent)) {
+    if (isNullPtr(symIdent)) {
         ret = -1;
         return ret;
     }

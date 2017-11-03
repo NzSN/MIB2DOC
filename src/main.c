@@ -8,7 +8,7 @@ extern FILE *yyin;
 extern int yyparse (void);
 extern char *beginFrom;
 
-elementList elistHead;
+slice sliceContainer;
 char currentTable[SIZE_OF_CURRENT_TABLE];
 char *sectionRecord[SIZE_OF_SECTION_RECORD];
 extern mibObjectTreeNode mibObjectTreeRoot;

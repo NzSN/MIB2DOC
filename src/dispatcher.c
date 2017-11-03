@@ -10,8 +10,8 @@
 /* Declaration Section */
 dispatch_mode dispatchMode;
 static int dispatchMakeChoice(dispatch_type dType);
-static int switchToModule(params_t *param);
-extern elementList elistHead;
+static int switchToModule(dispatchParam *param);
+extern slice sliceContainer;
 static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo);
 /* Global */
 switchingState swState;
@@ -22,21 +22,25 @@ int dispatchInit() {
     return ok;
 }
 
-int dispatch(dispatch_type dType, params_t *param) {
+int dispatch(dispatch_type dType, dispatchParam *param) {
 
     errorType ret = ok;
 
+    if (isNullPtr(param)) {
+        return error_null_reference;
+    }
+
     switch (dispatchMakeChoice(dType)) {
         case DISPATCH_PARAM_STAGE:
-            appendElement_el(&elistHead,
-                            buildElement((int)paramListGet(&param)->param,
-                            paramListGet(&param)->param));
+            sliceStore(&sliceContainer,
+                sliceConstruct((int)disParamGet(&param)->param,
+                disParamGet(&param)->param));
             break;
         case MIBTREE_GENERATION:
-            deal_with((int)paramListGet(&param)->param);
+            deal_with((int)disParamGet(&param)->param);
             break;
         case SYMBOL_COLLECTING:
-            symbolCollecting((int)paramListGet(&param)->param, param);
+            symbolCollecting((int)disParamGet(&param)->param, param);
             break;
         case SWITCH_TO_INC_BUFFER:
             ret = switchToModule(param);
@@ -47,7 +51,6 @@ int dispatch(dispatch_type dType, params_t *param) {
         default:
             ret = error_wrong_index;
     }
-
     return ret;
 }
 
@@ -68,17 +71,17 @@ static int dispatchMakeChoice(dispatch_type dType) {
     return choice;
 }
 
-static int switchToModule(params_t *param) {
+static int switchToModule(dispatchParam *param) {
     char *moduleName;
     char *sCollection;
     collectInfo *cInfo;
 
-    if (IS_PTR_NULL(param)) {
+    if (isNullPtr(param)) {
         return null;
     }
 
-    moduleName = paramListGet(&param);
-    sCollection = paramListGet(&param);
+    moduleName = disParamGet(&param);
+    sCollection = disParamGet(&param);
 
     cInfo = (collectInfo *)malloc(sizeof(collectInfo));
     collectInfoInit(moduleName, sCollection, cInfo);
@@ -92,7 +95,6 @@ static int switchToModule(params_t *param) {
         /* Terminate whole system */
         return abort_terminate;
     }
-
     return 0;
 }
 
@@ -115,7 +117,6 @@ int lexBufferSwitching(char *newModule) {
     if (path == null) {
         return error;
     }
-
     return ok;
 }
 
@@ -131,7 +132,7 @@ char * switch_CurrentMod(char *modName, int len) {
 static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo) {
       identList *head;
 
-      if (IS_PTR_NULL(modName) || IS_PTR_NULL(sString) || IS_PTR_NULL(cInfo))
+      if (isNullPtr(modName) || isNullPtr(sString) || isNullPtr(cInfo))
           return -1;
 
       head = (identList *)malloc(sizeof(identList));

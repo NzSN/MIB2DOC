@@ -40,7 +40,7 @@ void mibObjectTreeInit(mibObjectTreeNode *root) {
     root->info = (void *)rootInfo;
     root->head = root;
 
-    /* instead of method that mib tree complete by symbol import */
+    /* instead of method that complete by symbol import */
     #if null
     insert_mot(root, mibNodeBuild("iso", "1"), "root");
     insert_mot(root, mibNodeBuild("org", "1.3"), "iso");
@@ -56,7 +56,7 @@ mibObjectTreeNode * mibNodeBuild(char *ident, char *oid) {
     mibObjectTreeNode *obj;
     mibNodeInfo *info;
 
-    if (IS_PTR_NULL(ident) || IS_PTR_NULL(oid))
+    if (isNullPtr(ident) || isNullPtr(oid))
         return NULL;
 
     info = (mibNodeInfo *)malloc(sizeof(mibNodeInfo));
@@ -78,7 +78,7 @@ mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, 
     mibObjectTreeNode *obj;
     mibLeaveInfo *info;
 
-    if (IS_PTR_NULL(ident) || IS_PTR_NULL(type) ||  IS_PTR_NULL(oid))
+    if (isNullPtr(ident) || isNullPtr(type) ||  isNullPtr(oid))
         return NULL;
 
     info = (mibLeaveInfo *)malloc(sizeof(mibLeaveInfo));
@@ -105,7 +105,7 @@ mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, 
 int insert_mot(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ident) {
     mibObjectTreeNode *parentNode, *child, *current;
 
-    if (IS_PTR_NULL(root) || IS_PTR_NULL(obj) || IS_PTR_NULL(parent_ident))
+    if (isNullPtr(root) || isNullPtr(obj) || isNullPtr(parent_ident))
         return -1;
 
     parentNode = search_mot(root, parent_ident);
@@ -260,7 +260,7 @@ mibObjectTreeNode * travel_mot(mibObjectTreeNode *obj, int (*func)(void *argu, m
     int ret;
     mibObjectTreeNode *targetC, *targetS;
 
-    if (IS_PTR_NULL(obj) || IS_PTR_NULL(func))
+    if (isNullPtr(obj) || isNullPtr(func))
         return NULL;
 
 

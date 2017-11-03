@@ -166,7 +166,7 @@ static int sectionLatex(char *secName, char *OID, FILE *writeTo) {
 static int tableLaTex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) {
     int i, count, index;
 
-    if (IS_PTR_NULL(queue) || IS_PTR_NULL(writeTo))
+    if (isNullPtr(queue) || isNullPtr(writeTo))
         return -1;
 
     count = queue->count;
@@ -194,7 +194,7 @@ static int tableLaTex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) {
 
 static char * genTableItemLaTex(tableInfo *info, int index) {
 
-    if (IS_PTR_NULL(info))
+    if (isNullPtr(info))
         return NULL;
 
     memset(laTexStrBuffer, 0, SIZE_OF_LATEX_BUFFER);
@@ -375,7 +375,7 @@ S_finished:
 }
 
 char * long2Short(char *str) {
-    if (IS_PTR_NULL(str))
+    if (isNullPtr(str))
         return NULL;
 
     if (strncmp(str, "INTEGER", strlen("INTEGER")) == 0) {

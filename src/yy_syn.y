@@ -42,8 +42,8 @@ IMPORT :
 	IMPORTS_ MODULES SEMICOLON    { /* Build upper layer of mibtree */ };
 MODULES :
 	ITEMS FROM_ IDENTIFIER MODULES {
-		params_t *param = buildParam($3);
-		param->next = buildParam($1);
+		dispatchParam *param = disParamConstruct($3);
+		param->next = disParamConstruct($1);
 		if (dispatch(SWITCH_TO_INC_BUFFER, param) == abort_terminate) {
             return abort_terminate;
         }
@@ -61,11 +61,11 @@ SEQ_ITEM :
 	| IDENTIFIER TYPE    { };
 SMI :
     "SMI" IDENTIFIER {
-        params_t *param  = buildParam(IDENTIFIER_EL);
-        params_t *paramNext = buildParam($1);
+        dispatchParam *param  = disParamConstruct(SLICE_IDENTIFIER);
+        dispatchParam *paramNext = disParamConstruct($1);
 
         dispatch(DISPATCH_PARAM_STAGE, param);
-        dispatch(MIBTREE_GENERATION, buildParam(SMI_DEF));
+        dispatch(MIBTREE_GENERATION, disParamConstruct(SMI_DEF));
     };
 
 
@@ -73,34 +73,34 @@ OBJ_DEAL :
 	OBJ_IDENTIFIER { deal_with(OBJECT_IDENTIFIER); }
 OBJ_IDENTIFIER :
 	IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
-		params_t *param = buildParam(IDENTIFIER_EL);
-		param->next = buildParam($1);
+		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
+		param->next = disParamConstruct($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
-		param = buildParam(PARENT_EL);
-		param->next = buildParam($5);
+		param = disParamConstruct(SLICE_PARENT);
+		param->next = disParamConstruct($5);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
-		param = buildParam(SUFFIX_EL);
-		param->next = buildParam($6);
+		param = disParamConstruct(SLICE_OID_SUFFIX);
+		param->next = disParamConstruct($6);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 };
 
 OBJ :
-	HEAD BODY { dispatch(MIBTREE_GENERATION, buildParam(OBJECT)); };
+	HEAD BODY { dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT)); };
 TRAP :
-	TRAP_HEAD PROPERTY    { dispatch(MIBTREE_GENERATION, buildParam(TRAP)); };
+	TRAP_HEAD PROPERTY    { dispatch(MIBTREE_GENERATION, disParamConstruct(TRAP)); };
 TRAP_HEAD :
 	IDENTIFIER TRAP_SPECIFIER {
-		params_t *param = buildParam(IDENTIFIER_EL);
-		param->next = buildParam($1);
+		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
+		param->next = disParamConstruct($1);
 
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 HEAD :
 	IDENTIFIER OBJ_SPECIFIER {
-		params_t *param = buildParam(IDENTIFIER_EL);
-		param->next = buildParam($1);
+		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
+		param->next = disParamConstruct($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 BODY :
@@ -126,27 +126,27 @@ SYNTAX :
 	SYNTAX_SPECIFIER SYNTAX_VALUE ;
 SYNTAX_VALUE :
 	TYPE {
-		params_t *param = buildParam(TYPE_EL);
-		param->next = buildParam($1);
+		dispatchParam *param = disParamConstruct(SLICE_TYPE);
+		param->next = disParamConstruct($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
     } 
     | IDENTIFIER {
- 		params_t *param = buildParam(TYPE_EL);
-		param->next = buildParam($1);
+ 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
+		param->next = disParamConstruct($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
  	};
 ACCESS :
 	ACCESS_SPECIFIER ACCESS_VALUE {
-		params_t *param = buildParam(RW_EL);
-		param->next = buildParam($2);
+		dispatchParam *param = disParamConstruct(SLICE_PERMISSION);
+		param->next = disParamConstruct($2);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 STATUS :
 	STATUS_SPECIFIER STATUS_VALUE {};
 DESCRIPTION :
 	DESC_SPECIFIER DESC_VALUE {
-		params_t *param = buildParam(DESCRIPTION_EL);
-		param->next = buildParam($2);
+		dispatchParam *param = disParamConstruct(SLICE_DESCRIPTION);
+		param->next = disParamConstruct($2);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE    {};
@@ -155,12 +155,12 @@ INDEX_ITEM :
 	| IDENTIFIER    { };
 MOUNT :
 	ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
-		params_t *param = buildParam(PARENT_EL);
-		param->next = buildParam($3);
+		dispatchParam *param = disParamConstruct(SLICE_PARENT);
+		param->next = disParamConstruct($3);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
-		param = buildParam(SUFFIX_EL);
-		param->next = buildParam($4);
+		param = disParamConstruct(SLICE_OID_SUFFIX);
+		param->next = disParamConstruct($4);
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 

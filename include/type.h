@@ -2,12 +2,13 @@
 // Created by ayden on 2017/4/19.
 //
 
-#ifndef GL5610_MIB_DOC_GEN_TYPE_H
-#define GL5610_MIB_DOC_GEN_TYPE_H
+#ifndef _MIB2DOC_TYPE_H_
+#define _MIB2DOC_TYPE_H_
 
 #include <stddef.h>
 #include <stdio.h>
 #include <stddef.h>
+#include <stdbool.h>
 #include "mibTreeObjTree.h"
 
 /* define */
@@ -15,8 +16,8 @@
 #define SIZE_OF_CURRENT_TABLE 64
 #define SIZE_OF_SECTION_RECORD 1024
 #define SIZE_OF_OID_STRING 256
-#define IS_PTR_NULL(PTR) (PTR ? 0:1)
-#define RELEASE_PTR(PTR) ({free(PTR); PTR=NULL;})
+#define isNullPtr(PTR) (PTR ? 0:1)
+#define RELEASE_MEM(PTR) ({free(PTR); PTR=NULL;})
 #define containerOf(ptr, ConType, member) ({\
     const typeof( ((ConType *)(0))->member) *__mptr = ptr;\
     (ConType *)((char *)__mptr - offsetof(ConType, member));\
@@ -65,14 +66,14 @@ typedef enum unitType {
 } unitType;
 
 enum elementType {
-    IDENTIFIER_EL = 6,
-    TYPE_EL,
-    RW_EL,
-    DESCRIPTION_EL,
-    PARENT_EL,
-    SUFFIX_EL,
-    NUM_OF_COLLECT_ROUTINE
-};
+    SLICE_IDENTIFIER = 6,
+    SLICE_TYPE,
+    SLICE_PERMISSION,
+    SLICE_DESCRIPTION,
+    SLICE_PARENT,
+    SLICE_OID_SUFFIX,
+    SLICE_TYPE_MAXIMUM
+} sliceType;
 
 typedef enum errorType {
     ok,
@@ -84,10 +85,10 @@ typedef enum errorType {
     abort_terminate
 } errorType;
 
-typedef struct params_t {
+typedef struct dispatchParam {
     void *param;
-    struct params_t *next;
-} params_t;
+    listNode node;
+} dispatchParam;
 
 typedef struct nodeMeta_t {
     char *parentIdent;
@@ -105,19 +106,19 @@ typedef enum symbolType {
 } symbolType;
 
 typedef struct symbol_t {
-    int type;
-    char *identifier;
+    int symType;
+    char *symIdent;
     union {
        leaveMeta_t leaveMeta;
        nodeMeta_t nodeMeta;
-    } metadata;
-    struct symbol_t *next;
+   } symInfo;
+    listNode symNode;
 } symbol_t;
 
 typedef struct symbolTable {
     char *modName;
     symbol_t *symbol;
-    struct symbolTable *next;
+    listNode symTblNode;
 } symbolTable;
 
-#endif /* GL5610_MIB_DOC_GEN_TYPE_H */
+#endif /* _MIB2DOC_TYPE_H_ */

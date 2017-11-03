@@ -31,7 +31,7 @@ int optionsInit(int argc, char *argv[]) {
     incPathList *incNode;
     int i=0, paramIndex = 0;
 
-    if (IS_PTR_NULL(argv)) {
+    if (isNullPtr(argv)) {
         return error_null_reference;
     }
 
@@ -96,7 +96,7 @@ static void mappingTableInit() {
 static int paramMapping(char *param) {
     int index = 0;
 
-    if (IS_PTR_NULL(param)) {
+    if (isNullPtr(param)) {
         return error_null_reference;
     }
 
@@ -132,7 +132,7 @@ const char * getOption_includePath(int *index) {
     incPathList *head;
     listNode *node;
 
-    if (IS_PTR_NULL(index)) {
+    if (isNullPtr(index)) {
         return null;
     }
     if (i <= 0) {
@@ -143,7 +143,7 @@ const char * getOption_includePath(int *index) {
     node = &head->node;
 
     while (i--) {
-        node = listNext(&head->node);
+        node = listNodeNext(&head->node);
     }
 
     if (node == null) {

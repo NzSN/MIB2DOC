@@ -7,7 +7,7 @@
 
 int push(genericStack *ps, void *ident) {
     int top;
-    if (IS_PTR_NULL(ps) || IS_PTR_NULL(ident))
+    if (isNullPtr(ps) || isNullPtr(ident))
         return -1;
     top = ps->top;
     pushByIndex(ps->stack, ident, top, SIZE_OF_IDENT_STACK-1);
@@ -18,7 +18,7 @@ void *pop(genericStack *ps) {
     int top;
     void *retVal;
 
-    if (IS_PTR_NULL(ps))
+    if (isNullPtr(ps))
         return NULL;
 
     top = ps->top;

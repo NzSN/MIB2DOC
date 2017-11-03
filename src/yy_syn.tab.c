@@ -1318,8 +1318,8 @@ yyreduce:
   case 11:
 #line 44 "yy_syn.y" /* yacc.c:1646  */
     {
-		params_t *param = buildParam((yyvsp[-1]));
-		param->next = buildParam((yyvsp[-3]));
+		dispatchParam *param = disParamConstruct((yyvsp[-1]));
+		param->next = disParamConstruct((yyvsp[-3]));
 		dispatch(SWITCH_TO_INC_BUFFER, param);
 	}
 #line 1326 "yy_syn.tab.c" /* yacc.c:1646  */
@@ -1340,11 +1340,11 @@ yyreduce:
   case 19:
 #line 61 "yy_syn.y" /* yacc.c:1646  */
     {
-        params_t *param  = buildParam(IDENTIFIER_EL);
-        params_t *paramNext = buildParam((yyvsp[-1]));
+        dispatchParam *param  = disParamConstruct(SLICE_IDENTIFIER);
+        dispatchParam *paramNext = disParamConstruct((yyvsp[-1]));
 
         dispatch(DISPATCH_PARAM_STAGE, param);
-        dispatch(MIBTREE_GENERATION, buildParam(SMI_DEF));
+        dispatch(MIBTREE_GENERATION, disParamConstruct(SMI_DEF));
     }
 #line 1350 "yy_syn.tab.c" /* yacc.c:1646  */
     break;
@@ -1358,16 +1358,16 @@ yyreduce:
   case 21:
 #line 73 "yy_syn.y" /* yacc.c:1646  */
     {
-		params_t *param = buildParam(IDENTIFIER_EL);
-		param->next = buildParam((yyvsp[-6]));
+		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
+		param->next = disParamConstruct((yyvsp[-6]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
-		param = buildParam(PARENT_EL);
-		param->next = buildParam((yyvsp[-2]));
+		param = disParamConstruct(SLICE_PARENT);
+		param->next = disParamConstruct((yyvsp[-2]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
-		param = buildParam(SUFFIX_EL);
-		param->next = buildParam((yyvsp[-1]));
+		param = disParamConstruct(SLICE_OID_SUFFIX);
+		param->next = disParamConstruct((yyvsp[-1]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 }
 #line 1374 "yy_syn.tab.c" /* yacc.c:1646  */
@@ -1375,21 +1375,21 @@ yyreduce:
 
   case 22:
 #line 88 "yy_syn.y" /* yacc.c:1646  */
-    { dispatch(MIBTREE_GENERATION, buildParam(OBJECT)); }
+    { dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT)); }
 #line 1380 "yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
 #line 90 "yy_syn.y" /* yacc.c:1646  */
-    { dispatch(MIBTREE_GENERATION, buildParam(TRAP)); }
+    { dispatch(MIBTREE_GENERATION, disParamConstruct(TRAP)); }
 #line 1386 "yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
 #line 92 "yy_syn.y" /* yacc.c:1646  */
     {
-		params_t *param = buildParam(IDENTIFIER_EL);
-		param->next = buildParam((yyvsp[-1]));
+		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
+		param->next = disParamConstruct((yyvsp[-1]));
 
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
@@ -1399,8 +1399,8 @@ yyreduce:
   case 25:
 #line 99 "yy_syn.y" /* yacc.c:1646  */
     {
-		params_t *param = buildParam(IDENTIFIER_EL);
-		param->next = buildParam((yyvsp[-1]));
+		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
+		param->next = disParamConstruct((yyvsp[-1]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
 #line 1407 "yy_syn.tab.c" /* yacc.c:1646  */
@@ -1421,8 +1421,8 @@ yyreduce:
   case 39:
 #line 126 "yy_syn.y" /* yacc.c:1646  */
     {
-		params_t *param = buildParam(TYPE_EL);
-		param->next = buildParam((yyvsp[0]));
+		dispatchParam *param = disParamConstruct(SLICE_TYPE);
+		param->next = disParamConstruct((yyvsp[0]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
 #line 1429 "yy_syn.tab.c" /* yacc.c:1646  */
@@ -1431,8 +1431,8 @@ yyreduce:
   case 40:
 #line 131 "yy_syn.y" /* yacc.c:1646  */
     {
- 		params_t *param = buildParam(TYPE_EL);
-		param->next = buildParam((yyvsp[0]));
+ 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
+		param->next = disParamConstruct((yyvsp[0]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
  	}
 #line 1439 "yy_syn.tab.c" /* yacc.c:1646  */
@@ -1441,8 +1441,8 @@ yyreduce:
   case 41:
 #line 137 "yy_syn.y" /* yacc.c:1646  */
     {
-		params_t *param = buildParam(RW_EL);
-		param->next = buildParam((yyvsp[0]));
+		dispatchParam *param = disParamConstruct(SLICE_PERMISSION);
+		param->next = disParamConstruct((yyvsp[0]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
 #line 1449 "yy_syn.tab.c" /* yacc.c:1646  */
@@ -1457,8 +1457,8 @@ yyreduce:
   case 43:
 #line 145 "yy_syn.y" /* yacc.c:1646  */
     {
-		params_t *param = buildParam(DESCRIPTION_EL);
-		param->next = buildParam((yyvsp[0]));
+		dispatchParam *param = disParamConstruct(SLICE_DESCRIPTION);
+		param->next = disParamConstruct((yyvsp[0]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
 #line 1465 "yy_syn.tab.c" /* yacc.c:1646  */
@@ -1479,12 +1479,12 @@ yyreduce:
   case 47:
 #line 155 "yy_syn.y" /* yacc.c:1646  */
     {
-		params_t *param = buildParam(PARENT_EL);
-		param->next = buildParam((yyvsp[-2]));
+		dispatchParam *param = disParamConstruct(SLICE_PARENT);
+		param->next = disParamConstruct((yyvsp[-2]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
-		param = buildParam(SUFFIX_EL);
-		param->next = buildParam((yyvsp[-1]));
+		param = disParamConstruct(SLICE_OID_SUFFIX);
+		param->next = disParamConstruct((yyvsp[-1]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
 #line 1491 "yy_syn.tab.c" /* yacc.c:1646  */

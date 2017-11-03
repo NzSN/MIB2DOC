@@ -19,13 +19,13 @@ static char * oidComplement(char *parent, char *suffix);
 
 char currentTable[64];
 extern mibObjectTreeNode root;
-extern elementList elistHead;
+extern slice sliceContainer;
 extern mibObjectTreeNode mibObjectTreeRoot;
 
 /* Global */
 mibObjectTreeNode root;
 symbolTable symTable;
-elementList symCollectList;
+slice symCollectList;
 targetSymbolList tSymListHead;
 
 int deal_with(int type) {
@@ -51,92 +51,97 @@ int deal_with(int type) {
 int deal_with_object() {
     char *ident, *type, *rw, *desc, *parent, *suffix, *oid;
 
-    ident = getElement_el(&elistHead, IDENTIFIER_EL)->content;
-    type = getElement_el(&elistHead, TYPE_EL)->content;
-    rw = getElement_el(&elistHead, RW_EL)->content;
-    desc = getElement_el(&elistHead, DESCRIPTION_EL)->content;
-    parent = getElement_el(&elistHead, PARENT_EL)->content;
-    suffix = getElement_el(&elistHead, SUFFIX_EL)->content;
+    ident = sliceGet(&sliceContainer, SLICE_IDENTIFIER)->sliVal;
+    type = sliceGet(&sliceContainer, SLICE_TYPE)->sliVal;
+    rw = sliceGet(&sliceContainer, SLICE_PERMISSION)->sliVal;
+    desc = sliceGet(&sliceContainer, SLICE_DESCRIPTION)->sliVal;
+    parent = sliceGet(&sliceContainer, SLICE_PARENT)->sliVal;
+    suffix = sliceGet(&sliceContainer, SLICE_OID_SUFFIX)->sliVal;
 
-    if (IS_PTR_NULL(ident) || IS_PTR_NULL(type) ||
-            IS_PTR_NULL(rw) || IS_PTR_NULL(desc) ||
-            IS_PTR_NULL(desc) || IS_PTR_NULL(parent) ||
-            IS_PTR_NULL(suffix)) {
+    if (isNullPtr(ident) || isNullPtr(type) || isNullPtr(rw)
+        || isNullPtr(desc) || isNullPtr(desc) || isNullPtr(parent)
+        || isNullPtr(suffix)) {
         return -1;
     }
 
     oid = oidComplement(parent, suffix);
     mibTreeLeaveAdd(ident, type, rw, desc, parent, oid);
 
-    reset_el(&elistHead);
-    RELEASE_PTR(suffix);
-    RELEASE_PTR(parent);
+    sliceReset(&sliceContainer);
+    RELEASE_MEM(suffix);
+    RELEASE_MEM(parent);
     return 0;
 }
 
 int deal_with_objIdent() {
     char *ident, *parent, *suffix, *oid;
 
-    ident = getElement_el(&elistHead, IDENTIFIER_EL)->content;
-    parent = getElement_el(&elistHead, PARENT_EL)->content;
-    suffix = getElement_el(&elistHead, SUFFIX_EL)->content;
+    ident = sliceGet(&sliceContainer, SLICE_IDENTIFIER)->sliVal;
+    parent = sliceGet(&sliceContainer, SLICE_PARENT)->sliVal;
+    suffix = sliceGet(&sliceContainer, SLICE_OID_SUFFIX)->sliVal;
 
-    if (IS_PTR_NULL(ident) || IS_PTR_NULL(parent) || IS_PTR_NULL(suffix))
+    if (isNullPtr(ident) || isNullPtr(parent) || isNullPtr(suffix))
         return -1;
 
     oid = oidComplement(parent, suffix);
     mibTreeNodeAdd(ident, oid, parent);
 
-    reset_el(&elistHead);
-    RELEASE_PTR(suffix);
-    RELEASE_PTR(parent);
+    sliceReset(&sliceContainer);
+    RELEASE_MEM(suffix);
+    RELEASE_MEM(parent);
     return 0;
 }
 
 int deal_with_trap() {
     char *ident, *parent, *suffix, *oid, *desc, *type;
 
-    ident = getElement_el(&elistHead, IDENTIFIER_EL)->content;
+    ident = sliceGet(&sliceContainer, SLICE_IDENTIFIER)->sliVal;
     type = (char *)malloc(strlen("trap")+1);
     memset(type, 0, strlen("trap")+1);
     strncpy(type, "trap", strlen("trap"));
-    parent = getElement_el(&elistHead, PARENT_EL)->content;
-    suffix = getElement_el(&elistHead, SUFFIX_EL)->content;
-    desc = getElement_el(&elistHead, DESCRIPTION_EL)->content;
+    parent = sliceGet(&sliceContainer, SLICE_PARENT)->sliVal;
+    suffix = sliceGet(&sliceContainer, SLICE_OID_SUFFIX)->sliVal;
+    desc = sliceGet(&sliceContainer, SLICE_DESCRIPTION)->sliVal;
 
-    if (IS_PTR_NULL(ident) || IS_PTR_NULL(type) || IS_PTR_NULL(parent) || IS_PTR_NULL(suffix))
+    if (isNullPtr(ident) || isNullPtr(type) || isNullPtr(parent) || isNullPtr(suffix))
         return -1;
 
     oid = oidComplement(parent, suffix);
     mibTreeLeaveAdd(ident, type, NULL, NULL, parent, oid);
 
-    reset_el(&elistHead);
+    sliceReset(&sliceContainer);
 
-    RELEASE_PTR(desc);
-    RELEASE_PTR(suffix);
-    RELEASE_PTR(parent);
+    RELEASE_MEM(desc);
+    RELEASE_MEM(suffix);
+    RELEASE_MEM(parent);
     return 0;
 }
 
 void deal_with_sequence() {}
 
 static int tablePrint(char *ident, char *oid, char *rw, char *detail, FILE *output) {
-    if (IS_PTR_NULL(ident) || IS_PTR_NULL(oid) ||
-        IS_PTR_NULL(rw) || IS_PTR_NULL(detail))
+    if (isNullPtr(ident) || isNullPtr(oid) ||
+        isNullPtr(rw) || isNullPtr(detail))
         return -1;
 }
 
 
 
-static int mibTreeLeaveAdd(char *ident, char *type, char *rw, char *desc, char *parent, char *oid) {
+static int mibTreeLeaveAdd(char *ident, char *type,
+    char *rw, char *desc,
+    char *parent, char *oid) {
+
     mibObjectTreeNode *obj;
 
-    if (IS_PTR_NULL(ident) || IS_PTR_NULL(type) || IS_PTR_NULL(parent) || IS_PTR_NULL(oid)) {
+    if (isNullPtr(ident)
+        || isNullPtr(type)
+        || isNullPtr(parent)
+        || isNullPtr(oid)) {
         return -1;
     }
 
     obj = mibLeaveBuild(ident, type, rw, desc, oid);
-    if (IS_PTR_NULL(obj))
+    if (isNullPtr(obj))
         return -1;
 
     insert_mot(&mibObjectTreeRoot, obj, parent);
@@ -145,11 +150,11 @@ static int mibTreeLeaveAdd(char *ident, char *type, char *rw, char *desc, char *
 static int mibTreeNodeAdd(char *ident, char *oid, char *parent) {
     mibObjectTreeNode *obj;
 
-    if (IS_PTR_NULL(ident) || IS_PTR_NULL(oid))
+    if (isNullPtr(ident) || isNullPtr(oid))
         return -1;
 
     obj = mibNodeBuild(ident, oid);
-    if (IS_PTR_NULL(obj))
+    if (isNullPtr(obj))
         return -1;
 
     insert_mot(&mibObjectTreeRoot, obj, parent);
@@ -178,19 +183,19 @@ static char * oidComplement(char *parent, char *suffix) {
  * Symbol Collecting
  */
 
-static int symbolCollect_OBJECT(params_t *param);
-static int symbolCollect_DESCRIPTION(params_t *param);
-static int symbolCollect_IDENTIFIER(params_t *param);
-static int symbolCollect_OBJECT_IDENTIFIER(params_t *param);
-static int symbolCollect_PARENT(params_t *param);
-static int symbolCollect_RW(params_t *param);
-static int symbolCollect_SEQUENCE(params_t *param);
-static int symbolCollect_SMI_DEF(params_t *param);
-static int symbolCollect_SUFFIX(params_t *param);
-static int symbolCollect_TRAP(params_t *param);
-static int symbolCollect_TYPE(params_t *param);
+static int symbolCollect_OBJECT(dispatchParam *param);
+static int symbolCollect_DESCRIPTION(dispatchParam *param);
+static int symbolCollect_IDENTIFIER(dispatchParam *param);
+static int symbolCollect_OBJECT_IDENTIFIER(dispatchParam *param);
+static int symbolCollect_PARENT(dispatchParam *param);
+static int symbolCollect_RW(dispatchParam *param);
+static int symbolCollect_SEQUENCE(dispatchParam *param);
+static int symbolCollect_SMI_DEF(dispatchParam *param);
+static int symbolCollect_SUFFIX(dispatchParam *param);
+static int symbolCollect_TRAP(dispatchParam *param);
+static int symbolCollect_TYPE(dispatchParam *param);
 
-int (*symbolCollectRoutine[NUM_OF_COLLECT_ROUTINE])(params_t *);
+int (*symbolCollectRoutine[SLICE_TYPE_MAXIMUM])(dispatchParam *);
 
 /* Initialize symbolCollectRoutine array */
 int symbolCollectingInit() {
@@ -202,37 +207,37 @@ int symbolCollectingInit() {
     symbolCollectRoutine[SMI_DEF] = symbolCollect_SMI_DEF;
 
     /* Parameter Collecting function */
-    symbolCollectRoutine[IDENTIFIER_EL] = symbolCollect_IDENTIFIER;
-    symbolCollectRoutine[TYPE_EL] = symbolCollect_TYPE;
-    symbolCollectRoutine[RW_EL] = symbolCollect_RW;
-    symbolCollectRoutine[DESCRIPTION_EL] = symbolCollect_DESCRIPTION;
-    symbolCollectRoutine[PARENT_EL] = symbolCollect_PARENT;
-    symbolCollectRoutine[SUFFIX_EL] = symbolCollect_SUFFIX;
+    symbolCollectRoutine[SLICE_IDENTIFIER] = symbolCollect_IDENTIFIER;
+    symbolCollectRoutine[SLICE_TYPE] = symbolCollect_TYPE;
+    symbolCollectRoutine[SLICE_PERMISSION] = symbolCollect_RW;
+    symbolCollectRoutine[SLICE_DESCRIPTION] = symbolCollect_DESCRIPTION;
+    symbolCollectRoutine[SLICE_PARENT] = symbolCollect_PARENT;
+    symbolCollectRoutine[SLICE_OID_SUFFIX] = symbolCollect_SUFFIX;
 
     return 0;
 }
 
-int symbolCollecting(int type, params_t *param) {
+int symbolCollecting(int type, dispatchParam *param) {
     return symbolCollectRoutine[type](param);
 }
 
-static int symbolCollect_OBJECT(params_t *param) {
-    flushAll_el(&symCollectList);
+static int symbolCollect_OBJECT(dispatchParam *param) {
+    sliceRelease(&symCollectList);
 }
 
 
-static int symbolCollect_TRAP(params_t *param) {
-    flushAll_el(&symCollectList);
+static int symbolCollect_TRAP(dispatchParam *param) {
+    sliceRelease(&symCollectList);
 }
 
-static int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
+static int symbolCollect_OBJECT_IDENTIFIER(dispatchParam *param) {
     symbolTable *newMod;
     symbol_t *newSymbol;
     char *modIdent;
     char *symbolIdent;
-    char *parentIdent = getElement_el(&symCollectList, PARENT_EL)->content;
+    char *parentIdent = sliceGet(&symCollectList, SLICE_PARENT)->sliVal;
 
-    symbolIdent = getElement_el(&symCollectList, IDENTIFIER_EL)->content;
+    symbolIdent = sliceGet(&symCollectList, SLICE_IDENTIFIER)->sliVal;
 
     /* Is that
 
@@ -243,7 +248,7 @@ static int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
 
     modIdent = (char *)malloc(MAX_CHAR_OF_MOD_IDENT);
     switch_CurrentMod(modIdent, MAX_CHAR_OF_MOD_IDENT);
-    parentIdent = getElement_el(&symCollectList, PARENT_EL)->content;
+    parentIdent = sliceGet(&symCollectList, SLICE_PARENT)->sliVal;
 
     /* Is the module specify by modIdent is exists ? */
     if (!symbolModSearching(modIdent)) {
@@ -263,66 +268,66 @@ static int symbolCollect_OBJECT_IDENTIFIER(params_t *param) {
     return 0;
 }
 
-static int symbolCollect_SEQUENCE(params_t *param) {
-    flushAll_el(&symCollectList);
+static int symbolCollect_SEQUENCE(dispatchParam *param) {
+    sliceRelease(&symCollectList);
 }
 
-static int symbolCollect_SMI_DEF(params_t *param) {
+static int symbolCollect_SMI_DEF(dispatchParam *param) {
     /* Record into symtable */
 }
 
-static int symbolCollect_IDENTIFIER(params_t *param) {
+static int symbolCollect_IDENTIFIER(dispatchParam *param) {
 
-    if (IS_PTR_NULL(param)) {
+    if (isNullPtr(param)) {
         return -1;
     }
 
-    PARAM_STORE_TO_SYM_LIST(IDENTIFIER_EL, param);
+    PARAM_STORE_TO_SYM_LIST(SLICE_IDENTIFIER, param);
     return 0;
 }
 
-static int symbolCollect_TYPE(params_t *param) {
+static int symbolCollect_TYPE(dispatchParam *param) {
 
-    if (IS_PTR_NULL(param)) {
+    if (isNullPtr(param)) {
         return -1;
     }
 
-    PARAM_STORE_TO_SYM_LIST(TYPE_EL, param);
+    PARAM_STORE_TO_SYM_LIST(SLICE_TYPE, param);
     return 0;
 }
 
-static int symbolCollect_RW(params_t *param) {
-    if (IS_PTR_NULL(param)) {
+static int symbolCollect_RW(dispatchParam *param) {
+    if (isNullPtr(param)) {
         return -1;
     }
 
-    PARAM_STORE_TO_SYM_LIST(RW_EL, param);
+    PARAM_STORE_TO_SYM_LIST(SLICE_PERMISSION, param);
     return 0;
 }
 
-static int symbolCollect_DESCRIPTION(params_t *param) {
-    if (IS_PTR_NULL(param)) {
+static int symbolCollect_DESCRIPTION(dispatchParam *param) {
+    if (isNullPtr(param)) {
         return -1;
     }
 
-    PARAM_STORE_TO_SYM_LIST(DESCRIPTION_EL, param);
+    PARAM_STORE_TO_SYM_LIST(SLICE_DESCRIPTION, param);
     return 0;
 }
 
-static int symbolCollect_PARENT(params_t *param) {
-    if (IS_PTR_NULL(param)) {
+static int symbolCollect_PARENT(dispatchParam *param) {
+    if (isNullPtr(param)) {
         return -1;
     }
 
-    PARAM_STORE_TO_SYM_LIST(PARENT_EL, param);
+    PARAM_STORE_TO_SYM_LIST(SLICE_PARENT, param);
     return 0;
 }
 
-static int symbolCollect_SUFFIX(params_t *param) {
-    if (IS_PTR_NULL(param)) {
+static int symbolCollect_SUFFIX(dispatchParam *param) {
+    if (isNullPtr(param)) {
         return -1;
     }
 
-    PARAM_STORE_TO_SYM_LIST(SUFFIX_EL, param);
+    PARAM_STORE_TO_SYM_LIST(SLICE_OID_SUFFIX, param);
     return 0;
 }
