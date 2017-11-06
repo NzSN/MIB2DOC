@@ -38,7 +38,34 @@ listNode * listNodeInsert(listNode *head, listNode *node) {
     return node;
 }
 
+listNode *listNodeDelete(listNode *node) {
+    if (isNullPtr(node)) {
+        return ERROR_NULL_REF;
+    }
+    if (node->prev != NULL && node->next != NULL) {
+        /* Middle */
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+    } else if(node->prev != NULL) {
+        /* Tail */
+        node->next->prev = NULL;
+    } else if (node->next != NULL) {
+        /* Head */
+        node->prev->next = NULL;
+    } else {
+        /* Single node */
+    }
+}
 
+listNode * listNodeTail(listNode *head) {
+    if (isNullPtr(head) || isNullPtr(node)) {
+        return NULL;
+    }
+    while (head->next) {
+        head = head->next;
+    }
+    return head;
+}
 
 bool listNodeIsEmpty(listNode *head) {
     int i = 0;
@@ -50,6 +77,17 @@ bool listNodeIsEmpty(listNode *head) {
     } else {
         return FALSE;
     }
+}
+
+int listNodeTravel(listNode *head, listNodeTask func, void *arg) {
+    if (isNullPtr(head) || isNullPtr(func) || isNullPtr(arg)) {
+        return ERROR_NULL_REF;
+    }
+    while (head != NULL) {
+        func(head, arg);
+        head = listNodeNext(head);
+    }
+    return ERROR_NONE;
 }
 
 /*******************************************
@@ -92,6 +130,11 @@ slice * sliceNext(slice *sli) {
 }
 
 slice * sliceGet(slice *sli, int sliKey) {
+    if (isNullPtr(sli)) {
+        mib2docError = ERROR_NULL_REF;
+        return NULL;
+    }
+
     for (; sli != NULL; sli = sliceNext(sli)) {
         if (sli->sliKey == sliKey)
             return sli;
@@ -100,10 +143,18 @@ slice * sliceGet(slice *sli, int sliKey) {
 }
 
 int sliceStore(slice *sli, slice *next) {
+    if (isNullPtr(sli) || isNullPtr(next)) {
+        return ERROR_NULL_REF;
+    }
+
+    if (sliceGet(sli, next->sliKey)) {
+        return ERROR_NONE;
+    }
+
     for (; sli != NULL; sli = sliceNext(sli)) {
         if (sliceNext(sli) == NULL) {
             sli->node.next = &next->node;
-            return 0;
+            return ERROR_NONE;
         }
     }
     return 1;
@@ -163,15 +214,13 @@ dispatchParam * dispatchParamNext(dispatchParam *disparam) {
     return cointainerOf(disparam->node.next, dispatchParam, node);
 }
 
-dispatchParam * disParamStore(dispatchParam *head, dispatchParam *pl) {
-    if (head == NULL || pl == NULL) {
+dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {
+    if (head == NULL || new == NULL) {
+        mib2docError = ERROR_NULL_REF;
         return NULL;
     }
 
-    while (head->next != NULL) {
-        head = dispatchParamNext(head);
-    }
-    head->node.next = &pl->node;
+    listNodeInsert(listNodeTail(head->node), new->node)
     return pl;
 }
 
@@ -184,6 +233,7 @@ dispatchParam * disParamGet(dispatchParam **head) {
     dispatchParam *ret;
 
     if (isNullPtr(head) || isNullPtr(*head)) {
+        mib2docError = ERROR_NULL_REF;
         return NULL;
     }
 
@@ -196,12 +246,14 @@ dispatchParam * disParamGet(dispatchParam **head) {
 /*****************************************************
  * symbol_t and symbolTable operation function define *
  *****************************************************/
+symErrorCode symTblError;
 extern symbolTable symTable;
 
 symbolTable * symbolTableConstruct(char *name) {
     symbolTable *newTable;
 
     if (isNullPtr(name)) {
+        mib2docError = ERROR_NULL_REF;
         return NULL;
     }
     newTable = (symbolTable *)malloc(sizeof(symbolTable));
@@ -211,89 +263,101 @@ symbolTable * symbolTableConstruct(char *name) {
 }
 
 symbolTable * symbolTablePrev(symbolTable *tbl) {
-    return containerOf(tbl->node.prev, symbolTable, node);
+    return containerOf(tbl->node.prev, symbolTable, symTblNode);
 }
 
 symbolTable * symbolTableNext(symbolTable *tbl) {
-    return containerOf(tbl->node.next, symbolTable, node);
+    return containerOf(tbl->node.next, symbolTable, symTblNode);
 }
 
-int symbolModuleAdd(symbolTable *tblRoot, symbolTable *newTbl) {
-    int ret = ok;
+/* Return :
+ *  @NULL - if mib2docError == ERROR_NULL_REF means nul pointer
+ *          otherwise symbol table not found.
+ *  @pointer - pointer that point the table specify by modName
+ */
+symbolTable * symbolTableSearch(symbolTable *tblRoot, char *modName) {
+    if (isNullPtr(tblRoot) || isNullPtr(modName)) {
+        mib2docError = ERROR_NULL_REF;
+        return NULL;
+    }
+    while (tblRoot) {
+        if (!strncmp(tblRoot->modName, modName, strlen(modName)) {
+            return tblRoot;
+        }
+        tblRoot = symbolTableNext(tblRoot);
+    }
+    mib2docError = SYM_TABLE_NOT_FOUND;
+    return NULL;
+}
 
+symbolTable * symbolModuleAdd(symbolTable *tblRoot, symbolTable *newTbl) {
     if (isNullPtr(tblRoot) || isNullPtr(newTbl)) {
-        ret = -1;
-        return ret;
+        mib2docError = ERROR_NULL_REF;
+        return NULL;
     }
 
-    while (!isNullPtr(tblRoot->node.next)) {
-        tblRoot = tsymTableNext(tblRoot);
-    }
-
-    tblRoot->node.next = newTbl->node;
-
-    return ret;
+    listNodeInsert(listNodeTail(tblRoot->node), newTbl->node);
+    return newTbl;
 }
 
-int symbolAdd(char *modName, symbol_t *newSym) {
-    int ret;
-    symbolTable *pSymTbl = &symTable;
+symbol_t * symbolPrev(symbol_t *sym) {
+    return containerOf(sym->node.prev, symbol_t, symNode);
+}
+
+symbol_t * symbolNext(symbol_t *sym) {
+    return containerOf(sym->node.next, symbol_t, symNode)
+}
+
+symbol_t * symbolAdd(symbolTable *symTbl, symbol_t *newSym, char *modName) {
+    symbolTable *pSymTbl;
     symbol_t *pSym;
 
-    if (isNullPtr(modName) || isNullPtr(newSym)) {
-        ret = -1;
-        return ret;
+    if (isNullPtr(modName) || isNullPtr(newSym) || isNullPtr(symTbl)) {
+        mib2docError = ERROR_NULL_REF;
+        return NULL;
     }
-
-    while (!strncmp(modName, pSymTbl->modName, strlen(modName))) {
-        pSymTbl = pSymTbl->next;
-    }
-
-    /* no module match the modName */
-    if (pSymTbl == NULL) {
-        return 1;
+    if ((pSymTbl = symbolTableSearch(symTbl, modName)) == NULL) {
+        if (mib2docError == SYM_TABLE_NOT_FOUND)
+            pSymTbl = symbolModuleAdd(symbolTableConstruct(modName);
     }
 
     pSym = pSymTbl->symbol;
-
-    while (pSym->next != NULL) {
-        pSym = pSym->next;
+    if (!symbolSearching(pSymTbl, newSym->symIdent)) {
+        if (mib2docError == SYM_NOT_FOUND)
+            listNodeInsert(listNodeTail(pSym->symNode), newSym->symNode);
+            return pSym;
     }
-
-    pSym->next = newSym;
-    return ret;
+    return NULL;
 }
 
-int symbolModSearching(char *modIdent) {}
-
-/*
- *  return value:
- *      0 -- not exist
- *      1 -- exists
- */
-int symbolSearching(char *symIdent) {
-    int ret = 0;
-    symbolTable *pSymTbl = &symTable;
+symbol_t * symbolSearching(symbolTable *symTblRoot, char *symIdent) {
+    symbol_t ret = NULL;
+    symbolTable *pSymTbl;
     symbol_t *pSym;
 
-    if (isNullPtr(symIdent)) {
-        ret = -1;
+    if (isNullPtr(symIdent) || isNullPtr(symTblRoot)) {
+        mib2docError = ERROR_NULL_REF;
         return ret;
     }
 
-    while (pSymTbl->next != NULL) {
+    pSymTbl = symTblRoot;
+
+    while (symbolTableNext(pSymTbl) != NULL) {
         pSym = pSymTbl->symbol;
 
-        while (pSym->next != NULL) {
-            if (!strncmp(symIdent, pSym->identifier, strlen(symIdent))) {
-                ret = 1;
+        while (pSym != NULL) {
+            if (!strncmp(symIdent, pSym->symIdent, strlen(symIdent))) {
+                ret = pSym;
                 goto FINISHED;
             }
-            pSym = pSym->next;
+            pSym = symbolNext(pSym);
         }
-        pSymTbl = pSymTbl->next;
+        pSymTbl = symbolTableNext(pSymTbl);
     }
+    mib2docError = SYM_NOT_FOUND;
 
 FINISHED:
     return ret;
 }
+
+/* end of list.c */

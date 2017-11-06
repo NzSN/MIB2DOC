@@ -21,7 +21,7 @@ typedef enum dispatch_mode {
 typedef struct identList {
     int found;
     char *symName;
-    listNode next;
+    listNode node;
 } identList;
 
 extern struct yy_buffer_state;

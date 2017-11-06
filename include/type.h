@@ -19,8 +19,10 @@
 #define isNullPtr(PTR) (PTR ? 0:1)
 #define RELEASE_MEM(PTR) ({free(PTR); PTR=NULL;})
 #define containerOf(ptr, ConType, member) ({\
-    const typeof( ((ConType *)(0))->member) *__mptr = ptr;\
-    (ConType *)((char *)__mptr - offsetof(ConType, member));\
+    if (ptr != NULL) {\
+        const typeof( ((ConType *)(0))->member) *__mptr = ptr;\
+        __RET_PTR__ = (ConType *)((char *)__mptr - offsetof(ConType, member));\
+    }
 })
 
 /* Token Id Definition */
@@ -76,14 +78,15 @@ enum elementType {
 } sliceType;
 
 typedef enum errorType {
-    ok,
-    error,
-    error_null_reference,
-    error_wrong_index,
-    error_param_mismatch,
-    error_open_file_failed,
-    abort_terminate
+    ERROR_NONE,
+    ERROR_GENERIC,
+    ERROR_NULL_REF,
+    ERROR_WRONG_IDX,
+    ERROR_OPEN_FAILED,
+    ABORT
 } errorType;
+
+extern errorType mib2docError;
 
 typedef struct dispatchParam {
     void *param;
@@ -91,14 +94,29 @@ typedef struct dispatchParam {
 } dispatchParam;
 
 typedef struct nodeMeta_t {
+    char *nodeIdent;
     char *parentIdent;
+    char *suffix;
 } nodeMeta_t;
 
 typedef struct leaveMeta_t {
-
+    char *ident;
+    char *parent;
+    char *oidSuffix;
+    char *type;
+    char *permission;
 } leaveMeta_t;
 
 #define MAX_CHAR_OF_MOD_IDENT 64
+
+typedef enum symErrorCode {
+    SYM_TABLE_EXISTS,
+    SYM_TABLE_NOT_FOUND,
+    SYM_EXISTS,
+    SYM_NOT_FOUND
+} symErrorCode;
+
+extern symErrorCode symTblError;
 
 typedef enum symbolType {
     SYMBOL_TYPE_NODE,
@@ -106,7 +124,7 @@ typedef enum symbolType {
 } symbolType;
 
 typedef struct symbol_t {
-    int symType;
+    symbolType symType;
     char *symIdent;
     union {
        leaveMeta_t leaveMeta;

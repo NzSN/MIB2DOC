@@ -9,7 +9,7 @@ int stringToIdentList(char *str, identList *list, char seperator) {
     identList *listTmp;
 
     if (isNullPtr(str) || isNullPtr(list)) {
-        return error_null_reference;
+        return ERROR_NULL_REF;
     }
 
     beginPoint[index_++] = 0;
@@ -35,7 +35,7 @@ int stringToIdentList(char *str, identList *list, char seperator) {
         index++;
     }
 
-    return ok;
+    return ERROR_NONE;
 }
 
 /* util.c */

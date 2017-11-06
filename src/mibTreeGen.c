@@ -183,36 +183,36 @@ static char * oidComplement(char *parent, char *suffix) {
  * Symbol Collecting
  */
 
-static int symbolCollect_OBJECT(dispatchParam *param);
-static int symbolCollect_DESCRIPTION(dispatchParam *param);
-static int symbolCollect_IDENTIFIER(dispatchParam *param);
-static int symbolCollect_OBJECT_IDENTIFIER(dispatchParam *param);
-static int symbolCollect_PARENT(dispatchParam *param);
-static int symbolCollect_RW(dispatchParam *param);
-static int symbolCollect_SEQUENCE(dispatchParam *param);
-static int symbolCollect_SMI_DEF(dispatchParam *param);
-static int symbolCollect_SUFFIX(dispatchParam *param);
-static int symbolCollect_TRAP(dispatchParam *param);
-static int symbolCollect_TYPE(dispatchParam *param);
+static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param);
+static int symbolCollect_PARAM_DESC(dispatchParam *param);
+static int symbolCollect_PARAM_IDENT(dispatchParam *param);
+static int symbolCollect_BUILD_LEAVE_NODE(dispatchParam *param);
+static int symbolCollect_PARAM_PARENT(dispatchParam *param);
+static int symbolCollect_PARAM_PERM(dispatchParam *param);
+static int symbolCollect_BUILD_SEQUENCE(dispatchParam *param);
+static int symbolCollect_BUILD_SMI_DEF(dispatchParam *param);
+static int symbolCollect_PARAM_SUFFIX(dispatchParam *param);
+static int symbolCollect_BUILD_TRAP(dispatchParam *param);
+static int symbolCollect_PARAM_TYPE(dispatchParam *param);
 
 int (*symbolCollectRoutine[SLICE_TYPE_MAXIMUM])(dispatchParam *);
 
 /* Initialize symbolCollectRoutine array */
 int symbolCollectingInit() {
     /* Symbol Table building function */
-    symbolCollectRoutine[OBJECT] = symbolCollect_OBJECT;
-    symbolCollectRoutine[TRAP] = symbolCollect_TRAP;
-    symbolCollectRoutine[OBJECT_IDENTIFIER] = symbolCollect_OBJECT_IDENTIFIER;
-    symbolCollectRoutine[SEQUENCE] = symbolCollect_OBJECT_IDENTIFIER;
-    symbolCollectRoutine[SMI_DEF] = symbolCollect_SMI_DEF;
+    symbolCollectRoutine[OBJECT] = symbolCollect_BUILD_INNER_NODE;
+    symbolCollectRoutine[TRAP] = symbolCollect_BUILD_TRAP;
+    symbolCollectRoutine[OBJECT_IDENTIFIER] = symbolCollect_BUILD_LEAVE_NODE;
+    symbolCollectRoutine[SEQUENCE] = symbolCollect_BUILD_SEQUENCE;
+    symbolCollectRoutine[SMI_DEF] = symbolCollect_BUILD_SMI_DEF;
 
     /* Parameter Collecting function */
-    symbolCollectRoutine[SLICE_IDENTIFIER] = symbolCollect_IDENTIFIER;
-    symbolCollectRoutine[SLICE_TYPE] = symbolCollect_TYPE;
-    symbolCollectRoutine[SLICE_PERMISSION] = symbolCollect_RW;
-    symbolCollectRoutine[SLICE_DESCRIPTION] = symbolCollect_DESCRIPTION;
-    symbolCollectRoutine[SLICE_PARENT] = symbolCollect_PARENT;
-    symbolCollectRoutine[SLICE_OID_SUFFIX] = symbolCollect_SUFFIX;
+    symbolCollectRoutine[SLICE_IDENTIFIER] = symbolCollect_PARAM_IDENT;
+    symbolCollectRoutine[SLICE_TYPE] = symbolCollect_PARAM_TYPE;
+    symbolCollectRoutine[SLICE_PERMISSION] = symbolCollect_PARAM_PERM;
+    symbolCollectRoutine[SLICE_DESCRIPTION] = symbolCollect_PARAM_DESC;
+    symbolCollectRoutine[SLICE_PARENT] = symbolCollect_PARAM_PARENT;
+    symbolCollectRoutine[SLICE_OID_SUFFIX] = symbolCollect_PARAM_SUFFIX;
 
     return 0;
 }
@@ -221,29 +221,20 @@ int symbolCollecting(int type, dispatchParam *param) {
     return symbolCollectRoutine[type](param);
 }
 
-static int symbolCollect_OBJECT(dispatchParam *param) {
-    sliceRelease(&symCollectList);
-}
-
-
-static int symbolCollect_TRAP(dispatchParam *param) {
-    sliceRelease(&symCollectList);
-}
-
-static int symbolCollect_OBJECT_IDENTIFIER(dispatchParam *param) {
+static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
     symbolTable *newMod;
     symbol_t *newSymbol;
+    identList *listHead, *listProcessing;
     char *modIdent;
     char *symbolIdent;
     char *parentIdent = sliceGet(&symCollectList, SLICE_PARENT)->sliVal;
 
     symbolIdent = sliceGet(&symCollectList, SLICE_IDENTIFIER)->sliVal;
 
-    /* Is that
-
     /* Is the symbol exists in symbol table ? */
     if (symbolSearching(symbolIdent)) {
-        return 1;
+        /* Already exist only need to remove it from modStack */
+        goto MOD_STACK_OP_REMOVE;
     }
 
     modIdent = (char *)malloc(MAX_CHAR_OF_MOD_IDENT);
@@ -263,20 +254,45 @@ static int symbolCollect_OBJECT_IDENTIFIER(dispatchParam *param) {
     newSymbol->metadata.nodeMeta.parentIdent = parentIdent;
     symbolAdd(modIdent, newSymbol);
 
-    /* Need to remove the symbol found from list in thmodStack */
-
-    return 0;
+MOD_STACK_OP_REMOVE:
+    /* Need to remove the symbol found from list in the modStack */
+    listHead = (identList *)swState.modStack[swState.importStackIndex].symbols;
+    listProcessing = listHead;
+    while (listHead) {
+        if (!strncmp(listProcessing->symName, symbolIdent)) {
+            /* delete this node from lsit */
+            listNodeDelete(listProcessing->node);
+            if (listProcessing == listHead && listHead->node.next != NULL) {
+                swState.modStack[swState.importStackIndex].symbols =
+                    containerOf(&listHead->node.next, identList, node);
+            }
+            RELEASE_MEM(listProcessing->symName);
+            RELEASE_MEM(listProcessing);
+            break;
+        }
+        listHead = containerOf(&listHead->node.next, identList, node);
+    }
+    return ERROR_NONE;
 }
 
-static int symbolCollect_SEQUENCE(dispatchParam *param) {
+
+static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
     sliceRelease(&symCollectList);
 }
 
-static int symbolCollect_SMI_DEF(dispatchParam *param) {
+static int symbolCollect_BUILD_LEAVE_NODE(dispatchParam *param) {
+
+}
+
+static int symbolCollect_BUILD_SEQUENCE(dispatchParam *param) {
+    sliceRelease(&symCollectList);
+}
+
+static int symbolCollect_BUILD_SMI_DEF(dispatchParam *param) {
     /* Record into symtable */
 }
 
-static int symbolCollect_IDENTIFIER(dispatchParam *param) {
+static int symbolCollect_PARAM_IDENT(dispatchParam *param) {
 
     if (isNullPtr(param)) {
         return -1;
@@ -286,7 +302,7 @@ static int symbolCollect_IDENTIFIER(dispatchParam *param) {
     return 0;
 }
 
-static int symbolCollect_TYPE(dispatchParam *param) {
+static int symbolCollect_PARAM_TYPE(dispatchParam *param) {
 
     if (isNullPtr(param)) {
         return -1;
@@ -296,7 +312,7 @@ static int symbolCollect_TYPE(dispatchParam *param) {
     return 0;
 }
 
-static int symbolCollect_RW(dispatchParam *param) {
+static int symbolCollect_PARAM_PERM(dispatchParam *param) {
     if (isNullPtr(param)) {
         return -1;
     }
@@ -305,7 +321,7 @@ static int symbolCollect_RW(dispatchParam *param) {
     return 0;
 }
 
-static int symbolCollect_DESCRIPTION(dispatchParam *param) {
+static int symbolCollect_PARAM_DESC(dispatchParam *param) {
     if (isNullPtr(param)) {
         return -1;
     }
@@ -314,7 +330,7 @@ static int symbolCollect_DESCRIPTION(dispatchParam *param) {
     return 0;
 }
 
-static int symbolCollect_PARENT(dispatchParam *param) {
+static int symbolCollect_PARAM_PARENT(dispatchParam *param) {
     if (isNullPtr(param)) {
         return -1;
     }
@@ -323,7 +339,7 @@ static int symbolCollect_PARENT(dispatchParam *param) {
     return 0;
 }
 
-static int symbolCollect_SUFFIX(dispatchParam *param) {
+static int symbolCollect_PARAM_SUFFIX(dispatchParam *param) {
     if (isNullPtr(param)) {
         return -1;
     }

@@ -32,7 +32,7 @@ int optionsInit(int argc, char *argv[]) {
     int i=0, paramIndex = 0;
 
     if (isNullPtr(argv)) {
-        return error_null_reference;
+        return ERROR_NULL_REF;
     }
 
     if (argc == 0) {
@@ -75,7 +75,7 @@ int optionsInit(int argc, char *argv[]) {
                 break;
             default:
                 helpInfoPrint();
-                return error_wrong_index;
+                return ERROR_WRONG_IDX;
         }
 
         if (i > argc-1)
@@ -97,7 +97,7 @@ static int paramMapping(char *param) {
     int index = 0;
 
     if (isNullPtr(param)) {
-        return error_null_reference;
+        return ERROR_NULL_REF;
     }
 
     while (index < NumOfOptions) {

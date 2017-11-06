@@ -20,10 +20,12 @@ typedef struct slice {
 } slice;
 
 /* ListNode */
+typedef void (*listNodeTask)(listNode *head, void *arg);
 listNode *listNodePrev(listNode *node);
 listNode *listNodeNext(listNode *node);
 listNode *listNodeInsert(listNode *head, listNode *node);
 bool listNodeIsEmpty(listNode *node);
+int listNodeTravel(listNode *head, listNodeTask func, void *arg);
 
 /* Slice */
 slice * sliceConstruct(int sliKey, char *sliVal);
@@ -38,8 +40,8 @@ dispatchParam * disParamStore(dispatchParam *head, dispatchParam *pl);
 dispatchParam * disParamGet(dispatchParam **head);
 
 /* symbol_t and SymbolTable */
-int symbolModuleAdd(symbolTable *stbl, symbolTable *new);
-int symbolAdd(char *modName, symbol_t *newSym);
+symbolTable * symbolModuleAdd(symbolTable *tblRoot, symbolTable *newTbl);
+symbol_t * symbolAdd(symbolTable *symTbl, symbol_t *newSym, char *modName);
 int symbolModSearching(char *modIdent);
 int symbolSearching(char *symIdent);
 

@@ -19,15 +19,15 @@ switchingState swState;
 /* Definition Section */
 int dispatchInit() {
     dispatchMode = DISPATCH_MODE_DOC_GENERATING;
-    return ok;
+    return ERROR_NONE;
 }
 
 int dispatch(dispatch_type dType, dispatchParam *param) {
 
-    errorType ret = ok;
+    errorType ret = ERROR_NONE;
 
     if (isNullPtr(param)) {
-        return error_null_reference;
+        return ERROR_NULL_REF;
     }
 
     switch (dispatchMakeChoice(dType)) {
@@ -49,7 +49,7 @@ int dispatch(dispatch_type dType, dispatchParam *param) {
             /* Do nothing */
             break;
         default:
-            ret = error_wrong_index;
+            ret = ERROR_WRONG_IDX;
     }
     return ret;
 }
@@ -93,7 +93,7 @@ static int switchToModule(dispatchParam *param) {
                 MAX_INCLUDE_DEPTH-1);
     if (lexBufferSwitching(moduleName) == error) {
         /* Terminate whole system */
-        return abort_terminate;
+        return ABORT;
     }
     return 0;
 }
@@ -117,7 +117,7 @@ int lexBufferSwitching(char *newModule) {
     if (path == null) {
         return error;
     }
-    return ok;
+    return ERROR_NONE;
 }
 
 char * switch_CurrentMod(char *modName, int len) {

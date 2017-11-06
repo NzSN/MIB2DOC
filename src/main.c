@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 
     ret = yyparse();
 
-    if (ret == abort_terminate) {
+    if (ret == ABORT) {
         return error;
     }
 
