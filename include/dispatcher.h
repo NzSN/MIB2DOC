@@ -49,5 +49,5 @@ typedef struct switchingState {
 YY_BUFFER_STATE * getCurrentBufferState();
 char * switch_CurrentMod(char *modName, int len);
 int dispatch(dispatch_type dType, dispatchParam * param);
-
+int rmSymFromIdentList(identList *listHead, char *symbolIdent);
 #endif /* _DISPATCHER_H_ */

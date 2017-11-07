@@ -39,7 +39,9 @@ DEFINITION :
 	IDENTIFIER DEF ASSIGNED BEGIN_    { };
 
 IMPORT :
-	IMPORTS_ MODULES SEMICOLON    { /* Build upper layer of mibtree */ };
+	IMPORTS_ MODULES SEMICOLON    {
+        /* build upper tree if all including is finished */
+    };
 MODULES :
 	ITEMS FROM_ IDENTIFIER MODULES {
 		dispatchParam *param = disParamConstruct($3);
@@ -47,7 +49,7 @@ MODULES :
 		if (dispatch(SWITCH_TO_INC_BUFFER, param) == abort_terminate) {
             return abort_terminate;
         }
-	} | 
+	} |
     /* empty */  ;
 ITEMS :
 	IDENTIFIER
@@ -129,7 +131,7 @@ SYNTAX_VALUE :
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 		param->next = disParamConstruct($1);
 		dispatch(DISPATCH_PARAM_STAGE, param);
-    } 
+    }
     | IDENTIFIER {
  		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 		param->next = disParamConstruct($1);

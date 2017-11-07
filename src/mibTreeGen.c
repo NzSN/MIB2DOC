@@ -179,6 +179,10 @@ static char * oidComplement(char *parent, char *suffix) {
     return oid;
 }
 
+void preTreeGeneration() {
+
+}
+
 /*
  * Symbol Collecting
  */
@@ -222,6 +226,7 @@ int symbolCollecting(int type, dispatchParam *param) {
 }
 
 static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
+    int retVal;
     symbolTable *newMod;
     symbol_t *newSymbol;
     identList *listHead, *listProcessing;
@@ -257,39 +262,33 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
 MOD_STACK_OP_REMOVE:
     /* Need to remove the symbol found from list in the modStack */
     listHead = (identList *)swState.modStack[swState.importStackIndex].symbols;
-    listProcessing = listHead;
-    while (listHead) {
-        if (!strncmp(listProcessing->symName, symbolIdent)) {
-            /* delete this node from lsit */
-            listNodeDelete(listProcessing->node);
-            if (listProcessing == listHead && listHead->node.next != NULL) {
-                swState.modStack[swState.importStackIndex].symbols =
-                    containerOf(&listHead->node.next, identList, node);
-            }
-            RELEASE_MEM(listProcessing->symName);
-            RELEASE_MEM(listProcessing);
-            break;
-        }
-        listHead = containerOf(&listHead->node.next, identList, node);
-    }
-    return ERROR_NONE;
+    retVal = rmSymFromIdentList(listHead, symbolIdent);
+    return retVal;
 }
 
 
 static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
     sliceRelease(&symCollectList);
+    retVal = rmSymFromIdentList(swState.modStack[swState.importStackIndex].symbols, symbolIdent);
+    return retVal;
 }
 
 static int symbolCollect_BUILD_LEAVE_NODE(dispatchParam *param) {
-
+    retVal = rmSymFromIdentList(swState.modStack[swState.importStackIndex].symbols, symbolIdent);
+    return retVal;
 }
 
 static int symbolCollect_BUILD_SEQUENCE(dispatchParam *param) {
     sliceRelease(&symCollectList);
+    retVal = rmSymFromIdentList(swState.modStack[swState.importStackIndex].symbols, symbolIdent);
+    return retVal;
 }
 
 static int symbolCollect_BUILD_SMI_DEF(dispatchParam *param) {
     /* Record into symtable */
+    sliceRelease(&symCollectList);
+    retVal = rmSymFromIdentList(swState.modStack[swState.importStackIndex].symbols, symbolIdent);
+    return retVal;
 }
 
 static int symbolCollect_PARAM_IDENT(dispatchParam *param) {

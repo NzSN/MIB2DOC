@@ -144,4 +144,30 @@ static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo) {
       return 0;
 }
 
+int rmSymFromIdentList(identList *listHead, char *symbolIdent) {
+    identList *listProcessing;
+
+    if (isNullPtr(listHead)) {
+        return ERROR_NULL_REF;
+    }
+
+    listProcessing = listHead;
+
+    while (listHead) {
+        if (!strncmp(listProcessing->symName, symbolIdent)) {
+            /* delete this node from lsit */
+            listNodeDelete(listProcessing->node);
+            if (listProcessing == listHead && listHead->node.next != NULL) {
+                swState.modStack[swState.importStackIndex].symbols =
+                    containerOf(&listHead->node.next, identList, node);
+            }
+            RELEASE_MEM(listProcessing->symName);
+            RELEASE_MEM(listProcessing);
+            break;
+        }
+        listHead = containerOf(&listHead->node.next, identList, node);
+    }
+    return ERROR_NONE;
+}
+
 /* End of file */
