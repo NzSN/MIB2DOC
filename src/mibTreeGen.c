@@ -171,7 +171,6 @@ static char * oidComplement(char *parent, char *suffix) {
     if (parentNode == NULL)
         return NULL;
 
-
     strncpy(oid, getOidFromInfo(parentNode), SIZE_OF_OID_STRING);
     strncat(oid, ".", 1);
     strncat(oid, suffix, strlen(suffix));
@@ -179,8 +178,52 @@ static char * oidComplement(char *parent, char *suffix) {
     return oid;
 }
 
-void preTreeGeneration() {
+extern mibObjectTreeNode mibObjectTreeRoot;
+int upperTreeGeneration(symbolTable *symTbl) {
+    mibObjectTreeNode *root;
+    mibObjectTreeNode *current;
+    mibObjectTreeNode *childNode;
+    symbolTable *table;
+    symbol_t *sym;
+    symbol_t *child;
+    symbol_t *temp;
+    genericStack stack;
 
+    if (isNullPtr(symTbl)) {
+        return ERROR_NULL_REF;
+    }
+    root = &mibObjectTreeRoot;
+    insert_mot(root, mibNodeBuild("iso", "1"), "root");
+    push(&stack, root);
+
+    sym = (symbol_t *)malloc(symbol_t);
+    memset(sym, NULL, sizeof(symbol_t));
+    while (stack.top > 0) {
+        current = (mibObjectTreeNode *)pop(stack);
+        if (symbolSearchingByParent(&symTable, current->identifier, sym)) {
+            child = containerOf(sym->node.next, symbol_t, symNode);
+            while (child != NULL) {
+                if (child->symType == SYMBOL_TYPE_NODE) {
+                    childNode = mibNodeBuild(strdup(child->symIdent),
+                        strdup(child->symInfo.nodeMeta.suffix));
+                    insert_mot(root, childNode, strdup(current->identifier));
+                    push(&stack, childNode);
+                } else if (child->symType == SYMBOL_TYPE_LEAVE) {
+                    childNode = mibLeaveBuild(strdup(child->symIdent),
+                                    strdup(child->symInfo.leaveMeta.type),
+                                    strdup(child->symInfo.leaveMeta.permission),
+                                    NULL,
+                                    strdup(child->symInfo.leaveMeta.suffix));
+                    insert_mot(root, childNode, strdup(current->identifier));
+                }
+                temp = child;
+                child = containerOf(child->node.next, symbol_t, symNode);
+
+                RELEASE_MEM(temp->symIdent);
+                RELEASE_MEM(temp);
+            }
+        }
+    }
 }
 
 /*

@@ -7,6 +7,11 @@
 #include "list.h"
 #include "type.h"
 
+enum {
+    SYM_TRAVEL_CONTINUE = 10,
+    SYM_TRAVEL_STOP = 11
+}
+
 /************
  * ListNode *
  ************/
@@ -330,12 +335,13 @@ symbol_t * symbolAdd(symbolTable *symTbl, symbol_t *newSym, char *modName) {
     return NULL;
 }
 
-symbol_t * symbolSearching(symbolTable *symTblRoot, char *symIdent) {
+symbol_t * symbolTravel(symbolTable *symTblRoot, int (*func)(symbol_t *sym, void *arg), void *arg) {
+    int retVal;
     symbol_t ret = NULL;
     symbolTable *pSymTbl;
     symbol_t *pSym;
 
-    if (isNullPtr(symIdent) || isNullPtr(symTblRoot)) {
+    if (isNullPtr(symTblRoot)) {
         mib2docError = ERROR_NULL_REF;
         return ret;
     }
@@ -346,9 +352,13 @@ symbol_t * symbolSearching(symbolTable *symTblRoot, char *symIdent) {
         pSym = pSymTbl->symbol;
 
         while (pSym != NULL) {
-            if (!strncmp(symIdent, pSym->symIdent, strlen(symIdent))) {
-                ret = pSym;
-                goto FINISHED;
+            retVal = func(pSym, arg);
+            if (retVal == SYM_TRAVEL_LOOP) {
+                continue;
+            } else if (retVal == SYM_TRAVEL_STOP) {
+                return pSym;
+            } else if (retVal == ERROR_NULL_REF) {
+                return NULL;
             }
             pSym = symbolNext(pSym);
         }
@@ -358,6 +368,43 @@ symbol_t * symbolSearching(symbolTable *symTblRoot, char *symIdent) {
 
 FINISHED:
     return ret;
+}
+
+static int symbolIsParentEqual(symbol_t *sym, void *arg) {
+    char *parent;
+    symbol_t *pSym;
+    symbol_t *foundSym;
+
+    if (isNullPtr(sym) || isNullPtr(arg)) {
+        return ERROR_NULL_REF;
+    }
+
+    pSym = (symbol_t *)arg;
+    parent = pSym->symIdent;
+
+    if (!strncmp(parent, sym->symIdent, strlen(parent))) {
+        foundSym = (symbol_t *)malloc(sizeof(symbol_t));
+        memcpy(foundSym, sym, sizeof(symbol_t));
+        pSym->node.next = &foundSym->node;
+    }
+
+    return SYM_TRAVEL_CONTINUE;
+}
+
+int symbolSearchingByParent(symbolTable *symTblRoot, char *parent, symbol_t *sym) {
+    if (isNullPtr(symTblRoot) || isNullPtr(parent) || isNullPtr(sym)) {
+        return ERROR_NULL_REF;
+    }
+
+    memset(sym, NULL, sizeof(symbol_t));
+    sym->symIdent = parent;
+    symbolTravel(symTblRoot, symbolIsParentEqual, (void *)sym);
+
+    if (sym->node.next != NULL) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
 }
 
 /* end of list.c */

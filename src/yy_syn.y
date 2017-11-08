@@ -27,6 +27,7 @@
 
 MIB :
 	DEFINITION IMPORT MAIN_PART    { };
+    
 MAIN_PART :
 	OBJ_DEAL MAIN_PART
 	| OBJ MAIN_PART
@@ -41,6 +42,12 @@ DEFINITION :
 IMPORT :
 	IMPORTS_ MODULES SEMICOLON    {
         /* build upper tree if all including is finished */
+        if (swState.importStackIndex == 0) {
+            /* importStack is empty */
+            upperTreeGeneration(&symTable);
+        } else {
+            /* do nothing */
+        }
     };
 MODULES :
 	ITEMS FROM_ IDENTIFIER MODULES {

@@ -102,7 +102,7 @@ typedef struct nodeMeta_t {
 typedef struct leaveMeta_t {
     char *ident;
     char *parent;
-    char *oidSuffix;
+    char *suffix;
     char *type;
     char *permission;
 } leaveMeta_t;
