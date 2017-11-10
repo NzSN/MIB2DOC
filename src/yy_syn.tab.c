@@ -1351,7 +1351,7 @@ yyreduce:
 
   case 20:
 #line 71 "yy_syn.y" /* yacc.c:1646  */
-    { deal_with(OBJECT_IDENTIFIER); }
+    { mibObjGen(OBJECT_IDENTIFIER); }
 #line 1356 "yy_syn.tab.c" /* yacc.c:1646  */
     break;
 

@@ -68,7 +68,7 @@ static void mibTree_test(void **state) {
     sliceStore(&sliceContainer, sliceConstruct(SLICE_OID_SUFFIX, suffix));
     sliceStore(&sliceContainer, sliceConstruct(SLICE_PARENT, parent));
 
-    deal_with_objIdent();
+    mibObjGen_InnerNode();
     pNode = search_mot(&mibObjectTreeRoot, "gogo");
 
 }

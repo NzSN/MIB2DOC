@@ -25,19 +25,19 @@ extern mibObjectTreeNode mibObjectTreeRoot;
 /* Global */
 mibObjectTreeNode root;
 symbolTable symTable;
-slice symCollectList;
+slice symCollectSlice;
 targetSymbolList tSymListHead;
 
-int deal_with(int type) {
+int mibObjGen(int type) {
     switch (type) {
         case OBJECT:
-            deal_with_object();
+            mibObjGen_Leave();
             break;
         case TRAP:
-            deal_with_trap();
+            mibObjGen_trap();
             break;
         case OBJECT_IDENTIFIER:
-            deal_with_objIdent();
+            mibObjGen_InnerNode();
             break;
         case SEQUENCE:
             /* ignore */
@@ -48,7 +48,7 @@ int deal_with(int type) {
     return 0;
 }
 
-int deal_with_object() {
+int mibObjGen_Leave() {
     char *ident, *type, *rw, *desc, *parent, *suffix, *oid;
 
     ident = sliceGet(&sliceContainer, SLICE_IDENTIFIER)->sliVal;
@@ -73,7 +73,7 @@ int deal_with_object() {
     return 0;
 }
 
-int deal_with_objIdent() {
+int mibObjGen_InnerNode() {
     char *ident, *parent, *suffix, *oid;
 
     ident = sliceGet(&sliceContainer, SLICE_IDENTIFIER)->sliVal;
@@ -92,7 +92,7 @@ int deal_with_objIdent() {
     return 0;
 }
 
-int deal_with_trap() {
+int mibObjGen_trap() {
     char *ident, *parent, *suffix, *oid, *desc, *type;
 
     ident = sliceGet(&sliceContainer, SLICE_IDENTIFIER)->sliVal;
@@ -275,9 +275,9 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
     identList *listHead, *listProcessing;
     char *modIdent;
     char *symbolIdent;
-    char *parentIdent = sliceGet(&symCollectList, SLICE_PARENT)->sliVal;
+    char *parentIdent = sliceGet(&symCollectSlice, SLICE_PARENT)->sliVal;
 
-    symbolIdent = sliceGet(&symCollectList, SLICE_IDENTIFIER)->sliVal;
+    symbolIdent = sliceGet(&symCollectSlice, SLICE_IDENTIFIER)->sliVal;
 
     /* Is the symbol exists in symbol table ? */
     if (symbolSearching(symbolIdent)) {
@@ -287,7 +287,7 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
 
     modIdent = (char *)malloc(MAX_CHAR_OF_MOD_IDENT);
     switch_CurrentMod(modIdent, MAX_CHAR_OF_MOD_IDENT);
-    parentIdent = sliceGet(&symCollectList, SLICE_PARENT)->sliVal;
+    parentIdent = sliceGet(&symCollectSlice, SLICE_PARENT)->sliVal;
 
     /* Is the module specify by modIdent is exists ? */
     if (!symbolModSearching(modIdent)) {
@@ -311,7 +311,7 @@ MOD_STACK_OP_REMOVE:
 
 
 static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
-    sliceRelease(&symCollectList);
+    sliceRelease(&symCollectSlice);
     retVal = rmSymFromIdentList(swState.modStack[swState.importStackIndex].symbols, symbolIdent);
     return retVal;
 }
@@ -322,14 +322,14 @@ static int symbolCollect_BUILD_LEAVE_NODE(dispatchParam *param) {
 }
 
 static int symbolCollect_BUILD_SEQUENCE(dispatchParam *param) {
-    sliceRelease(&symCollectList);
+    sliceRelease(&symCollectSlice);
     retVal = rmSymFromIdentList(swState.modStack[swState.importStackIndex].symbols, symbolIdent);
     return retVal;
 }
 
 static int symbolCollect_BUILD_SMI_DEF(dispatchParam *param) {
     /* Record into symtable */
-    sliceRelease(&symCollectList);
+    sliceRelease(&symCollectSlice);
     retVal = rmSymFromIdentList(swState.modStack[swState.importStackIndex].symbols, symbolIdent);
     return retVal;
 }

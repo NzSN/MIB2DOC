@@ -25,17 +25,17 @@ typedef struct targetSymbolList {
 } targetSymbolList;
 
 
-int deal_with(int type);
-int deal_with_object();
-int deal_with_objIdent();
-int deal_with_trap();
+int mibObjGen(int type);
+int mibObjGen_Leave();
+int mibObjGen_InnerNode();
+int mibObjGen_trap();
 int symbolCollecting(int type, dispatchParam *param);
 
 /* Note: this macro is only use for symbolCollect_XXXX series function */
 #define PARAM_STORE_TO_SYM_LIST(type, param) ({\
     char *string; \
     string = (char *)disParamGet(&param)->param; \
-    sliceStore(&symCollectList, sliceConstruct(type, string)); \
+    sliceStore(&symCollectSlice, sliceConstruct(type, string)); \
 })
 
 #endif //GL5610_MIB_DOC_GEN_TOKENOP_H

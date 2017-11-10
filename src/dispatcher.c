@@ -37,7 +37,7 @@ int dispatch(dispatch_type dType, dispatchParam *param) {
                 disParamGet(&param)->param));
             break;
         case MIBTREE_GENERATION:
-            deal_with((int)disParamGet(&param)->param);
+            mibObjGen((int)disParamGet(&param)->param);
             break;
         case SYMBOL_COLLECTING:
             symbolCollecting((int)disParamGet(&param)->param, param);
