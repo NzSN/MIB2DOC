@@ -30,13 +30,13 @@ typedef struct mibObjectTreeNode {
 } mibObjectTreeNode;
 
 void mibObjectTreeInit(mibObjectTreeNode *root);
-int insert_mot(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent);
-mibObjectTreeNode * parent_mot(mibObjectTreeNode *root, char *ident);
+int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent);
+mibObjectTreeNode * parent_MibTree(mibObjectTreeNode *root, char *ident);
 mibObjectTreeNode * mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid);
 mibObjectTreeNode * mibNodeBuild(char *ident, char *oid);
-mibObjectTreeNode * search_mot(mibObjectTreeNode *root, char *const ident);
+mibObjectTreeNode * search_MibTree(mibObjectTreeNode *root, char *const ident);
 char * getIdentFromInfo(mibObjectTreeNode *node);
 char * getOidFromInfo(mibObjectTreeNode *node);
 void showTree(mibObjectTreeNode *root);
-mibObjectTreeNode * travel_mot(mibObjectTreeNode *obj, int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
+mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
 #endif //GL5610_MIB_DOC_GEN_TREE_H

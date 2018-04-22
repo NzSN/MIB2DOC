@@ -34,7 +34,7 @@ int symbolCollecting(int type, dispatchParam *param);
 /* Note: this macro is only use for symbolCollect_XXXX series function */
 #define PARAM_STORE_TO_SYM_LIST(type, param) ({\
     char *string; \
-    string = (char *)disParamGet(&param)->param; \
+    string = (char *)disParamRetrive(&param)->param; \
     sliceStore(&symCollectSlice, sliceConstruct(type, string)); \
 })
 

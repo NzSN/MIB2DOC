@@ -1,1 +1,0 @@
-/usr/bin/cc    CMakeFiles/UNIT_TEST.dir/src/unitTest/unitTest.c.o CMakeFiles/UNIT_TEST.dir/src/mibTreeGen.c.o CMakeFiles/UNIT_TEST.dir/src/lex.yy.c.o CMakeFiles/UNIT_TEST.dir/src/yy_syn.tab.c.o CMakeFiles/UNIT_TEST.dir/src/queue.c.o CMakeFiles/UNIT_TEST.dir/src/mibTreeObjTree.c.o CMakeFiles/UNIT_TEST.dir/src/stack.c.o CMakeFiles/UNIT_TEST.dir/src/list.c.o  -o UNIT_TEST 

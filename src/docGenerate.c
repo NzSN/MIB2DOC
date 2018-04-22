@@ -28,9 +28,9 @@ extern mibObjectTreeNode mibObjectTreeRoot;
 char *laTexStrBuffer;
 mibNodeInfoQueue infoQueue;
 static int makeDecision(mibObjectTreeNode *node);
-static int sectionLatex(char *secName, char *OID, FILE *writeTo);
-static int tableLaTex(mibNodeInfoQueue *info, char *parent, FILE *writeTo);
-static char * genTableItemLaTex(tableInfo *info, int index);
+static int sectionGen_Latex(char *secName, char *OID, FILE *writeTo);
+static int tableGen_Latex(mibNodeInfoQueue *info, char *parent, FILE *writeTo);
+static char * tableItemGen_Latex(tableInfo *info, int index);
 static int infoPacket(tableInfo *info, mibObjectTreeNode *node);
 char *long2Short(char *str);
 static int latexHeaderGen();
@@ -43,7 +43,7 @@ static int docGenerate(void *arg, mibObjectTreeNode *root);
 
 int documentGen(mibObjectTreeNode *root, FILE *writeTo) {
     latexHeaderGen();
-    travel_mot(root, docGenerate, writeTo);
+    travel_MibTree(root, docGenerate, writeTo);
     latexTailGen();
 
     return 0;
@@ -60,7 +60,7 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
         return 0;
 
     writeTo = (FILE *) arg;
-    pNode = search_mot(&mibObjectTreeRoot, beginFrom);
+    pNode = search_MibTree(&mibObjectTreeRoot, beginFrom);
     beginOid = strlen(getOidFromInfo(pNode));
     laTexStrBuffer = (char *) malloc(SIZE_OF_LATEX_BUFFER);
 
@@ -69,10 +69,12 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
             info = (tableInfo *)malloc(sizeof(tableInfo));
             infoPacket(info, node);
             parent = getIdentFromInfo(node->parent);
+            // fixme:Should be recognize a table via type of it
+            // but not the name of it.
             if (entryRecognize(parent, strlen(parent)))
                 parent = getIdentFromInfo(node->parent->parent);
             appendQueue(&infoQueue, info);
-            tableLaTex(&infoQueue, parent, writeTo);
+            tableGen_Latex(&infoQueue, parent, writeTo);
             break;
         case COLLECTING:
             info = (tableInfo *)malloc(sizeof(tableInfo));
@@ -82,7 +84,7 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
         case SECTION:
             secname = getIdentFromInfo(node);
             oid = getOidFromInfo(node);
-            sectionLatex(secname, oid, writeTo);
+            sectionGen_Latex(secname, oid, writeTo);
             break;
         default:
             break;
@@ -91,9 +93,10 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
     return 0;
 }
 
-
+// Generate contents before tables of mib nodes.
 static int latexHeaderGen() {}
 
+// Generate contents after tables of mib nodes.
 static int latexTailGen() {}
 
 static int makeDecision(mibObjectTreeNode *node) {
@@ -124,10 +127,10 @@ static int infoPacket(tableInfo *info, mibObjectTreeNode *node) {
     return 0;
 }
 
-static int sectionLatex(char *secName, char *OID, FILE *writeTo) {
+static int sectionGen_Latex(char *secName, char *OID, FILE *writeTo) {
     enum {
         section = 1,
-        subsection = 2 ,
+        subsection = 2,
         subsubsection = 3,
         paragraph = 4,
         subparagraph = 5
@@ -159,11 +162,10 @@ static int sectionLatex(char *secName, char *OID, FILE *writeTo) {
     }
 
     fprintf(writeTo, "\\%s {%s (%s)}.\n", prefix, secName, OID);
-
     return 0;
 }
 
-static int tableLaTex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) {
+static int tableGen_Latex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) {
     int i, count, index;
 
     if (isNullPtr(queue) || isNullPtr(writeTo))
@@ -179,7 +181,7 @@ static int tableLaTex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) {
                      "Index & Name & Desc & OID & RW & Type & Detail \\\\ \n"
                      "\\hline\n");
     for (i=0; i<count; i++, index++) {
-        fprintf(writeTo, "%s \\\\\n", genTableItemLaTex((tableInfo *)getQueue(queue), index));
+        fprintf(writeTo, "%s \\\\\n", tableItemGen_Latex((tableInfo *)getQueue(queue), index));
         fprintf(writeTo, "\\hline\n");
     }
 
@@ -192,7 +194,7 @@ static int tableLaTex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) {
     return 0;
 }
 
-static char * genTableItemLaTex(tableInfo *info, int index) {
+static char * tableItemGen_Latex(tableInfo *info, int index) {
 
     if (isNullPtr(info))
         return NULL;
@@ -204,7 +206,7 @@ static char * genTableItemLaTex(tableInfo *info, int index) {
     return laTexStrBuffer;
 }
 
-/* static ** for test */ int tableRecognize(char *buffer, int size) {
+static int tableRecognize(char *buffer, int size) {
     int ret, index;
     char current;
 
@@ -289,7 +291,8 @@ S_finished:
     return ret;
 }
 
-/* static ** for test */ int entryRecognize(char *buffer, int size) {
+
+static int entryRecognize(char *buffer, int size) {
     int ret, index;
     char current;
 

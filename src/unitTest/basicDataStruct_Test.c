@@ -8,17 +8,16 @@
 #include <cmocka.h>
 #include <malloc.h>
 #include <string.h>
-#include "../../include/type.h"
-#include "../../include/list.h"
-#include "../../include/mibTreeGen.h"
-#include "../../include/queue.h"
+#include "type.h"
+#include "list.h"
+#include "mibTreeGen.h"
+#include "queue.h"
 
 slice sliceContainer;
 char *sectionRecord[SIZE_OF_SECTION_RECORD];
 
 int tableRecognize(char *buffer, int size);
 
-/* A test case that does nothing and succeeds. */
 static void list_test(void **state) {
     slice *new1;
     slice *new2;
@@ -69,7 +68,7 @@ static void mibTree_test(void **state) {
     sliceStore(&sliceContainer, sliceConstruct(SLICE_PARENT, parent));
 
     mibObjGen_InnerNode();
-    pNode = search_mot(&mibObjectTreeRoot, "gogo");
+    pNode = search_MibTree(&mibObjectTreeRoot, "gogo");
 
 }
 

@@ -37,7 +37,7 @@ bool sliceReset(slice *sli);
 /* dispatchParam */
 dispatchParam * disParamConstruct(void *arg);
 dispatchParam * disParamStore(dispatchParam *head, dispatchParam *pl);
-dispatchParam * disParamGet(dispatchParam **head);
+dispatchParam * disParamRetrive(dispatchParam **head);
 
 /* symbol_t and SymbolTable */
 symbolTable * symbolModuleAdd(symbolTable *tblRoot, symbolTable *newTbl);

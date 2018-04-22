@@ -46,6 +46,8 @@ typedef struct switchingState {
     int importStackIndex;
 } switchingState;
 
+extern dispatch_mode dispatchMode;
+
 YY_BUFFER_STATE * getCurrentBufferState();
 char * switch_CurrentMod(char *modName, int len);
 int dispatch(dispatch_type dType, dispatchParam * param);

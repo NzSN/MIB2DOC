@@ -1,5 +1,0 @@
-/home/aydenlin/Projects/Mib2Doc/CMakeFiles/rebuild_cache.dir
-/home/aydenlin/Projects/Mib2Doc/CMakeFiles/edit_cache.dir
-/home/aydenlin/Projects/Mib2Doc/CMakeFiles/Mib2Doc.dir
-/home/aydenlin/Projects/Mib2Doc/CMakeFiles/UNIT_TEST.dir
-/home/aydenlin/Projects/Mib2Doc/CMakeFiles/lexBison.dir

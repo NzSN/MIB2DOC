@@ -2,6 +2,7 @@
 // Created by ayden on 2017/4/24.
 //
 
+#include <stddef.h>
 #include <malloc.h>
 #include <string.h>
 #include "mibTreeObjTree.h"
@@ -14,16 +15,25 @@ mibObjectTreeNode mibObjectTreeRoot;
 /* Local */
 static int nodeCmp(void *arg, mibObjectTreeNode *node);
 static int Treeprint(void *arg, mibObjectTreeNode *node);
+
 /* Define */
 #define OID_LENGTH 256
-
 #define IS_NODE_HAS_CHILD_MT(node) (node->child ? 1 : 0)
 #define IS_NODE_HAS_SIBLING_MT(node) (node->sibling ? 1 : 0)
+#define LOWER_CASE(C) ({ \
+    int ret; \
+    if (C < 97) \
+        ret = C+32; \
+    else \
+        ret = C; \
+    ret; \
+})
 
 /* Declaration */
 mibObjectTreeNode * mibNodeBuild(char *ident, char *oid);
-mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid);
-mibObjectTreeNode * travel_mot(mibObjectTreeNode *obj, int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
+mibObjectTreeNode * mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid);
+mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, 
+    int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
 
 void mibObjectTreeInit(mibObjectTreeNode *root) {
     mibNodeInfo *rootInfo;
@@ -40,14 +50,13 @@ void mibObjectTreeInit(mibObjectTreeNode *root) {
     root->info = (void *)rootInfo;
     root->head = root;
 
-    /* instead of method that complete by symbol import */
-    #if null
-    insert_mot(root, mibNodeBuild("iso", "1"), "root");
-    insert_mot(root, mibNodeBuild("org", "1.3"), "iso");
-    insert_mot(root, mibNodeBuild("dod", "1.3.6"), "org");
-    insert_mot(root, mibNodeBuild("internet", "1.3.6.1"), "dod");
-    insert_mot(root, mibNodeBuild("private", "1.3.6.1.4"), "internet");
-    insert_mot(root, mibNodeBuild("enterprises", "1.3.6.1.4.1"), "private");
+    #if FALSE
+    insert_MibTree(root, mibNodeBuild("iso", "1"), "root");
+    insert_MibTree(root, mibNodeBuild("org", "1.3"), "iso");
+    insert_MibTree(root, mibNodeBuild("dod", "1.3.6"), "org");
+    insert_MibTree(root, mibNodeBuild("internet", "1.3.6.1"), "dod");
+    insert_MibTree(root, mibNodeBuild("private", "1.3.6.1.4"), "internet");
+    insert_MibTree(root, mibNodeBuild("enterprises", "1.3.6.1.4.1"), "private");
     #endif
 
 }
@@ -102,13 +111,13 @@ mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, 
 }
 
 /* If parent is root node ,then <parent_ident> can be NULL */
-int insert_mot(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ident) {
+int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ident) {
     mibObjectTreeNode *parentNode, *child, *current;
 
     if (isNullPtr(root) || isNullPtr(obj) || isNullPtr(parent_ident))
         return -1;
 
-    parentNode = search_mot(root, parent_ident);
+    parentNode = search_MibTree(root, parent_ident);
 
     if (parentNode == NULL)
         return -1;
@@ -134,15 +143,6 @@ MISC:
     descriptionDeal(obj);
     return 0;
 }
-
-#define LOWER_CASE(C) ({ \
-    int ret; \
-    if (C < 97) \
-        ret = C+32; \
-    else \
-        ret = C; \
-    ret; \
-})
 
 int descriptionDeal(mibObjectTreeNode *node) {
 
@@ -185,26 +185,26 @@ int descriptionDeal(mibObjectTreeNode *node) {
     return 0;
 }
 
-mibObjectTreeNode *parent_mot(mibObjectTreeNode *root, char *ident) {
+mibObjectTreeNode *parent_MibTree(mibObjectTreeNode *root, char *ident) {
     mibObjectTreeNode *node;
 
-    node = search_mot(root, ident);
+    node = search_MibTree(root, ident);
     if (node != NULL)
         return node->parent;
     else
         return NULL;
 }
 
-mibObjectTreeNode * search_mot(mibObjectTreeNode *root, char *const ident) {
+mibObjectTreeNode * search_MibTree(mibObjectTreeNode *root, char *const ident) {
     mibObjectTreeNode *target;
 
-    target = travel_mot(root, nodeCmp, ident);
+    target = travel_MibTree(root, nodeCmp, ident);
 
     return target;
 }
 
 void showTree(mibObjectTreeNode *root) {
-    travel_mot(root, Treeprint, NULL);
+    travel_MibTree(root, Treeprint, NULL);
 }
 
 static int Treeprint(void *arg, mibObjectTreeNode *node) {
@@ -256,7 +256,8 @@ char *getOidFromInfo(mibObjectTreeNode *node) {
 }
 
 
-mibObjectTreeNode * travel_mot(mibObjectTreeNode *obj, int (*func)(void *argu, mibObjectTreeNode *node), void *arg) {
+mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, 
+    int (*func)(void *argu, mibObjectTreeNode *node), void *arg) {
     int ret;
     mibObjectTreeNode *targetC, *targetS;
 
@@ -269,8 +270,8 @@ mibObjectTreeNode * travel_mot(mibObjectTreeNode *obj, int (*func)(void *argu, m
         return obj;
     }
 
-    targetC = travel_mot(obj->child, func, arg);
-    targetS = travel_mot(obj->sibling, func, arg);
+    targetC = travel_MibTree(obj->child, func, arg);
+    targetS = travel_MibTree(obj->sibling, func, arg);
 
     if (targetC != NULL)
         return targetC;

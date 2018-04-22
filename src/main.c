@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     yyin = fopen("src/case", "r");
     if (yyin == NULL)
         printf("%s\n", "open failed");
-
+    
     ret = yyparse();
 
     if (ret == ABORT) {
@@ -39,8 +39,6 @@ int main(int argc, char *argv[]) {
         printf("%s\n", "open failed");
 
     documentGen(&mibObjectTreeRoot, writeTo);
-
     showTree(&mibObjectTreeRoot);
-
     return 0;
 }

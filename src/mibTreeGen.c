@@ -144,7 +144,7 @@ static int mibTreeLeaveAdd(char *ident, char *type,
     if (isNullPtr(obj))
         return -1;
 
-    insert_mot(&mibObjectTreeRoot, obj, parent);
+    insert_MibTree(&mibObjectTreeRoot, obj, parent);
 }
 
 static int mibTreeNodeAdd(char *ident, char *oid, char *parent) {
@@ -157,7 +157,7 @@ static int mibTreeNodeAdd(char *ident, char *oid, char *parent) {
     if (isNullPtr(obj))
         return -1;
 
-    insert_mot(&mibObjectTreeRoot, obj, parent);
+    insert_MibTree(&mibObjectTreeRoot, obj, parent);
 }
 
 static char * oidComplement(char *parent, char *suffix) {
@@ -166,7 +166,7 @@ static char * oidComplement(char *parent, char *suffix) {
 
     oid = (char *)malloc(SIZE_OF_OID_STRING);
     memset(oid, 0, SIZE_OF_OID_STRING);
-    parentNode = search_mot(&mibObjectTreeRoot, parent);
+    parentNode = search_MibTree(&mibObjectTreeRoot, parent);
 
     if (parentNode == NULL)
         return NULL;
@@ -193,7 +193,7 @@ int upperTreeGeneration(symbolTable *symTbl) {
         return ERROR_NULL_REF;
     }
     root = &mibObjectTreeRoot;
-    insert_mot(root, mibNodeBuild("iso", "1"), "root");
+    insert_MibTree(root, mibNodeBuild("iso", "1"), "root");
     push(&stack, root);
 
     sym = (symbol_t *)malloc(symbol_t);
@@ -206,7 +206,7 @@ int upperTreeGeneration(symbolTable *symTbl) {
                 if (child->symType == SYMBOL_TYPE_NODE) {
                     childNode = mibNodeBuild(strdup(child->symIdent),
                         strdup(child->symInfo.nodeMeta.suffix));
-                    insert_mot(root, childNode, strdup(current->identifier));
+                    insert_MibTree(root, childNode, strdup(current->identifier));
                     push(&stack, childNode);
                 } else if (child->symType == SYMBOL_TYPE_LEAVE) {
                     childNode = mibLeaveBuild(strdup(child->symIdent),
@@ -214,7 +214,7 @@ int upperTreeGeneration(symbolTable *symTbl) {
                                     strdup(child->symInfo.leaveMeta.permission),
                                     NULL,
                                     strdup(child->symInfo.leaveMeta.suffix));
-                    insert_mot(root, childNode, strdup(current->identifier));
+                    insert_MibTree(root, childNode, strdup(current->identifier));
                 }
                 temp = child;
                 child = containerOf(child->node.next, symbol_t, symNode);
@@ -229,7 +229,6 @@ int upperTreeGeneration(symbolTable *symTbl) {
 /*
  * Symbol Collecting
  */
-
 static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param);
 static int symbolCollect_PARAM_DESC(dispatchParam *param);
 static int symbolCollect_PARAM_IDENT(dispatchParam *param);

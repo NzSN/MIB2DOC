@@ -33,14 +33,14 @@ int dispatch(dispatch_type dType, dispatchParam *param) {
     switch (dispatchMakeChoice(dType)) {
         case DISPATCH_PARAM_STAGE:
             sliceStore(&sliceContainer,
-                sliceConstruct((int)disParamGet(&param)->param,
-                disParamGet(&param)->param));
+                sliceConstruct((int)disParamRetrive(&param)->param,
+                disParamRetrive(&param)->param));
             break;
         case MIBTREE_GENERATION:
-            mibObjGen((int)disParamGet(&param)->param);
+            mibObjGen((int)disParamRetrive(&param)->param);
             break;
         case SYMBOL_COLLECTING:
-            symbolCollecting((int)disParamGet(&param)->param, param);
+            symbolCollecting((int)disParamRetrive(&param)->param, param);
             break;
         case SWITCH_TO_INC_BUFFER:
             ret = switchToModule(param);
@@ -80,8 +80,8 @@ static int switchToModule(dispatchParam *param) {
         return null;
     }
 
-    moduleName = disParamGet(&param);
-    sCollection = disParamGet(&param);
+    moduleName = disParamRetrive(&param);
+    sCollection = disParamRetrive(&param);
 
     cInfo = (collectInfo *)malloc(sizeof(collectInfo));
     collectInfoInit(moduleName, sCollection, cInfo);

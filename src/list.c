@@ -2,6 +2,7 @@
 // Created by ayden on 17-5-1.
 //
 
+#include <stddef.>
 #include <malloc.h>
 #include <string.h>
 #include "list.h"
@@ -98,7 +99,6 @@ int listNodeTravel(listNode *head, listNodeTask func, void *arg) {
 /*******************************************
  *  Element list Operation function define *
  *******************************************/
-
 slice * sliceConstruct(int sliKey, char *sliVal) {
     slice *sli = (slice *)malloc(sizeof(slice));
 
@@ -134,7 +134,7 @@ slice * sliceNext(slice *sli) {
     return containerOf(sli->node.next, slice, node);
 }
 
-slice * sliceGet(slice *sli, int sliKey) {
+slice * sliceGet(slice *sliHead, int sliKey) {
     if (isNullPtr(sli)) {
         mib2docError = ERROR_NULL_REF;
         return NULL;
@@ -147,22 +147,23 @@ slice * sliceGet(slice *sli, int sliKey) {
     return NULL;
 }
 
-int sliceStore(slice *sli, slice *next) {
-    if (isNullPtr(sli) || isNullPtr(next)) {
+int sliceStore(slice *sliHead, slice *next) {
+    if (isNullPtr(sliHead) || isNullPtr(next)) {
         return ERROR_NULL_REF;
     }
+    
 
-    if (sliceGet(sli, next->sliKey)) {
+    if (sliceGet(sliHead, next->sliKey)) {
         return ERROR_NONE;
     }
 
-    for (; sli != NULL; sli = sliceNext(sli)) {
-        if (sliceNext(sli) == NULL) {
-            sli->node.next = &next->node;
+    for (; sliHead != NULL; sliHead = sliceNext(sliHead)) {
+        if (sliceNext(sliHead) == NULL) {
+            sliHead->node.next = &next->node;
             return ERROR_NONE;
         }
     }
-    return 1;
+    return TRUE;
 }
 
 bool sliceRelease(slice *sli) {
@@ -225,16 +226,16 @@ dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {
         return NULL;
     }
 
-    listNodeInsert(listNodeTail(head->node), new->node)
+    listNodeInsert(listNodeTail(head->node), new->node);
     return pl;
 }
 
 /*
- * Get node from head fo list
+ * Get node from the head from the list
  * after that the head will be
  * removed from list.
  */
-dispatchParam * disParamGet(dispatchParam **head) {
+dispatchParam * disParamRetrive(dispatchParam **head) {
     dispatchParam *ret;
 
     if (isNullPtr(head) || isNullPtr(*head)) {
