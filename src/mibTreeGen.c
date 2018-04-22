@@ -264,6 +264,9 @@ int symbolCollectingInit() {
 }
 
 int symbolCollecting(int type, dispatchParam *param) {
+    // fixme: before collecting a symbol you should 
+    // check to see that whether the symbol you encounter
+    // is the one you want to include
     return symbolCollectRoutine[type](param);
 }
 

@@ -836,7 +836,7 @@ IGNORE	include/dispatcher.h	/^    IGNORE$/;"	e	language:C++	enum:dispatch_type
 IMPORT	src/yy_syn.y	/^IMPORT :$/;"	l	language:YACC
 IMPORTS_	include/type.h	/^    IMPORTS_ = 284$/;"	e	language:C++	enum:yytokentype
 IMPORTS_	src/yy_syn.tab.c	/^    IMPORTS_ = 284$/;"	e	language:C	enum:yytokentype	file:
-INDEX	src/yy_syn.y	/^INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE    {};$/;"	l	language:YACC
+INDEX	src/yy_syn.y	/^INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE;$/;"	l	language:YACC
 INDEX_	include/type.h	/^    INDEX_ = 275,$/;"	e	language:C++	enum:yytokentype
 INDEX_	src/yy_syn.tab.c	/^    INDEX_ = 275,$/;"	e	language:C	enum:yytokentype	file:
 INDEX_ITEM	src/yy_syn.y	/^INDEX_ITEM :$/;"	l	language:YACC
@@ -857,7 +857,7 @@ LOWER_CASE	src/mibTreeObjTree.c	23;"	d	language:C	file:
 L_BRACE	include/type.h	/^    L_BRACE = 278,$/;"	e	language:C++	enum:yytokentype
 L_BRACE	src/yy_syn.tab.c	/^    L_BRACE = 278,$/;"	e	language:C	enum:yytokentype	file:
 MAIN_PART	src/yy_syn.y	/^MAIN_PART :$/;"	l	language:YACC
-MAX_CHAR_OF_MOD_IDENT	include/type.h	111;"	d	language:C++
+MAX_CHAR_OF_MOD_IDENT	include/type.h	112;"	d	language:C++
 MAX_INCLUDE_DEPTH	include/dispatcher.h	35;"	d	language:C++
 MIB	src/yy_syn.y	/^MIB :$/;"	l	language:YACC
 MIBTREE_GENERATION	include/dispatcher.h	/^    MIBTREE_GENERATION,$/;"	e	language:C++	enum:dispatch_type
@@ -1073,7 +1073,7 @@ PLATFORM_ID	CMakeFiles/3.9.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	384;"	d	langua
 PROPERTY	src/yy_syn.y	/^PROPERTY :$/;"	l	language:YACC
 Qnext	src/queue.c	6;"	d	language:C	file:
 REJECT	src/lex.yy.c	703;"	d	language:C	file:
-RELEASE_MEM	include/type.h	20;"	d	language:C++
+RELEASE_MEM	include/type.h	21;"	d	language:C++
 RM	Makefile	/^RM = \/usr\/bin\/cmake -E remove -f$/;"	m	language:Make
 R_BRACE	include/type.h	/^    R_BRACE = 279,$/;"	e	language:C++	enum:yytokentype
 R_BRACE	src/yy_syn.tab.c	/^    R_BRACE = 279,$/;"	e	language:C	enum:yytokentype	file:
@@ -1140,12 +1140,12 @@ SIMULATE_VERSION_MINOR	CMakeFiles/3.9.4/CompilerIdC/CMakeCCompilerId.c	38;"	d	la
 SIMULATE_VERSION_MINOR	CMakeFiles/3.9.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	165;"	d	language:C++	file:
 SIMULATE_VERSION_MINOR	CMakeFiles/3.9.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	180;"	d	language:C++	file:
 SIMULATE_VERSION_MINOR	CMakeFiles/3.9.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	38;"	d	language:C++	file:
-SIZE_OF_CURRENT_TABLE	include/type.h	16;"	d	language:C++
+SIZE_OF_CURRENT_TABLE	include/type.h	17;"	d	language:C++
 SIZE_OF_IDENT_STACK	include/stack.h	8;"	d	language:C++
 SIZE_OF_LATEX_BUFFER	src/docGenerate.c	13;"	d	language:C	file:
-SIZE_OF_OID_STRING	include/type.h	18;"	d	language:C++
+SIZE_OF_OID_STRING	include/type.h	19;"	d	language:C++
 SIZE_OF_QUEUE	include/queue.h	10;"	d	language:C++
-SIZE_OF_SECTION_RECORD	include/type.h	17;"	d	language:C++
+SIZE_OF_SECTION_RECORD	include/type.h	18;"	d	language:C++
 SLICE_DESCRIPTION	include/type.h	/^    SLICE_DESCRIPTION,$/;"	e	language:C++	enum:elementType
 SLICE_IDENTIFIER	include/type.h	/^    SLICE_IDENTIFIER = 6,$/;"	e	language:C++	enum:elementType
 SLICE_OID_SUFFIX	include/type.h	/^    SLICE_OID_SUFFIX,$/;"	e	language:C++	enum:elementType
@@ -1272,7 +1272,7 @@ YYSTYPE_IS_TRIVIAL	src/yy_syn.tab.c	147;"	d	language:C	file:
 YYTABLES_NAME	src/lex.yy.c	2167;"	d	language:C	file:
 YYTABLE_NINF	src/yy_syn.tab.c	504;"	d	language:C	file:
 YYTERROR	src/yy_syn.tab.c	652;"	d	language:C	file:
-YYTOKENTYPE	include/type.h	31;"	d	language:C++
+YYTOKENTYPE	include/type.h	32;"	d	language:C++
 YYTOKENTYPE	src/yy_syn.tab.c	111;"	d	language:C	file:
 YYTRANSLATE	src/yy_syn.tab.c	418;"	d	language:C	file:
 YYUNDEFTOK	src/yy_syn.tab.c	415;"	d	language:C	file:
@@ -1356,13 +1356,14 @@ alloca	src/yy_syn.tab.c	285;"	d	language:C	file:
 appendQueue	src/queue.c	/^int appendQueue(mibNodeInfoQueue *q, tableInfo *pData) {$/;"	f	language:C
 beginFrom	src/docGenerate.c	/^char *beginFrom;$/;"	v	language:C
 beginOid	src/docGenerate.c	/^int beginOid;$/;"	v	language:C
+cSpace	include/type.h	15;"	d	language:C++
 child	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *child;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode::mibObjectTreeNode
 collectInfo	include/dispatcher.h	/^typedef struct collectInfo {$/;"	s	language:C++
 collectInfo	include/dispatcher.h	/^} collectInfo;$/;"	t	language:C++	typeref:struct:collectInfo
 collectInfoInit	src/dispatcher.c	/^static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo) {$/;"	f	language:C	file:
 const	CMakeFiles/3.9.3/CompilerIdC/CMakeCCompilerId.c	10;"	d	language:C	file:
 const	CMakeFiles/3.9.4/CompilerIdC/CMakeCCompilerId.c	10;"	d	language:C	file:
-containerOf	include/type.h	21;"	d	language:C++
+containerOf	include/type.h	22;"	d	language:C++
 count	include/queue.h	/^    int count;$/;"	m	language:C++	struct:mibNodeInfoQueue
 counter	include/dispatcher.h	/^    int counter;$/;"	m	language:C++	struct:switchingState
 currentModule	include/dispatcher.h	/^    char *currentModule;$/;"	m	language:C++	struct:switchingState
@@ -1489,7 +1490,7 @@ info_version	CMakeFiles/3.9.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const 
 insert_MibTree	src/mibTreeObjTree.c	/^int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ident) {$/;"	f	language:C
 isInitilized	src/docGenerate.c	/^int isInitilized;$/;"	v	language:C
 isNode	include/mibTreeObjTree.h	/^    int isNode;$/;"	m	language:C++	struct:mibObjectTreeNode
-isNullPtr	include/type.h	19;"	d	language:C++
+isNullPtr	include/type.h	20;"	d	language:C++
 isQueueEmpty	src/queue.c	/^static int isQueueEmpty(mibNodeInfoQueue *q) {$/;"	f	language:C	file:
 isQueueFull	src/queue.c	/^static int isQueueFull(mibNodeInfoQueue *q) {$/;"	f	language:C	file:
 laTexStrBuffer	src/docGenerate.c	/^char *laTexStrBuffer;$/;"	v	language:C
@@ -1562,7 +1563,7 @@ nodeInfo	include/mibTreeObjTree.h	/^    mibNodeInfo *nodeInfo;$/;"	m	language:C+
 nodeMeta	include/type.h	/^       nodeMeta_t nodeMeta;$/;"	m	language:C++	union:symbol_t::__anon2
 nodeMeta_t	include/type.h	/^typedef struct nodeMeta_t {$/;"	s	language:C++
 nodeMeta_t	include/type.h	/^} nodeMeta_t;$/;"	t	language:C++	typeref:struct:nodeMeta_t
-null	include/type.h	15;"	d	language:C++
+null	include/type.h	16;"	d	language:C++
 oid	include/docGenerate.h	/^    char *oid;$/;"	m	language:C++	struct:tableInfo
 oid	include/mibTreeObjTree.h	/^    char *oid;$/;"	m	language:C++	struct:mibNodeInfo
 oidComplement	src/mibTreeGen.c	/^static char * oidComplement(char *parent, char *suffix) {$/;"	f	language:C	file:

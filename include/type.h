@@ -12,6 +12,7 @@
 #include "mibTreeObjTree.h"
 
 /* define */
+#define cSpace ' '
 #define null (0)
 #define SIZE_OF_CURRENT_TABLE 64
 #define SIZE_OF_SECTION_RECORD 1024

@@ -3,35 +3,41 @@
 #include "util.h"
 
 int stringToIdentList(char *str, identList *list, char seperator) {
-    int index = 0;
-    int index_ = 0;
-    int beginPoint[256] = {0};
+    enum { identRecognize, identTracking };
+    int index = 0, index_ = 0, flag = identRecognize
+        beginPoint[256] = [0];
+    char *strCopy = null;
     identList *listTmp;
-
+    
     if (isNullPtr(str) || isNullPtr(list)) {
         return ERROR_NULL_REF;
     }
+    
+    strCopy = strdup(str);
+    if (strCopy == null) {
+        return -1;
+    }
 
     beginPoint[index_++] = 0;
-    while (str[index] != null) {
-        if (str[index] == seperator) {
-            str[index] = null;
-            if (str[index+1] != null) {
-                beginPoint[index_++] = index+1;
-            } else {
-                break;
-            }
+    while (strCopy[index] != null) {
+        if (flag == identRecognize && strCopy[index] == seperator) {
+            strCopy[index] = null;
+            flag = identTracking;
+            index++;
+        } else if (flag == identTracking && strCopy[index] == cSpace) {
+            index++;
+        } else {
+            beginPoint[index_++] = index;
+            flag = identRecognize;
         }
     }
 
     index = 0;
-    while (index_--) {
+    while (index_-- > 0) {
         listTmp = (identList *)malloc(sizeof(identList));
         memset(listTmp, null, sizeof(identList));
-        listTmp->symName = (char *)malloc(strlen(str+beginPoint[index]));
-        memset(listTmp->symName, null, strlen(str+beginPoint[index]));
-        strncpy(listTmp->symName, str+beginPoint[index], strlen(str+beginPoint[index]));
-        list->next.next = &listTmp->next;
+        listTmp->symName = strCopy[beginPoint[index]];
+        list->node.next = &listTmp->node;
         index++;
     }
 
