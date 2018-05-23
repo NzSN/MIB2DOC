@@ -4,6 +4,7 @@
 #include "type.h"
 #include "stack.h"
 #include "list.h"
+#include "lexer.h"
 
 typedef enum dispatch_type {
     DISPATCH_PARAM_STAGE = 0,
@@ -24,7 +25,6 @@ typedef struct identList {
     listNode node;
 } identList;
 
-extern struct yy_buffer_state;
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
 
 typedef struct collectInfo {

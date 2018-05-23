@@ -147,21 +147,21 @@ slice * sliceGet(slice *sliHead, int sliKey) {
     return NULL;
 }
 
-int sliceStore(slice *sliHead, slice *next) {
-    if (isNullPtr(sliHead) || isNullPtr(next)) {
+int sliceStore(slice *sliHead, slice *newSli) {
+    if (isNullPtr(sliHead) || isNullPtr(newSli)) {
         return ERROR_NULL_REF;
-    }
-    
+    } 
 
-    if (sliceGet(sliHead, next->sliKey)) {
+    if (sliceGet(sliHead, newSli->sliKey)) {
         return ERROR_NONE;
     }
-
-    for (; sliHead != NULL; sliHead = sliceNext(sliHead)) {
+    
+    while (sliHead != NULL) {
         if (sliceNext(sliHead) == NULL) {
-            sliHead->node.next = &next->node;
+            sliHead->node.next = &new->node;
             return ERROR_NONE;
         }
+        sliHead = sliceNext(sliHead);
     }
     return TRUE;
 }
@@ -249,9 +249,7 @@ dispatchParam * disParamRetrive(dispatchParam **head) {
     return ret;
 }
 
-/*****************************************************
- * symbol_t and symbolTable operation function define *
- *****************************************************/
+/* symbol_t and symbolTable operation function define */
 symErrorCode symTblError;
 extern symbolTable symTable;
 

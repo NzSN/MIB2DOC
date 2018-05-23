@@ -131,7 +131,7 @@ typedef struct symbol_t {
     union {
        leaveMeta_t leaveMeta;
        nodeMeta_t nodeMeta;
-   } symInfo;
+    } symInfo;
     listNode symNode;
 } symbol_t;
 

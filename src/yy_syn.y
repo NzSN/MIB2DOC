@@ -91,7 +91,7 @@ OBJ_DEAL :
     };
 
 OBJ_IDENTIFIER :
-	IDENTIFIER[chil] OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER[pIarent] NUM R_BRACE {
+	IDENTIFIER[chil] OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER[parent] NUM R_BRACE {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct($chil));
 		dispatch(DISPATCH_PARAM_STAGE, param);
@@ -157,7 +157,7 @@ SYNTAX_VALUE :
     }
     | IDENTIFIER {
  		dispatchParam *param = disParamConstruct(SLICE_TYPE);
-	    disParamStore(param, disParamConstruct($TYPE));
+	    disParamStore(param, disParamConstruct($IDENTIFIER));
 		dispatch(DISPATCH_PARAM_STAGE, param);
  	};
 

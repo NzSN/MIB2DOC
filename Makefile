@@ -203,36 +203,6 @@ src/docGenerate.c.s:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/docGenerate.c.s
 .PHONY : src/docGenerate.c.s
 
-src/lex.yy.o: src/lex.yy.c.o
-
-.PHONY : src/lex.yy.o
-
-# target to build an object file
-src/lex.yy.c.o:
-	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/lex.yy.c.o
-	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/lex.yy.c.o
-.PHONY : src/lex.yy.c.o
-
-src/lex.yy.i: src/lex.yy.c.i
-
-.PHONY : src/lex.yy.i
-
-# target to preprocess a source file
-src/lex.yy.c.i:
-	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/lex.yy.c.i
-	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/lex.yy.c.i
-.PHONY : src/lex.yy.c.i
-
-src/lex.yy.s: src/lex.yy.c.s
-
-.PHONY : src/lex.yy.s
-
-# target to generate assembly for a file
-src/lex.yy.c.s:
-	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/lex.yy.c.s
-	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/lex.yy.c.s
-.PHONY : src/lex.yy.c.s
-
 src/lexDeal.o: src/lexDeal.c.o
 
 .PHONY : src/lexDeal.o
@@ -259,6 +229,36 @@ src/lexDeal.s: src/lexDeal.c.s
 src/lexDeal.c.s:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/lexDeal.c.s
 .PHONY : src/lexDeal.c.s
+
+src/lexer.o: src/lexer.c.o
+
+.PHONY : src/lexer.o
+
+# target to build an object file
+src/lexer.c.o:
+	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/lexer.c.o
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/lexer.c.o
+.PHONY : src/lexer.c.o
+
+src/lexer.i: src/lexer.c.i
+
+.PHONY : src/lexer.i
+
+# target to preprocess a source file
+src/lexer.c.i:
+	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/lexer.c.i
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/lexer.c.i
+.PHONY : src/lexer.c.i
+
+src/lexer.s: src/lexer.c.s
+
+.PHONY : src/lexer.s
+
+# target to generate assembly for a file
+src/lexer.c.s:
+	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/lexer.c.s
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/lexer.c.s
+.PHONY : src/lexer.c.s
 
 src/list.o: src/list.c.o
 
@@ -565,12 +565,12 @@ help:
 	@echo "... src/docGenerate.o"
 	@echo "... src/docGenerate.i"
 	@echo "... src/docGenerate.s"
-	@echo "... src/lex.yy.o"
-	@echo "... src/lex.yy.i"
-	@echo "... src/lex.yy.s"
 	@echo "... src/lexDeal.o"
 	@echo "... src/lexDeal.i"
 	@echo "... src/lexDeal.s"
+	@echo "... src/lexer.o"
+	@echo "... src/lexer.i"
+	@echo "... src/lexer.s"
 	@echo "... src/list.o"
 	@echo "... src/list.i"
 	@echo "... src/list.s"

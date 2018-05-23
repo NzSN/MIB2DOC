@@ -4,8 +4,8 @@
 
 #include <malloc.h>
 #include <string.h>
-#include "../include/lexDeal.h"
-#include "../include/type.h"
+#include "lexDeal.h"
+#include "type.h"
 
 char * strDuplicate(char *src) {
     size_t size;

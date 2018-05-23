@@ -302,7 +302,7 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
     newSymbol->identifier = symbolIdent;
     newSymbol->type = SYMBOL_TYPE_NODE;
     newSymbol->metadata.nodeMeta.parentIdent = parentIdent;
-    symbolAdd(modIdent, newSymbol);
+    symbolAdd(&symTable, newSymbol, newMod->modName);
 
 MOD_STACK_OP_REMOVE:
     /* Need to remove the symbol found from list in the modStack */

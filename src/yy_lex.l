@@ -1,7 +1,10 @@
+%option header-file="include/lexer.h"
+%option outfile="src/lexer.c"
+
 %{
-    #include "../include/type.h"
-    #include "../include/list.h"
+    #include "yy_syn.tab.h"
     #include "dispatcher.h"
+
     #define YYSTYPE char*
     extern YYSTYPE yylval;
     extern switchingState swState;
@@ -17,12 +20,12 @@ OBJECTS                             { return OBJECTS_; }
 NOTIFICATION-TYPE                   { return TRAP_SPECIFIER; }
 SYNTAX                              { return SYNTAX_SPECIFIER; }
 
-INTEGER([ \n\t\r]*\(*.*\))*
-| IpAddress
-| MacAddress
-| OCTET[ \n\t\r]+STRING([ \n\t\r]*\(.*\))*
-| SEQUENCE[ \n\t\r]+OF[ \n\t\r]*[a-zA-Z]*
-| RowStatus                         { yylval = strDuplicate(yytext); return TYPE; }
+INTEGER([ \n\t\r]*\(*.*\))* | 
+IpAddress                   | 
+MacAddress                  | 
+OCTET[ \n\t\r]+STRING([ \n\t\r]*\(.*\))*    | 
+SEQUENCE[ \n\t\r]+OF[ \n\t\r]*[a-zA-Z]*     | 
+RowStatus                           { yylval = strDuplicate(yytext); return TYPE; }
 
 SEQUENCE                            { return SEQ; }
 
@@ -36,10 +39,10 @@ FROM                                { return FROM_; }
 \;                                  { return SEMICOLON; }
 END                                 { return END_; }
 
-read-only |
-write |
-read-write |
-accessible-for-notify |
+read-only               |
+write                   |
+read-write              |
+accessible-for-notify   |
 not-accessible                      { yylval = strDuplicate(yytext); return ACCESS_VALUE; }
 
 STATUS                              { return STATUS_SPECIFIER; }

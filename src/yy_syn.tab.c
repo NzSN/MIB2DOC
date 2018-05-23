@@ -59,7 +59,7 @@
 #define YYPULL 1
 
 /* "%code top" blocks.  */
-#line 12 "yy_syn.y" /* yacc.c:316  */
+#line 13 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:316  */
 
     #include <stdio.h>
     #include "type.h"
@@ -67,19 +67,19 @@
     #include "mibTreeObjTree.h"
     #include "dispatcher.h"
     #define YYSTYPE char *
-
+    
     extern char *yylval;
     void yyerror(char const *s) {
         fprintf(stderr, "%s: %s\n", s, yylval);
     }
 
-#line 77 "yy_syn.tab.c" /* yacc.c:316  */
+#line 77 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:316  */
 
 
 
 /* Copy the first part of user declarations.  */
 
-#line 83 "yy_syn.tab.c" /* yacc.c:339  */
+#line 83 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -97,7 +97,10 @@
 # define YYERROR_VERBOSE 0
 #endif
 
-
+/* In a future release of Bison, this section will be replaced
+   by #include "yy_syn.tab.h".  */
+#ifndef YY_YY_HOME_TOTORO_CODEW_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
+# define YY_YY_HOME_TOTORO_CODEW_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -153,11 +156,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-
+#endif /* !YY_YY_HOME_TOTORO_CODEW_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 161 "yy_syn.tab.c" /* yacc.c:358  */
+#line 164 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -457,11 +460,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    29,    29,    31,    32,    33,    34,    35,    36,    39,
-      42,    44,    49,    51,    52,    53,    56,    58,    59,    61,
-      71,    73,    88,    90,    92,    99,   105,   107,   108,   109,
-     110,   111,   112,   113,   114,   117,   120,   121,   124,   126,
-     131,   137,   143,   145,   150,   152,   153,   155
+       0,    31,    31,    34,    35,    36,    37,    38,    39,    42,
+      45,    56,    62,    66,    67,    68,    71,    74,    75,    78,
+      88,    94,   109,   112,   115,   123,   130,   133,   134,   135,
+     136,   137,   138,   139,   140,   143,   146,   147,   150,   153,
+     158,   165,   172,   175,   181,   184,   185,   188
 };
 #endif
 
@@ -1291,207 +1294,160 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 2:
-#line 29 "yy_syn.y" /* yacc.c:1646  */
-    { }
-#line 1298 "yy_syn.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 8:
-#line 36 "yy_syn.y" /* yacc.c:1646  */
-    { }
-#line 1304 "yy_syn.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 9:
-#line 39 "yy_syn.y" /* yacc.c:1646  */
-    { }
-#line 1310 "yy_syn.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 10:
-#line 42 "yy_syn.y" /* yacc.c:1646  */
-    { /* Build upper layer of mibtree */ }
-#line 1316 "yy_syn.tab.c" /* yacc.c:1646  */
+        case 10:
+#line 45 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
+    {
+        /* build upper tree if all including is finished */
+        if (swState.importStackIndex == 0) {
+            /* importStack is empty */
+            upperTreeGeneration(&symTable);
+        } else {
+            /* do nothing */
+        }
+    }
+#line 1309 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 44 "yy_syn.y" /* yacc.c:1646  */
+#line 56 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct((yyvsp[-1]));
-		param->next = disParamConstruct((yyvsp[-3]));
-		dispatch(SWITCH_TO_INC_BUFFER, param);
+		disParamStore(param, disParamConstruct((yyvsp[-3])));
+		if (dispatch(SWITCH_TO_INC_BUFFER, param) == abort_terminate) {
+            return abort_terminate;
+        }
 	}
-#line 1326 "yy_syn.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 16:
-#line 56 "yy_syn.y" /* yacc.c:1646  */
-    { }
-#line 1332 "yy_syn.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 18:
-#line 59 "yy_syn.y" /* yacc.c:1646  */
-    { }
-#line 1338 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1321 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 61 "yy_syn.y" /* yacc.c:1646  */
+#line 78 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
         dispatchParam *param  = disParamConstruct(SLICE_IDENTIFIER);
-        dispatchParam *paramNext = disParamConstruct((yyvsp[-1]));
+        disParamStore(param, disParamConstruct((yyvsp[0])));
 
         dispatch(DISPATCH_PARAM_STAGE, param);
         dispatch(MIBTREE_GENERATION, disParamConstruct(SMI_DEF));
     }
-#line 1350 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1333 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 71 "yy_syn.y" /* yacc.c:1646  */
-    { mibObjGen(OBJECT_IDENTIFIER); }
-#line 1356 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 88 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
+    { 
+        dispatchParam *param = disParamConstruct(OBJECT_IDENTIFIER);
+        dispatch(MIBTREE_GENERATION, param);
+    }
+#line 1342 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 73 "yy_syn.y" /* yacc.c:1646  */
+#line 94 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
-		param->next = disParamConstruct((yyvsp[-6]));
+		disParamStore(param, disParamConstruct((yyvsp[-6])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
 		param = disParamConstruct(SLICE_PARENT);
-		param->next = disParamConstruct((yyvsp[-2]));
+		disParamStore(param, disParamConstruct((yyvsp[-2])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
 		param = disParamConstruct(SLICE_OID_SUFFIX);
-		param->next = disParamConstruct((yyvsp[-1]));
+		disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 }
-#line 1374 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1360 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 88 "yy_syn.y" /* yacc.c:1646  */
+#line 109 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     { dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT)); }
-#line 1380 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1366 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 90 "yy_syn.y" /* yacc.c:1646  */
+#line 112 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     { dispatch(MIBTREE_GENERATION, disParamConstruct(TRAP)); }
-#line 1386 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1372 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 92 "yy_syn.y" /* yacc.c:1646  */
+#line 115 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
-		param->next = disParamConstruct((yyvsp[-1]));
+		disParamStore(param, disParamConstruct((yyvsp[-1])));
 
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1397 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1383 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 99 "yy_syn.y" /* yacc.c:1646  */
+#line 123 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
-		param->next = disParamConstruct((yyvsp[-1]));
+		disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1407 "yy_syn.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 26:
-#line 105 "yy_syn.y" /* yacc.c:1646  */
-    {}
-#line 1413 "yy_syn.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 34:
-#line 114 "yy_syn.y" /* yacc.c:1646  */
-    { }
-#line 1419 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1393 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 126 "yy_syn.y" /* yacc.c:1646  */
+#line 153 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
-		param->next = disParamConstruct((yyvsp[0]));
+	    disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
-	}
-#line 1429 "yy_syn.tab.c" /* yacc.c:1646  */
+    }
+#line 1403 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 131 "yy_syn.y" /* yacc.c:1646  */
+#line 158 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
  		dispatchParam *param = disParamConstruct(SLICE_TYPE);
-		param->next = disParamConstruct((yyvsp[0]));
+	    disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
  	}
-#line 1439 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1413 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 137 "yy_syn.y" /* yacc.c:1646  */
+#line 165 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_PERMISSION);
-		param->next = disParamConstruct((yyvsp[0]));
+		disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1449 "yy_syn.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 42:
-#line 143 "yy_syn.y" /* yacc.c:1646  */
-    {}
-#line 1455 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1423 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 145 "yy_syn.y" /* yacc.c:1646  */
+#line 175 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_DESCRIPTION);
-		param->next = disParamConstruct((yyvsp[0]));
+		disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1465 "yy_syn.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 44:
-#line 150 "yy_syn.y" /* yacc.c:1646  */
-    {}
-#line 1471 "yy_syn.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 46:
-#line 153 "yy_syn.y" /* yacc.c:1646  */
-    { }
-#line 1477 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1433 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 155 "yy_syn.y" /* yacc.c:1646  */
+#line 188 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_PARENT);
-		param->next = disParamConstruct((yyvsp[-2]));
+		disParamStore(param, disParamConstruct((yyvsp[-2])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
 		param = disParamConstruct(SLICE_OID_SUFFIX);
-		param->next = disParamConstruct((yyvsp[-1]));
+	    disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1491 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1447 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1495 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1451 "/home/totoro/codeW/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1719,5 +1675,8 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 165 "yy_syn.y" /* yacc.c:1906  */
+#line 198 "/home/totoro/codeW/MIB2DOC/src/yy_syn.y" /* yacc.c:1906  */
+
+
+// Epilogue
 

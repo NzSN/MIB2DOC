@@ -22,7 +22,7 @@ int dispatchInit() {
     return ERROR_NONE;
 }
 
-int dispatch(dispatch_type dType, dispatchParam *param) {
+int dispatch(dispatch_type disType, dispatchParam *param) {
 
     errorType ret = ERROR_NONE;
 
@@ -30,9 +30,9 @@ int dispatch(dispatch_type dType, dispatchParam *param) {
         return ERROR_NULL_REF;
     }
 
-    switch (dispatchMakeChoice(dType)) {
+    switch (dispatchMakeChoice(disType)) {
         case DISPATCH_PARAM_STAGE:
-            sliceStore(&sliceContainer,
+            sliceStore(&sliceContainer, 
                 sliceConstruct((int)disParamRetrive(&param)->param,
                 disParamRetrive(&param)->param));
             break;

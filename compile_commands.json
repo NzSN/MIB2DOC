@@ -11,8 +11,8 @@
 },
 {
   "directory": "/home/totoro/codeW/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/totoro/codeW/MIB2DOC/include    -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/lex.yy.c.o   -c /home/totoro/codeW/MIB2DOC/src/lex.yy.c",
-  "file": "/home/totoro/codeW/MIB2DOC/src/lex.yy.c"
+  "command": "/usr/bin/cc  -I/home/totoro/codeW/MIB2DOC/include    -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/lexer.c.o   -c /home/totoro/codeW/MIB2DOC/src/lexer.c",
+  "file": "/home/totoro/codeW/MIB2DOC/src/lexer.c"
 },
 {
   "directory": "/home/totoro/codeW/MIB2DOC",
@@ -76,8 +76,8 @@
 },
 {
   "directory": "/home/totoro/codeW/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/totoro/codeW/MIB2DOC/include    -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/lex.yy.c.o   -c /home/totoro/codeW/MIB2DOC/src/lex.yy.c",
-  "file": "/home/totoro/codeW/MIB2DOC/src/lex.yy.c"
+  "command": "/usr/bin/cc  -I/home/totoro/codeW/MIB2DOC/include    -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/lexer.c.o   -c /home/totoro/codeW/MIB2DOC/src/lexer.c",
+  "file": "/home/totoro/codeW/MIB2DOC/src/lexer.c"
 },
 {
   "directory": "/home/totoro/codeW/MIB2DOC",
