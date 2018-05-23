@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(Mib2Doc)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(HOME_DIR /home/ayden/codeArea/MIB2DOC)
+set(HOME_DIR /home/totoro/codeW/MIB2DOC)
 set(SRC_DIR ${HOME_DIR}/src)
 set(CMAKE_C_STANDARD 11)
 set(SOURCE_FILES 

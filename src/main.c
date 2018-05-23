@@ -18,12 +18,12 @@ int main(int argc, char *argv[]) {
     int ret;
     FILE *writeTo;
     mibObjectTreeNode *node;
+    
+    beginFrom = "gponConfig";
     mibObjectTreeInit(&mibObjectTreeRoot);
     node = &mibObjectTreeRoot;
-
     optionsInit(argc, argv);
-    beginFrom = "gponConfig";
-
+    
     yyin = fopen("src/case", "r");
     if (yyin == NULL)
         printf("%s\n", "open failed");
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     ret = yyparse();
 
     if (ret == ABORT) {
-        return error;
+        return -1;
     }
 
     writeTo = fopen("src/result/result", "w");

@@ -102,7 +102,7 @@ int lexBufferSwitching(char *newModule) {
     int index = 0;
     const char *path;
     char *targetModulePath;
-
+    
     while (path = getOption_includePath(&index)) {
         targetModulePath = (char *)malloc(strlen(path)+strlen(newModule)+1);
         strncpy(targetModulePath, path, strlen(path));

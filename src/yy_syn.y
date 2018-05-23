@@ -9,6 +9,7 @@
 %token OBJ_IDEN_ L_BRACE R_BRACE OBJECTS_
 %token TYPE NUM FROM_ IMPORTS_
 
+// Prologue
 %code top {
     #include <stdio.h>
     #include "type.h"
@@ -23,6 +24,7 @@
     }
 }
 
+// Grammar rules
 %%
 
 MIB :
@@ -194,3 +196,6 @@ MOUNT :
 	};
 
 %%
+
+// Epilogue
+
