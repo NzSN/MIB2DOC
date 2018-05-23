@@ -54,8 +54,8 @@ IMPORT :
 
 MODULES :
 	ITEMS FROM_ IDENTIFIER MODULES {
-		dispatchParam *param = disParamConstruct($3);
-		disParamStore(param, disParamConstruct($1));
+		dispatchParam *param = disParamConstruct($IDENTIFIER);
+		disParamStore(param, disParamConstruct($ITEMS));
 		if (dispatch(SWITCH_TO_INC_BUFFER, param) == abort_terminate) {
             return abort_terminate;
         }
@@ -77,7 +77,7 @@ SEQ_ITEM :
 SMI :
     "SMI" IDENTIFIER {
         dispatchParam *param  = disParamConstruct(SLICE_IDENTIFIER);
-        disParamStore(param, disParamConstruct($1));
+        disParamStore(param, disParamConstruct($IDENTIFIER));
 
         dispatch(DISPATCH_PARAM_STAGE, param);
         dispatch(MIBTREE_GENERATION, disParamConstruct(SMI_DEF));
@@ -91,17 +91,17 @@ OBJ_DEAL :
     };
 
 OBJ_IDENTIFIER :
-	IDENTIFIER OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
+	IDENTIFIER[chil] OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER[pIarent] NUM R_BRACE {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
-		disParamStore(param, disParamConstruct($1));
+		disParamStore(param, disParamConstruct($chil));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
 		param = disParamConstruct(SLICE_PARENT);
-		disParamStore(param, disParamConstruct($5));
+		disParamStore(param, disParamConstruct($parent));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
 		param = disParamConstruct(SLICE_OID_SUFFIX);
-		disParamStore(param, disParamConstruct($6));
+		disParamStore(param, disParamConstruct($NUM));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 };
 
@@ -114,7 +114,7 @@ TRAP :
 TRAP_HEAD :
 	IDENTIFIER TRAP_SPECIFIER {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
-		disParamStore(param, disParamConstruct($1));
+		disParamStore(param, disParamConstruct($IDENTIFIER));
 
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
@@ -122,7 +122,7 @@ TRAP_HEAD :
 HEAD :
 	IDENTIFIER OBJ_SPECIFIER {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
-		disParamStore(param, disParamConstruct($1));
+		disParamStore(param, disParamConstruct($IDENTIFIER));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 
@@ -152,19 +152,19 @@ SYNTAX :
 SYNTAX_VALUE :
 	TYPE {
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
-	    disParamStore(param, disParamConstruct($1));
+	    disParamStore(param, disParamConstruct($TYPE));
 		dispatch(DISPATCH_PARAM_STAGE, param);
     }
     | IDENTIFIER {
  		dispatchParam *param = disParamConstruct(SLICE_TYPE);
-	    disParamStore(param, disParamConstruct($1));
+	    disParamStore(param, disParamConstruct($TYPE));
 		dispatch(DISPATCH_PARAM_STAGE, param);
  	};
 
 ACCESS :
 	ACCESS_SPECIFIER ACCESS_VALUE {
 		dispatchParam *param = disParamConstruct(SLICE_PERMISSION);
-		disParamStore(param, disParamConstruct($2));
+		disParamStore(param, disParamConstruct($ACCESS_VALUE));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 
@@ -174,7 +174,7 @@ STATUS :
 DESCRIPTION :
 	DESC_SPECIFIER DESC_VALUE {
 		dispatchParam *param = disParamConstruct(SLICE_DESCRIPTION);
-		disParamStore(param, disParamConstruct($2));
+		disParamStore(param, disParamConstruct($DESC_VALUE));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 
@@ -187,11 +187,11 @@ INDEX_ITEM :
 MOUNT :
 	ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
 		dispatchParam *param = disParamConstruct(SLICE_PARENT);
-		disParamStore(param, disParamConstruct($3));
+		disParamStore(param, disParamConstruct($IDENTIFIER));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 
 		param = disParamConstruct(SLICE_OID_SUFFIX);
-	    disParamStore(param, disParamConstruct($4));
+	    disParamStore(param, disParamConstruct($NUM));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 
