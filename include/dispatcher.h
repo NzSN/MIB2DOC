@@ -6,6 +6,12 @@
 #include "list.h"
 #include "lexer.h"
 
+
+typedef struct dispatchParam {
+    void *param;
+    listNode node;
+} dispatchParam;
+
 typedef enum dispatch_type {
     DISPATCH_PARAM_STAGE = 0,
     MIBTREE_GENERATION,
@@ -25,31 +31,38 @@ typedef struct identList {
     listNode node;
 } identList;
 
-typedef struct yy_buffer_state * YY_BUFFER_STATE;
-
 typedef struct collectInfo {
     char *modName;
     identList *symbols;
 } collectInfo;
 
+typedef struct switchInfo {
+    collectInfo importInfo;
+    YY_BUFFER_STATE bufferInfo;
+} switchInfo;
+
 #define MAX_INCLUDE_DEPTH 10
 typedef struct switchingState {
-    /* Include status or Non-Include status */
+    // Include status or Non-Include status
     int state;
-    /* Number of modules in stack */
+    // Number of modules in stack
     int counter;
-    /* Stack of struct collectInfo */
-    genericStack *modStack;
-    char *currentModule;
-    /* Buffer stack */
-    YY_BUFFER_STATE importStack[MAX_INCLUDE_DEPTH];
-    int importStackIndex;
+    // Current processing module info
+    switchInfo currentSwitchInfo;
+    // Stack of struct switchInfo
+    genericStack swStack;
 } switchingState;
 
 extern dispatch_mode dispatchMode;
+extern switchingState swState;
+
+dispatchParam * disParamConstruct(void *arg);
+dispatchParam * disParamStore(dispatchParam *head, dispatchParam *pl);
+dispatchParam * disParamRetrive(dispatchParam **head);
 
 YY_BUFFER_STATE * getCurrentBufferState();
 char * switch_CurrentMod(char *modName, int len);
 int dispatch(dispatch_type dType, dispatchParam * param);
 int rmSymFromIdentList(identList *listHead, char *symbolIdent);
+
 #endif /* _DISPATCHER_H_ */

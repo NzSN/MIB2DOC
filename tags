@@ -6,10 +6,8 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 ABORT	include/type.h	/^    ABORT$/;"	e	language:C++	enum:errorType
 ACCESS	src/yy_syn.y	/^ACCESS :$/;"	l	language:YACC
-ACCESS_SPECIFIER	include/type.h	/^    ACCESS_SPECIFIER = 261,$/;"	e	language:C++	enum:yytokentype
 ACCESS_SPECIFIER	include/yy_syn.tab.h	/^    ACCESS_SPECIFIER = 261,$/;"	e	language:C++	enum:yytokentype
 ACCESS_SPECIFIER	src/yy_syn.tab.c	/^    ACCESS_SPECIFIER = 261,$/;"	e	language:C	enum:yytokentype	file:
-ACCESS_VALUE	include/type.h	/^    ACCESS_VALUE = 262,$/;"	e	language:C++	enum:yytokentype
 ACCESS_VALUE	include/yy_syn.tab.h	/^    ACCESS_VALUE = 262,$/;"	e	language:C++	enum:yytokentype
 ACCESS_VALUE	src/yy_syn.tab.c	/^    ACCESS_VALUE = 262,$/;"	e	language:C	enum:yytokentype	file:
 ARCHITECTURE_ID	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	416;"	d	language:C	file:
@@ -46,19 +44,16 @@ ARCHITECTURE_ID	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	444;"	d	l
 ARCHITECTURE_ID	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	447;"	d	language:C++	file:
 ARCHITECTURE_ID	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	450;"	d	language:C++	file:
 ARCHITECTURE_ID	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	453;"	d	language:C++	file:
-ASSIGNED	include/type.h	/^    ASSIGNED = 268,$/;"	e	language:C++	enum:yytokentype
 ASSIGNED	include/yy_syn.tab.h	/^    ASSIGNED = 268,$/;"	e	language:C++	enum:yytokentype
 ASSIGNED	src/yy_syn.tab.c	/^    ASSIGNED = 268,$/;"	e	language:C	enum:yytokentype	file:
 BEGIN	src/lexer.c	118;"	d	language:C	file:
-BEGIN_	include/type.h	/^    BEGIN_ = 269,$/;"	e	language:C++	enum:yytokentype
 BEGIN_	include/yy_syn.tab.h	/^    BEGIN_ = 269,$/;"	e	language:C++	enum:yytokentype
 BEGIN_	src/yy_syn.tab.c	/^    BEGIN_ = 269,$/;"	e	language:C	enum:yytokentype	file:
 BODY	src/yy_syn.y	/^BODY :$/;"	l	language:YACC
-CMAKE_BINARY_DIR	Makefile	/^CMAKE_BINARY_DIR = \/home\/totoro\/codeW\/MIB2DOC$/;"	m	language:Make
+CMAKE_BINARY_DIR	Makefile	/^CMAKE_BINARY_DIR = \/home\/totoro\/Projects\/MIB2DOC$/;"	m	language:Make
 CMAKE_COMMAND	Makefile	/^CMAKE_COMMAND = \/usr\/bin\/cmake$/;"	m	language:Make
-CMAKE_SOURCE_DIR	Makefile	/^CMAKE_SOURCE_DIR = \/home\/totoro\/codeW\/MIB2DOC$/;"	m	language:Make
+CMAKE_SOURCE_DIR	Makefile	/^CMAKE_SOURCE_DIR = \/home\/totoro\/Projects\/MIB2DOC$/;"	m	language:Make
 COLLECTING	src/docGenerate.c	/^    COLLECTING,$/;"	e	language:C	enum:__anon3	file:
-COMMA	include/type.h	/^    COMMA = 273,$/;"	e	language:C++	enum:yytokentype
 COMMA	include/yy_syn.tab.h	/^    COMMA = 273,$/;"	e	language:C++	enum:yytokentype
 COMMA	src/yy_syn.tab.c	/^    COMMA = 273,$/;"	e	language:C	enum:yytokentype	file:
 COMPILER_ID	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	101;"	d	language:C	file:
@@ -303,22 +298,18 @@ C_DIALECT	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	557;"	d	language:C	fi
 C_DIALECT	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	559;"	d	language:C	file:
 DEC	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	472;"	d	language:C	file:
 DEC	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	457;"	d	language:C++	file:
-DEF	include/type.h	/^    DEF = 271,$/;"	e	language:C++	enum:yytokentype
 DEF	include/yy_syn.tab.h	/^    DEF = 271,$/;"	e	language:C++	enum:yytokentype
 DEF	src/yy_syn.tab.c	/^    DEF = 271,$/;"	e	language:C	enum:yytokentype	file:
 DEFINITION	src/yy_syn.y	/^DEFINITION :$/;"	l	language:YACC
 DESCRIPTION	src/yy_syn.y	/^DESCRIPTION :$/;"	l	language:YACC
-DESC_SPECIFIER	include/type.h	/^    DESC_SPECIFIER = 265,$/;"	e	language:C++	enum:yytokentype
 DESC_SPECIFIER	include/yy_syn.tab.h	/^    DESC_SPECIFIER = 265,$/;"	e	language:C++	enum:yytokentype
 DESC_SPECIFIER	src/yy_syn.tab.c	/^    DESC_SPECIFIER = 265,$/;"	e	language:C	enum:yytokentype	file:
-DESC_VALUE	include/type.h	/^    DESC_VALUE = 266,$/;"	e	language:C++	enum:yytokentype
 DESC_VALUE	include/yy_syn.tab.h	/^    DESC_VALUE = 266,$/;"	e	language:C++	enum:yytokentype
 DESC_VALUE	src/yy_syn.tab.c	/^    DESC_VALUE = 266,$/;"	e	language:C	enum:yytokentype	file:
 DISPATCH_MODE_DOC_GENERATING	include/dispatcher.h	/^    DISPATCH_MODE_DOC_GENERATING = 1$/;"	e	language:C++	enum:dispatch_mode
 DISPATCH_MODE_SYMBOL_COLLECTING	include/dispatcher.h	/^    DISPATCH_MODE_SYMBOL_COLLECTING = 0,$/;"	e	language:C++	enum:dispatch_mode
 DISPATCH_PARAM_STAGE	include/dispatcher.h	/^    DISPATCH_PARAM_STAGE = 0,$/;"	e	language:C++	enum:dispatch_type
 ECHO	src/lexer.c	742;"	d	language:C	file:
-END_	include/type.h	/^    END_ = 270,$/;"	e	language:C++	enum:yytokentype
 END_	include/yy_syn.tab.h	/^    END_ = 270,$/;"	e	language:C++	enum:yytokentype
 END_	src/yy_syn.tab.c	/^    END_ = 270,$/;"	e	language:C	enum:yytokentype	file:
 EOB_ACT_CONTINUE_SCAN	src/lexer.c	162;"	d	language:C	file:
@@ -332,13 +323,13 @@ ERROR_OPEN_FAILED	include/type.h	/^    ERROR_OPEN_FAILED,$/;"	e	language:C++	enu
 ERROR_WRONG_IDX	include/type.h	/^    ERROR_WRONG_IDX,$/;"	e	language:C++	enum:errorType
 EXIT_SUCCESS	src/yy_syn.tab.c	295;"	d	language:C	file:
 EXIT_SUCCESS	src/yy_syn.tab.c	323;"	d	language:C	file:
+FALSE	include/type.h	16;"	d	language:C++
 FLEXINT_H	include/lexer.h	34;"	d	language:C++
 FLEXINT_H	src/lexer.c	30;"	d	language:C	file:
 FLEX_BETA	include/lexer.h	18;"	d	language:C++
 FLEX_BETA	src/lexer.c	14;"	d	language:C	file:
 FLEX_SCANNER	include/lexer.h	13;"	d	language:C++
 FLEX_SCANNER	src/lexer.c	9;"	d	language:C	file:
-FROM_	include/type.h	/^    FROM_ = 283,$/;"	e	language:C++	enum:yytokentype
 FROM_	include/yy_syn.tab.h	/^    FROM_ = 283,$/;"	e	language:C++	enum:yytokentype
 FROM_	src/yy_syn.tab.c	/^    FROM_ = 283,$/;"	e	language:C	enum:yytokentype	file:
 GL5610_MIB_DOC_GEN_QUEUE_H	include/queue.h	8;"	d	language:C++
@@ -348,17 +339,14 @@ GL5610_MIB_DOC_GEN_TREE_H	include/mibTreeObjTree.h	6;"	d	language:C++
 HEAD	src/yy_syn.y	/^HEAD :$/;"	l	language:YACC
 HEX	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	483;"	d	language:C	file:
 HEX	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	468;"	d	language:C++	file:
-IDENTIFIER	include/type.h	/^    IDENTIFIER = 258,$/;"	e	language:C++	enum:yytokentype
 IDENTIFIER	include/yy_syn.tab.h	/^    IDENTIFIER = 258,$/;"	e	language:C++	enum:yytokentype
 IDENTIFIER	src/yy_syn.tab.c	/^    IDENTIFIER = 258,$/;"	e	language:C	enum:yytokentype	file:
 ID_VOID_MAIN	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	6;"	d	language:C	file:
 IGNORE	include/dispatcher.h	/^    IGNORE$/;"	e	language:C++	enum:dispatch_type
 IMPORT	src/yy_syn.y	/^IMPORT :$/;"	l	language:YACC
-IMPORTS_	include/type.h	/^    IMPORTS_ = 284$/;"	e	language:C++	enum:yytokentype
 IMPORTS_	include/yy_syn.tab.h	/^    IMPORTS_ = 284$/;"	e	language:C++	enum:yytokentype
 IMPORTS_	src/yy_syn.tab.c	/^    IMPORTS_ = 284$/;"	e	language:C	enum:yytokentype	file:
 INDEX	src/yy_syn.y	/^INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE;$/;"	l	language:YACC
-INDEX_	include/type.h	/^    INDEX_ = 275,$/;"	e	language:C++	enum:yytokentype
 INDEX_	include/yy_syn.tab.h	/^    INDEX_ = 275,$/;"	e	language:C++	enum:yytokentype
 INDEX_	src/yy_syn.tab.c	/^    INDEX_ = 275,$/;"	e	language:C	enum:yytokentype	file:
 INDEX_ITEM	src/yy_syn.y	/^INDEX_ITEM :$/;"	l	language:YACC
@@ -378,47 +366,41 @@ INT8_MIN	include/lexer.h	64;"	d	language:C++
 INT8_MIN	src/lexer.c	60;"	d	language:C	file:
 IS_NODE_HAS_CHILD_MT	src/mibTreeObjTree.c	21;"	d	language:C	file:
 IS_NODE_HAS_SIBLING_MT	src/mibTreeObjTree.c	22;"	d	language:C	file:
-IS_STACK_EMPTY	include/stack.h	9;"	d	language:C++
-IS_STACK_FULL	include/stack.h	10;"	d	language:C++
+IS_STACK_EMPTY	include/stack.h	8;"	d	language:C++
+IS_STACK_FULL	include/stack.h	9;"	d	language:C++
 ITEMS	src/yy_syn.y	/^ITEMS :$/;"	l	language:YACC
 IncludePath	src/options.c	/^    IncludePath,$/;"	e	language:C	enum:optionNumber	file:
 LOWER_CASE	src/mibTreeObjTree.c	23;"	d	language:C	file:
-L_BRACE	include/type.h	/^    L_BRACE = 278,$/;"	e	language:C++	enum:yytokentype
 L_BRACE	include/yy_syn.tab.h	/^    L_BRACE = 278,$/;"	e	language:C++	enum:yytokentype
 L_BRACE	src/yy_syn.tab.c	/^    L_BRACE = 278,$/;"	e	language:C	enum:yytokentype	file:
 MAIN_PART	src/yy_syn.y	/^MAIN_PART :$/;"	l	language:YACC
-MAX_CHAR_OF_MOD_IDENT	include/type.h	112;"	d	language:C++
-MAX_INCLUDE_DEPTH	include/dispatcher.h	35;"	d	language:C++
+MAX_CHAR_OF_MOD_IDENT	include/symbolTbl.h	6;"	d	language:C++
+MAX_INCLUDE_DEPTH	include/dispatcher.h	44;"	d	language:C++
 MIB	src/yy_syn.y	/^MIB :$/;"	l	language:YACC
 MIBTREE_GENERATION	include/dispatcher.h	/^    MIBTREE_GENERATION,$/;"	e	language:C++	enum:dispatch_type
 MODULES	src/yy_syn.y	/^MODULES :$/;"	l	language:YACC
 MOUNT	src/yy_syn.y	/^MOUNT :$/;"	l	language:YACC
-MOUNT_POINT	include/type.h	/^    MOUNT_POINT = 267,$/;"	e	language:C++	enum:yytokentype
 MOUNT_POINT	include/yy_syn.tab.h	/^    MOUNT_POINT = 267,$/;"	e	language:C++	enum:yytokentype
 MOUNT_POINT	src/yy_syn.tab.c	/^    MOUNT_POINT = 267,$/;"	e	language:C	enum:yytokentype	file:
 Modules	doc/structures.tex	/^	\\newpage$/;"	s	language:Tex
-NUM	include/type.h	/^    NUM = 282,$/;"	e	language:C++	enum:yytokentype
 NUM	include/yy_syn.tab.h	/^    NUM = 282,$/;"	e	language:C++	enum:yytokentype
 NUM	src/yy_syn.tab.c	/^    NUM = 282,$/;"	e	language:C	enum:yytokentype	file:
 NumOfOptions	src/options.c	/^    NumOfOptions$/;"	e	language:C	enum:optionNumber	file:
 OBJ	src/yy_syn.y	/^OBJ :$/;"	l	language:YACC
 OBJECT	include/type.h	/^    OBJECT = 1,$/;"	e	language:C++	enum:unitType
 OBJECT	src/yy_syn.y	/^OBJECT :$/;"	l	language:YACC
-OBJECTS_	include/type.h	/^    OBJECTS_ = 280,$/;"	e	language:C++	enum:yytokentype
 OBJECTS_	include/yy_syn.tab.h	/^    OBJECTS_ = 280,$/;"	e	language:C++	enum:yytokentype
 OBJECTS_	src/yy_syn.tab.c	/^    OBJECTS_ = 280,$/;"	e	language:C	enum:yytokentype	file:
 OBJECT_IDENTIFIER	include/type.h	/^    OBJECT_IDENTIFIER,$/;"	e	language:C++	enum:unitType
 OBJECT_ITEM	src/yy_syn.y	/^OBJECT_ITEM :$/;"	l	language:YACC
 OBJ_DEAL	src/yy_syn.y	/^OBJ_DEAL :$/;"	l	language:YACC
 OBJ_IDENTIFIER	src/yy_syn.y	/^OBJ_IDENTIFIER :$/;"	l	language:YACC
-OBJ_IDEN_	include/type.h	/^    OBJ_IDEN_ = 277,$/;"	e	language:C++	enum:yytokentype
 OBJ_IDEN_	include/yy_syn.tab.h	/^    OBJ_IDEN_ = 277,$/;"	e	language:C++	enum:yytokentype
 OBJ_IDEN_	src/yy_syn.tab.c	/^    OBJ_IDEN_ = 277,$/;"	e	language:C	enum:yytokentype	file:
-OBJ_SPECIFIER	include/type.h	/^    OBJ_SPECIFIER = 259,$/;"	e	language:C++	enum:yytokentype
 OBJ_SPECIFIER	include/yy_syn.tab.h	/^    OBJ_SPECIFIER = 259,$/;"	e	language:C++	enum:yytokentype
 OBJ_SPECIFIER	src/yy_syn.tab.c	/^    OBJ_SPECIFIER = 259,$/;"	e	language:C	enum:yytokentype	file:
 OID_LENGTH	src/mibTreeObjTree.c	20;"	d	language:C	file:
-PARAM_STORE_TO_SYM_LIST	include/mibTreeGen.h	35;"	d	language:C++
+PARAM_STORE_TO_SYM_LIST	include/mibTreeGen.h	34;"	d	language:C++
 PLATFORM_ID	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	313;"	d	language:C	file:
 PLATFORM_ID	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	316;"	d	language:C	file:
 PLATFORM_ID	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	319;"	d	language:C	file:
@@ -484,16 +466,13 @@ PLATFORM_ID	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	390;"	d	langu
 PROPERTY	src/yy_syn.y	/^PROPERTY :$/;"	l	language:YACC
 Qnext	src/queue.c	6;"	d	language:C	file:
 REJECT	src/lexer.c	631;"	d	language:C	file:
-RELEASE_MEM	include/type.h	21;"	d	language:C++
+RELEASE_MEM	include/type.h	28;"	d	language:C++
 RM	Makefile	/^RM = \/usr\/bin\/cmake -E remove -f$/;"	m	language:Make
-R_BRACE	include/type.h	/^    R_BRACE = 279,$/;"	e	language:C++	enum:yytokentype
 R_BRACE	include/yy_syn.tab.h	/^    R_BRACE = 279,$/;"	e	language:C++	enum:yytokentype
 R_BRACE	src/yy_syn.tab.c	/^    R_BRACE = 279,$/;"	e	language:C	enum:yytokentype	file:
 SECTION	src/docGenerate.c	/^    SECTION$/;"	e	language:C	enum:__anon3	file:
-SEMICOLON	include/type.h	/^    SEMICOLON = 274,$/;"	e	language:C++	enum:yytokentype
 SEMICOLON	include/yy_syn.tab.h	/^    SEMICOLON = 274,$/;"	e	language:C++	enum:yytokentype
 SEMICOLON	src/yy_syn.tab.c	/^    SEMICOLON = 274,$/;"	e	language:C	enum:yytokentype	file:
-SEQ	include/type.h	/^    SEQ = 272,$/;"	e	language:C++	enum:yytokentype
 SEQ	include/yy_syn.tab.h	/^    SEQ = 272,$/;"	e	language:C++	enum:yytokentype
 SEQ	src/yy_syn.tab.c	/^    SEQ = 272,$/;"	e	language:C	enum:yytokentype	file:
 SEQUENCE	include/type.h	/^    SEQUENCE,$/;"	e	language:C++	enum:unitType
@@ -520,26 +499,23 @@ SIMULATE_VERSION_MINOR	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	18
 SIMULATE_VERSION_MINOR	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	38;"	d	language:C++	file:
 SIZE_MAX	include/lexer.h	92;"	d	language:C++
 SIZE_MAX	src/lexer.c	88;"	d	language:C	file:
-SIZE_OF_CURRENT_TABLE	include/type.h	17;"	d	language:C++
-SIZE_OF_IDENT_STACK	include/stack.h	8;"	d	language:C++
+SIZE_OF_CURRENT_TABLE	include/type.h	24;"	d	language:C++
 SIZE_OF_LATEX_BUFFER	src/docGenerate.c	13;"	d	language:C	file:
-SIZE_OF_OID_STRING	include/type.h	19;"	d	language:C++
+SIZE_OF_OID_STRING	include/type.h	26;"	d	language:C++
 SIZE_OF_QUEUE	include/queue.h	10;"	d	language:C++
-SIZE_OF_SECTION_RECORD	include/type.h	18;"	d	language:C++
-SLICE_DESCRIPTION	include/type.h	/^    SLICE_DESCRIPTION,$/;"	e	language:C++	enum:elementType
-SLICE_IDENTIFIER	include/type.h	/^    SLICE_IDENTIFIER = 6,$/;"	e	language:C++	enum:elementType
-SLICE_OID_SUFFIX	include/type.h	/^    SLICE_OID_SUFFIX,$/;"	e	language:C++	enum:elementType
-SLICE_PARENT	include/type.h	/^    SLICE_PARENT,$/;"	e	language:C++	enum:elementType
-SLICE_PERMISSION	include/type.h	/^    SLICE_PERMISSION,$/;"	e	language:C++	enum:elementType
-SLICE_TYPE	include/type.h	/^    SLICE_TYPE,$/;"	e	language:C++	enum:elementType
-SLICE_TYPE_MAXIMUM	include/type.h	/^    SLICE_TYPE_MAXIMUM$/;"	e	language:C++	enum:elementType
+SIZE_OF_SECTION_RECORD	include/type.h	25;"	d	language:C++
+SLICE_DESCRIPTION	include/list.h	/^    SLICE_DESCRIPTION,$/;"	e	language:C++	enum:elementType
+SLICE_IDENTIFIER	include/list.h	/^    SLICE_IDENTIFIER = 6,$/;"	e	language:C++	enum:elementType
+SLICE_OID_SUFFIX	include/list.h	/^    SLICE_OID_SUFFIX,$/;"	e	language:C++	enum:elementType
+SLICE_PARENT	include/list.h	/^    SLICE_PARENT,$/;"	e	language:C++	enum:elementType
+SLICE_PERMISSION	include/list.h	/^    SLICE_PERMISSION,$/;"	e	language:C++	enum:elementType
+SLICE_TYPE	include/list.h	/^    SLICE_TYPE,$/;"	e	language:C++	enum:elementType
+SLICE_TYPE_MAXIMUM	include/list.h	/^    SLICE_TYPE_MAXIMUM$/;"	e	language:C++	enum:elementType
 SMI	src/yy_syn.y	/^SMI :$/;"	l	language:YACC
 SMI_DEF	include/type.h	/^    SMI_DEF$/;"	e	language:C++	enum:unitType
 STATUS	src/yy_syn.y	/^STATUS :$/;"	l	language:YACC
-STATUS_SPECIFIER	include/type.h	/^    STATUS_SPECIFIER = 263,$/;"	e	language:C++	enum:yytokentype
 STATUS_SPECIFIER	include/yy_syn.tab.h	/^    STATUS_SPECIFIER = 263,$/;"	e	language:C++	enum:yytokentype
 STATUS_SPECIFIER	src/yy_syn.tab.c	/^    STATUS_SPECIFIER = 263,$/;"	e	language:C	enum:yytokentype	file:
-STATUS_VALUE	include/type.h	/^    STATUS_VALUE = 264,$/;"	e	language:C++	enum:yytokentype
 STATUS_VALUE	include/yy_syn.tab.h	/^    STATUS_VALUE = 264,$/;"	e	language:C++	enum:yytokentype
 STATUS_VALUE	src/yy_syn.tab.c	/^    STATUS_VALUE = 264,$/;"	e	language:C	enum:yytokentype	file:
 STRINGIFY	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	309;"	d	language:C	file:
@@ -551,17 +527,16 @@ SWITCH_TO_INC_BUFFER	include/dispatcher.h	/^    SWITCH_TO_INC_BUFFER,$/;"	e	lang
 SYMBOL_COLLECTING	include/dispatcher.h	/^    SYMBOL_COLLECTING,$/;"	e	language:C++	enum:dispatch_type
 SYMBOL_FOUND	include/mibTreeGen.h	/^    SYMBOL_FOUND,$/;"	e	language:C++	enum:__anon2
 SYMBOL_NOT_FOUND	include/mibTreeGen.h	/^    SYMBOL_NOT_FOUND$/;"	e	language:C++	enum:__anon2
-SYMBOL_SEPERATOR	src/dispatcher.c	130;"	d	language:C	file:
-SYMBOL_TYPE_LEAVE	include/type.h	/^    SYMBOL_TYPE_LEAVE$/;"	e	language:C++	enum:symbolType
-SYMBOL_TYPE_NODE	include/type.h	/^    SYMBOL_TYPE_NODE,$/;"	e	language:C++	enum:symbolType
-SYM_EXISTS	include/type.h	/^    SYM_EXISTS,$/;"	e	language:C++	enum:symErrorCode
-SYM_NOT_FOUND	include/type.h	/^    SYM_NOT_FOUND$/;"	e	language:C++	enum:symErrorCode
-SYM_TABLE_EXISTS	include/type.h	/^    SYM_TABLE_EXISTS,$/;"	e	language:C++	enum:symErrorCode
-SYM_TABLE_NOT_FOUND	include/type.h	/^    SYM_TABLE_NOT_FOUND,$/;"	e	language:C++	enum:symErrorCode
+SYMBOL_SEPERATOR	src/dispatcher.c	146;"	d	language:C	file:
+SYMBOL_TYPE_LEAVE	include/symbolTbl.h	/^    SYMBOL_TYPE_LEAVE$/;"	e	language:C++	enum:symbolType
+SYMBOL_TYPE_NODE	include/symbolTbl.h	/^    SYMBOL_TYPE_NODE,$/;"	e	language:C++	enum:symbolType
+SYM_EXISTS	include/symbolTbl.h	/^    SYM_EXISTS,$/;"	e	language:C++	enum:symErrorCode
+SYM_NOT_FOUND	include/symbolTbl.h	/^    SYM_NOT_FOUND$/;"	e	language:C++	enum:symErrorCode
+SYM_TABLE_EXISTS	include/symbolTbl.h	/^    SYM_TABLE_EXISTS,$/;"	e	language:C++	enum:symErrorCode
+SYM_TABLE_NOT_FOUND	include/symbolTbl.h	/^    SYM_TABLE_NOT_FOUND,$/;"	e	language:C++	enum:symErrorCode
 SYM_TRAVEL_CONTINUE	src/list.c	/^    SYM_TRAVEL_CONTINUE = 10,$/;"	e	language:C	enum:__anon4	file:
 SYM_TRAVEL_STOP	src/list.c	/^    SYM_TRAVEL_STOP = 11$/;"	e	language:C	enum:__anon4	file:
 SYNTAX	src/yy_syn.y	/^SYNTAX :$/;"	l	language:YACC
-SYNTAX_SPECIFIER	include/type.h	/^    SYNTAX_SPECIFIER = 260,$/;"	e	language:C++	enum:yytokentype
 SYNTAX_SPECIFIER	include/yy_syn.tab.h	/^    SYNTAX_SPECIFIER = 260,$/;"	e	language:C++	enum:yytokentype
 SYNTAX_SPECIFIER	src/yy_syn.tab.c	/^    SYNTAX_SPECIFIER = 260,$/;"	e	language:C	enum:yytokentype	file:
 SYNTAX_VALUE	src/yy_syn.y	/^SYNTAX_VALUE :$/;"	l	language:YACC
@@ -570,10 +545,9 @@ TABLE	src/docGenerate.c	/^    TABLE = 1,$/;"	e	language:C	enum:__anon3	file:
 TRAP	include/type.h	/^    TRAP,$/;"	e	language:C++	enum:unitType
 TRAP	src/yy_syn.y	/^TRAP :$/;"	l	language:YACC
 TRAP_HEAD	src/yy_syn.y	/^TRAP_HEAD :$/;"	l	language:YACC
-TRAP_SPECIFIER	include/type.h	/^    TRAP_SPECIFIER = 276,$/;"	e	language:C++	enum:yytokentype
 TRAP_SPECIFIER	include/yy_syn.tab.h	/^    TRAP_SPECIFIER = 276,$/;"	e	language:C++	enum:yytokentype
 TRAP_SPECIFIER	src/yy_syn.tab.c	/^    TRAP_SPECIFIER = 276,$/;"	e	language:C	enum:yytokentype	file:
-TYPE	include/type.h	/^    TYPE = 281,$/;"	e	language:C++	enum:yytokentype
+TRUE	include/type.h	19;"	d	language:C++
 TYPE	include/yy_syn.tab.h	/^    TYPE = 281,$/;"	e	language:C++	enum:yytokentype
 TYPE	src/yy_syn.tab.c	/^    TYPE = 281,$/;"	e	language:C	enum:yytokentype	file:
 TargetPdfFile	src/options.c	/^    TargetPdfFile,$/;"	e	language:C	enum:optionNumber	file:
@@ -656,7 +630,6 @@ YYSTYPE_IS_TRIVIAL	src/yy_syn.tab.c	150;"	d	language:C	file:
 YYTABLES_NAME	src/lexer.c	2110;"	d	language:C	file:
 YYTABLE_NINF	src/yy_syn.tab.c	507;"	d	language:C	file:
 YYTERROR	src/yy_syn.tab.c	655;"	d	language:C	file:
-YYTOKENTYPE	include/type.h	32;"	d	language:C++
 YYTOKENTYPE	include/yy_syn.tab.h	45;"	d	language:C++
 YYTOKENTYPE	src/yy_syn.tab.c	114;"	d	language:C	file:
 YYTRANSLATE	src/yy_syn.tab.c	421;"	d	language:C	file:
@@ -674,7 +647,6 @@ YY_BREAK	src/lexer.c	821;"	d	language:C	file:
 YY_BUFFER_EOF_PENDING	src/lexer.c	244;"	d	language:C	file:
 YY_BUFFER_NEW	src/lexer.c	232;"	d	language:C	file:
 YY_BUFFER_NORMAL	src/lexer.c	233;"	d	language:C	file:
-YY_BUFFER_STATE	include/dispatcher.h	/^typedef struct yy_buffer_state * YY_BUFFER_STATE;$/;"	t	language:C++	typeref:struct:yy_buffer_state
 YY_BUFFER_STATE	include/lexer.h	/^typedef struct yy_buffer_state *YY_BUFFER_STATE;$/;"	t	language:C++	typeref:struct:yy_buffer_state
 YY_BUFFER_STATE	src/lexer.c	/^typedef struct yy_buffer_state *YY_BUFFER_STATE;$/;"	t	language:C	typeref:struct:yy_buffer_state	file:
 YY_BUF_SIZE	include/lexer.h	117;"	d	language:C++
@@ -758,23 +730,28 @@ _MIB2DOC_TYPE_H_	include/type.h	6;"	d	language:C++
 _Noreturn	src/yy_syn.tab.c	241;"	d	language:C	file:
 _Noreturn	src/yy_syn.tab.c	243;"	d	language:C	file:
 _OPTIONS_H	include/options.h	2;"	d	language:C++
+_SYMBOLTBL_H_	include/symbolTbl.h	2;"	d	language:C++
 _UTIL_H	include/util.h	2;"	d	language:C++
 __STDC_LIMIT_MACROS	include/lexer.h	44;"	d	language:C++
 __STDC_LIMIT_MACROS	src/lexer.c	40;"	d	language:C	file:
 alloca	src/yy_syn.tab.c	288;"	d	language:C	file:
 appendQueue	src/queue.c	/^int appendQueue(mibNodeInfoQueue *q, tableInfo *pData) {$/;"	f	language:C
+base	include/stack.h	/^    unsigned char *base;$/;"	m	language:C++	struct:identStack
 beginFrom	src/docGenerate.c	/^char *beginFrom;$/;"	v	language:C
 beginOid	src/docGenerate.c	/^int beginOid;$/;"	v	language:C
-cSpace	include/type.h	15;"	d	language:C++
+buffer	include/stack.h	/^    unsigned char *buffer;$/;"	m	language:C++	struct:identStack
+bufferInfo	include/dispatcher.h	/^    YY_BUFFER_STATE bufferInfo;$/;"	m	language:C++	struct:switchInfo
+bufferSize	include/stack.h	/^    int bufferSize;$/;"	m	language:C++	struct:identStack
+cSpace	include/type.h	22;"	d	language:C++
 child	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *child;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode::mibObjectTreeNode
 collectInfo	include/dispatcher.h	/^typedef struct collectInfo {$/;"	s	language:C++
 collectInfo	include/dispatcher.h	/^} collectInfo;$/;"	t	language:C++	typeref:struct:collectInfo
 collectInfoInit	src/dispatcher.c	/^static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo) {$/;"	f	language:C	file:
 const	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	10;"	d	language:C	file:
-containerOf	include/type.h	22;"	d	language:C++
+containerOf	include/type.h	29;"	d	language:C++
 count	include/queue.h	/^    int count;$/;"	m	language:C++	struct:mibNodeInfoQueue
 counter	include/dispatcher.h	/^    int counter;$/;"	m	language:C++	struct:switchingState
-currentModule	include/dispatcher.h	/^    char *currentModule;$/;"	m	language:C++	struct:switchingState
+currentSwitchInfo	include/dispatcher.h	/^    switchInfo currentSwitchInfo;$/;"	m	language:C++	struct:switchingState
 currentTable	src/main.c	/^char currentTable[SIZE_OF_CURRENT_TABLE];$/;"	v	language:C
 currentTable	src/mibTreeGen.c	/^char currentTable[64];$/;"	v	language:C
 deal_with_sequence	src/mibTreeGen.c	/^void deal_with_sequence() {}$/;"	f	language:C
@@ -790,8 +767,8 @@ dispatch	src/dispatcher.c	/^int dispatch(dispatch_type disType, dispatchParam *p
 dispatchInit	src/dispatcher.c	/^int dispatchInit() {$/;"	f	language:C
 dispatchMakeChoice	src/dispatcher.c	/^static int dispatchMakeChoice(dispatch_type dType) {$/;"	f	language:C	file:
 dispatchMode	src/dispatcher.c	/^dispatch_mode dispatchMode;$/;"	v	language:C
-dispatchParam	include/type.h	/^typedef struct dispatchParam {$/;"	s	language:C++
-dispatchParam	include/type.h	/^} dispatchParam;$/;"	t	language:C++	typeref:struct:dispatchParam
+dispatchParam	include/dispatcher.h	/^typedef struct dispatchParam {$/;"	s	language:C++
+dispatchParam	include/dispatcher.h	/^} dispatchParam;$/;"	t	language:C++	typeref:struct:dispatchParam
 dispatchParamNext	src/list.c	/^dispatchParam * dispatchParamNext(dispatchParam *disparam) {$/;"	f	language:C
 dispatchParamPrev	src/list.c	/^dispatchParam * dispatchParamPrev(dispatchParam *disparam) {$/;"	f	language:C
 dispatch_mode	include/dispatcher.h	/^typedef enum dispatch_mode {$/;"	g	language:C++
@@ -800,7 +777,7 @@ dispatch_type	include/dispatcher.h	/^typedef enum dispatch_type {$/;"	g	language
 dispatch_type	include/dispatcher.h	/^} dispatch_type;$/;"	t	language:C++	typeref:enum:dispatch_type
 docGenerate	src/docGenerate.c	/^static int docGenerate(void *arg, mibObjectTreeNode *node) {$/;"	f	language:C	file:
 documentGen	src/docGenerate.c	/^int documentGen(mibObjectTreeNode *root, FILE *writeTo) {$/;"	f	language:C
-elementType	include/type.h	/^enum elementType {$/;"	g	language:C++
+elementType	include/list.h	/^enum elementType {$/;"	g	language:C++
 entryRecognize	src/docGenerate.c	/^static int entryRecognize(char *buffer, int size) {$/;"	f	language:C	file:
 errorType	include/type.h	/^typedef enum errorType {$/;"	g	language:C++
 errorType	include/type.h	/^} errorType;$/;"	t	language:C++	typeref:enum:errorType
@@ -834,6 +811,7 @@ flex_uint8_t	src/lexer.c	/^typedef unsigned char flex_uint8_t; $/;"	t	language:C
 fontSize	include/options.h	/^    int fontSize;$/;"	m	language:C++	struct:options
 found	include/dispatcher.h	/^    int found;$/;"	m	language:C++	struct:identList
 genericStack	include/stack.h	/^} genericStack;$/;"	t	language:C++	typeref:struct:identStack
+genericStackConstruct	src/stack.c	/^int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize) {$/;"	f	language:C
 getCUrrentBufferState	src/lexer.c	/^YY_BUFFER_STATE * getCUrrentBufferState() {$/;"	f	language:C
 getIdentFromInfo	src/mibTreeObjTree.c	/^char * getIdentFromInfo(mibObjectTreeNode *node) {$/;"	f	language:C
 getOidFromInfo	src/mibTreeObjTree.c	/^char *getOidFromInfo(mibObjectTreeNode *node) {$/;"	f	language:C
@@ -845,14 +823,13 @@ head	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *head;$/;"	m	langua
 head	include/queue.h	/^    int head;$/;"	m	language:C++	struct:mibNodeInfoQueue
 helpInfoPrint	src/options.c	/^static void helpInfoPrint() {}$/;"	f	language:C	file:
 ident	include/mibTreeObjTree.h	/^    char *ident;$/;"	m	language:C++	struct:mibNodeInfo
-ident	include/type.h	/^    char *ident;$/;"	m	language:C++	struct:leaveMeta_t
+ident	include/symbolTbl.h	/^    char *ident;$/;"	m	language:C++	struct:leaveMeta_t
 identList	include/dispatcher.h	/^typedef struct identList {$/;"	s	language:C++
 identList	include/dispatcher.h	/^} identList;$/;"	t	language:C++	typeref:struct:identList
 identStack	include/stack.h	/^typedef struct identStack {$/;"	s	language:C++
 identifier	include/docGenerate.h	/^    char *identifier;$/;"	m	language:C++	struct:tableInfo
 identifier	include/mibTreeObjTree.h	/^    char *identifier;$/;"	m	language:C++	struct:mibObjectTreeNode
-importStack	include/dispatcher.h	/^    YY_BUFFER_STATE importStack[MAX_INCLUDE_DEPTH];$/;"	m	language:C++	struct:switchingState
-importStackIndex	include/dispatcher.h	/^    int importStackIndex;$/;"	m	language:C++	struct:switchingState
+importInfo	include/dispatcher.h	/^    collectInfo importInfo;$/;"	m	language:C++	struct:switchInfo
 incPathList	include/options.h	/^typedef struct incPathList {$/;"	s	language:C++
 incPathList	include/options.h	/^} incPathList;$/;"	t	language:C++	typeref:struct:incPathList
 includePath	include/options.h	/^    incPathList includePath;$/;"	m	language:C++	struct:options
@@ -879,16 +856,17 @@ info_version_internal	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char co
 info_version_internal	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version_internal[] = {$/;"	v	language:C++
 insert_MibTree	src/mibTreeObjTree.c	/^int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ident) {$/;"	f	language:C
 isInitilized	src/docGenerate.c	/^int isInitilized;$/;"	v	language:C
+isNeedSwitchInit	src/dispatcher.c	/^static unsigned char isNeedSwitchInit = TRUE;$/;"	v	language:C	file:
 isNode	include/mibTreeObjTree.h	/^    int isNode;$/;"	m	language:C++	struct:mibObjectTreeNode
-isNullPtr	include/type.h	20;"	d	language:C++
+isNullPtr	include/type.h	27;"	d	language:C++
 isQueueEmpty	src/queue.c	/^static int isQueueEmpty(mibNodeInfoQueue *q) {$/;"	f	language:C	file:
 isQueueFull	src/queue.c	/^static int isQueueFull(mibNodeInfoQueue *q) {$/;"	f	language:C	file:
 laTexStrBuffer	src/docGenerate.c	/^char *laTexStrBuffer;$/;"	v	language:C
 latexHeaderGen	src/docGenerate.c	/^static int latexHeaderGen() {}$/;"	f	language:C	file:
 latexTailGen	src/docGenerate.c	/^static int latexTailGen() {}$/;"	f	language:C	file:
-leaveMeta	include/type.h	/^       leaveMeta_t leaveMeta;$/;"	m	language:C++	union:symbol_t::__anon1
-leaveMeta_t	include/type.h	/^typedef struct leaveMeta_t {$/;"	s	language:C++
-leaveMeta_t	include/type.h	/^} leaveMeta_t;$/;"	t	language:C++	typeref:struct:leaveMeta_t
+leaveMeta	include/symbolTbl.h	/^       leaveMeta_t leaveMeta;$/;"	m	language:C++	union:symbol_t::__anon1
+leaveMeta_t	include/symbolTbl.h	/^typedef struct leaveMeta_t {$/;"	s	language:C++
+leaveMeta_t	include/symbolTbl.h	/^} leaveMeta_t;$/;"	t	language:C++	typeref:struct:leaveMeta_t
 lexBufferSwitching	src/dispatcher.c	/^int lexBufferSwitching(char *newModule) {$/;"	f	language:C
 listNode	include/list.h	/^typedef struct listNode {$/;"	s	language:C++
 listNode	include/list.h	/^} listNode;$/;"	t	language:C++	typeref:struct:listNode
@@ -929,25 +907,25 @@ mibObjectTreeInit	src/mibTreeObjTree.c	/^void mibObjectTreeInit(mibObjectTreeNod
 mibObjectTreeNode	include/mibTreeObjTree.h	/^typedef struct mibObjectTreeNode {$/;"	s	language:C++
 mibObjectTreeNode	include/mibTreeObjTree.h	/^} mibObjectTreeNode;$/;"	t	language:C++	typeref:struct:mibObjectTreeNode
 mibObjectTreeRoot	src/mibTreeObjTree.c	/^mibObjectTreeNode mibObjectTreeRoot;$/;"	v	language:C
+mibObjectTreeRoot	src/unitTest/basicDataStruct_Test.c	/^mibObjectTreeNode mibObjectTreeRoot;$/;"	v	language:C
 mibTreeLeaveAdd	src/mibTreeGen.c	/^static int mibTreeLeaveAdd(char *ident, char *type,$/;"	f	language:C	file:
 mibTreeNodeAdd	src/mibTreeGen.c	/^static int mibTreeNodeAdd(char *ident, char *oid, char *parent) {$/;"	f	language:C	file:
 mibTree_test	src/unitTest/basicDataStruct_Test.c	/^static void mibTree_test(void **state) {$/;"	f	language:C	file:
 miscInit	src/misc.c	/^void miscInit() {$/;"	f	language:C
 modName	include/dispatcher.h	/^    char *modName;$/;"	m	language:C++	struct:collectInfo
-modName	include/type.h	/^    char *modName;$/;"	m	language:C++	struct:symbolTable
-modStack	include/dispatcher.h	/^    genericStack *modStack;$/;"	m	language:C++	struct:switchingState
+modName	include/symbolTbl.h	/^    char *modName;$/;"	m	language:C++	struct:symbolTable
 next	include/list.h	/^    struct listNode *next;$/;"	m	language:C++	struct:listNode	typeref:struct:listNode::listNode
+node	include/dispatcher.h	/^    listNode node;$/;"	m	language:C++	struct:dispatchParam
 node	include/dispatcher.h	/^    listNode node;$/;"	m	language:C++	struct:identList
 node	include/mibTreeGen.h	/^    listNode node;$/;"	m	language:C++	struct:targetSymbolList
 node	include/options.h	/^    listNode node;$/;"	m	language:C++	struct:incPathList
-node	include/type.h	/^    listNode node;$/;"	m	language:C++	struct:dispatchParam
 nodeCmp	src/mibTreeObjTree.c	/^int nodeCmp(void *arg, mibObjectTreeNode *node) {$/;"	f	language:C
-nodeIdent	include/type.h	/^    char *nodeIdent;$/;"	m	language:C++	struct:nodeMeta_t
+nodeIdent	include/symbolTbl.h	/^    char *nodeIdent;$/;"	m	language:C++	struct:nodeMeta_t
 nodeInfo	include/mibTreeObjTree.h	/^    mibNodeInfo *nodeInfo;$/;"	m	language:C++	struct:mibInfo
-nodeMeta	include/type.h	/^       nodeMeta_t nodeMeta;$/;"	m	language:C++	union:symbol_t::__anon1
-nodeMeta_t	include/type.h	/^typedef struct nodeMeta_t {$/;"	s	language:C++
-nodeMeta_t	include/type.h	/^} nodeMeta_t;$/;"	t	language:C++	typeref:struct:nodeMeta_t
-null	include/type.h	16;"	d	language:C++
+nodeMeta	include/symbolTbl.h	/^       nodeMeta_t nodeMeta;$/;"	m	language:C++	union:symbol_t::__anon1
+nodeMeta_t	include/symbolTbl.h	/^typedef struct nodeMeta_t {$/;"	s	language:C++
+nodeMeta_t	include/symbolTbl.h	/^} nodeMeta_t;$/;"	t	language:C++	typeref:struct:nodeMeta_t
+null	include/type.h	23;"	d	language:C++
 oid	include/docGenerate.h	/^    char *oid;$/;"	m	language:C++	struct:tableInfo
 oid	include/mibTreeObjTree.h	/^    char *oid;$/;"	m	language:C++	struct:mibNodeInfo
 oidComplement	src/mibTreeGen.c	/^static char * oidComplement(char *parent, char *suffix) {$/;"	f	language:C	file:
@@ -957,19 +935,19 @@ options	include/options.h	/^typedef struct options {$/;"	s	language:C++
 optionsInit	src/options.c	/^int optionsInit(int argc, char *argv[]) {$/;"	f	language:C
 optionsManager	src/options.c	/^options_t optionsManager;$/;"	v	language:C
 options_t	include/options.h	/^} options_t;$/;"	t	language:C++	typeref:struct:options
-param	include/type.h	/^    void *param;$/;"	m	language:C++	struct:dispatchParam
+param	include/dispatcher.h	/^    void *param;$/;"	m	language:C++	struct:dispatchParam
 paramMapping	src/options.c	/^static int paramMapping(char *param) {$/;"	f	language:C	file:
 parent	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *parent;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode::mibObjectTreeNode
-parent	include/type.h	/^    char *parent;$/;"	m	language:C++	struct:leaveMeta_t
-parentIdent	include/type.h	/^    char *parentIdent;$/;"	m	language:C++	struct:nodeMeta_t
+parent	include/symbolTbl.h	/^    char *parent;$/;"	m	language:C++	struct:leaveMeta_t
+parentIdent	include/symbolTbl.h	/^    char *parentIdent;$/;"	m	language:C++	struct:nodeMeta_t
 parent_MibTree	src/mibTreeObjTree.c	/^mibObjectTreeNode *parent_MibTree(mibObjectTreeNode *root, char *ident) {$/;"	f	language:C
 path	include/options.h	/^    char *path;$/;"	m	language:C++	struct:incPathList
-permission	include/type.h	/^    char *permission;$/;"	m	language:C++	struct:leaveMeta_t
-pop	src/stack.c	/^void *pop(genericStack *ps) {$/;"	f	language:C
+permission	include/symbolTbl.h	/^    char *permission;$/;"	m	language:C++	struct:leaveMeta_t
+pop	src/stack.c	/^int pop(genericStack *gStack, void *unit) {$/;"	f	language:C
 popByIndex	include/stack.h	36;"	d	language:C++
 prev	include/list.h	/^    struct listNode *prev;$/;"	m	language:C++	struct:listNode	typeref:struct:listNode::listNode
-push	src/stack.c	/^int push(genericStack *ps, void *ident) {$/;"	f	language:C
-pushByIndex	include/stack.h	19;"	d	language:C++
+push	src/stack.c	/^int push(genericStack *gStack, void *unit) {$/;"	f	language:C
+pushByIndex	include/stack.h	18;"	d	language:C++
 qnxnto	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v	language:C
 qnxnto	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v	language:C++
 rmSymFromIdentList	src/dispatcher.c	/^int rmSymFromIdentList(identList *listHead, char *symbolIdent) {$/;"	f	language:C
@@ -998,32 +976,35 @@ slicePrev	src/list.c	/^slice * slicePrev(slice *sli) {$/;"	f	language:C
 sliceRelease	src/list.c	/^bool sliceRelease(slice *sli) {$/;"	f	language:C
 sliceReset	src/list.c	/^bool sliceReset(slice *sli) {$/;"	f	language:C
 sliceStore	src/list.c	/^int sliceStore(slice *sliHead, slice *newSli) {$/;"	f	language:C
-sliceType	include/type.h	/^} sliceType;$/;"	v	language:C++	typeref:enum:elementType
+sliceType	include/list.h	/^} sliceType;$/;"	v	language:C++	typeref:enum:elementType
 sourceMibFilePath	include/options.h	/^    char *sourceMibFilePath;$/;"	m	language:C++	struct:options
-stack	include/stack.h	/^    void *stack[SIZE_OF_IDENT_STACK];$/;"	m	language:C++	struct:identStack
 state	include/dispatcher.h	/^    int state;$/;"	m	language:C++	struct:switchingState
 state	include/mibTreeGen.h	/^    int state;$/;"	m	language:C++	struct:targetSymbolList
 strDuplicate	src/lexDeal.c	/^char * strDuplicate(char *src) {$/;"	f	language:C
 stringToIdentList	src/util.c	/^int stringToIdentList(char *str, identList *list, char seperator) {$/;"	f	language:C
-suffix	include/type.h	/^    char *suffix;$/;"	m	language:C++	struct:leaveMeta_t
-suffix	include/type.h	/^    char *suffix;$/;"	m	language:C++	struct:nodeMeta_t
+suffix	include/symbolTbl.h	/^    char *suffix;$/;"	m	language:C++	struct:leaveMeta_t
+suffix	include/symbolTbl.h	/^    char *suffix;$/;"	m	language:C++	struct:nodeMeta_t
+swStack	include/dispatcher.h	/^    genericStack swStack;$/;"	m	language:C++	struct:switchingState
 swState	src/dispatcher.c	/^switchingState swState;$/;"	v	language:C
+switchInfo	include/dispatcher.h	/^typedef struct switchInfo {$/;"	s	language:C++
+switchInfo	include/dispatcher.h	/^} switchInfo;$/;"	t	language:C++	typeref:struct:switchInfo
+switchInit	src/dispatcher.c	/^static int switchInit() {$/;"	f	language:C	file:
 switchToModule	src/dispatcher.c	/^static int switchToModule(dispatchParam *param) {$/;"	f	language:C	file:
 switch_CurrentMod	src/dispatcher.c	/^char * switch_CurrentMod(char *modName, int len) {$/;"	f	language:C
 switchingState	include/dispatcher.h	/^typedef struct switchingState {$/;"	s	language:C++
 switchingState	include/dispatcher.h	/^} switchingState;$/;"	t	language:C++	typeref:struct:switchingState
 symCollectSlice	src/mibTreeGen.c	/^slice symCollectSlice;$/;"	v	language:C
-symErrorCode	include/type.h	/^typedef enum symErrorCode {$/;"	g	language:C++
-symErrorCode	include/type.h	/^} symErrorCode;$/;"	t	language:C++	typeref:enum:symErrorCode
-symIdent	include/type.h	/^    char *symIdent;$/;"	m	language:C++	struct:symbol_t
-symInfo	include/type.h	/^    } symInfo;$/;"	m	language:C++	struct:symbol_t	typeref:union:symbol_t::__anon1
+symErrorCode	include/symbolTbl.h	/^typedef enum symErrorCode {$/;"	g	language:C++
+symErrorCode	include/symbolTbl.h	/^} symErrorCode;$/;"	t	language:C++	typeref:enum:symErrorCode
+symIdent	include/symbolTbl.h	/^    char *symIdent;$/;"	m	language:C++	struct:symbol_t
+symInfo	include/symbolTbl.h	/^    } symInfo;$/;"	m	language:C++	struct:symbol_t	typeref:union:symbol_t::__anon1
 symName	include/dispatcher.h	/^    char *symName;$/;"	m	language:C++	struct:identList
-symNode	include/type.h	/^    listNode symNode;$/;"	m	language:C++	struct:symbol_t
+symNode	include/symbolTbl.h	/^    listNode symNode;$/;"	m	language:C++	struct:symbol_t
 symTable	src/mibTreeGen.c	/^symbolTable symTable;$/;"	v	language:C
 symTblError	src/list.c	/^symErrorCode symTblError;$/;"	v	language:C
-symTblNode	include/type.h	/^    listNode symTblNode;$/;"	m	language:C++	struct:symbolTable
-symType	include/type.h	/^    symbolType symType;$/;"	m	language:C++	struct:symbol_t
-symbol	include/type.h	/^    symbol_t *symbol;$/;"	m	language:C++	struct:symbolTable
+symTblNode	include/symbolTbl.h	/^    listNode symTblNode;$/;"	m	language:C++	struct:symbolTable
+symType	include/symbolTbl.h	/^    symbolType symType;$/;"	m	language:C++	struct:symbol_t
+symbol	include/symbolTbl.h	/^    symbol_t *symbol;$/;"	m	language:C++	struct:symbolTable
 symbolAdd	src/list.c	/^symbol_t * symbolAdd(symbolTable *symTbl, symbol_t *newSym, char *modName) {$/;"	f	language:C
 symbolCollectRoutine	src/mibTreeGen.c	/^int (*symbolCollectRoutine[SLICE_TYPE_MAXIMUM])(dispatchParam *);$/;"	v	language:C
 symbolCollect_BUILD_INNER_NODE	src/mibTreeGen.c	/^static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {$/;"	f	language:C	file:
@@ -1044,18 +1025,19 @@ symbolModuleAdd	src/list.c	/^symbolTable * symbolModuleAdd(symbolTable *tblRoot,
 symbolName	include/mibTreeGen.h	/^    char *symbolName;$/;"	m	language:C++	struct:targetSymbolList
 symbolNext	src/list.c	/^symbol_t * symbolNext(symbol_t *sym) {$/;"	f	language:C
 symbolPrev	src/list.c	/^symbol_t * symbolPrev(symbol_t *sym) {$/;"	f	language:C
+symbolSearching	src/list.c	/^int symbolSearching(symbolTable *symTblRoot, char *sym) {$/;"	f	language:C
 symbolSearchingByParent	src/list.c	/^int symbolSearchingByParent(symbolTable *symTblRoot, char *parent, symbol_t *sym) {$/;"	f	language:C
-symbolTable	include/type.h	/^typedef struct symbolTable {$/;"	s	language:C++
-symbolTable	include/type.h	/^} symbolTable;$/;"	t	language:C++	typeref:struct:symbolTable
+symbolTable	include/symbolTbl.h	/^typedef struct symbolTable {$/;"	s	language:C++
+symbolTable	include/symbolTbl.h	/^} symbolTable;$/;"	t	language:C++	typeref:struct:symbolTable
 symbolTableConstruct	src/list.c	/^symbolTable * symbolTableConstruct(char *name) {$/;"	f	language:C
 symbolTableNext	src/list.c	/^symbolTable * symbolTableNext(symbolTable *tbl) {$/;"	f	language:C
 symbolTablePrev	src/list.c	/^symbolTable * symbolTablePrev(symbolTable *tbl) {$/;"	f	language:C
 symbolTableSearch	src/list.c	/^symbolTable * symbolTableSearch(symbolTable *tblRoot, char *modName) {$/;"	f	language:C
 symbolTravel	src/list.c	/^symbol_t * symbolTravel(symbolTable *symTblRoot, int (*func)(symbol_t *sym, void *arg), void *arg) {$/;"	f	language:C
-symbolType	include/type.h	/^typedef enum symbolType {$/;"	g	language:C++
-symbolType	include/type.h	/^} symbolType;$/;"	t	language:C++	typeref:enum:symbolType
-symbol_t	include/type.h	/^typedef struct symbol_t {$/;"	s	language:C++
-symbol_t	include/type.h	/^} symbol_t;$/;"	t	language:C++	typeref:struct:symbol_t
+symbolType	include/symbolTbl.h	/^typedef enum symbolType {$/;"	g	language:C++
+symbolType	include/symbolTbl.h	/^} symbolType;$/;"	t	language:C++	typeref:enum:symbolType
+symbol_t	include/symbolTbl.h	/^typedef struct symbol_t {$/;"	s	language:C++
+symbol_t	include/symbolTbl.h	/^} symbol_t;$/;"	t	language:C++	typeref:struct:symbol_t
 symbols	include/dispatcher.h	/^    identList *symbols;$/;"	m	language:C++	struct:collectInfo
 tSymListHead	src/mibTreeGen.c	/^targetSymbolList tSymListHead;$/;"	v	language:C
 tableBuffer	include/queue.h	/^    tableInfo *tableBuffer[SIZE_OF_QUEUE];$/;"	m	language:C++	struct:mibNodeInfoQueue
@@ -1070,12 +1052,12 @@ tail	include/queue.h	/^    int tail;$/;"	m	language:C++	struct:mibNodeInfoQueue
 targetPdfPATH	include/options.h	/^    char *targetPdfPATH;$/;"	m	language:C++	struct:options
 targetSymbolList	include/mibTreeGen.h	/^typedef struct targetSymbolList {$/;"	s	language:C++
 targetSymbolList	include/mibTreeGen.h	/^} targetSymbolList;$/;"	t	language:C++	typeref:struct:targetSymbolList
-tokenType	include/type.h	/^} tokenType;$/;"	t	language:C++	typeref:enum:yytokentype
 top	include/stack.h	/^    int top;$/;"	m	language:C++	struct:identStack
 travel_MibTree	src/mibTreeObjTree.c	/^mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, $/;"	f	language:C
 type	include/docGenerate.h	/^    char *type;$/;"	m	language:C++	struct:tableInfo
 type	include/mibTreeObjTree.h	/^    char *type;$/;"	m	language:C++	struct:mibInfo
-type	include/type.h	/^    char *type;$/;"	m	language:C++	struct:leaveMeta_t
+type	include/symbolTbl.h	/^    char *type;$/;"	m	language:C++	struct:leaveMeta_t
+unitSize	include/stack.h	/^    int unitSize;$/;"	m	language:C++	struct:identStack
 unitType	include/type.h	/^typedef enum unitType {$/;"	g	language:C++
 unitType	include/type.h	/^} unitType;$/;"	t	language:C++	typeref:enum:unitType
 unput	src/lexer.c	182;"	d	language:C	file:
@@ -1278,7 +1260,6 @@ yytext_ptr	src/lexer.c	337;"	d	language:C	file:
 yytext_ptr	src/lexer.c	339;"	d	language:C	file:
 yytname	src/yy_syn.tab.c	/^static const char *const yytname[] =$/;"	v	language:C	file:
 yytnamerr	src/yy_syn.tab.c	/^yytnamerr (char *yyres, const char *yystr)$/;"	f	language:C	file:
-yytokentype	include/type.h	/^typedef enum yytokentype {$/;"	g	language:C++
 yytokentype	include/yy_syn.tab.h	/^  enum yytokentype$/;"	g	language:C++
 yytokentype	src/yy_syn.tab.c	/^  enum yytokentype$/;"	g	language:C	file:
 yytoknum	src/yy_syn.tab.c	/^static const yytype_uint16 yytoknum[] =$/;"	v	language:C	file:

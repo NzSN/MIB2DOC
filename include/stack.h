@@ -5,7 +5,6 @@
 #ifndef GL5610_MIB_DOC_GEN_STACK_H
 #define GL5610_MIB_DOC_GEN_STACK_H
 
-#define SIZE_OF_IDENT_STACK (128)
 #define IS_STACK_EMPTY(S) ((S)->top < 0)
 #define IS_STACK_FULL(S) ((S)->top >= SIZE_OF_IDENT_STACK-1)
 
@@ -16,13 +15,14 @@
  *     * TOP - index of TOP of stack
  *     * MAX - max index that can use for the stack
  */
-#define pushByIndex(STACK, ELEMENT, /* int */TOP, /* int */MAX) ({\
+#define pushByIndex(STACK_BASE, ELEMENT, /* int */TOP, /* int */MAX, /* int */UNIT_SIZE) ({\
     int ret;\
-    if (TOP >= MAX) {\
+    if (TOP >= MAX || TOP+UNIT_SIZE >= MAX) {\
         /* Stack is full just do nothing */\
         ret = 0;\
     } else {\
-        STACK[TOP++] = ELEMENT;\
+        TOP += UNIT_SIZE;\
+        memcpy(STACK_BASE - TOP, ELEMENT, UNIT_SIZE); \
         ret = 1;\
     }\
     ret;\
@@ -32,23 +32,32 @@
  * Parameter
  *     * STACK - pointer of stack
  *     * TOP - index of TOP of stack
- */
-#define popByIndex(STACK, /* int */TOP, retVal) ({\
+ */T
+#define popByIndex(STACK_BASE, /* int */TOP, UNIT, UNIT_SIZE) ({\
     int ret;\
     if (TOP <= 0) {\
         ret = 0;\
     } else {\
-        retVal = STACK[--TOP];\
+        memcpy(UNIT, STACK_BASE + TOP, UNIT_SIZE);\
+        TOP -= UNIT_SIZE;\
         ret = 1;\
     }\
     ret;\
 })
 
+// Note: genericStack can only buffer
+// only one class of objects, several class
+// of objects buffer into one genericStack 
+// is not supported.
 typedef struct identStack {
     int top;
-    void *stack[SIZE_OF_IDENT_STACK];
+    int bufferSize;
+    int unitSize;
+    unsigned char *base;
+    unsigned char *buffer;
 } genericStack;
 
+int genericStackConstruct();
 int push(genericStack *ps, void *ident);
 void *pop(genericStack *ps);
 

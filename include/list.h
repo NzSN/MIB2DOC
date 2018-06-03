@@ -8,6 +8,16 @@
 #include "type.h"
 #include <stdbool.h>
 
+enum elementType {
+    SLICE_IDENTIFIER = 6,
+    SLICE_TYPE,
+    SLICE_PERMISSION,
+    SLICE_DESCRIPTION,
+    SLICE_PARENT,
+    SLICE_OID_SUFFIX,
+    SLICE_TYPE_MAXIMUM
+} sliceType;
+
 typedef struct listNode {
     struct listNode *next;
     struct listNode *prev;
@@ -33,17 +43,5 @@ slice * sliceGet(slice *sli, int sliKey);
 int sliceStore(slice *sli, slice *next);
 bool sliceRelease(slice *sli);
 bool sliceReset(slice *sli);
-
-/* dispatchParam */
-dispatchParam * disParamConstruct(void *arg);
-dispatchParam * disParamStore(dispatchParam *head, dispatchParam *pl);
-dispatchParam * disParamRetrive(dispatchParam **head);
-
-/* symbol_t and SymbolTable */
-symbolTable * symbolModuleAdd(symbolTable *tblRoot, symbolTable *newTbl);
-symbol_t * symbolAdd(symbolTable *symTbl, symbol_t *newSym, char *modName);
-int symbolModSearching(char *modIdent);
-int symbolSearching(char *symIdent);
-
 
 #endif /* _MIB2DOC_LIST_H_ */

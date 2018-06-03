@@ -13,6 +13,7 @@
 #include "mibTreeGen.h"
 #include "queue.h"
 
+mibObjectTreeNode mibObjectTreeRoot;
 slice sliceContainer;
 char *sectionRecord[SIZE_OF_SECTION_RECORD];
 

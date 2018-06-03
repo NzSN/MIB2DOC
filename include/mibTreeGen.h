@@ -7,6 +7,7 @@
 
 #include "type.h"
 #include "list.h"
+#include "dispatcher.h"
 
 enum {
     SYMBOL_FOUND,
@@ -15,11 +16,9 @@ enum {
 
 typedef struct targetSymbolList {
     char *symbolName;
-    /* 
-     * VALUE : 
-     *     1. SYMBOL_FOUND
-     *     2. SYMBOL_NOT_FOUND
-     */
+     // Value : 
+     //     1. SYMBOL_FOUND
+     //     2. SYMBOL_NOT_FOUND     
     int state;
     listNode node;
 } targetSymbolList;

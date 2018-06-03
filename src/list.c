@@ -102,10 +102,9 @@ int listNodeTravel(listNode *head, listNodeTask func, void *arg) {
 slice * sliceConstruct(int sliKey, char *sliVal) {
     slice *sli = (slice *)malloc(sizeof(slice));
 
-    memset(newSlice, 0, sizeof(slice));
     sli->sliKey = sliKey;
     sli->sliVal = sliVal;
-
+    sli->sliNode = 0;
     return sli;
 }
 
@@ -388,6 +387,10 @@ static int symbolIsParentEqual(symbol_t *sym, void *arg) {
     }
 
     return SYM_TRAVEL_CONTINUE;
+}
+
+int symbolSearching(symbolTable *symTblRoot, char *sym) {
+    return 0;
 }
 
 int symbolSearchingByParent(symbolTable *symTblRoot, char *parent, symbol_t *sym) {

@@ -5,24 +5,35 @@
 #include "stack.h"
 #include "type.h"
 
-int push(genericStack *ps, void *ident) {
-    int top;
-    if (isNullPtr(ps) || isNullPtr(ident))
+int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize) {
+    if (isNullPtr(gStack)) {
         return -1;
-    top = ps->top;
-    pushByIndex(ps->stack, ident, top, SIZE_OF_IDENT_STACK-1);
+    }
+    gStack->top = 0;
+    gStack->unitSize = unitSize;
+    gStack->bufferSize = bufferSize;
+    gStack->buffer = (unsigned char *)malloc(size);
+    gStack->base = gStack->buffer + bufferSize;
     return 0;
 }
 
-void *pop(genericStack *ps) {
+int push(genericStack *gStack, void *unit) {
+    if (isNullPtr(gStack) || isNullPtr(unit))
+        return -1;
+
+    pushByIndex(gStack->base, unit, gStack->top, 
+            gStack->bufferSize-1, gStack->unitSize);
+    return 0;
+}
+
+int pop(genericStack *gStack, void *unit) {
     int top;
-    void *retVal;
 
     if (isNullPtr(ps))
-        return NULL;
+        return -1;
 
     top = ps->top;
-    popByIndex(ps->stack, top, retVal);
-    return retVal;
+    popByIndex(gStack->base, gStack->top, unit, gStack->unitSize);
+    return 0;
 }
 

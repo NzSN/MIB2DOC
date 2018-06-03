@@ -9,6 +9,7 @@
 
 /* Declaration Section */
 dispatch_mode dispatchMode;
+static unsigned char isNeedSwitchInit = TRUE;
 static int dispatchMakeChoice(dispatch_type dType);
 static int switchToModule(dispatchParam *param);
 extern slice sliceContainer;
@@ -43,6 +44,8 @@ int dispatch(dispatch_type disType, dispatchParam *param) {
             symbolCollecting((int)disParamRetrive(&param)->param, param);
             break;
         case SWITCH_TO_INC_BUFFER:
+            if (isNeedSwitchInit)
+                switchInit();
             ret = switchToModule(param);
             break;
         case IGNORE:
@@ -69,6 +72,20 @@ static int dispatchMakeChoice(dispatch_type dType) {
     }
 
     return choice;
+}
+
+// Following codes is added for import feature.
+static int switchInit() {
+    int retVal;
+    
+    swState.state = DISPATCH_MODE_SYMBOL_COLLECTING;
+    swState.counter = 0;
+    swState.currentSwitchInfo.bufferInfo = YY_CURRENT_BUFFER;
+    memset(&swState.currentSwitchInfo.importInfo, 0, sizeof(collectInfo));
+    genericStackConstruct(&swState.swStack, 128 * sizeof(switchInfo));    
+    
+    isNeedSwitchInit = FALSE;
+    return retVal;
 }
 
 static int switchToModule(dispatchParam *param) {
