@@ -471,4 +471,8 @@ extern int yylex (void);
 
 #line 473 "include/lexer.h"
 #undef yyIN_HEADER
+
+/* User function declaration */
+YY_BUFFER_STATE* getCurrentBufferState();
+
 #endif /* yyHEADER_H */

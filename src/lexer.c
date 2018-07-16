@@ -2118,7 +2118,7 @@ int yywrap() {
     return 1;
 }
 
-YY_BUFFER_STATE * getCUrrentBufferState() {
+YY_BUFFER_STATE * getCurrentBufferState() {
     return YY_CURRENT_BUFFER;
 }
 

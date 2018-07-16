@@ -32,7 +32,7 @@
  * Parameter
  *     * STACK - pointer of stack
  *     * TOP - index of TOP of stack
- */T
+ */
 #define popByIndex(STACK_BASE, /* int */TOP, UNIT, UNIT_SIZE) ({\
     int ret;\
     if (TOP <= 0) {\

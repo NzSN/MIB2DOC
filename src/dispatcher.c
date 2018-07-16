@@ -8,13 +8,14 @@
 
 
 /* Declaration Section */
-dispatch_mode dispatchMode;
-static unsigned char isNeedSwitchInit = TRUE;
 static int dispatchMakeChoice(dispatch_type dType);
 static int switchToModule(dispatchParam *param);
-extern slice sliceContainer;
 static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo);
+static int switchInit();
 /* Global */
+extern slice sliceContainer;
+dispatch_mode dispatchMode;
+static unsigned char isNeedSwitchInit = TRUE;
 switchingState swState;
 
 /* Definition Section */
@@ -24,18 +25,17 @@ int dispatchInit() {
 }
 
 int dispatch(dispatch_type disType, dispatchParam *param) {
-
-    errorType ret = ERROR_NONE;
+    errorType ret =  ERROR_NONE;
 
     if (isNullPtr(param)) {
         return ERROR_NULL_REF;
     }
-
+    
     switch (dispatchMakeChoice(disType)) {
         case DISPATCH_PARAM_STAGE:
-            sliceStore(&sliceContainer, 
-                sliceConstruct((int)disParamRetrive(&param)->param,
-                disParamRetrive(&param)->param));
+            sliceStore(&sliceContainer,
+                    sliceConstruct((int)disParamRetrive(&param)->param,
+                        disParamRetrive(&param)->param));
             break;
         case MIBTREE_GENERATION:
             mibObjGen((int)disParamRetrive(&param)->param);
@@ -77,13 +77,13 @@ static int dispatchMakeChoice(dispatch_type dType) {
 // Following codes is added for import feature.
 static int switchInit() {
     int retVal;
-    
+
     swState.state = DISPATCH_MODE_SYMBOL_COLLECTING;
     swState.counter = 0;
-    swState.currentSwitchInfo.bufferInfo = YY_CURRENT_BUFFER;
+    swState.currentSwitchInfo.bufferInfo = getCurrentBufferState();
     memset(&swState.currentSwitchInfo.importInfo, 0, sizeof(collectInfo));
-    genericStackConstruct(&swState.swStack, 128 * sizeof(switchInfo));    
-    
+    genericStackConstruct(&swState.swStack, 128 * sizeof(switchInfo), sizeof(switchInfo));
+
     isNeedSwitchInit = FALSE;
     return retVal;
 }
@@ -100,15 +100,13 @@ static int switchToModule(dispatchParam *param) {
     moduleName = disParamRetrive(&param);
     sCollection = disParamRetrive(&param);
 
-    cInfo = (collectInfo *)malloc(sizeof(collectInfo));
-    collectInfoInit(moduleName, sCollection, cInfo);
+    // Step 1: Push currentSwitchInfo into stack
+    pushByIndex(SW_STACK_BASE(swState), SW_CUR_BUFFER_INFO_REF(swState), SW_STACK_TOP(swState), SW_STACK_BUFFER_SIZE(swState), SW_STACK_UNIT_SIZE(swState));
+    
+    // Step 2: Update currentSwitchInfo
 
-    push(swState.modStack, cInfo);
-    pushByIndex(swState.importStack,
-                getCurrentBufferState(),
-                swState.importStackIndex,
-                MAX_INCLUDE_DEPTH-1);
-    if (lexBufferSwitching(moduleName) == error) {
+
+    if (lexBufferSwitching(moduleName) == ERROR_GENERIC) {
         /* Terminate whole system */
         return ABORT;
     }
@@ -119,7 +117,7 @@ int lexBufferSwitching(char *newModule) {
     int index = 0;
     const char *path;
     char *targetModulePath;
-    
+
     while (path = getOption_includePath(&index)) {
         targetModulePath = (char *)malloc(strlen(path)+strlen(newModule)+1);
         strncpy(targetModulePath, path, strlen(path));
@@ -132,7 +130,7 @@ int lexBufferSwitching(char *newModule) {
         yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
     }
     if (path == null) {
-        return error;
+        return ERROR_GENERIC;
     }
     return ERROR_NONE;
 }
@@ -147,18 +145,18 @@ char * switch_CurrentMod(char *modName, int len) {
 #define SYMBOL_SEPERATOR ','
 
 static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo) {
-      identList *head;
+    identList *head;
 
-      if (isNullPtr(modName) || isNullPtr(sString) || isNullPtr(cInfo))
-          return -1;
+    if (isNullPtr(modName) || isNullPtr(sString) || isNullPtr(cInfo))
+        return -1;
 
-      head = (identList *)malloc(sizeof(identList));
-      stringToIdentList(sString, head, SYMBOL_SEPERATOR);
+    head = (identList *)malloc(sizeof(identList));
+    stringToIdentList(sString, head, SYMBOL_SEPERATOR);
 
-      cInfo->modName = modName;
-      cInfo->symbols = head;
+    cInfo->modName = modName;
+    cInfo->symbols = head;
 
-      return 0;
+    return 0;
 }
 
 int rmSymFromIdentList(identList *listHead, char *symbolIdent) {

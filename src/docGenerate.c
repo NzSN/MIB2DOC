@@ -37,9 +37,8 @@ static int latexHeaderGen();
 static int latexTailGen();
 int documentGen(mibObjectTreeNode *root, FILE *writeTo);
 static int docGenerate(void *arg, mibObjectTreeNode *root);
-
-/* static ** for test */ int tableRecognize(char *buffer, int size);
-/* static ** for test */ int entryRecognize(char *buffer, int size);
+static int tableRecognize(char *buffer, int size);
+static int entryRecognize(char *buffer, int size);
 
 int documentGen(mibObjectTreeNode *root, FILE *writeTo) {
     latexHeaderGen();

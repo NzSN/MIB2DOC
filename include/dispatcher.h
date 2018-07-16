@@ -53,6 +53,16 @@ typedef struct switchingState {
     genericStack swStack;
 } switchingState;
 
+#define SW_CUR_IMPORT(SW_STATE) (SW_STATE.currentSwitchInfo.importInfo)
+#define SW_CUR_IMPORT_REF(SW_STATE) (&SW_CUR_IMPORT(SW_STATE))
+#define SW_CUR_BUFFER_INFO(SW_STATE) (SW_STATE.currentSwitchInfo.bufferInfo)
+#define SW_CUR_BUFFER_INFO_REF(SW_STATE) (&SW_CUR_BUFFER_INFO(SW_STATE))
+
+#define SW_STACK_BASE(SW_STATE) (SW_STATE.swStack.base)
+#define SW_STACK_TOP(SW_STATE) (SW_STATE.swStack.top)
+#define SW_STACK_BUFFER_SIZE(SW_STATE) (SW_STATE.swStack.bufferSize)
+#define SW_STACK_UNIT_SIZE(SW_STATE) (SW_STATE.swStack.unitSize)
+
 extern dispatch_mode dispatchMode;
 extern switchingState swState;
 

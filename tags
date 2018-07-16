@@ -524,6 +524,14 @@ STRINGIFY_HELPER	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	308;"	d	langua
 STRINGIFY_HELPER	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	293;"	d	language:C++	file:
 SUFFIXES	Makefile	/^SUFFIXES =$/;"	m	language:Make
 SWITCH_TO_INC_BUFFER	include/dispatcher.h	/^    SWITCH_TO_INC_BUFFER,$/;"	e	language:C++	enum:dispatch_type
+SW_CUR_BUFFER_INFO	include/dispatcher.h	58;"	d	language:C++
+SW_CUR_BUFFER_INFO_REF	include/dispatcher.h	59;"	d	language:C++
+SW_CUR_IMPORT	include/dispatcher.h	56;"	d	language:C++
+SW_CUR_IMPORT_REF	include/dispatcher.h	57;"	d	language:C++
+SW_STACK_BASE	include/dispatcher.h	61;"	d	language:C++
+SW_STACK_BUFFER_SIZE	include/dispatcher.h	63;"	d	language:C++
+SW_STACK_TOP	include/dispatcher.h	62;"	d	language:C++
+SW_STACK_UNIT_SIZE	include/dispatcher.h	64;"	d	language:C++
 SYMBOL_COLLECTING	include/dispatcher.h	/^    SYMBOL_COLLECTING,$/;"	e	language:C++	enum:dispatch_type
 SYMBOL_FOUND	include/mibTreeGen.h	/^    SYMBOL_FOUND,$/;"	e	language:C++	enum:__anon2
 SYMBOL_NOT_FOUND	include/mibTreeGen.h	/^    SYMBOL_NOT_FOUND$/;"	e	language:C++	enum:__anon2
@@ -812,7 +820,7 @@ fontSize	include/options.h	/^    int fontSize;$/;"	m	language:C++	struct:options
 found	include/dispatcher.h	/^    int found;$/;"	m	language:C++	struct:identList
 genericStack	include/stack.h	/^} genericStack;$/;"	t	language:C++	typeref:struct:identStack
 genericStackConstruct	src/stack.c	/^int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize) {$/;"	f	language:C
-getCUrrentBufferState	src/lexer.c	/^YY_BUFFER_STATE * getCUrrentBufferState() {$/;"	f	language:C
+getCurrentBufferState	src/lexer.c	/^YY_BUFFER_STATE * getCurrentBufferState() {$/;"	f	language:C
 getIdentFromInfo	src/mibTreeObjTree.c	/^char * getIdentFromInfo(mibObjectTreeNode *node) {$/;"	f	language:C
 getOidFromInfo	src/mibTreeObjTree.c	/^char *getOidFromInfo(mibObjectTreeNode *node) {$/;"	f	language:C
 getOption_SourceMibFilePath	src/options.c	/^const char * getOption_SourceMibFilePath() {$/;"	f	language:C

@@ -16,7 +16,6 @@ typedef struct tableInfo {
 } tableInfo;
 
 int documentGen(mibObjectTreeNode *root, FILE *writeTo);
-int tableRecognize(char *buffer, int size);
 
 #endif /* UNIT_TEST_DOCGENERATE_H */
 
