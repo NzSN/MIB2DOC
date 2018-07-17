@@ -3,6 +3,6 @@
 
 #include "dispatcher.h"
 
-void stringToIdentList(char *str, identList *list, char *seperator);
+void stringToIdentList(char *str, identList *list, char seperator);
 
 #endif /* _UTIL_H_ */

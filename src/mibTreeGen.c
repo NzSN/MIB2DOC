@@ -200,7 +200,7 @@ int upperTreeGeneration(symbolTable *symTbl) {
     sym = (symbol_t *)malloc(sizeof(symbol_t));
     memset(sym, 0, sizeof(symbol_t));
     while (stack.top > 0) {
-        current = (mibObjectTreeNode *)pop(&stack);
+        pop(&stack, current);
         if (symbolSearchingByParent(&symTable, current->identifier, sym)) {
             child = containerOf(sym->symNode.next, symbol_t, symNode);
             while (child != NULL) {
@@ -309,9 +309,7 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
 
 MOD_STACK_OP_REMOVE:
     /* Need to remove the symbol found from list in the modStack */
-    pCollect = (collectInfo *)swState.modStack[swState.importStackIndex];
-    listHead = pCollect.symbols;
-    retVal = rmSymFromIdentList(listHead, symbolIdent);
+    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
     sliceRelease(&symCollectSlice);
     return retVal;
 }
@@ -319,30 +317,32 @@ MOD_STACK_OP_REMOVE:
 
 static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
     int retVal;
-    collectInfo *pCollect = swState.modStack;
-    retVal = rmSymFromIdentList(swState.modStack[swState.importStackIndex].symbols, symbolIdent);
+    char *symbolIdent = sliceGet(&symCollectSlice, SLICE_IDENTIFIER)->sliVal;
+    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
     sliceRelease(&symCollectSlice);
     return retVal;
 }
 
 static int symbolCollect_BUILD_LEAVE_NODE(dispatchParam *param) {
     int retVal;
-    collectInfo *collect;
-    retVal = rmSymFromIdentList(swState.modStack[swState.importStackIndex].symbols, symbolIdent);
+    char *symbolIdent = sliceGet(&symCollectSlice, SLICE_IDENTIFIER)->sliVal;
+    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
     sliceRelease(&symCollectSlice);
     return retVal;
 }
 
 static int symbolCollect_BUILD_SEQUENCE(dispatchParam *param) {
     int retVal;
-    retVal = rmSymFromIdentList(swState.modStack[swState.importStackIndex].symbols, symbolIdent);
+    char *symbolIdent = sliceGet(&symCollectSlice, SLICE_IDENTIFIER)->sliVal;
+    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
     sliceRelease(&symCollectSlice);
     return retVal;
 }
 
 static int symbolCollect_BUILD_SMI_DEF(dispatchParam *param) {
     int retVal;
-    retVal = rmSymFromIdentList(swState.modStack[swState.importStackIndex].symbols, symbolIdent);
+    char *symbolIdent = sliceGet(&symCollectSlice, SLICE_IDENTIFIER)->sliVal;
+    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
     sliceRelease(&symCollectSlice);
     return retVal;
 }

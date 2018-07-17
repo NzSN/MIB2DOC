@@ -58,7 +58,7 @@ typedef struct identStack {
 } genericStack;
 
 int genericStackConstruct();
-int push(genericStack *ps, void *ident);
-void *pop(genericStack *ps);
+int push(genericStack *ps, void *unit);
+int pop(genericStack *ps, void *unit);
 
 #endif /* GL5610_MIB_DOC_GEN_STACK_H */

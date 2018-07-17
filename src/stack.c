@@ -12,7 +12,7 @@ int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize) {
     gStack->top = 0;
     gStack->unitSize = unitSize;
     gStack->bufferSize = bufferSize;
-    gStack->buffer = (unsigned char *)malloc(size);
+    gStack->buffer = (unsigned char *)malloc(bufferSize);
     gStack->base = gStack->buffer + bufferSize;
     return 0;
 }
@@ -29,10 +29,10 @@ int push(genericStack *gStack, void *unit) {
 int pop(genericStack *gStack, void *unit) {
     int top;
 
-    if (isNullPtr(ps))
+    if (isNullPtr(gStack) || isNullPtr(unit))
         return -1;
 
-    top = ps->top;
+    top = gStack->top;
     popByIndex(gStack->base, gStack->top, unit, gStack->unitSize);
     return 0;
 }

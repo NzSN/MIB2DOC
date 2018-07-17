@@ -3,11 +3,7 @@
 
 %{
     #include "yy_syn.tab.h"
-    #include "dispatcher.h"
-
-    #define YYSTYPE char*
-    extern YYSTYPE yylval;
-    extern switchingState swState;
+    #include "lexDeal.h"
 %}
 
 %%
@@ -59,22 +55,19 @@ DESCRIPTION                         { return DESC_SPECIFIER; }
 ([a-zA-Z0-9]|"-")+                  { yylval = strDuplicate(yytext); return IDENTIFIER; }
 
 <<EOF>>                             {
-                                        if (--swState.importStackIndex < 0) {
-                                            yyterminate();
-                                        } else {
-                                            yy_delete_buffer(YY_CURRENT_BUFFER);
-                                            yy_switch_to_buffer(swState.importStack[swState.importStackIndex]);
-                                        }
+                                        //if (--swState.counter < 0) {
+                                        //    yyterminate();
+                                        //} else {
+                                        //    yy_delete_buffer(SW_CUR_BUFFER_INFO(swState));
+                                            //yy_switch_to_buffer(swState.importStack[swState.importStackIndex]);
+                                        //}
                                     }
 
 %%
-
-#define YYSTYPE char*
-YYSTYPE yylval;
 int yywrap() {
     return 1;
 }
 
-YY_BUFFER_STATE * getCUrrentBufferState() {
+YY_BUFFER_STATE getCurrentBufferState() {
     return YY_CURRENT_BUFFER;
 }

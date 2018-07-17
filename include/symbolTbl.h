@@ -2,6 +2,7 @@
 #define _SYMBOLTBL_H_
 
 #include "type.h"
+#include "list.h"
 
 #define MAX_CHAR_OF_MOD_IDENT (64)
 

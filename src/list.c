@@ -2,7 +2,7 @@
 // Created by ayden on 17-5-1.
 //
 
-#include <stddef.>
+#include <stddef.h>
 #include <malloc.h>
 #include <string.h>
 #include "list.h"
@@ -11,7 +11,7 @@
 enum {
     SYM_TRAVEL_CONTINUE = 10,
     SYM_TRAVEL_STOP = 11
-}
+};
 
 /************
  * ListNode *
@@ -64,7 +64,7 @@ listNode *listNodeDelete(listNode *node) {
 }
 
 listNode * listNodeTail(listNode *head) {
-    if (isNullPtr(head) || isNullPtr(node)) {
+    if (isNullPtr(head)) {
         return NULL;
     }
     while (head->next) {

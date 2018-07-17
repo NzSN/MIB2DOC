@@ -16,8 +16,10 @@
     #include "mibTreeGen.h"
     #include "mibTreeObjTree.h"
     #include "dispatcher.h"
+    #include "symbolTbl.h"
     #define YYSTYPE char *
     
+    extern symbolTable symTable; 
     extern char *yylval;
     void yyerror(char const *s) {
         fprintf(stderr, "%s: %s\n", s, yylval);
@@ -44,7 +46,7 @@ DEFINITION :
 IMPORT :
 	IMPORTS_ MODULES SEMICOLON    {
         /* build upper tree if all including is finished */
-        if (swState.importStackIndex == 0) {
+        if (swState.counter == 0) {
             /* importStack is empty */
             upperTreeGeneration(&symTable);
         } else {
@@ -56,9 +58,6 @@ MODULES :
 	ITEMS FROM_ IDENTIFIER MODULES {
 		dispatchParam *param = disParamConstruct($IDENTIFIER);
 		disParamStore(param, disParamConstruct($ITEMS));
-		if (dispatch(SWITCH_TO_INC_BUFFER, param) == abort_terminate) {
-            return abort_terminate;
-        }
 	} | 
     /* empty */  ;
 

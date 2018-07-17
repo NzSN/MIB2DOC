@@ -466,13 +466,9 @@ extern int yylex (void);
 #undef yyTABLES_NAME
 #endif
 
-#line 70 "/home/totoro/codeW/MIB2DOC/src/yy_lex.l"
+#line 66 "src/yy_lex.l"
 
 
 #line 473 "include/lexer.h"
 #undef yyIN_HEADER
-
-/* User function declaration */
-YY_BUFFER_STATE* getCurrentBufferState();
-
 #endif /* yyHEADER_H */

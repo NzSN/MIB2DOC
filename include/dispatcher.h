@@ -70,7 +70,7 @@ dispatchParam * disParamConstruct(void *arg);
 dispatchParam * disParamStore(dispatchParam *head, dispatchParam *pl);
 dispatchParam * disParamRetrive(dispatchParam **head);
 
-YY_BUFFER_STATE * getCurrentBufferState();
+YY_BUFFER_STATE getCurrentBufferState();
 char * switch_CurrentMod(char *modName, int len);
 int dispatch(dispatch_type dType, dispatchParam * param);
 int rmSymFromIdentList(identList *listHead, char *symbolIdent);

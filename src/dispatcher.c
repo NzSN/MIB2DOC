@@ -5,10 +5,13 @@
 #include "dispatcher.h"
 #include "mibTreeGen.h"
 #include <stdlib.h>
-
+#include <list.h>
+#include <options.h>
+#include <util.h>
 
 /* Declaration Section */
 static int dispatchMakeChoice(dispatch_type dType);
+static int lexBufferSwitching(char *newModule);
 static int switchToModule(dispatchParam *param);
 static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo);
 static int switchInit();
@@ -34,14 +37,14 @@ int dispatch(dispatch_type disType, dispatchParam *param) {
     switch (dispatchMakeChoice(disType)) {
         case DISPATCH_PARAM_STAGE:
             sliceStore(&sliceContainer,
-                    sliceConstruct((int)disParamRetrive(&param)->param,
+                    sliceConstruct((unsigned long)disParamRetrive(&param)->param,
                         disParamRetrive(&param)->param));
             break;
         case MIBTREE_GENERATION:
-            mibObjGen((int)disParamRetrive(&param)->param);
+            mibObjGen((unsigned long)disParamRetrive(&param)->param);
             break;
         case SYMBOL_COLLECTING:
-            symbolCollecting((int)disParamRetrive(&param)->param, param);
+            symbolCollecting((unsigned long)disParamRetrive(&param)->param, param);
             break;
         case SWITCH_TO_INC_BUFFER:
             if (isNeedSwitchInit)
@@ -80,8 +83,8 @@ static int switchInit() {
 
     swState.state = DISPATCH_MODE_SYMBOL_COLLECTING;
     swState.counter = 0;
-    swState.currentSwitchInfo.bufferInfo = getCurrentBufferState();
-    memset(&swState.currentSwitchInfo.importInfo, 0, sizeof(collectInfo));
+    memcpy(SW_CUR_BUFFER_INFO_REF(swState), getCurrentBufferState(), sizeof(YY_BUFFER_STATE));
+    memset(SW_CUR_IMPORT_REF(swState), 0, sizeof(collectInfo));
     genericStackConstruct(&swState.swStack, 128 * sizeof(switchInfo), sizeof(switchInfo));
 
     isNeedSwitchInit = FALSE;
@@ -97,14 +100,14 @@ static int switchToModule(dispatchParam *param) {
         return null;
     }
 
-    moduleName = disParamRetrive(&param);
-    sCollection = disParamRetrive(&param);
+    moduleName = (char *)disParamRetrive(&param)->param;
+    sCollection = (char *)disParamRetrive(&param)->param;
 
     // Step 1: Push currentSwitchInfo into stack
     pushByIndex(SW_STACK_BASE(swState), SW_CUR_BUFFER_INFO_REF(swState), SW_STACK_TOP(swState), SW_STACK_BUFFER_SIZE(swState), SW_STACK_UNIT_SIZE(swState));
     
     // Step 2: Update currentSwitchInfo
-
+    
 
     if (lexBufferSwitching(moduleName) == ERROR_GENERIC) {
         /* Terminate whole system */
@@ -113,7 +116,7 @@ static int switchToModule(dispatchParam *param) {
     return 0;
 }
 
-int lexBufferSwitching(char *newModule) {
+static int lexBufferSwitching(char *newModule) {
     int index = 0;
     const char *path;
     char *targetModulePath;
@@ -136,7 +139,7 @@ int lexBufferSwitching(char *newModule) {
 }
 
 char * switch_CurrentMod(char *modName, int len) {
-    return swState.currentModule;
+    return SW_CUR_IMPORT(swState).modName;
 }
 
 /**************************
@@ -169,18 +172,17 @@ int rmSymFromIdentList(identList *listHead, char *symbolIdent) {
     listProcessing = listHead;
 
     while (listHead) {
-        if (!strncmp(listProcessing->symName, symbolIdent)) {
+        if (!strncmp(listProcessing->symName, symbolIdent, strlen(symbolIdent))) {
             /* delete this node from lsit */
-            listNodeDelete(listProcessing->node);
+            listNodeDelete(&listProcessing->node);
             if (listProcessing == listHead && listHead->node.next != NULL) {
-                swState.modStack[swState.importStackIndex].symbols =
-                    containerOf(&listHead->node.next, identList, node);
+                SW_CUR_IMPORT(swState).symbols = containerOf(listHead->node.next, identList, node);
             }
             RELEASE_MEM(listProcessing->symName);
             RELEASE_MEM(listProcessing);
             break;
         }
-        listHead = containerOf(&listHead->node.next, identList, node);
+        listHead = containerOf(listHead->node.next, identList, node);
     }
     return ERROR_NONE;
 }

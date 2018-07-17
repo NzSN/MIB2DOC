@@ -5,7 +5,6 @@
 #ifndef _MIB2DOC_LIST_H_
 #define _MIB2DOC_LIST_H_
 
-#include "type.h"
 #include <stdbool.h>
 
 enum elementType {
@@ -34,6 +33,7 @@ typedef void (*listNodeTask)(listNode *head, void *arg);
 listNode *listNodePrev(listNode *node);
 listNode *listNodeNext(listNode *node);
 listNode *listNodeInsert(listNode *head, listNode *node);
+listNode *listNodeDelete(listNode *node);
 bool listNodeIsEmpty(listNode *node);
 int listNodeTravel(listNode *head, listNodeTask func, void *arg);
 
