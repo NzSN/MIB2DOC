@@ -4,8 +4,8 @@
 
 int stringToIdentList(char *str, identList *list, char seperator) {
     enum { identRecognize, identTracking };
-    int index = 0, index_ = 0, flag = identRecognize
-        beginPoint[256] = [0];
+    int index = 0, index_ = 0, flag = identRecognize,
+        beginPoint[256] = { 0 };
     char *strCopy = null;
     identList *listTmp;
     
@@ -36,7 +36,7 @@ int stringToIdentList(char *str, identList *list, char seperator) {
     while (index_-- > 0) {
         listTmp = (identList *)malloc(sizeof(identList));
         memset(listTmp, null, sizeof(identList));
-        listTmp->symName = strCopy[beginPoint[index]];
+        listTmp->symName = &strCopy[beginPoint[index]];
         list->node.next = &listTmp->node;
         index++;
     }

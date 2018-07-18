@@ -25,6 +25,9 @@ typedef enum optionNumber {
 
 static char * mappingTable[NumOfOptions];
 
+/* Local Functions */
+static void helpInfoPrint();
+
 int optionsInit(int argc, char *argv[]) {
     char *param;
     char *paramVal;
@@ -37,7 +40,7 @@ int optionsInit(int argc, char *argv[]) {
 
     if (argc == 0) {
         helpInfoPrint();
-        return error_param_mismatch;
+        return ERROR_GENERIC;
     }
 
     mappingTableInit();
@@ -50,7 +53,7 @@ int optionsInit(int argc, char *argv[]) {
     while (param = argv[i++]) {
         if ((paramIndex = paramMapping(param)) < UNIQUE_PARAM) {
             if (mappingTable[paramIndex] == null) {
-                return error_param_mismatch;
+                return ERROR_GENERIC;
             }
         }
         switch(paramMapping(param)) {
@@ -61,7 +64,7 @@ int optionsInit(int argc, char *argv[]) {
                 break;
             case TargetPdfFile:
                 if (TargetPdfFile < UNIQUE_PARAM && optionsManager.targetPdfPATH != null)
-                    return error_param_mismatch;
+                    return ERROR_GENERIC;
                 paramVal = argv[i++];
                 optionsManager.targetPdfPATH = paramVal;
                 mappingTable[TargetPdfFile] = null;
@@ -71,7 +74,7 @@ int optionsInit(int argc, char *argv[]) {
                 incNode = (incPathList *)malloc(sizeof(incPathList));
                 memset(incNode, 0, sizeof(incPathList));
                 incNode->path = paramVal;
-                listAppend(&optionsManager.includePath.node, &incNode->node);
+                listNodeAppend(&optionsManager.includePath.node, &incNode->node);
                 break;
             default:
                 helpInfoPrint();

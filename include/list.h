@@ -34,6 +34,7 @@ listNode *listNodePrev(listNode *node);
 listNode *listNodeNext(listNode *node);
 listNode *listNodeInsert(listNode *head, listNode *node);
 listNode *listNodeDelete(listNode *node);
+listNode *listNodeAppend(listNode *listH, listNode *listN);
 bool listNodeIsEmpty(listNode *node);
 int listNodeTravel(listNode *head, listNodeTask func, void *arg);
 

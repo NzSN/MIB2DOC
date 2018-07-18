@@ -48,6 +48,6 @@ typedef enum errorType {
     ABORT
 } errorType;
 
-extern errorType mib2docError;
+extern int mib2docError;
 
 #endif /* _MIB2DOC_TYPE_H_ */

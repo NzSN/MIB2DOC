@@ -7,6 +7,8 @@
 #include <string.h>
 #include "list.h"
 #include "type.h"
+#include "dispatcher.h"
+#include "symbolTbl.h"
 
 enum {
     SYM_TRAVEL_CONTINUE = 10,
@@ -16,50 +18,50 @@ enum {
 /************
  * ListNode *
  ************/
-listNode *listNodePrev(listNode *node) {
-    if (isNullPtr(node) || isNullPtr(node->next))
+listNode *listNodePrev(listNode *sliNode) {
+    if (isNullPtr(sliNode) || isNullPtr(sliNode->next))
         return NULL;
-    return node->next;
+    return sliNode->next;
 }
 
-listNode * listNodeNext(listNode *node) {
-    if (isNullPtr(node) || isNullPtr(node->prev))
+listNode * listNodeNext(listNode *sliNode) {
+    if (isNullPtr(sliNode) || isNullPtr(sliNode->prev))
         return NULL;
-    return node->prev;
+    return sliNode->prev;
 }
 
-listNode * listNodeInsert(listNode *head, listNode *node) {
+listNode * listNodeInsert(listNode *head, listNode *sliNode) {
     listNode *middle;
 
-    if (isNullPtr(head) || isNullPtr(node)) {
+    if (isNullPtr(head) || isNullPtr(sliNode)) {
         return NULL;
     }
     if (head->next == NULL) {
-        head->next = node;
+        head->next = sliNode;
     } else {
         middle = head->next;
-        head->next = node;
-        node->next = middle;
+        head->next = sliNode;
+        sliNode->next = middle;
     }
-    return node;
+    return sliNode;
 }
 
-listNode *listNodeDelete(listNode *node) {
-    if (isNullPtr(node)) {
-        return ERROR_NULL_REF;
+listNode *listNodeDelete(listNode *sliNode) {
+    if (isNullPtr(sliNode)) {
+        return NULL;
     }
-    if (node->prev != NULL && node->next != NULL) {
+    if (sliNode->prev != NULL && sliNode->next != NULL) {
         /* Middle */
-        node->prev->next = node->next;
-        node->next->prev = node->prev;
-    } else if(node->prev != NULL) {
+        sliNode->prev->next = sliNode->next;
+        sliNode->next->prev = sliNode->prev;
+    } else if(sliNode->prev != NULL) {
         /* Tail */
-        node->next->prev = NULL;
-    } else if (node->next != NULL) {
+        sliNode->next->prev = NULL;
+    } else if (sliNode->next != NULL) {
         /* Head */
-        node->prev->next = NULL;
+        sliNode->prev->next = NULL;
     } else {
-        /* Single node */
+        /* Single sliNode */
     }
 }
 
@@ -71,6 +73,15 @@ listNode * listNodeTail(listNode *head) {
         head = head->next;
     }
     return head;
+}
+
+listNode * listNodeAppend(listNode *listH, listNode *listN) {
+    if (isNullPtr(listH) || isNullPtr(listN)) {
+        return NULL; 
+    }
+    listH = listNodeTail(listH);
+    listNodeInsert(listH, listN);
+    return listN;
 }
 
 bool listNodeIsEmpty(listNode *head) {
@@ -104,7 +115,8 @@ slice * sliceConstruct(int sliKey, char *sliVal) {
 
     sli->sliKey = sliKey;
     sli->sliVal = sliVal;
-    sli->sliNode = 0;
+    sli->sliNode.next = NULL;
+    sli->sliNode.prev = NULL;
     return sli;
 }
 
@@ -123,25 +135,25 @@ slice * slicePrev(slice *sli) {
     if (isNullPtr(sli)) {
         return NULL;
     }
-    return containerOf(sli->node.prev, slice, node);
+    return containerOf(sli->sliNode.prev, slice, sliNode);
 }
 
 slice * sliceNext(slice *sli) {
     if (isNullPtr(sli)) {
         return NULL;
     }
-    return containerOf(sli->node.next, slice, node);
+    return containerOf(sli->sliNode.next, slice, sliNode);
 }
 
 slice * sliceGet(slice *sliHead, int sliKey) {
-    if (isNullPtr(sli)) {
+    if (isNullPtr(sliHead)) {
         mib2docError = ERROR_NULL_REF;
         return NULL;
     }
 
-    for (; sli != NULL; sli = sliceNext(sli)) {
-        if (sli->sliKey == sliKey)
-            return sli;
+    for (; sliHead != NULL; sliHead = sliceNext(sliHead)) {
+        if (sliHead->sliKey == sliKey)
+            return sliHead;
     }
     return NULL;
 }
@@ -157,7 +169,7 @@ int sliceStore(slice *sliHead, slice *newSli) {
     
     while (sliHead != NULL) {
         if (sliceNext(sliHead) == NULL) {
-            sliHead->node.next = &new->node;
+            sliHead->sliNode.next = &newSli->sliNode;
             return ERROR_NONE;
         }
         sliHead = sliceNext(sliHead);
@@ -172,7 +184,7 @@ bool sliceRelease(slice *sli) {
     if (isNullPtr(sli)) {
         return FALSE;
     }
-    for (pSli = sli; pSli != NULL; pSli = pSli_next;) {
+    for (pSli = sli; pSli != NULL; pSli = pSli_next) {
         pSli_next = sliceNext(pSli);
         sliceDestruct(pSli);
     }
@@ -184,7 +196,7 @@ bool sliceReset(slice *sli) {
         return FALSE;
     }
     sliceRelease(sliceNext(sli));
-    sli->node.next = NULL;
+    sli->sliNode.next = NULL;
 
     return TRUE;
 }
@@ -195,7 +207,7 @@ bool sliceReset(slice *sli) {
  **************************************/
 
  /*
-  * append node to tail of list
+  * append sliNode to tail of list
   */
 dispatchParam * disParamConstruct(void *param) {
     dispatchParam *ret;
@@ -216,7 +228,7 @@ dispatchParam * dispatchParamPrev(dispatchParam *disparam) {
 }
 
 dispatchParam * dispatchParamNext(dispatchParam *disparam) {
-    return cointainerOf(disparam->node.next, dispatchParam, node);
+    return containerOf(disparam->node.next, dispatchParam, node);
 }
 
 dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {
@@ -225,12 +237,12 @@ dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {
         return NULL;
     }
 
-    listNodeInsert(listNodeTail(head->node), new->node);
-    return pl;
+    listNodeInsert(listNodeTail(&head->node), &new->node);
+    return new;
 }
 
 /*
- * Get node from the head from the list
+ * Get sliNode from the head from the list
  * after that the head will be
  * removed from list.
  */
@@ -260,17 +272,17 @@ symbolTable * symbolTableConstruct(char *name) {
         return NULL;
     }
     newTable = (symbolTable *)malloc(sizeof(symbolTable));
-    memset(newTable, NULL, sizeof(symbolTable));
+    memset(newTable, 0, sizeof(symbolTable));
     newTable->modName = name;
     return newTable;
 }
 
 symbolTable * symbolTablePrev(symbolTable *tbl) {
-    return containerOf(tbl->node.prev, symbolTable, symTblNode);
+    return containerOf(tbl->symTblNode.prev, symbolTable, symTblNode);
 }
 
 symbolTable * symbolTableNext(symbolTable *tbl) {
-    return containerOf(tbl->node.next, symbolTable, symTblNode);
+    return containerOf(tbl->symTblNode.next, symbolTable, symTblNode);
 }
 
 /* Return :
@@ -284,7 +296,7 @@ symbolTable * symbolTableSearch(symbolTable *tblRoot, char *modName) {
         return NULL;
     }
     while (tblRoot) {
-        if (!strncmp(tblRoot->modName, modName, strlen(modName)) {
+        if (!strncmp(tblRoot->modName, modName, strlen(modName))) {
             return tblRoot;
         }
         tblRoot = symbolTableNext(tblRoot);
@@ -299,16 +311,16 @@ symbolTable * symbolModuleAdd(symbolTable *tblRoot, symbolTable *newTbl) {
         return NULL;
     }
 
-    listNodeInsert(listNodeTail(tblRoot->node), newTbl->node);
+    listNodeInsert(listNodeTail(&tblRoot->symTblNode), &newTbl->symTblNode);
     return newTbl;
 }
 
 symbol_t * symbolPrev(symbol_t *sym) {
-    return containerOf(sym->node.prev, symbol_t, symNode);
+    return containerOf(sym->symNode.prev, symbol_t, symNode);
 }
 
 symbol_t * symbolNext(symbol_t *sym) {
-    return containerOf(sym->node.next, symbol_t, symNode)
+    return containerOf(sym->symNode.next, symbol_t, symNode);
 }
 
 symbol_t * symbolAdd(symbolTable *symTbl, symbol_t *newSym, char *modName) {
@@ -321,13 +333,13 @@ symbol_t * symbolAdd(symbolTable *symTbl, symbol_t *newSym, char *modName) {
     }
     if ((pSymTbl = symbolTableSearch(symTbl, modName)) == NULL) {
         if (mib2docError == SYM_TABLE_NOT_FOUND)
-            pSymTbl = symbolModuleAdd(symbolTableConstruct(modName);
+            pSymTbl = symbolModuleAdd(symTbl, symbolTableConstruct(modName));
     }
 
     pSym = pSymTbl->symbol;
     if (!symbolSearching(pSymTbl, newSym->symIdent)) {
         if (mib2docError == SYM_NOT_FOUND)
-            listNodeInsert(listNodeTail(pSym->symNode), newSym->symNode);
+            listNodeInsert(listNodeTail(&pSym->symNode), &newSym->symNode);
             return pSym;
     }
     return NULL;
@@ -335,7 +347,7 @@ symbol_t * symbolAdd(symbolTable *symTbl, symbol_t *newSym, char *modName) {
 
 symbol_t * symbolTravel(symbolTable *symTblRoot, int (*func)(symbol_t *sym, void *arg), void *arg) {
     int retVal;
-    symbol_t ret = NULL;
+    symbol_t *ret = NULL;
     symbolTable *pSymTbl;
     symbol_t *pSym;
 
@@ -351,7 +363,7 @@ symbol_t * symbolTravel(symbolTable *symTblRoot, int (*func)(symbol_t *sym, void
 
         while (pSym != NULL) {
             retVal = func(pSym, arg);
-            if (retVal == SYM_TRAVEL_LOOP) {
+            if (retVal == SYM_TRAVEL_CONTINUE) {
                 continue;
             } else if (retVal == SYM_TRAVEL_STOP) {
                 return pSym;
@@ -383,7 +395,7 @@ static int symbolIsParentEqual(symbol_t *sym, void *arg) {
     if (!strncmp(parent, sym->symIdent, strlen(parent))) {
         foundSym = (symbol_t *)malloc(sizeof(symbol_t));
         memcpy(foundSym, sym, sizeof(symbol_t));
-        pSym->node.next = &foundSym->node;
+        pSym->symNode.next = &foundSym->symNode;
     }
 
     return SYM_TRAVEL_CONTINUE;
@@ -398,11 +410,11 @@ int symbolSearchingByParent(symbolTable *symTblRoot, char *parent, symbol_t *sym
         return ERROR_NULL_REF;
     }
 
-    memset(sym, NULL, sizeof(symbol_t));
+    memset(sym, 0, sizeof(symbol_t));
     sym->symIdent = parent;
     symbolTravel(symTblRoot, symbolIsParentEqual, (void *)sym);
 
-    if (sym->node.next != NULL) {
+    if (sym->symNode.next != NULL) {
         return TRUE;
     } else {
         return FALSE;

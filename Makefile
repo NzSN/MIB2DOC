@@ -377,6 +377,33 @@ src/mibTreeObjTree.c.s:
 	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/mibTreeObjTree.c.s
 .PHONY : src/mibTreeObjTree.c.s
 
+src/misc.o: src/misc.c.o
+
+.PHONY : src/misc.o
+
+# target to build an object file
+src/misc.c.o:
+	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/misc.c.o
+.PHONY : src/misc.c.o
+
+src/misc.i: src/misc.c.i
+
+.PHONY : src/misc.i
+
+# target to preprocess a source file
+src/misc.c.i:
+	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/misc.c.i
+.PHONY : src/misc.c.i
+
+src/misc.s: src/misc.c.s
+
+.PHONY : src/misc.s
+
+# target to generate assembly for a file
+src/misc.c.s:
+	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/misc.c.s
+.PHONY : src/misc.c.s
+
 src/options.o: src/options.c.o
 
 .PHONY : src/options.o
@@ -583,6 +610,9 @@ help:
 	@echo "... src/mibTreeObjTree.o"
 	@echo "... src/mibTreeObjTree.i"
 	@echo "... src/mibTreeObjTree.s"
+	@echo "... src/misc.o"
+	@echo "... src/misc.i"
+	@echo "... src/misc.s"
 	@echo "... src/options.o"
 	@echo "... src/options.i"
 	@echo "... src/options.s"

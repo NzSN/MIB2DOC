@@ -133,7 +133,7 @@ int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent
             obj->parent = parentNode;
             obj->head = child;
             goto MISC;
-            }
+        }
     } else {
         parentNode->child = obj;
         obj->head = obj;
@@ -156,7 +156,7 @@ int descriptionDeal(mibObjectTreeNode *node) {
     else
         size = strlen(ident);
 
-    if (!node->isNode & !tableRecognize(ident, strlen(ident))) {
+    if (!node->isNode) {
         info = node->info;
 
         pos = -1;

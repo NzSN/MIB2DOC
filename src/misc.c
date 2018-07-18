@@ -2,7 +2,7 @@
  * miscellaneous global variable.
  */
 
-#include "types.h"
+#include "type.h"
 
 int mib2docError;
 

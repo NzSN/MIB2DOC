@@ -309,7 +309,7 @@ DESC_VALUE	src/yy_syn.tab.c	/^    DESC_VALUE = 266,$/;"	e	language:C	enum:yytoke
 DISPATCH_MODE_DOC_GENERATING	include/dispatcher.h	/^    DISPATCH_MODE_DOC_GENERATING = 1$/;"	e	language:C++	enum:dispatch_mode
 DISPATCH_MODE_SYMBOL_COLLECTING	include/dispatcher.h	/^    DISPATCH_MODE_SYMBOL_COLLECTING = 0,$/;"	e	language:C++	enum:dispatch_mode
 DISPATCH_PARAM_STAGE	include/dispatcher.h	/^    DISPATCH_PARAM_STAGE = 0,$/;"	e	language:C++	enum:dispatch_type
-ECHO	src/lexer.c	742;"	d	language:C	file:
+ECHO	src/lexer.c	738;"	d	language:C	file:
 END_	include/yy_syn.tab.h	/^    END_ = 270,$/;"	e	language:C++	enum:yytokentype
 END_	src/yy_syn.tab.c	/^    END_ = 270,$/;"	e	language:C	enum:yytokentype	file:
 EOB_ACT_CONTINUE_SCAN	src/lexer.c	162;"	d	language:C	file:
@@ -321,8 +321,8 @@ ERROR_NONE	include/type.h	/^    ERROR_NONE,$/;"	e	language:C++	enum:errorType
 ERROR_NULL_REF	include/type.h	/^    ERROR_NULL_REF,$/;"	e	language:C++	enum:errorType
 ERROR_OPEN_FAILED	include/type.h	/^    ERROR_OPEN_FAILED,$/;"	e	language:C++	enum:errorType
 ERROR_WRONG_IDX	include/type.h	/^    ERROR_WRONG_IDX,$/;"	e	language:C++	enum:errorType
-EXIT_SUCCESS	src/yy_syn.tab.c	295;"	d	language:C	file:
-EXIT_SUCCESS	src/yy_syn.tab.c	323;"	d	language:C	file:
+EXIT_SUCCESS	src/yy_syn.tab.c	294;"	d	language:C	file:
+EXIT_SUCCESS	src/yy_syn.tab.c	322;"	d	language:C	file:
 FALSE	include/type.h	16;"	d	language:C++
 FLEXINT_H	include/lexer.h	34;"	d	language:C++
 FLEXINT_H	src/lexer.c	30;"	d	language:C	file:
@@ -351,7 +351,7 @@ INDEX_	include/yy_syn.tab.h	/^    INDEX_ = 275,$/;"	e	language:C++	enum:yytokent
 INDEX_	src/yy_syn.tab.c	/^    INDEX_ = 275,$/;"	e	language:C	enum:yytokentype	file:
 INDEX_ITEM	src/yy_syn.y	/^INDEX_ITEM :$/;"	l	language:YACC
 INITIAL	include/lexer.h	215;"	d	language:C++
-INITIAL	src/lexer.c	647;"	d	language:C	file:
+INITIAL	src/lexer.c	643;"	d	language:C	file:
 INT16_MAX	include/lexer.h	76;"	d	language:C++
 INT16_MAX	src/lexer.c	72;"	d	language:C	file:
 INT16_MIN	include/lexer.h	67;"	d	language:C++
@@ -374,7 +374,7 @@ LOWER_CASE	src/mibTreeObjTree.c	23;"	d	language:C	file:
 L_BRACE	include/yy_syn.tab.h	/^    L_BRACE = 278,$/;"	e	language:C++	enum:yytokentype
 L_BRACE	src/yy_syn.tab.c	/^    L_BRACE = 278,$/;"	e	language:C	enum:yytokentype	file:
 MAIN_PART	src/yy_syn.y	/^MAIN_PART :$/;"	l	language:YACC
-MAX_CHAR_OF_MOD_IDENT	include/symbolTbl.h	6;"	d	language:C++
+MAX_CHAR_OF_MOD_IDENT	include/symbolTbl.h	7;"	d	language:C++
 MAX_INCLUDE_DEPTH	include/dispatcher.h	44;"	d	language:C++
 MIB	src/yy_syn.y	/^MIB :$/;"	l	language:YACC
 MIBTREE_GENERATION	include/dispatcher.h	/^    MIBTREE_GENERATION,$/;"	e	language:C++	enum:dispatch_type
@@ -535,7 +535,7 @@ SW_STACK_UNIT_SIZE	include/dispatcher.h	64;"	d	language:C++
 SYMBOL_COLLECTING	include/dispatcher.h	/^    SYMBOL_COLLECTING,$/;"	e	language:C++	enum:dispatch_type
 SYMBOL_FOUND	include/mibTreeGen.h	/^    SYMBOL_FOUND,$/;"	e	language:C++	enum:__anon2
 SYMBOL_NOT_FOUND	include/mibTreeGen.h	/^    SYMBOL_NOT_FOUND$/;"	e	language:C++	enum:__anon2
-SYMBOL_SEPERATOR	src/dispatcher.c	146;"	d	language:C	file:
+SYMBOL_SEPERATOR	src/dispatcher.c	148;"	d	language:C	file:
 SYMBOL_TYPE_LEAVE	include/symbolTbl.h	/^    SYMBOL_TYPE_LEAVE$/;"	e	language:C++	enum:symbolType
 SYMBOL_TYPE_NODE	include/symbolTbl.h	/^    SYMBOL_TYPE_NODE,$/;"	e	language:C++	enum:symbolType
 SYM_EXISTS	include/symbolTbl.h	/^    SYM_EXISTS,$/;"	e	language:C++	enum:symErrorCode
@@ -569,89 +569,88 @@ UINT8_MAX	src/lexer.c	78;"	d	language:C	file:
 UNIQUE_PARAM	src/options.c	/^    UNIQUE_PARAM, \/* params above this line is unique another is not *\/$/;"	e	language:C	enum:optionNumber	file:
 UNIT_TEST_DOCGENERATE_H	include/docGenerate.h	8;"	d	language:C++
 UNIT_TEST_LEXDEAL_H	include/lexDeal.h	6;"	d	language:C++
-YYABORT	src/yy_syn.tab.c	631;"	d	language:C	file:
-YYACCEPT	src/yy_syn.tab.c	630;"	d	language:C	file:
-YYBACKUP	src/yy_syn.tab.c	637;"	d	language:C	file:
+YYABORT	src/yy_syn.tab.c	630;"	d	language:C	file:
+YYACCEPT	src/yy_syn.tab.c	629;"	d	language:C	file:
+YYBACKUP	src/yy_syn.tab.c	636;"	d	language:C	file:
 YYBISON	src/yy_syn.tab.c	44;"	d	language:C	file:
 YYBISON_VERSION	src/yy_syn.tab.c	47;"	d	language:C	file:
-YYCASE_	src/yy_syn.tab.c	978;"	d	language:C	file:
-YYCASE_	src/yy_syn.tab.c	988;"	d	language:C	file:
-YYCOPY	src/yy_syn.tab.c	387;"	d	language:C	file:
-YYCOPY	src/yy_syn.tab.c	390;"	d	language:C	file:
-YYCOPY_NEEDED	src/yy_syn.tab.c	362;"	d	language:C	file:
+YYCASE_	src/yy_syn.tab.c	977;"	d	language:C	file:
+YYCASE_	src/yy_syn.tab.c	987;"	d	language:C	file:
+YYCOPY	src/yy_syn.tab.c	386;"	d	language:C	file:
+YYCOPY	src/yy_syn.tab.c	389;"	d	language:C	file:
+YYCOPY_NEEDED	src/yy_syn.tab.c	361;"	d	language:C	file:
 YYDEBUG	include/yy_syn.tab.h	37;"	d	language:C++
-YYDEBUG	src/yy_syn.tab.c	106;"	d	language:C	file:
-YYDPRINTF	src/yy_syn.tab.c	668;"	d	language:C	file:
-YYDPRINTF	src/yy_syn.tab.c	783;"	d	language:C	file:
-YYEMPTY	src/yy_syn.tab.c	627;"	d	language:C	file:
-YYEOF	src/yy_syn.tab.c	628;"	d	language:C	file:
-YYERRCODE	src/yy_syn.tab.c	656;"	d	language:C	file:
-YYERROR	src/yy_syn.tab.c	632;"	d	language:C	file:
-YYERROR_VERBOSE	src/yy_syn.tab.c	94;"	d	language:C	file:
-YYERROR_VERBOSE	src/yy_syn.tab.c	95;"	d	language:C	file:
+YYDEBUG	src/yy_syn.tab.c	105;"	d	language:C	file:
+YYDPRINTF	src/yy_syn.tab.c	667;"	d	language:C	file:
+YYDPRINTF	src/yy_syn.tab.c	782;"	d	language:C	file:
+YYEMPTY	src/yy_syn.tab.c	626;"	d	language:C	file:
+YYEOF	src/yy_syn.tab.c	627;"	d	language:C	file:
+YYERRCODE	src/yy_syn.tab.c	655;"	d	language:C	file:
+YYERROR	src/yy_syn.tab.c	631;"	d	language:C	file:
+YYERROR_VERBOSE	src/yy_syn.tab.c	96;"	d	language:C	file:
 YYERROR_VERBOSE	src/yy_syn.tab.c	97;"	d	language:C	file:
-YYFINAL	src/yy_syn.tab.c	403;"	d	language:C	file:
-YYFPRINTF	src/yy_syn.tab.c	665;"	d	language:C	file:
-YYFREE	src/yy_syn.tab.c	333;"	d	language:C	file:
-YYINITDEPTH	src/yy_syn.tab.c	792;"	d	language:C	file:
-YYLAST	src/yy_syn.tab.c	405;"	d	language:C	file:
-YYMALLOC	src/yy_syn.tab.c	327;"	d	language:C	file:
-YYMAXDEPTH	src/yy_syn.tab.c	803;"	d	language:C	file:
-YYMAXUTOK	src/yy_syn.tab.c	419;"	d	language:C	file:
-YYNNTS	src/yy_syn.tab.c	410;"	d	language:C	file:
-YYNRULES	src/yy_syn.tab.c	412;"	d	language:C	file:
-YYNSTATES	src/yy_syn.tab.c	414;"	d	language:C	file:
-YYNTOKENS	src/yy_syn.tab.c	408;"	d	language:C	file:
-YYPACT_NINF	src/yy_syn.tab.c	502;"	d	language:C	file:
-YYPOPSTACK	src/yy_syn.tab.c	1103;"	d	language:C	file:
+YYERROR_VERBOSE	src/yy_syn.tab.c	99;"	d	language:C	file:
+YYFINAL	src/yy_syn.tab.c	402;"	d	language:C	file:
+YYFPRINTF	src/yy_syn.tab.c	664;"	d	language:C	file:
+YYFREE	src/yy_syn.tab.c	332;"	d	language:C	file:
+YYINITDEPTH	src/yy_syn.tab.c	791;"	d	language:C	file:
+YYLAST	src/yy_syn.tab.c	404;"	d	language:C	file:
+YYMALLOC	src/yy_syn.tab.c	326;"	d	language:C	file:
+YYMAXDEPTH	src/yy_syn.tab.c	802;"	d	language:C	file:
+YYMAXUTOK	src/yy_syn.tab.c	418;"	d	language:C	file:
+YYNNTS	src/yy_syn.tab.c	409;"	d	language:C	file:
+YYNRULES	src/yy_syn.tab.c	411;"	d	language:C	file:
+YYNSTATES	src/yy_syn.tab.c	413;"	d	language:C	file:
+YYNTOKENS	src/yy_syn.tab.c	407;"	d	language:C	file:
+YYPACT_NINF	src/yy_syn.tab.c	501;"	d	language:C	file:
+YYPOPSTACK	src/yy_syn.tab.c	1102;"	d	language:C	file:
 YYPULL	src/yy_syn.tab.c	59;"	d	language:C	file:
 YYPURE	src/yy_syn.tab.c	53;"	d	language:C	file:
 YYPUSH	src/yy_syn.tab.c	56;"	d	language:C	file:
-YYRECOVERING	src/yy_syn.tab.c	635;"	d	language:C	file:
-YYSIZE_MAXIMUM	src/yy_syn.tab.c	206;"	d	language:C	file:
-YYSIZE_T	src/yy_syn.tab.c	195;"	d	language:C	file:
-YYSIZE_T	src/yy_syn.tab.c	197;"	d	language:C	file:
-YYSIZE_T	src/yy_syn.tab.c	200;"	d	language:C	file:
-YYSIZE_T	src/yy_syn.tab.c	202;"	d	language:C	file:
+YYRECOVERING	src/yy_syn.tab.c	634;"	d	language:C	file:
+YYSIZE_MAXIMUM	src/yy_syn.tab.c	205;"	d	language:C	file:
+YYSIZE_T	src/yy_syn.tab.c	194;"	d	language:C	file:
+YYSIZE_T	src/yy_syn.tab.c	196;"	d	language:C	file:
+YYSIZE_T	src/yy_syn.tab.c	199;"	d	language:C	file:
+YYSIZE_T	src/yy_syn.tab.c	201;"	d	language:C	file:
 YYSKELETON_NAME	src/yy_syn.tab.c	50;"	d	language:C	file:
-YYSTACK_ALLOC	src/yy_syn.tab.c	281;"	d	language:C	file:
-YYSTACK_ALLOC	src/yy_syn.tab.c	285;"	d	language:C	file:
-YYSTACK_ALLOC	src/yy_syn.tab.c	290;"	d	language:C	file:
-YYSTACK_ALLOC	src/yy_syn.tab.c	313;"	d	language:C	file:
-YYSTACK_ALLOC_MAXIMUM	src/yy_syn.tab.c	310;"	d	language:C	file:
-YYSTACK_ALLOC_MAXIMUM	src/yy_syn.tab.c	316;"	d	language:C	file:
-YYSTACK_BYTES	src/yy_syn.tab.c	358;"	d	language:C	file:
-YYSTACK_FREE	src/yy_syn.tab.c	304;"	d	language:C	file:
-YYSTACK_FREE	src/yy_syn.tab.c	314;"	d	language:C	file:
-YYSTACK_GAP_MAXIMUM	src/yy_syn.tab.c	354;"	d	language:C	file:
-YYSTACK_RELOCATE	src/yy_syn.tab.c	369;"	d	language:C	file:
+YYSTACK_ALLOC	src/yy_syn.tab.c	280;"	d	language:C	file:
+YYSTACK_ALLOC	src/yy_syn.tab.c	284;"	d	language:C	file:
+YYSTACK_ALLOC	src/yy_syn.tab.c	289;"	d	language:C	file:
+YYSTACK_ALLOC	src/yy_syn.tab.c	312;"	d	language:C	file:
+YYSTACK_ALLOC_MAXIMUM	src/yy_syn.tab.c	309;"	d	language:C	file:
+YYSTACK_ALLOC_MAXIMUM	src/yy_syn.tab.c	315;"	d	language:C	file:
+YYSTACK_BYTES	src/yy_syn.tab.c	357;"	d	language:C	file:
+YYSTACK_FREE	src/yy_syn.tab.c	303;"	d	language:C	file:
+YYSTACK_FREE	src/yy_syn.tab.c	313;"	d	language:C	file:
+YYSTACK_GAP_MAXIMUM	src/yy_syn.tab.c	353;"	d	language:C	file:
+YYSTACK_RELOCATE	src/yy_syn.tab.c	368;"	d	language:C	file:
 YYSTATE	src/lexer.c	124;"	d	language:C	file:
 YYSTYPE	include/yy_syn.tab.h	/^typedef int YYSTYPE;$/;"	t	language:C++
-YYSTYPE	src/lexer.c	2115;"	d	language:C	file:
-YYSTYPE	src/lexer.c	641;"	d	language:C	file:
+YYSTYPE	include/yy_syn.tab.h	79;"	d	language:C++
 YYSTYPE	src/yy_syn.tab.c	/^typedef int YYSTYPE;$/;"	t	language:C	file:
-YYSTYPE	src/yy_syn.tab.c	69;"	d	language:C	file:
-YYSTYPE_IS_DECLARED	include/yy_syn.tab.h	82;"	d	language:C++
-YYSTYPE_IS_DECLARED	src/yy_syn.tab.c	151;"	d	language:C	file:
-YYSTYPE_IS_TRIVIAL	include/yy_syn.tab.h	81;"	d	language:C++
-YYSTYPE_IS_TRIVIAL	src/yy_syn.tab.c	150;"	d	language:C	file:
-YYTABLES_NAME	src/lexer.c	2110;"	d	language:C	file:
-YYTABLE_NINF	src/yy_syn.tab.c	507;"	d	language:C	file:
-YYTERROR	src/yy_syn.tab.c	655;"	d	language:C	file:
+YYSTYPE	src/yy_syn.tab.c	70;"	d	language:C	file:
+YYSTYPE_IS_DECLARED	include/yy_syn.tab.h	83;"	d	language:C++
+YYSTYPE_IS_DECLARED	src/yy_syn.tab.c	150;"	d	language:C	file:
+YYSTYPE_IS_TRIVIAL	include/yy_syn.tab.h	82;"	d	language:C++
+YYSTYPE_IS_TRIVIAL	src/yy_syn.tab.c	149;"	d	language:C	file:
+YYTABLES_NAME	src/lexer.c	2106;"	d	language:C	file:
+YYTABLE_NINF	src/yy_syn.tab.c	506;"	d	language:C	file:
+YYTERROR	src/yy_syn.tab.c	654;"	d	language:C	file:
 YYTOKENTYPE	include/yy_syn.tab.h	45;"	d	language:C++
-YYTOKENTYPE	src/yy_syn.tab.c	114;"	d	language:C	file:
-YYTRANSLATE	src/yy_syn.tab.c	421;"	d	language:C	file:
-YYUNDEFTOK	src/yy_syn.tab.c	418;"	d	language:C	file:
-YYUSE	src/yy_syn.tab.c	249;"	d	language:C	file:
-YYUSE	src/yy_syn.tab.c	251;"	d	language:C	file:
-YY_	src/yy_syn.tab.c	212;"	d	language:C	file:
-YY_	src/yy_syn.tab.c	216;"	d	language:C	file:
-YY_ATTRIBUTE	src/yy_syn.tab.c	224;"	d	language:C	file:
-YY_ATTRIBUTE	src/yy_syn.tab.c	226;"	d	language:C	file:
-YY_ATTRIBUTE_PURE	src/yy_syn.tab.c	231;"	d	language:C	file:
-YY_ATTRIBUTE_UNUSED	src/yy_syn.tab.c	235;"	d	language:C	file:
+YYTOKENTYPE	src/yy_syn.tab.c	113;"	d	language:C	file:
+YYTRANSLATE	src/yy_syn.tab.c	420;"	d	language:C	file:
+YYUNDEFTOK	src/yy_syn.tab.c	417;"	d	language:C	file:
+YYUSE	src/yy_syn.tab.c	248;"	d	language:C	file:
+YYUSE	src/yy_syn.tab.c	250;"	d	language:C	file:
+YY_	src/yy_syn.tab.c	211;"	d	language:C	file:
+YY_	src/yy_syn.tab.c	215;"	d	language:C	file:
+YY_ATTRIBUTE	src/yy_syn.tab.c	223;"	d	language:C	file:
+YY_ATTRIBUTE	src/yy_syn.tab.c	225;"	d	language:C	file:
+YY_ATTRIBUTE_PURE	src/yy_syn.tab.c	230;"	d	language:C	file:
+YY_ATTRIBUTE_UNUSED	src/yy_syn.tab.c	234;"	d	language:C	file:
 YY_AT_BOL	src/lexer.c	323;"	d	language:C	file:
-YY_BREAK	src/lexer.c	821;"	d	language:C	file:
+YY_BREAK	src/lexer.c	817;"	d	language:C	file:
 YY_BUFFER_EOF_PENDING	src/lexer.c	244;"	d	language:C	file:
 YY_BUFFER_NEW	src/lexer.c	232;"	d	language:C	file:
 YY_BUFFER_NORMAL	src/lexer.c	233;"	d	language:C	file:
@@ -666,18 +665,18 @@ YY_CURRENT_BUFFER	src/lexer.c	260;"	d	language:C	file:
 YY_CURRENT_BUFFER_LVALUE	src/lexer.c	266;"	d	language:C	file:
 YY_DECL	include/lexer.h	307;"	d	language:C++
 YY_DECL	include/lexer.h	321;"	d	language:C++
-YY_DECL	src/lexer.c	809;"	d	language:C	file:
+YY_DECL	src/lexer.c	805;"	d	language:C	file:
 YY_DECL_IS_OURS	include/lexer.h	303;"	d	language:C++
 YY_DECL_IS_OURS	include/lexer.h	320;"	d	language:C++
-YY_DECL_IS_OURS	src/lexer.c	805;"	d	language:C	file:
+YY_DECL_IS_OURS	src/lexer.c	801;"	d	language:C	file:
 YY_DO_BEFORE_ACTION	include/lexer.h	317;"	d	language:C++
 YY_DO_BEFORE_ACTION	src/lexer.c	349;"	d	language:C	file:
 YY_END_OF_BUFFER	src/lexer.c	356;"	d	language:C	file:
 YY_END_OF_BUFFER_CHAR	src/lexer.c	129;"	d	language:C	file:
-YY_EXIT_FAILURE	src/lexer.c	1906;"	d	language:C	file:
+YY_EXIT_FAILURE	src/lexer.c	1902;"	d	language:C	file:
 YY_EXTRA_TYPE	include/lexer.h	228;"	d	language:C++
-YY_EXTRA_TYPE	src/lexer.c	658;"	d	language:C	file:
-YY_FATAL_ERROR	src/lexer.c	796;"	d	language:C	file:
+YY_EXTRA_TYPE	src/lexer.c	654;"	d	language:C	file:
+YY_FATAL_ERROR	src/lexer.c	792;"	d	language:C	file:
 YY_FLEX_MAJOR_VERSION	include/lexer.h	14;"	d	language:C++
 YY_FLEX_MAJOR_VERSION	src/lexer.c	10;"	d	language:C	file:
 YY_FLEX_MINOR_VERSION	include/lexer.h	15;"	d	language:C++
@@ -686,63 +685,62 @@ YY_FLEX_SUBMINOR_VERSION	include/lexer.h	16;"	d	language:C++
 YY_FLEX_SUBMINOR_VERSION	src/lexer.c	12;"	d	language:C	file:
 YY_FLUSH_BUFFER	include/lexer.h	313;"	d	language:C++
 YY_FLUSH_BUFFER	src/lexer.c	294;"	d	language:C	file:
-YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	src/yy_syn.tab.c	256;"	d	language:C	file:
-YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	src/yy_syn.tab.c	266;"	d	language:C	file:
-YY_IGNORE_MAYBE_UNINITIALIZED_END	src/yy_syn.tab.c	260;"	d	language:C	file:
-YY_IGNORE_MAYBE_UNINITIALIZED_END	src/yy_syn.tab.c	267;"	d	language:C	file:
-YY_INITIAL_VALUE	src/yy_syn.tab.c	263;"	d	language:C	file:
-YY_INITIAL_VALUE	src/yy_syn.tab.c	270;"	d	language:C	file:
-YY_INPUT	src/lexer.c	749;"	d	language:C	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	src/yy_syn.tab.c	255;"	d	language:C	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	src/yy_syn.tab.c	265;"	d	language:C	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_END	src/yy_syn.tab.c	259;"	d	language:C	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_END	src/yy_syn.tab.c	266;"	d	language:C	file:
+YY_INITIAL_VALUE	src/yy_syn.tab.c	262;"	d	language:C	file:
+YY_INITIAL_VALUE	src/yy_syn.tab.c	269;"	d	language:C	file:
+YY_INPUT	src/lexer.c	745;"	d	language:C	file:
 YY_INT_ALIGNED	include/lexer.h	9;"	d	language:C++
 YY_INT_ALIGNED	src/lexer.c	5;"	d	language:C	file:
 YY_LESS_LINENO	src/lexer.c	166;"	d	language:C	file:
 YY_LINENO_REWIND_TO	src/lexer.c	167;"	d	language:C	file:
-YY_LOCATION_PRINT	src/yy_syn.tab.c	676;"	d	language:C	file:
+YY_LOCATION_PRINT	src/yy_syn.tab.c	675;"	d	language:C	file:
 YY_MORE_ADJ	src/lexer.c	633;"	d	language:C	file:
 YY_NEW_FILE	include/lexer.h	312;"	d	language:C++
 YY_NEW_FILE	src/lexer.c	128;"	d	language:C	file:
 YY_NULL	src/lexer.c	107;"	d	language:C	file:
-YY_NULLPTR	src/yy_syn.tab.c	86;"	d	language:C	file:
 YY_NULLPTR	src/yy_syn.tab.c	88;"	d	language:C	file:
+YY_NULLPTR	src/yy_syn.tab.c	90;"	d	language:C	file:
 YY_NUM_RULES	src/lexer.c	355;"	d	language:C	file:
 YY_READ_BUF_SIZE	include/lexer.h	288;"	d	language:C++
 YY_READ_BUF_SIZE	include/lexer.h	290;"	d	language:C++
-YY_READ_BUF_SIZE	src/lexer.c	731;"	d	language:C	file:
-YY_READ_BUF_SIZE	src/lexer.c	733;"	d	language:C	file:
-YY_REDUCE_PRINT	src/yy_syn.tab.c	773;"	d	language:C	file:
-YY_REDUCE_PRINT	src/yy_syn.tab.c	786;"	d	language:C	file:
+YY_READ_BUF_SIZE	src/lexer.c	727;"	d	language:C	file:
+YY_READ_BUF_SIZE	src/lexer.c	729;"	d	language:C	file:
+YY_REDUCE_PRINT	src/yy_syn.tab.c	772;"	d	language:C	file:
+YY_REDUCE_PRINT	src/yy_syn.tab.c	785;"	d	language:C	file:
 YY_RESTORE_YY_MORE_OFFSET	src/lexer.c	634;"	d	language:C	file:
-YY_RULE_SETUP	src/lexer.c	824;"	d	language:C	file:
+YY_RULE_SETUP	src/lexer.c	820;"	d	language:C	file:
 YY_SC_TO_UI	src/lexer.c	112;"	d	language:C	file:
-YY_STACK_PRINT	src/yy_syn.tab.c	742;"	d	language:C	file:
-YY_STACK_PRINT	src/yy_syn.tab.c	785;"	d	language:C	file:
+YY_STACK_PRINT	src/yy_syn.tab.c	741;"	d	language:C	file:
+YY_STACK_PRINT	src/yy_syn.tab.c	784;"	d	language:C	file:
 YY_START	src/lexer.c	123;"	d	language:C	file:
 YY_START_STACK_INCR	include/lexer.h	296;"	d	language:C++
-YY_START_STACK_INCR	src/lexer.c	791;"	d	language:C	file:
+YY_START_STACK_INCR	src/lexer.c	787;"	d	language:C	file:
 YY_STATE_BUF_SIZE	src/lexer.c	146;"	d	language:C	file:
 YY_STATE_EOF	src/lexer.c	126;"	d	language:C	file:
 YY_STRUCT_YY_BUFFER_STATE	include/lexer.h	138;"	d	language:C++
 YY_STRUCT_YY_BUFFER_STATE	src/lexer.c	185;"	d	language:C	file:
-YY_SYMBOL_PRINT	src/yy_syn.tab.c	680;"	d	language:C	file:
-YY_SYMBOL_PRINT	src/yy_syn.tab.c	784;"	d	language:C	file:
+YY_SYMBOL_PRINT	src/yy_syn.tab.c	679;"	d	language:C	file:
+YY_SYMBOL_PRINT	src/yy_syn.tab.c	783;"	d	language:C	file:
 YY_TYPEDEF_YY_BUFFER_STATE	include/lexer.h	124;"	d	language:C++
 YY_TYPEDEF_YY_BUFFER_STATE	src/lexer.c	149;"	d	language:C	file:
 YY_TYPEDEF_YY_SIZE_T	include/lexer.h	129;"	d	language:C++
 YY_TYPEDEF_YY_SIZE_T	src/lexer.c	154;"	d	language:C	file:
-YY_USER_ACTION	src/lexer.c	816;"	d	language:C	file:
+YY_USER_ACTION	src/lexer.c	812;"	d	language:C	file:
 YY_YY_HOME_TOTORO_CODEW_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED	include/yy_syn.tab.h	34;"	d	language:C++
-YY_YY_HOME_TOTORO_CODEW_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED	src/yy_syn.tab.c	103;"	d	language:C	file:
 _DISPATCHER_H_	include/dispatcher.h	2;"	d	language:C++
 _MIB2DOC_LIST_H_	include/list.h	6;"	d	language:C++
 _MIB2DOC_TYPE_H_	include/type.h	6;"	d	language:C++
-_Noreturn	src/yy_syn.tab.c	241;"	d	language:C	file:
-_Noreturn	src/yy_syn.tab.c	243;"	d	language:C	file:
+_Noreturn	src/yy_syn.tab.c	240;"	d	language:C	file:
+_Noreturn	src/yy_syn.tab.c	242;"	d	language:C	file:
 _OPTIONS_H	include/options.h	2;"	d	language:C++
 _SYMBOLTBL_H_	include/symbolTbl.h	2;"	d	language:C++
 _UTIL_H	include/util.h	2;"	d	language:C++
 __STDC_LIMIT_MACROS	include/lexer.h	44;"	d	language:C++
 __STDC_LIMIT_MACROS	src/lexer.c	40;"	d	language:C	file:
-alloca	src/yy_syn.tab.c	288;"	d	language:C	file:
+alloca	src/yy_syn.tab.c	287;"	d	language:C	file:
 appendQueue	src/queue.c	/^int appendQueue(mibNodeInfoQueue *q, tableInfo *pData) {$/;"	f	language:C
 base	include/stack.h	/^    unsigned char *base;$/;"	m	language:C++	struct:identStack
 beginFrom	src/docGenerate.c	/^char *beginFrom;$/;"	v	language:C
@@ -820,7 +818,7 @@ fontSize	include/options.h	/^    int fontSize;$/;"	m	language:C++	struct:options
 found	include/dispatcher.h	/^    int found;$/;"	m	language:C++	struct:identList
 genericStack	include/stack.h	/^} genericStack;$/;"	t	language:C++	typeref:struct:identStack
 genericStackConstruct	src/stack.c	/^int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize) {$/;"	f	language:C
-getCurrentBufferState	src/lexer.c	/^YY_BUFFER_STATE * getCurrentBufferState() {$/;"	f	language:C
+getCurrentBufferState	src/lexer.c	/^YY_BUFFER_STATE getCurrentBufferState() {$/;"	f	language:C
 getIdentFromInfo	src/mibTreeObjTree.c	/^char * getIdentFromInfo(mibObjectTreeNode *node) {$/;"	f	language:C
 getOidFromInfo	src/mibTreeObjTree.c	/^char *getOidFromInfo(mibObjectTreeNode *node) {$/;"	f	language:C
 getOption_SourceMibFilePath	src/options.c	/^const char * getOption_SourceMibFilePath() {$/;"	f	language:C
@@ -875,14 +873,15 @@ latexTailGen	src/docGenerate.c	/^static int latexTailGen() {}$/;"	f	language:C	f
 leaveMeta	include/symbolTbl.h	/^       leaveMeta_t leaveMeta;$/;"	m	language:C++	union:symbol_t::__anon1
 leaveMeta_t	include/symbolTbl.h	/^typedef struct leaveMeta_t {$/;"	s	language:C++
 leaveMeta_t	include/symbolTbl.h	/^} leaveMeta_t;$/;"	t	language:C++	typeref:struct:leaveMeta_t
-lexBufferSwitching	src/dispatcher.c	/^int lexBufferSwitching(char *newModule) {$/;"	f	language:C
+lexBufferSwitching	src/dispatcher.c	/^static int lexBufferSwitching(char *newModule) {$/;"	f	language:C	file:
 listNode	include/list.h	/^typedef struct listNode {$/;"	s	language:C++
 listNode	include/list.h	/^} listNode;$/;"	t	language:C++	typeref:struct:listNode
-listNodeDelete	src/list.c	/^listNode *listNodeDelete(listNode *node) {$/;"	f	language:C
-listNodeInsert	src/list.c	/^listNode * listNodeInsert(listNode *head, listNode *node) {$/;"	f	language:C
+listNodeAppend	src/list.c	/^listNode * listNodeAppend(listNode *listH, listNode *listN) {$/;"	f	language:C
+listNodeDelete	src/list.c	/^listNode *listNodeDelete(listNode *sliNode) {$/;"	f	language:C
+listNodeInsert	src/list.c	/^listNode * listNodeInsert(listNode *head, listNode *sliNode) {$/;"	f	language:C
 listNodeIsEmpty	src/list.c	/^bool listNodeIsEmpty(listNode *head) {$/;"	f	language:C
-listNodeNext	src/list.c	/^listNode * listNodeNext(listNode *node) {$/;"	f	language:C
-listNodePrev	src/list.c	/^listNode *listNodePrev(listNode *node) {$/;"	f	language:C
+listNodeNext	src/list.c	/^listNode * listNodeNext(listNode *sliNode) {$/;"	f	language:C
+listNodePrev	src/list.c	/^listNode *listNodePrev(listNode *sliNode) {$/;"	f	language:C
 listNodeTail	src/list.c	/^listNode * listNodeTail(listNode *head) {$/;"	f	language:C
 listNodeTask	include/list.h	/^typedef void (*listNodeTask)(listNode *head, void *arg);$/;"	t	language:C++
 listNodeTravel	src/list.c	/^int listNodeTravel(listNode *head, listNodeTask func, void *arg) {$/;"	f	language:C
@@ -966,7 +965,7 @@ search_MibTree	src/mibTreeObjTree.c	/^mibObjectTreeNode * search_MibTree(mibObje
 sectionGen_Latex	src/docGenerate.c	/^static int sectionGen_Latex(char *secName, char *OID, FILE *writeTo) {$/;"	f	language:C	file:
 sectionRecord	src/main.c	/^char *sectionRecord[SIZE_OF_SECTION_RECORD];$/;"	v	language:C
 sectionRecord	src/unitTest/basicDataStruct_Test.c	/^char *sectionRecord[SIZE_OF_SECTION_RECORD];$/;"	v	language:C
-short	src/yy_syn.tab.c	166;"	d	language:C	file:
+short	src/yy_syn.tab.c	165;"	d	language:C	file:
 showTree	src/mibTreeObjTree.c	/^void showTree(mibObjectTreeNode *root) {$/;"	f	language:C
 sibling	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *sibling;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode::mibObjectTreeNode
 sliKey	include/list.h	/^    int sliKey;$/;"	m	language:C++	struct:slice
@@ -1167,7 +1166,7 @@ yyalloc	src/lexer.c	/^void *yyalloc (yy_size_t  size )$/;"	f	language:C
 yyalloc	src/yy_syn.tab.c	/^union yyalloc$/;"	u	language:C	file:
 yychar	src/yy_syn.tab.c	/^int yychar;$/;"	v	language:C
 yycheck	src/yy_syn.tab.c	/^static const yytype_int8 yycheck[] =$/;"	v	language:C	file:
-yyclearin	src/yy_syn.tab.c	626;"	d	language:C	file:
+yyclearin	src/yy_syn.tab.c	625;"	d	language:C	file:
 yyconst	include/lexer.h	102;"	d	language:C++
 yyconst	src/lexer.c	98;"	d	language:C	file:
 yydebug	src/yy_syn.tab.c	/^int yydebug;$/;"	v	language:C
@@ -1176,7 +1175,7 @@ yydefgoto	src/yy_syn.tab.c	/^static const yytype_int8 yydefgoto[] =$/;"	v	langua
 yydestruct	src/yy_syn.tab.c	/^yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep)$/;"	f	language:C	file:
 yyensure_buffer_stack	include/lexer.h	358;"	d	language:C++
 yyensure_buffer_stack	src/lexer.c	/^static void yyensure_buffer_stack (void)$/;"	f	language:C	file:
-yyerrok	src/yy_syn.tab.c	625;"	d	language:C	file:
+yyerrok	src/yy_syn.tab.c	624;"	d	language:C	file:
 yyerror	src/yy_syn.tab.c	/^    void yyerror(char const *s) {$/;"	f	language:C
 yyfree	include/lexer.h	439;"	d	language:C++
 yyfree	src/lexer.c	/^void yyfree (void * ptr )$/;"	f	language:C
@@ -1202,8 +1201,8 @@ yyinput	src/lexer.c	/^    static int yyinput (void)$/;"	f	language:C	file:
 yyleng	include/lexer.h	445;"	d	language:C++
 yyleng	src/lexer.c	/^int yyleng;$/;"	v	language:C
 yyless	src/lexer.c	170;"	d	language:C	file:
-yyless	src/lexer.c	1917;"	d	language:C	file:
-yyless	src/lexer.c	1918;"	d	language:C	file:
+yyless	src/lexer.c	1913;"	d	language:C	file:
+yyless	src/lexer.c	1914;"	d	language:C	file:
 yylex	include/lexer.h	361;"	d	language:C++
 yylex_destroy	include/lexer.h	373;"	d	language:C++
 yylex_destroy	src/lexer.c	/^int yylex_destroy  (void)$/;"	f	language:C
@@ -1211,7 +1210,6 @@ yylex_init	include/lexer.h	367;"	d	language:C++
 yylex_init_extra	include/lexer.h	370;"	d	language:C++
 yylineno	include/lexer.h	457;"	d	language:C++
 yylineno	src/lexer.c	/^int yylineno = 1;$/;"	v	language:C
-yylval	src/lexer.c	/^YYSTYPE yylval;$/;"	v	language:C
 yylval	src/yy_syn.tab.c	/^YYSTYPE yylval;$/;"	v	language:C
 yymore	src/lexer.c	632;"	d	language:C	file:
 yynerrs	src/yy_syn.tab.c	/^int yynerrs;$/;"	v	language:C
@@ -1222,7 +1220,7 @@ yynoreturn	src/lexer.c	103;"	d	language:C	file:
 yyout	include/lexer.h	451;"	d	language:C++
 yyout	src/lexer.c	/^FILE *yyin = NULL, *yyout = NULL;$/;"	v	language:C
 yypact	src/yy_syn.tab.c	/^static const yytype_int8 yypact[] =$/;"	v	language:C	file:
-yypact_value_is_default	src/yy_syn.tab.c	504;"	d	language:C	file:
+yypact_value_is_default	src/yy_syn.tab.c	503;"	d	language:C	file:
 yyparse	src/yy_syn.tab.c	/^yyparse (void)$/;"	f	language:C
 yypgoto	src/yy_syn.tab.c	/^static const yytype_int8 yypgoto[] =$/;"	v	language:C	file:
 yypop_buffer_state	include/lexer.h	355;"	d	language:C++
@@ -1251,15 +1249,15 @@ yyset_out	src/lexer.c	/^void yyset_out (FILE *  _out_str )$/;"	f	language:C
 yyss_alloc	src/yy_syn.tab.c	/^  yytype_int16 yyss_alloc;$/;"	m	language:C	union:yyalloc	file:
 yystos	src/yy_syn.tab.c	/^static const yytype_uint8 yystos[] =$/;"	v	language:C	file:
 yystpcpy	src/yy_syn.tab.c	/^yystpcpy (char *yydest, const char *yysrc)$/;"	f	language:C	file:
-yystpcpy	src/yy_syn.tab.c	827;"	d	language:C	file:
+yystpcpy	src/yy_syn.tab.c	826;"	d	language:C	file:
 yystrlen	src/yy_syn.tab.c	/^yystrlen (const char *yystr)$/;"	f	language:C	file:
-yystrlen	src/yy_syn.tab.c	811;"	d	language:C	file:
+yystrlen	src/yy_syn.tab.c	810;"	d	language:C	file:
 yysyntax_error	src/yy_syn.tab.c	/^yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,$/;"	f	language:C	file:
 yytable	src/yy_syn.tab.c	/^static const yytype_int8 yytable[] =$/;"	v	language:C	file:
-yytable_value_is_error	src/yy_syn.tab.c	509;"	d	language:C	file:
+yytable_value_is_error	src/yy_syn.tab.c	508;"	d	language:C	file:
 yytables_destroy	include/lexer.h	463;"	d	language:C++
 yytables_fload	include/lexer.h	460;"	d	language:C++
-yyterminate	src/lexer.c	786;"	d	language:C	file:
+yyterminate	src/lexer.c	782;"	d	language:C	file:
 yytext	include/lexer.h	442;"	d	language:C++
 yytext	src/lexer.c	/^char *yytext;$/;"	v	language:C
 yytext_ptr	include/lexer.h	210;"	d	language:C++
