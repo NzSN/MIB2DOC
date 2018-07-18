@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 project(Mib2Doc)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wint-conversion")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(HOME_DIR /home/totoro/Projects/MIB2DOC)
 set(SRC_DIR ${HOME_DIR}/src)

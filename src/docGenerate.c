@@ -8,6 +8,7 @@
 #include "mibTreeObjTree.h"
 #include "docGenerate.h"
 #include "queue.h"
+#include "util.h"
 
 /* Defines */
 #define SIZE_OF_LATEX_BUFFER 256
@@ -37,8 +38,6 @@ static int latexHeaderGen();
 static int latexTailGen();
 int documentGen(mibObjectTreeNode *root, FILE *writeTo);
 static int docGenerate(void *arg, mibObjectTreeNode *root);
-static int tableRecognize(char *buffer, int size);
-static int entryRecognize(char *buffer, int size);
 
 int documentGen(mibObjectTreeNode *root, FILE *writeTo) {
     latexHeaderGen();
@@ -203,177 +202,6 @@ static char * tableItemGen_Latex(tableInfo *info, int index) {
             index, info->identifier, info->desc, info->oid, info->rw, info->type, " ");
 
     return laTexStrBuffer;
-}
-
-static int tableRecognize(char *buffer, int size) {
-    int ret, index;
-    char current;
-
-S_init:
-    index = -1;
-    ret = -1;
-    goto S_0;
-
-S_0:
-    if (index < size)
-        index++;
-    else
-        goto S_out;
-
-    current = buffer[index];
-
-    if (current == 'T')
-        goto S_1;
-    else
-        goto S_0;
-
-S_1:
-    if (index < size)
-        index++;
-    else
-        goto S_out;
-
-    current = buffer[index];
-
-    if (current == 'a')
-        goto S_2;
-    else
-        goto S_0;
-
-S_2:
-    if (index < size)
-        index++;
-    else
-        goto S_out;
-
-    current = buffer[index];
-
-    if (current == 'b')
-        goto S_3;
-    else
-        goto S_0;
-
-S_3:
-    if (index < size)
-        index++;
-    else
-        goto S_out;
-
-    current = buffer[index];
-
-    if (current == 'l')
-        goto S_4;
-    else
-        goto S_0;
-
-S_4:
-    if (index < size)
-        index++;
-    else
-        goto S_out;
-
-    current = buffer[index];
-
-    if (current == 'e')
-        goto S_accept;
-    else
-        goto S_0;
-
-S_accept:
-    ret = 1;
-    goto S_finished;
-
-S_out:
-    ret = 0;
-
-S_finished:
-    return ret;
-}
-
-
-static int entryRecognize(char *buffer, int size) {
-    int ret, index;
-    char current;
-
-    S_init:
-    index = -1;
-    ret = -1;
-    goto S_0;
-
-    S_0:
-    if (index < size)
-        index++;
-    else
-        goto S_out;
-
-    current = buffer[index];
-
-    if (current == 'E')
-        goto S_1;
-    else
-        goto S_0;
-
-    S_1:
-    if (index < size)
-        index++;
-    else
-        goto S_out;
-
-    current = buffer[index];
-
-    if (current == 'n')
-        goto S_2;
-    else
-        goto S_0;
-
-    S_2:
-    if (index < size)
-        index++;
-    else
-        goto S_out;
-
-    current = buffer[index];
-
-    if (current == 't')
-        goto S_3;
-    else
-        goto S_0;
-
-    S_3:
-    if (index < size)
-        index++;
-    else
-        goto S_out;
-
-    current = buffer[index];
-
-    if (current == 'r')
-        goto S_4;
-    else
-        goto S_0;
-
-    S_4:
-    if (index < size)
-        index++;
-    else
-        goto S_out;
-
-    current = buffer[index];
-
-    if (current == 'y')
-        goto S_accept;
-    else
-        goto S_0;
-
-    S_accept:
-    ret = 1;
-    goto S_finished;
-
-    S_out:
-    ret = 0;
-
-    S_finished:
-    return ret;
 }
 
 char * long2Short(char *str) {

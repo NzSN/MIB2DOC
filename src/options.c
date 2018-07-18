@@ -38,7 +38,7 @@ int optionsInit(int argc, char *argv[]) {
         return ERROR_NULL_REF;
     }
 
-    if (argc == 0) {
+    if (argc == 1) {
         helpInfoPrint();
         return ERROR_GENERIC;
     }

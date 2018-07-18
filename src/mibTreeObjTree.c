@@ -8,6 +8,7 @@
 #include "mibTreeObjTree.h"
 #include "type.h"
 #include "docGenerate.h"
+#include "util.h"
 
 /* Global */
 mibObjectTreeNode mibObjectTreeRoot;
@@ -157,7 +158,7 @@ static int descriptionDeal(mibObjectTreeNode *node) {
     else
         size = strlen(ident);
 
-    if (!node->isNode) {
+    if (!node->isNode & !tableRecognize(ident, strlen(ident))) {
         info = node->info;
 
         pos = -1;
