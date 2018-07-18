@@ -15,6 +15,7 @@ mibObjectTreeNode mibObjectTreeRoot;
 /* Local */
 static int nodeCmp(void *arg, mibObjectTreeNode *node);
 static int Treeprint(void *arg, mibObjectTreeNode *node);
+static int descriptionDeal(mibObjectTreeNode *node);
 
 /* Define */
 #define OID_LENGTH 256
@@ -144,7 +145,7 @@ MISC:
     return 0;
 }
 
-int descriptionDeal(mibObjectTreeNode *node) {
+static int descriptionDeal(mibObjectTreeNode *node) {
 
     int i, pos, size, descSize, sumChild, sumParent;
     char *ident = getIdentFromInfo(node);
