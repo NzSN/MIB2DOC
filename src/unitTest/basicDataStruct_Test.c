@@ -26,10 +26,10 @@ static void list_test(void **state) {
 
     memset(&sliceContainer, 0, sizeof(slice));
 
-    new1 = sliceConstruct(SLICE_IDENTIFIER, "LLLL");
+    new1 = sliceConstruct(SLICE_IDENTIFIER, strdup("LLLLL"));
     sliceStore(&sliceContainer, new1);
 
-    new2 = sliceConstruct(SLICE_TYPE, "lllll");
+    new2 = sliceConstruct(SLICE_TYPE, strdup("lllll"));
     sliceStore(&sliceContainer, new2);
 
     got = sliceGet(&sliceContainer, SLICE_IDENTIFIER);
@@ -40,7 +40,7 @@ static void list_test(void **state) {
     if ( (got->sliVal != new2->sliVal) || (got->sliKey != new2->sliKey))
         fail();
 
-    sliceRelease(&sliceContainer);
+    sliceRelease_STATIC(&sliceContainer);
     got = sliceGet(&sliceContainer, SLICE_IDENTIFIER);
     if (got != NULL)
         fail();
@@ -70,7 +70,22 @@ static void mibTree_test(void **state) {
 
     mibObjGen_InnerNode();
     pNode = search_MibTree(&mibObjectTreeRoot, "gogo");
+    
+}
 
+static void disParam_test(void **state) {
+    dispatchParam *disParam, *disRet;
+    unsigned long a = 1;
+    unsigned long b = 2;
+    disParam = disParamConstruct((void *)a);
+    disParamStore(disParam, disParamConstruct((void *)b));
+    
+    disRet = disParamRetrive(&disParam);
+    if (disRet->param != (void *)1)
+        fail();
+    disRet = disParamRetrive(&disParam);
+    if (disRet->param != (void *)2)
+        fail();
 }
 
 static void tableInfoQueue_test(void **state) {
@@ -169,10 +184,11 @@ static void fa_test(void **state) {
 
 int main(void) {
     const struct CMUnitTest tests[] = {
-            //cmocka_unit_test(list_test),
-            //cmocka_unit_test(mibTree_test),
-            //cmocka_unit_test(fa_test),
-            //cmocka_unit_test(tableInfoQueue_test),
+            cmocka_unit_test(list_test),
+            cmocka_unit_test(mibTree_test),
+            cmocka_unit_test(disParam_test),
+            cmocka_unit_test(fa_test),
+            cmocka_unit_test(tableInfoQueue_test),
             cmocka_unit_test(desc_test)
     };
     return cmocka_run_group_tests(tests, NULL, NULL);

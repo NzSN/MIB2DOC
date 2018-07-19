@@ -633,12 +633,13 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "src/yy_lex.l"
-#line 5 "src/yy_lex.l"
+#line 1 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
+#line 5 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
+    #define YYSTYPE char *
     #include "yy_syn.tab.h"
     #include "lexDeal.h"
-#line 641 "src/lexer.c"
 #line 642 "src/lexer.c"
+#line 643 "src/lexer.c"
 
 #define INITIAL 0
 
@@ -855,9 +856,9 @@ YY_DECL
 		}
 
 	{
-#line 9 "src/yy_lex.l"
+#line 10 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 
-#line 861 "src/lexer.c"
+#line 862 "src/lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -917,177 +918,177 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 10 "src/yy_lex.l"
+#line 11 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 11 "src/yy_lex.l"
+#line 12 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 12 "src/yy_lex.l"
+#line 13 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 13 "src/yy_lex.l"
+#line 14 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return OBJ_IDEN_; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 14 "src/yy_lex.l"
+#line 15 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return OBJ_SPECIFIER; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 15 "src/yy_lex.l"
+#line 16 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return OBJECTS_; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 16 "src/yy_lex.l"
+#line 17 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return TRAP_SPECIFIER; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 17 "src/yy_lex.l"
+#line 18 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return SYNTAX_SPECIFIER; }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
-#line 20 "src/yy_lex.l"
+#line 21 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 case 10:
 /* rule 10 can match eol */
-#line 21 "src/yy_lex.l"
+#line 22 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 case 11:
 /* rule 11 can match eol */
-#line 22 "src/yy_lex.l"
+#line 23 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 case 12:
 /* rule 12 can match eol */
-#line 23 "src/yy_lex.l"
+#line 24 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 case 13:
 /* rule 13 can match eol */
-#line 24 "src/yy_lex.l"
+#line 25 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 24 "src/yy_lex.l"
+#line 25 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { yylval = strDuplicate(yytext); return TYPE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 26 "src/yy_lex.l"
+#line 27 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return SEQ; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 28 "src/yy_lex.l"
+#line 29 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return INDEX_; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 29 "src/yy_lex.l"
+#line 30 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return ACCESS_SPECIFIER; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 30 "src/yy_lex.l"
+#line 31 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return DEF; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 31 "src/yy_lex.l"
+#line 32 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return BEGIN_; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 32 "src/yy_lex.l"
+#line 33 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return IMPORTS_; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 33 "src/yy_lex.l"
+#line 34 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return FROM_; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 34 "src/yy_lex.l"
+#line 35 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return COMMA; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 35 "src/yy_lex.l"
+#line 36 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return SEMICOLON; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 36 "src/yy_lex.l"
+#line 37 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return END_; }
 	YY_BREAK
 case 25:
-#line 39 "src/yy_lex.l"
+#line 40 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 case 26:
-#line 40 "src/yy_lex.l"
+#line 41 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 case 27:
-#line 41 "src/yy_lex.l"
+#line 42 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 case 28:
-#line 42 "src/yy_lex.l"
+#line 43 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 case 29:
 YY_RULE_SETUP
-#line 42 "src/yy_lex.l"
+#line 43 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { yylval = strDuplicate(yytext); return ACCESS_VALUE; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 44 "src/yy_lex.l"
+#line 45 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return STATUS_SPECIFIER; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 45 "src/yy_lex.l"
+#line 46 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return STATUS_VALUE; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 46 "src/yy_lex.l"
+#line 47 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return DESC_SPECIFIER; }
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 47 "src/yy_lex.l"
+#line 48 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { yylval = strDuplicate(yytext); return DESC_VALUE; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 48 "src/yy_lex.l"
+#line 49 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return ASSIGNED; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 50 "src/yy_lex.l"
+#line 51 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return L_BRACE; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 51 "src/yy_lex.l"
+#line 52 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { return R_BRACE; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 53 "src/yy_lex.l"
+#line 54 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { yylval = strDuplicate(yytext); return NUM; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 55 "src/yy_lex.l"
+#line 56 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 { yylval = strDuplicate(yytext); return IDENTIFIER; }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 57 "src/yy_lex.l"
+#line 58 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 {
                                         //if (--swState.counter < 0) {
                                         //    yyterminate();
@@ -1099,10 +1100,10 @@ case YY_STATE_EOF(INITIAL):
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 66 "src/yy_lex.l"
+#line 67 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 ECHO;
 	YY_BREAK
-#line 1106 "src/lexer.c"
+#line 1107 "src/lexer.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2105,7 +2106,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 66 "src/yy_lex.l"
+#line 67 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 
 int yywrap() {
     return 1;

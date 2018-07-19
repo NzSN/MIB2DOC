@@ -37,8 +37,8 @@ int dispatch(dispatch_type disType, dispatchParam *param) {
     switch (dispatchMakeChoice(disType)) {
         case DISPATCH_PARAM_STAGE:
             sliceStore(&sliceContainer,
-                    sliceConstruct((unsigned long)disParamRetrive(&param)->param,
-                        disParamRetrive(&param)->param));
+                sliceConstruct((unsigned long)disParamRetrive(&param)->param,
+                    (char *)disParamRetrive(&param)->param));
             break;
         case MIBTREE_GENERATION:
             mibObjGen((unsigned long)disParamRetrive(&param)->param);

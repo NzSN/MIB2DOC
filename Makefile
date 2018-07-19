@@ -156,6 +156,7 @@ src/dispatcher.o: src/dispatcher.c.o
 # target to build an object file
 src/dispatcher.c.o:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/dispatcher.c.o
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/dispatcher.c.o
 .PHONY : src/dispatcher.c.o
 
 src/dispatcher.i: src/dispatcher.c.i
@@ -165,6 +166,7 @@ src/dispatcher.i: src/dispatcher.c.i
 # target to preprocess a source file
 src/dispatcher.c.i:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/dispatcher.c.i
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/dispatcher.c.i
 .PHONY : src/dispatcher.c.i
 
 src/dispatcher.s: src/dispatcher.c.s
@@ -174,6 +176,7 @@ src/dispatcher.s: src/dispatcher.c.s
 # target to generate assembly for a file
 src/dispatcher.c.s:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/dispatcher.c.s
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/dispatcher.c.s
 .PHONY : src/dispatcher.c.s
 
 src/docGenerate.o: src/docGenerate.c.o
@@ -210,6 +213,7 @@ src/lexDeal.o: src/lexDeal.c.o
 # target to build an object file
 src/lexDeal.c.o:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/lexDeal.c.o
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/lexDeal.c.o
 .PHONY : src/lexDeal.c.o
 
 src/lexDeal.i: src/lexDeal.c.i
@@ -219,6 +223,7 @@ src/lexDeal.i: src/lexDeal.c.i
 # target to preprocess a source file
 src/lexDeal.c.i:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/lexDeal.c.i
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/lexDeal.c.i
 .PHONY : src/lexDeal.c.i
 
 src/lexDeal.s: src/lexDeal.c.s
@@ -228,6 +233,7 @@ src/lexDeal.s: src/lexDeal.c.s
 # target to generate assembly for a file
 src/lexDeal.c.s:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/lexDeal.c.s
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/lexDeal.c.s
 .PHONY : src/lexDeal.c.s
 
 src/lexer.o: src/lexer.c.o
@@ -384,6 +390,7 @@ src/misc.o: src/misc.c.o
 # target to build an object file
 src/misc.c.o:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/misc.c.o
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/misc.c.o
 .PHONY : src/misc.c.o
 
 src/misc.i: src/misc.c.i
@@ -393,6 +400,7 @@ src/misc.i: src/misc.c.i
 # target to preprocess a source file
 src/misc.c.i:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/misc.c.i
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/misc.c.i
 .PHONY : src/misc.c.i
 
 src/misc.s: src/misc.c.s
@@ -402,6 +410,7 @@ src/misc.s: src/misc.c.s
 # target to generate assembly for a file
 src/misc.c.s:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/misc.c.s
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/misc.c.s
 .PHONY : src/misc.c.s
 
 src/options.o: src/options.c.o
@@ -411,6 +420,7 @@ src/options.o: src/options.c.o
 # target to build an object file
 src/options.c.o:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/options.c.o
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/options.c.o
 .PHONY : src/options.c.o
 
 src/options.i: src/options.c.i
@@ -420,6 +430,7 @@ src/options.i: src/options.c.i
 # target to preprocess a source file
 src/options.c.i:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/options.c.i
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/options.c.i
 .PHONY : src/options.c.i
 
 src/options.s: src/options.c.s
@@ -429,6 +440,7 @@ src/options.s: src/options.c.s
 # target to generate assembly for a file
 src/options.c.s:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/options.c.s
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/options.c.s
 .PHONY : src/options.c.s
 
 src/queue.o: src/queue.c.o
@@ -525,6 +537,7 @@ src/util.o: src/util.c.o
 # target to build an object file
 src/util.c.o:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/util.c.o
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/util.c.o
 .PHONY : src/util.c.o
 
 src/util.i: src/util.c.i
@@ -534,6 +547,7 @@ src/util.i: src/util.c.i
 # target to preprocess a source file
 src/util.c.i:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/util.c.i
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/util.c.i
 .PHONY : src/util.c.i
 
 src/util.s: src/util.c.s
@@ -543,6 +557,7 @@ src/util.s: src/util.c.s
 # target to generate assembly for a file
 src/util.c.s:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/util.c.s
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/util.c.s
 .PHONY : src/util.c.s
 
 src/yy_syn.tab.o: src/yy_syn.tab.c.o

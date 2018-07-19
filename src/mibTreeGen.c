@@ -50,14 +50,27 @@ int mibObjGen(int type) {
 }
 
 int mibObjGen_Leave() {
+    slice *pSlice;
     char *ident, *type, *rw, *desc, *parent, *suffix, *oid;
 
-    ident = sliceGet(&sliceContainer, SLICE_IDENTIFIER)->sliVal;
-    type = sliceGet(&sliceContainer, SLICE_TYPE)->sliVal;
-    rw = sliceGet(&sliceContainer, SLICE_PERMISSION)->sliVal;
-    desc = sliceGet(&sliceContainer, SLICE_DESCRIPTION)->sliVal;
-    parent = sliceGet(&sliceContainer, SLICE_PARENT)->sliVal;
-    suffix = sliceGet(&sliceContainer, SLICE_OID_SUFFIX)->sliVal;
+    pSlice = sliceGet(&sliceContainer, SLICE_IDENTIFIER);
+    if (pSlice)
+        ident = pSlice->sliVal;
+    pSlice = sliceGet(&sliceContainer, SLICE_TYPE);
+    if (pSlice)
+        type = pSlice->sliVal;
+    pSlice = sliceGet(&sliceContainer, SLICE_PERMISSION);
+    if (pSlice)
+        rw = pSlice->sliVal;
+    pSlice = sliceGet(&sliceContainer, SLICE_DESCRIPTION);
+    if (pSlice)
+        desc = pSlice->sliVal;
+    pSlice = sliceGet(&sliceContainer, SLICE_PARENT);
+    if (pSlice)
+        parent = pSlice->sliVal;
+    pSlice = sliceGet(&sliceContainer, SLICE_OID_SUFFIX);
+    if (pSlice)
+        suffix = pSlice->sliVal;
 
     if (isNullPtr(ident) || isNullPtr(type) || isNullPtr(rw)
         || isNullPtr(desc) || isNullPtr(desc) || isNullPtr(parent)

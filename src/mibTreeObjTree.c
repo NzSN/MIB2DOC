@@ -52,7 +52,7 @@ void mibObjectTreeInit(mibObjectTreeNode *root) {
     root->info = (void *)rootInfo;
     root->head = root;
 
-    #if FALSE
+    #if TRUE
     insert_MibTree(root, mibNodeBuild("iso", "1"), "root");
     insert_MibTree(root, mibNodeBuild("org", "1.3"), "iso");
     insert_MibTree(root, mibNodeBuild("dod", "1.3.6"), "org");

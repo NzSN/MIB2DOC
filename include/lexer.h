@@ -466,7 +466,7 @@ extern int yylex (void);
 #undef yyTABLES_NAME
 #endif
 
-#line 66 "src/yy_lex.l"
+#line 67 "/home/totoro/Projects/MIB2DOC/src/yy_lex.l"
 
 
 #line 473 "include/lexer.h"

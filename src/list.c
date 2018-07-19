@@ -112,7 +112,7 @@ int listNodeTravel(listNode *head, listNodeTask func, void *arg) {
  *******************************************/
 slice * sliceConstruct(int sliKey, char *sliVal) {
     slice *sli = (slice *)malloc(sizeof(slice));
-
+     
     sli->sliKey = sliKey;
     sli->sliVal = sliVal;
     sli->sliNode.next = NULL;
@@ -124,7 +124,7 @@ bool sliceDestruct(slice *sli) {
     if (isNullPtr(sli)) {
         return FALSE;
     }
-    if (isNullPtr(sli->sliVal)) {
+    if (!isNullPtr(sli->sliVal)) {
         RELEASE_MEM(sli->sliVal);
     }
     RELEASE_MEM(sli);
@@ -132,14 +132,14 @@ bool sliceDestruct(slice *sli) {
 }
 
 slice * slicePrev(slice *sli) {
-    if (isNullPtr(sli)) {
+    if (isNullPtr(sli) || isNullPtr(sli->sliNode.prev)) {
         return NULL;
     }
     return containerOf(sli->sliNode.prev, slice, sliNode);
 }
 
 slice * sliceNext(slice *sli) {
-    if (isNullPtr(sli)) {
+    if (isNullPtr(sli) || isNullPtr(sli->sliNode.next)) {
         return NULL;
     }
     return containerOf(sli->sliNode.next, slice, sliNode);
@@ -151,9 +151,10 @@ slice * sliceGet(slice *sliHead, int sliKey) {
         return NULL;
     }
 
-    for (; sliHead != NULL; sliHead = sliceNext(sliHead)) {
+    while (sliHead != NULL) {
         if (sliHead->sliKey == sliKey)
             return sliHead;
+        sliHead = sliceNext(sliHead);
     }
     return NULL;
 }
@@ -175,6 +176,25 @@ int sliceStore(slice *sliHead, slice *newSli) {
         sliHead = sliceNext(sliHead);
     }
     return TRUE;
+}
+
+bool sliceRelease_STATIC(slice *sli) {
+    slice *pSli;
+    slice *pSli_next;
+
+    if (isNullPtr(sli)) 
+        return FALSE;
+    pSli = sli;
+    while (pSli != NULL) {
+        pSli_next = sliceNext(pSli); 
+        if (pSli->sliKey != 0)
+            sliceDestruct(pSli);
+        else {
+            sli->sliNode.next = NULL;
+            sli->sliNode.prev = NULL;
+        }
+        pSli = pSli_next;
+    } 
 }
 
 bool sliceRelease(slice *sli) {
@@ -200,7 +220,6 @@ bool sliceReset(slice *sli) {
 
     return TRUE;
 }
-
 
 /**************************************
  * dispatchParam Operation function define *

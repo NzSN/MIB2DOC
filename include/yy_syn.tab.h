@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_HOME_TOTORO_CODEW_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
-# define YY_YY_HOME_TOTORO_CODEW_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
+#ifndef YY_YY_HOME_TOTORO_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
+# define YY_YY_HOME_TOTORO_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -76,15 +76,15 @@ extern int yydebug;
 #endif
 
 /* Value type.  */
-#define YYSTYPE char *
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
+
 extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_TOTORO_CODEW_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED  */
+#endif /* !YY_YY_HOME_TOTORO_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED  */

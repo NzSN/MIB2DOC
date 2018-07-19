@@ -59,7 +59,7 @@
 #define YYPULL 1
 
 /* "%code top" blocks.  */
-#line 13 "yy_syn.y" /* yacc.c:316  */
+#line 13 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:316  */
 
     #include <stdio.h>
     #include "type.h"
@@ -70,18 +70,18 @@
     #define YYSTYPE char *
     
     extern symbolTable symTable; 
-    extern char *yylval;
+    extern YYSTYPE yylval;
     void yyerror(char const *s) {
         fprintf(stderr, "%s: %s\n", s, yylval);
     }
 
-#line 79 "yy_syn.tab.c" /* yacc.c:316  */
+#line 79 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:316  */
 
 
 
 /* Copy the first part of user declarations.  */
 
-#line 85 "yy_syn.tab.c" /* yacc.c:339  */
+#line 85 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -99,7 +99,10 @@
 # define YYERROR_VERBOSE 0
 #endif
 
-
+/* In a future release of Bison, this section will be replaced
+   by #include "yy_syn.tab.h".  */
+#ifndef YY_YY_HOME_TOTORO_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
+# define YY_YY_HOME_TOTORO_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -155,11 +158,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-
+#endif /* !YY_YY_HOME_TOTORO_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 163 "yy_syn.tab.c" /* yacc.c:358  */
+#line 166 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -460,10 +463,10 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    33,    33,    36,    37,    38,    39,    40,    41,    44,
-      47,    58,    61,    65,    66,    67,    70,    73,    74,    77,
-      87,    93,   108,   111,   114,   122,   129,   132,   133,   134,
-     135,   136,   137,   138,   139,   142,   145,   146,   149,   152,
-     157,   164,   171,   174,   180,   183,   184,   187
+      47,    60,    64,    68,    69,    70,    73,    76,    77,    80,
+      90,    96,   111,   114,   117,   125,   134,   137,   138,   139,
+     140,   141,   142,   143,   144,   147,   150,   151,   154,   157,
+     164,   173,   182,   185,   193,   196,   197,   200
 };
 #endif
 
@@ -1293,31 +1296,52 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 10:
-#line 47 "yy_syn.y" /* yacc.c:1646  */
+        case 2:
+#line 33 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
+    { printf("MIB\n"); return; }
+#line 1303 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 8:
+#line 41 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
+    { printf("MAIN\n"); }
+#line 1309 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 9:
+#line 44 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
+    { printf("llll\n"); }
+#line 1315 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 10:
+#line 47 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
-        /* build upper tree if all including is finished */
+        #if 0
         if (swState.counter == 0) {
             /* importStack is empty */
             upperTreeGeneration(&symTable);
         } else {
             /* do nothing */
         }
+        #endif
+        printf("IMPORT\n");
     }
-#line 1308 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1331 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 58 "yy_syn.y" /* yacc.c:1646  */
+#line 60 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
-		dispatchParam *param = disParamConstruct((yyvsp[-1]));
-		disParamStore(param, disParamConstruct((yyvsp[-3])));
+		//dispatchParam *param = disParamConstruct($IDENTIFIER);
+		//disParamStore(param, disParamConstruct($ITEMS));
+        printf("MODULES\n");
 	}
-#line 1317 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1341 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 77 "yy_syn.y" /* yacc.c:1646  */
+#line 80 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
         dispatchParam *param  = disParamConstruct(SLICE_IDENTIFIER);
         disParamStore(param, disParamConstruct((yyvsp[0])));
@@ -1325,20 +1349,20 @@ yyreduce:
         dispatch(DISPATCH_PARAM_STAGE, param);
         dispatch(MIBTREE_GENERATION, disParamConstruct(SMI_DEF));
     }
-#line 1329 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1353 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 87 "yy_syn.y" /* yacc.c:1646  */
+#line 90 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     { 
         dispatchParam *param = disParamConstruct(OBJECT_IDENTIFIER);
         dispatch(MIBTREE_GENERATION, param);
     }
-#line 1338 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1362 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 93 "yy_syn.y" /* yacc.c:1646  */
+#line 96 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[-6])));
@@ -1352,85 +1376,96 @@ yyreduce:
 		disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 }
-#line 1356 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1380 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 108 "yy_syn.y" /* yacc.c:1646  */
-    { dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT)); }
-#line 1362 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 111 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
+    { printf("ll\n");/* dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT));*/ }
+#line 1386 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 111 "yy_syn.y" /* yacc.c:1646  */
+#line 114 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     { dispatch(MIBTREE_GENERATION, disParamConstruct(TRAP)); }
-#line 1368 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1392 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 114 "yy_syn.y" /* yacc.c:1646  */
+#line 117 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[-1])));
 
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1379 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1403 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 122 "yy_syn.y" /* yacc.c:1646  */
+#line 125 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
+        #if 0
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
+        #endif
 	}
-#line 1389 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1415 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 152 "yy_syn.y" /* yacc.c:1646  */
+#line 157 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
+        #if 0
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
+        #endif
     }
-#line 1399 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1427 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 157 "yy_syn.y" /* yacc.c:1646  */
+#line 164 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
+        #if 0
  		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
+        #endif
  	}
-#line 1409 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1439 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 164 "yy_syn.y" /* yacc.c:1646  */
+#line 173 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
+        #if 0
 		dispatchParam *param = disParamConstruct(SLICE_PERMISSION);
 		disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
+        #endif
 	}
-#line 1419 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1451 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 174 "yy_syn.y" /* yacc.c:1646  */
+#line 185 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
+        #if 0 
 		dispatchParam *param = disParamConstruct(SLICE_DESCRIPTION);
 		disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
+        #endif
 	}
-#line 1429 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1463 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 187 "yy_syn.y" /* yacc.c:1646  */
+#line 200 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1646  */
     {
+        #if 0
 		dispatchParam *param = disParamConstruct(SLICE_PARENT);
 		disParamStore(param, disParamConstruct((yyvsp[-2])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
@@ -1438,12 +1473,13 @@ yyreduce:
 		param = disParamConstruct(SLICE_OID_SUFFIX);
 	    disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
+        #endif
 	}
-#line 1443 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1479 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1447 "yy_syn.tab.c" /* yacc.c:1646  */
+#line 1483 "/home/totoro/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1671,7 +1707,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 197 "yy_syn.y" /* yacc.c:1906  */
+#line 212 "/home/totoro/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1906  */
 
 
 // Epilogue

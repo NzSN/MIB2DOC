@@ -22,14 +22,13 @@ int main(int argc, char *argv[]) {
     beginFrom = "gponConfig";
     mibObjectTreeInit(&mibObjectTreeRoot);
     node = &mibObjectTreeRoot;
-    optionsInit(argc, argv);
+    //optionsInit(argc, argv);
     
     yyin = fopen("src/case", "r");
     if (yyin == NULL)
         printf("%s\n", "open failed");
     
     ret = yyparse();
-
     if (ret == ABORT) {
         return -1;
     }

@@ -2,6 +2,7 @@
 %option outfile="src/lexer.c"
 
 %{
+    #define YYSTYPE char *
     #include "yy_syn.tab.h"
     #include "lexDeal.h"
 %}

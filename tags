@@ -53,6 +53,16 @@ BODY	src/yy_syn.y	/^BODY :$/;"	l	language:YACC
 CMAKE_BINARY_DIR	Makefile	/^CMAKE_BINARY_DIR = \/home\/totoro\/Projects\/MIB2DOC$/;"	m	language:Make
 CMAKE_COMMAND	Makefile	/^CMAKE_COMMAND = \/usr\/bin\/cmake$/;"	m	language:Make
 CMAKE_SOURCE_DIR	Makefile	/^CMAKE_SOURCE_DIR = \/home\/totoro\/Projects\/MIB2DOC$/;"	m	language:Make
+CMFixtureFunction	src/unitTest/cmocka.h	/^typedef int (*CMFixtureFunction)(void **state);$/;"	t	language:C++
+CMOCKA_DEPRECATED	src/unitTest/cmocka.h	158;"	d	language:C++
+CMOCKA_H_	src/unitTest/cmocka.h	17;"	d	language:C++
+CMOCKA_PRINTF_ATTRIBUTE	src/unitTest/cmocka.h	151;"	d	language:C++
+CMUnitTest	src/unitTest/cmocka.h	/^struct CMUnitTest {$/;"	s	language:C++
+CMUnitTestFunction	src/unitTest/cmocka.h	/^typedef void (*CMUnitTestFunction)(void **state);$/;"	t	language:C++
+CM_OUTPUT_STDOUT	src/unitTest/cmocka.h	/^    CM_OUTPUT_STDOUT,$/;"	e	language:C++	enum:cm_message_output
+CM_OUTPUT_SUBUNIT	src/unitTest/cmocka.h	/^    CM_OUTPUT_SUBUNIT,$/;"	e	language:C++	enum:cm_message_output
+CM_OUTPUT_TAP	src/unitTest/cmocka.h	/^    CM_OUTPUT_TAP,$/;"	e	language:C++	enum:cm_message_output
+CM_OUTPUT_XML	src/unitTest/cmocka.h	/^    CM_OUTPUT_XML,$/;"	e	language:C++	enum:cm_message_output
 COLLECTING	src/docGenerate.c	/^    COLLECTING,$/;"	e	language:C	enum:__anon3	file:
 COMMA	include/yy_syn.tab.h	/^    COMMA = 273,$/;"	e	language:C++	enum:yytokentype
 COMMA	src/yy_syn.tab.c	/^    COMMA = 273,$/;"	e	language:C	enum:yytokentype	file:
@@ -296,6 +306,9 @@ C_DIALECT	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	552;"	d	language:C	fi
 C_DIALECT	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	555;"	d	language:C	file:
 C_DIALECT	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	557;"	d	language:C	file:
 C_DIALECT	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	559;"	d	language:C	file:
+CheckParameterEvent	src/unitTest/cmocka.h	/^typedef struct CheckParameterEvent {$/;"	s	language:C++
+CheckParameterEvent	src/unitTest/cmocka.h	/^} CheckParameterEvent;$/;"	t	language:C++	typeref:struct:CheckParameterEvent
+CheckParameterValue	src/unitTest/cmocka.h	/^typedef int (*CheckParameterValue)(const LargestIntegralType value,$/;"	t	language:C++
 DEC	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	472;"	d	language:C	file:
 DEC	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	457;"	d	language:C++	file:
 DEF	include/yy_syn.tab.h	/^    DEF = 271,$/;"	e	language:C++	enum:yytokentype
@@ -321,8 +334,8 @@ ERROR_NONE	include/type.h	/^    ERROR_NONE,$/;"	e	language:C++	enum:errorType
 ERROR_NULL_REF	include/type.h	/^    ERROR_NULL_REF,$/;"	e	language:C++	enum:errorType
 ERROR_OPEN_FAILED	include/type.h	/^    ERROR_OPEN_FAILED,$/;"	e	language:C++	enum:errorType
 ERROR_WRONG_IDX	include/type.h	/^    ERROR_WRONG_IDX,$/;"	e	language:C++	enum:errorType
-EXIT_SUCCESS	src/yy_syn.tab.c	294;"	d	language:C	file:
-EXIT_SUCCESS	src/yy_syn.tab.c	322;"	d	language:C	file:
+EXIT_SUCCESS	src/yy_syn.tab.c	297;"	d	language:C	file:
+EXIT_SUCCESS	src/yy_syn.tab.c	325;"	d	language:C	file:
 FALSE	include/type.h	16;"	d	language:C++
 FLEXINT_H	include/lexer.h	34;"	d	language:C++
 FLEXINT_H	src/lexer.c	30;"	d	language:C	file:
@@ -336,6 +349,8 @@ GL5610_MIB_DOC_GEN_QUEUE_H	include/queue.h	8;"	d	language:C++
 GL5610_MIB_DOC_GEN_STACK_H	include/stack.h	6;"	d	language:C++
 GL5610_MIB_DOC_GEN_TOKENOP_H	include/mibTreeGen.h	6;"	d	language:C++
 GL5610_MIB_DOC_GEN_TREE_H	include/mibTreeObjTree.h	6;"	d	language:C++
+GroupTest	src/unitTest/cmocka.h	/^typedef struct GroupTest {$/;"	s	language:C++
+GroupTest	src/unitTest/cmocka.h	/^} GroupTest;$/;"	t	language:C++	typeref:struct:GroupTest
 HEAD	src/yy_syn.y	/^HEAD :$/;"	l	language:YACC
 HEX	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	483;"	d	language:C	file:
 HEX	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	468;"	d	language:C++	file:
@@ -364,15 +379,24 @@ INT8_MAX	include/lexer.h	73;"	d	language:C++
 INT8_MAX	src/lexer.c	69;"	d	language:C	file:
 INT8_MIN	include/lexer.h	64;"	d	language:C++
 INT8_MIN	src/lexer.c	60;"	d	language:C	file:
-IS_NODE_HAS_CHILD_MT	src/mibTreeObjTree.c	21;"	d	language:C	file:
-IS_NODE_HAS_SIBLING_MT	src/mibTreeObjTree.c	22;"	d	language:C	file:
+IS_NODE_HAS_CHILD_MT	src/mibTreeObjTree.c	23;"	d	language:C	file:
+IS_NODE_HAS_SIBLING_MT	src/mibTreeObjTree.c	24;"	d	language:C	file:
 IS_STACK_EMPTY	include/stack.h	8;"	d	language:C++
 IS_STACK_FULL	include/stack.h	9;"	d	language:C++
 ITEMS	src/yy_syn.y	/^ITEMS :$/;"	l	language:YACC
 IncludePath	src/options.c	/^    IncludePath,$/;"	e	language:C	enum:optionNumber	file:
-LOWER_CASE	src/mibTreeObjTree.c	23;"	d	language:C	file:
+LOWER_CASE	src/mibTreeObjTree.c	25;"	d	language:C	file:
 L_BRACE	include/yy_syn.tab.h	/^    L_BRACE = 278,$/;"	e	language:C++	enum:yytokentype
 L_BRACE	src/yy_syn.tab.c	/^    L_BRACE = 278,$/;"	e	language:C	enum:yytokentype	file:
+LargestIntegralType	src/unitTest/cmocka.h	/^typedef uintmax_t LargestIntegralType;$/;"	t	language:C++
+LargestIntegralType	src/unitTest/cmocka.h	75;"	d	language:C++
+LargestIntegralType	src/unitTest/cmocka.h	77;"	d	language:C++
+LargestIntegralTypePrintfFormat	src/unitTest/cmocka.h	85;"	d	language:C++
+LargestIntegralTypePrintfFormat	src/unitTest/cmocka.h	88;"	d	language:C++
+LargestIntegralTypePrintfFormat	src/unitTest/cmocka.h	90;"	d	language:C++
+LargestIntegralTypePrintfFormatDecimal	src/unitTest/cmocka.h	101;"	d	language:C++
+LargestIntegralTypePrintfFormatDecimal	src/unitTest/cmocka.h	103;"	d	language:C++
+LargestIntegralTypePrintfFormatDecimal	src/unitTest/cmocka.h	98;"	d	language:C++
 MAIN_PART	src/yy_syn.y	/^MAIN_PART :$/;"	l	language:YACC
 MAX_CHAR_OF_MOD_IDENT	include/symbolTbl.h	7;"	d	language:C++
 MAX_INCLUDE_DEPTH	include/dispatcher.h	44;"	d	language:C++
@@ -399,7 +423,7 @@ OBJ_IDEN_	include/yy_syn.tab.h	/^    OBJ_IDEN_ = 277,$/;"	e	language:C++	enum:yy
 OBJ_IDEN_	src/yy_syn.tab.c	/^    OBJ_IDEN_ = 277,$/;"	e	language:C	enum:yytokentype	file:
 OBJ_SPECIFIER	include/yy_syn.tab.h	/^    OBJ_SPECIFIER = 259,$/;"	e	language:C++	enum:yytokentype
 OBJ_SPECIFIER	src/yy_syn.tab.c	/^    OBJ_SPECIFIER = 259,$/;"	e	language:C	enum:yytokentype	file:
-OID_LENGTH	src/mibTreeObjTree.c	20;"	d	language:C	file:
+OID_LENGTH	src/mibTreeObjTree.c	22;"	d	language:C	file:
 PARAM_STORE_TO_SYM_LIST	include/mibTreeGen.h	34;"	d	language:C++
 PLATFORM_ID	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	313;"	d	language:C	file:
 PLATFORM_ID	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	316;"	d	language:C	file:
@@ -500,7 +524,7 @@ SIMULATE_VERSION_MINOR	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	38
 SIZE_MAX	include/lexer.h	92;"	d	language:C++
 SIZE_MAX	src/lexer.c	88;"	d	language:C	file:
 SIZE_OF_CURRENT_TABLE	include/type.h	24;"	d	language:C++
-SIZE_OF_LATEX_BUFFER	src/docGenerate.c	13;"	d	language:C	file:
+SIZE_OF_LATEX_BUFFER	src/docGenerate.c	14;"	d	language:C	file:
 SIZE_OF_OID_STRING	include/type.h	26;"	d	language:C++
 SIZE_OF_QUEUE	include/queue.h	10;"	d	language:C++
 SIZE_OF_SECTION_RECORD	include/type.h	25;"	d	language:C++
@@ -548,6 +572,8 @@ SYNTAX	src/yy_syn.y	/^SYNTAX :$/;"	l	language:YACC
 SYNTAX_SPECIFIER	include/yy_syn.tab.h	/^    SYNTAX_SPECIFIER = 260,$/;"	e	language:C++	enum:yytokentype
 SYNTAX_SPECIFIER	src/yy_syn.tab.c	/^    SYNTAX_SPECIFIER = 260,$/;"	e	language:C	enum:yytokentype	file:
 SYNTAX_VALUE	src/yy_syn.y	/^SYNTAX_VALUE :$/;"	l	language:YACC
+SourceLocation	src/unitTest/cmocka.h	/^typedef struct SourceLocation {$/;"	s	language:C++
+SourceLocation	src/unitTest/cmocka.h	/^} SourceLocation;$/;"	t	language:C++	typeref:struct:SourceLocation
 SourceMibFile	src/options.c	/^    SourceMibFile = 0,$/;"	e	language:C	enum:optionNumber	file:
 TABLE	src/docGenerate.c	/^    TABLE = 1,$/;"	e	language:C	enum:__anon3	file:
 TRAP	include/type.h	/^    TRAP,$/;"	e	language:C++	enum:unitType
@@ -568,87 +594,99 @@ UINT8_MAX	include/lexer.h	82;"	d	language:C++
 UINT8_MAX	src/lexer.c	78;"	d	language:C	file:
 UNIQUE_PARAM	src/options.c	/^    UNIQUE_PARAM, \/* params above this line is unique another is not *\/$/;"	e	language:C	enum:optionNumber	file:
 UNIT_TEST_DOCGENERATE_H	include/docGenerate.h	8;"	d	language:C++
+UNIT_TEST_FUNCTION_TYPE_GROUP_SETUP	src/unitTest/cmocka.h	/^    UNIT_TEST_FUNCTION_TYPE_GROUP_SETUP,$/;"	e	language:C++	enum:UnitTestFunctionType
+UNIT_TEST_FUNCTION_TYPE_GROUP_TEARDOWN	src/unitTest/cmocka.h	/^    UNIT_TEST_FUNCTION_TYPE_GROUP_TEARDOWN,$/;"	e	language:C++	enum:UnitTestFunctionType
+UNIT_TEST_FUNCTION_TYPE_SETUP	src/unitTest/cmocka.h	/^    UNIT_TEST_FUNCTION_TYPE_SETUP,$/;"	e	language:C++	enum:UnitTestFunctionType
+UNIT_TEST_FUNCTION_TYPE_TEARDOWN	src/unitTest/cmocka.h	/^    UNIT_TEST_FUNCTION_TYPE_TEARDOWN,$/;"	e	language:C++	enum:UnitTestFunctionType
+UNIT_TEST_FUNCTION_TYPE_TEST	src/unitTest/cmocka.h	/^    UNIT_TEST_FUNCTION_TYPE_TEST = 0,$/;"	e	language:C++	enum:UnitTestFunctionType
 UNIT_TEST_LEXDEAL_H	include/lexDeal.h	6;"	d	language:C++
-YYABORT	src/yy_syn.tab.c	630;"	d	language:C	file:
-YYACCEPT	src/yy_syn.tab.c	629;"	d	language:C	file:
-YYBACKUP	src/yy_syn.tab.c	636;"	d	language:C	file:
+UnitTest	src/unitTest/cmocka.h	/^typedef struct UnitTest {$/;"	s	language:C++
+UnitTest	src/unitTest/cmocka.h	/^} UnitTest;$/;"	t	language:C++	typeref:struct:UnitTest
+UnitTestFunction	src/unitTest/cmocka.h	/^typedef void (*UnitTestFunction)(void **state);$/;"	t	language:C++
+UnitTestFunctionType	src/unitTest/cmocka.h	/^typedef enum UnitTestFunctionType {$/;"	g	language:C++
+UnitTestFunctionType	src/unitTest/cmocka.h	/^} UnitTestFunctionType;$/;"	t	language:C++	typeref:enum:UnitTestFunctionType
+WILL_RETURN_ALWAYS	src/unitTest/cmocka.h	165;"	d	language:C++
+WILL_RETURN_ONCE	src/unitTest/cmocka.h	166;"	d	language:C++
+YYABORT	src/yy_syn.tab.c	633;"	d	language:C	file:
+YYACCEPT	src/yy_syn.tab.c	632;"	d	language:C	file:
+YYBACKUP	src/yy_syn.tab.c	639;"	d	language:C	file:
 YYBISON	src/yy_syn.tab.c	44;"	d	language:C	file:
 YYBISON_VERSION	src/yy_syn.tab.c	47;"	d	language:C	file:
-YYCASE_	src/yy_syn.tab.c	977;"	d	language:C	file:
-YYCASE_	src/yy_syn.tab.c	987;"	d	language:C	file:
-YYCOPY	src/yy_syn.tab.c	386;"	d	language:C	file:
+YYCASE_	src/yy_syn.tab.c	980;"	d	language:C	file:
+YYCASE_	src/yy_syn.tab.c	990;"	d	language:C	file:
 YYCOPY	src/yy_syn.tab.c	389;"	d	language:C	file:
-YYCOPY_NEEDED	src/yy_syn.tab.c	361;"	d	language:C	file:
+YYCOPY	src/yy_syn.tab.c	392;"	d	language:C	file:
+YYCOPY_NEEDED	src/yy_syn.tab.c	364;"	d	language:C	file:
 YYDEBUG	include/yy_syn.tab.h	37;"	d	language:C++
-YYDEBUG	src/yy_syn.tab.c	105;"	d	language:C	file:
-YYDPRINTF	src/yy_syn.tab.c	667;"	d	language:C	file:
-YYDPRINTF	src/yy_syn.tab.c	782;"	d	language:C	file:
-YYEMPTY	src/yy_syn.tab.c	626;"	d	language:C	file:
-YYEOF	src/yy_syn.tab.c	627;"	d	language:C	file:
-YYERRCODE	src/yy_syn.tab.c	655;"	d	language:C	file:
-YYERROR	src/yy_syn.tab.c	631;"	d	language:C	file:
+YYDEBUG	src/yy_syn.tab.c	108;"	d	language:C	file:
+YYDPRINTF	src/yy_syn.tab.c	670;"	d	language:C	file:
+YYDPRINTF	src/yy_syn.tab.c	785;"	d	language:C	file:
+YYEMPTY	src/yy_syn.tab.c	629;"	d	language:C	file:
+YYEOF	src/yy_syn.tab.c	630;"	d	language:C	file:
+YYERRCODE	src/yy_syn.tab.c	658;"	d	language:C	file:
+YYERROR	src/yy_syn.tab.c	634;"	d	language:C	file:
 YYERROR_VERBOSE	src/yy_syn.tab.c	96;"	d	language:C	file:
 YYERROR_VERBOSE	src/yy_syn.tab.c	97;"	d	language:C	file:
 YYERROR_VERBOSE	src/yy_syn.tab.c	99;"	d	language:C	file:
-YYFINAL	src/yy_syn.tab.c	402;"	d	language:C	file:
-YYFPRINTF	src/yy_syn.tab.c	664;"	d	language:C	file:
-YYFREE	src/yy_syn.tab.c	332;"	d	language:C	file:
-YYINITDEPTH	src/yy_syn.tab.c	791;"	d	language:C	file:
-YYLAST	src/yy_syn.tab.c	404;"	d	language:C	file:
-YYMALLOC	src/yy_syn.tab.c	326;"	d	language:C	file:
-YYMAXDEPTH	src/yy_syn.tab.c	802;"	d	language:C	file:
-YYMAXUTOK	src/yy_syn.tab.c	418;"	d	language:C	file:
-YYNNTS	src/yy_syn.tab.c	409;"	d	language:C	file:
-YYNRULES	src/yy_syn.tab.c	411;"	d	language:C	file:
-YYNSTATES	src/yy_syn.tab.c	413;"	d	language:C	file:
-YYNTOKENS	src/yy_syn.tab.c	407;"	d	language:C	file:
-YYPACT_NINF	src/yy_syn.tab.c	501;"	d	language:C	file:
-YYPOPSTACK	src/yy_syn.tab.c	1102;"	d	language:C	file:
+YYFINAL	src/yy_syn.tab.c	405;"	d	language:C	file:
+YYFPRINTF	src/yy_syn.tab.c	667;"	d	language:C	file:
+YYFREE	src/yy_syn.tab.c	335;"	d	language:C	file:
+YYINITDEPTH	src/yy_syn.tab.c	794;"	d	language:C	file:
+YYLAST	src/yy_syn.tab.c	407;"	d	language:C	file:
+YYMALLOC	src/yy_syn.tab.c	329;"	d	language:C	file:
+YYMAXDEPTH	src/yy_syn.tab.c	805;"	d	language:C	file:
+YYMAXUTOK	src/yy_syn.tab.c	421;"	d	language:C	file:
+YYNNTS	src/yy_syn.tab.c	412;"	d	language:C	file:
+YYNRULES	src/yy_syn.tab.c	414;"	d	language:C	file:
+YYNSTATES	src/yy_syn.tab.c	416;"	d	language:C	file:
+YYNTOKENS	src/yy_syn.tab.c	410;"	d	language:C	file:
+YYPACT_NINF	src/yy_syn.tab.c	504;"	d	language:C	file:
+YYPOPSTACK	src/yy_syn.tab.c	1105;"	d	language:C	file:
 YYPULL	src/yy_syn.tab.c	59;"	d	language:C	file:
 YYPURE	src/yy_syn.tab.c	53;"	d	language:C	file:
 YYPUSH	src/yy_syn.tab.c	56;"	d	language:C	file:
-YYRECOVERING	src/yy_syn.tab.c	634;"	d	language:C	file:
-YYSIZE_MAXIMUM	src/yy_syn.tab.c	205;"	d	language:C	file:
-YYSIZE_T	src/yy_syn.tab.c	194;"	d	language:C	file:
-YYSIZE_T	src/yy_syn.tab.c	196;"	d	language:C	file:
+YYRECOVERING	src/yy_syn.tab.c	637;"	d	language:C	file:
+YYSIZE_MAXIMUM	src/yy_syn.tab.c	208;"	d	language:C	file:
+YYSIZE_T	src/yy_syn.tab.c	197;"	d	language:C	file:
 YYSIZE_T	src/yy_syn.tab.c	199;"	d	language:C	file:
-YYSIZE_T	src/yy_syn.tab.c	201;"	d	language:C	file:
+YYSIZE_T	src/yy_syn.tab.c	202;"	d	language:C	file:
+YYSIZE_T	src/yy_syn.tab.c	204;"	d	language:C	file:
 YYSKELETON_NAME	src/yy_syn.tab.c	50;"	d	language:C	file:
-YYSTACK_ALLOC	src/yy_syn.tab.c	280;"	d	language:C	file:
-YYSTACK_ALLOC	src/yy_syn.tab.c	284;"	d	language:C	file:
-YYSTACK_ALLOC	src/yy_syn.tab.c	289;"	d	language:C	file:
-YYSTACK_ALLOC	src/yy_syn.tab.c	312;"	d	language:C	file:
-YYSTACK_ALLOC_MAXIMUM	src/yy_syn.tab.c	309;"	d	language:C	file:
-YYSTACK_ALLOC_MAXIMUM	src/yy_syn.tab.c	315;"	d	language:C	file:
-YYSTACK_BYTES	src/yy_syn.tab.c	357;"	d	language:C	file:
-YYSTACK_FREE	src/yy_syn.tab.c	303;"	d	language:C	file:
-YYSTACK_FREE	src/yy_syn.tab.c	313;"	d	language:C	file:
-YYSTACK_GAP_MAXIMUM	src/yy_syn.tab.c	353;"	d	language:C	file:
-YYSTACK_RELOCATE	src/yy_syn.tab.c	368;"	d	language:C	file:
+YYSTACK_ALLOC	src/yy_syn.tab.c	283;"	d	language:C	file:
+YYSTACK_ALLOC	src/yy_syn.tab.c	287;"	d	language:C	file:
+YYSTACK_ALLOC	src/yy_syn.tab.c	292;"	d	language:C	file:
+YYSTACK_ALLOC	src/yy_syn.tab.c	315;"	d	language:C	file:
+YYSTACK_ALLOC_MAXIMUM	src/yy_syn.tab.c	312;"	d	language:C	file:
+YYSTACK_ALLOC_MAXIMUM	src/yy_syn.tab.c	318;"	d	language:C	file:
+YYSTACK_BYTES	src/yy_syn.tab.c	360;"	d	language:C	file:
+YYSTACK_FREE	src/yy_syn.tab.c	306;"	d	language:C	file:
+YYSTACK_FREE	src/yy_syn.tab.c	316;"	d	language:C	file:
+YYSTACK_GAP_MAXIMUM	src/yy_syn.tab.c	356;"	d	language:C	file:
+YYSTACK_RELOCATE	src/yy_syn.tab.c	371;"	d	language:C	file:
 YYSTATE	src/lexer.c	124;"	d	language:C	file:
 YYSTYPE	include/yy_syn.tab.h	/^typedef int YYSTYPE;$/;"	t	language:C++
 YYSTYPE	include/yy_syn.tab.h	79;"	d	language:C++
 YYSTYPE	src/yy_syn.tab.c	/^typedef int YYSTYPE;$/;"	t	language:C	file:
 YYSTYPE	src/yy_syn.tab.c	70;"	d	language:C	file:
 YYSTYPE_IS_DECLARED	include/yy_syn.tab.h	83;"	d	language:C++
-YYSTYPE_IS_DECLARED	src/yy_syn.tab.c	150;"	d	language:C	file:
+YYSTYPE_IS_DECLARED	src/yy_syn.tab.c	153;"	d	language:C	file:
 YYSTYPE_IS_TRIVIAL	include/yy_syn.tab.h	82;"	d	language:C++
-YYSTYPE_IS_TRIVIAL	src/yy_syn.tab.c	149;"	d	language:C	file:
+YYSTYPE_IS_TRIVIAL	src/yy_syn.tab.c	152;"	d	language:C	file:
 YYTABLES_NAME	src/lexer.c	2106;"	d	language:C	file:
-YYTABLE_NINF	src/yy_syn.tab.c	506;"	d	language:C	file:
-YYTERROR	src/yy_syn.tab.c	654;"	d	language:C	file:
+YYTABLE_NINF	src/yy_syn.tab.c	509;"	d	language:C	file:
+YYTERROR	src/yy_syn.tab.c	657;"	d	language:C	file:
 YYTOKENTYPE	include/yy_syn.tab.h	45;"	d	language:C++
-YYTOKENTYPE	src/yy_syn.tab.c	113;"	d	language:C	file:
-YYTRANSLATE	src/yy_syn.tab.c	420;"	d	language:C	file:
-YYUNDEFTOK	src/yy_syn.tab.c	417;"	d	language:C	file:
-YYUSE	src/yy_syn.tab.c	248;"	d	language:C	file:
-YYUSE	src/yy_syn.tab.c	250;"	d	language:C	file:
-YY_	src/yy_syn.tab.c	211;"	d	language:C	file:
-YY_	src/yy_syn.tab.c	215;"	d	language:C	file:
-YY_ATTRIBUTE	src/yy_syn.tab.c	223;"	d	language:C	file:
-YY_ATTRIBUTE	src/yy_syn.tab.c	225;"	d	language:C	file:
-YY_ATTRIBUTE_PURE	src/yy_syn.tab.c	230;"	d	language:C	file:
-YY_ATTRIBUTE_UNUSED	src/yy_syn.tab.c	234;"	d	language:C	file:
+YYTOKENTYPE	src/yy_syn.tab.c	116;"	d	language:C	file:
+YYTRANSLATE	src/yy_syn.tab.c	423;"	d	language:C	file:
+YYUNDEFTOK	src/yy_syn.tab.c	420;"	d	language:C	file:
+YYUSE	src/yy_syn.tab.c	251;"	d	language:C	file:
+YYUSE	src/yy_syn.tab.c	253;"	d	language:C	file:
+YY_	src/yy_syn.tab.c	214;"	d	language:C	file:
+YY_	src/yy_syn.tab.c	218;"	d	language:C	file:
+YY_ATTRIBUTE	src/yy_syn.tab.c	226;"	d	language:C	file:
+YY_ATTRIBUTE	src/yy_syn.tab.c	228;"	d	language:C	file:
+YY_ATTRIBUTE_PURE	src/yy_syn.tab.c	233;"	d	language:C	file:
+YY_ATTRIBUTE_UNUSED	src/yy_syn.tab.c	237;"	d	language:C	file:
 YY_AT_BOL	src/lexer.c	323;"	d	language:C	file:
 YY_BREAK	src/lexer.c	817;"	d	language:C	file:
 YY_BUFFER_EOF_PENDING	src/lexer.c	244;"	d	language:C	file:
@@ -685,18 +723,18 @@ YY_FLEX_SUBMINOR_VERSION	include/lexer.h	16;"	d	language:C++
 YY_FLEX_SUBMINOR_VERSION	src/lexer.c	12;"	d	language:C	file:
 YY_FLUSH_BUFFER	include/lexer.h	313;"	d	language:C++
 YY_FLUSH_BUFFER	src/lexer.c	294;"	d	language:C	file:
-YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	src/yy_syn.tab.c	255;"	d	language:C	file:
-YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	src/yy_syn.tab.c	265;"	d	language:C	file:
-YY_IGNORE_MAYBE_UNINITIALIZED_END	src/yy_syn.tab.c	259;"	d	language:C	file:
-YY_IGNORE_MAYBE_UNINITIALIZED_END	src/yy_syn.tab.c	266;"	d	language:C	file:
-YY_INITIAL_VALUE	src/yy_syn.tab.c	262;"	d	language:C	file:
-YY_INITIAL_VALUE	src/yy_syn.tab.c	269;"	d	language:C	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	src/yy_syn.tab.c	258;"	d	language:C	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	src/yy_syn.tab.c	268;"	d	language:C	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_END	src/yy_syn.tab.c	262;"	d	language:C	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_END	src/yy_syn.tab.c	269;"	d	language:C	file:
+YY_INITIAL_VALUE	src/yy_syn.tab.c	265;"	d	language:C	file:
+YY_INITIAL_VALUE	src/yy_syn.tab.c	272;"	d	language:C	file:
 YY_INPUT	src/lexer.c	745;"	d	language:C	file:
 YY_INT_ALIGNED	include/lexer.h	9;"	d	language:C++
 YY_INT_ALIGNED	src/lexer.c	5;"	d	language:C	file:
 YY_LESS_LINENO	src/lexer.c	166;"	d	language:C	file:
 YY_LINENO_REWIND_TO	src/lexer.c	167;"	d	language:C	file:
-YY_LOCATION_PRINT	src/yy_syn.tab.c	675;"	d	language:C	file:
+YY_LOCATION_PRINT	src/yy_syn.tab.c	678;"	d	language:C	file:
 YY_MORE_ADJ	src/lexer.c	633;"	d	language:C	file:
 YY_NEW_FILE	include/lexer.h	312;"	d	language:C++
 YY_NEW_FILE	src/lexer.c	128;"	d	language:C	file:
@@ -708,13 +746,13 @@ YY_READ_BUF_SIZE	include/lexer.h	288;"	d	language:C++
 YY_READ_BUF_SIZE	include/lexer.h	290;"	d	language:C++
 YY_READ_BUF_SIZE	src/lexer.c	727;"	d	language:C	file:
 YY_READ_BUF_SIZE	src/lexer.c	729;"	d	language:C	file:
-YY_REDUCE_PRINT	src/yy_syn.tab.c	772;"	d	language:C	file:
-YY_REDUCE_PRINT	src/yy_syn.tab.c	785;"	d	language:C	file:
+YY_REDUCE_PRINT	src/yy_syn.tab.c	775;"	d	language:C	file:
+YY_REDUCE_PRINT	src/yy_syn.tab.c	788;"	d	language:C	file:
 YY_RESTORE_YY_MORE_OFFSET	src/lexer.c	634;"	d	language:C	file:
 YY_RULE_SETUP	src/lexer.c	820;"	d	language:C	file:
 YY_SC_TO_UI	src/lexer.c	112;"	d	language:C	file:
-YY_STACK_PRINT	src/yy_syn.tab.c	741;"	d	language:C	file:
-YY_STACK_PRINT	src/yy_syn.tab.c	784;"	d	language:C	file:
+YY_STACK_PRINT	src/yy_syn.tab.c	744;"	d	language:C	file:
+YY_STACK_PRINT	src/yy_syn.tab.c	787;"	d	language:C	file:
 YY_START	src/lexer.c	123;"	d	language:C	file:
 YY_START_STACK_INCR	include/lexer.h	296;"	d	language:C++
 YY_START_STACK_INCR	src/lexer.c	787;"	d	language:C	file:
@@ -722,26 +760,52 @@ YY_STATE_BUF_SIZE	src/lexer.c	146;"	d	language:C	file:
 YY_STATE_EOF	src/lexer.c	126;"	d	language:C	file:
 YY_STRUCT_YY_BUFFER_STATE	include/lexer.h	138;"	d	language:C++
 YY_STRUCT_YY_BUFFER_STATE	src/lexer.c	185;"	d	language:C	file:
-YY_SYMBOL_PRINT	src/yy_syn.tab.c	679;"	d	language:C	file:
-YY_SYMBOL_PRINT	src/yy_syn.tab.c	783;"	d	language:C	file:
+YY_SYMBOL_PRINT	src/yy_syn.tab.c	682;"	d	language:C	file:
+YY_SYMBOL_PRINT	src/yy_syn.tab.c	786;"	d	language:C	file:
 YY_TYPEDEF_YY_BUFFER_STATE	include/lexer.h	124;"	d	language:C++
 YY_TYPEDEF_YY_BUFFER_STATE	src/lexer.c	149;"	d	language:C	file:
 YY_TYPEDEF_YY_SIZE_T	include/lexer.h	129;"	d	language:C++
 YY_TYPEDEF_YY_SIZE_T	src/lexer.c	154;"	d	language:C	file:
 YY_USER_ACTION	src/lexer.c	812;"	d	language:C	file:
-YY_YY_HOME_TOTORO_CODEW_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED	include/yy_syn.tab.h	34;"	d	language:C++
+YY_YY_HOME_TOTORO_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED	include/yy_syn.tab.h	34;"	d	language:C++
+YY_YY_HOME_TOTORO_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED	src/yy_syn.tab.c	105;"	d	language:C	file:
 _DISPATCHER_H_	include/dispatcher.h	2;"	d	language:C++
 _MIB2DOC_LIST_H_	include/list.h	6;"	d	language:C++
 _MIB2DOC_TYPE_H_	include/type.h	6;"	d	language:C++
-_Noreturn	src/yy_syn.tab.c	240;"	d	language:C	file:
-_Noreturn	src/yy_syn.tab.c	242;"	d	language:C	file:
+_Noreturn	src/yy_syn.tab.c	243;"	d	language:C	file:
+_Noreturn	src/yy_syn.tab.c	245;"	d	language:C	file:
 _OPTIONS_H	include/options.h	2;"	d	language:C++
 _SYMBOLTBL_H_	include/symbolTbl.h	2;"	d	language:C++
+_UINTPTR_T	src/unitTest/cmocka.h	137;"	d	language:C++
+_UINTPTR_T_DEFINED	src/unitTest/cmocka.h	138;"	d	language:C++
 _UTIL_H	include/util.h	2;"	d	language:C++
 __STDC_LIMIT_MACROS	include/lexer.h	44;"	d	language:C++
 __STDC_LIMIT_MACROS	src/lexer.c	40;"	d	language:C	file:
-alloca	src/yy_syn.tab.c	287;"	d	language:C	file:
+__WORDSIZE	src/unitTest/cmocka.h	60;"	d	language:C++
+__WORDSIZE	src/unitTest/cmocka.h	62;"	d	language:C++
+__func__	src/unitTest/cmocka.h	22;"	d	language:C++
+_unit_test_dummy	src/unitTest/cmocka.h	/^static inline void _unit_test_dummy(void **state) {$/;"	f	language:C++
+_unit_test_setup	src/unitTest/cmocka.h	1617;"	d	language:C++
+_unit_test_teardown	src/unitTest/cmocka.h	1629;"	d	language:C++
+alloca	src/yy_syn.tab.c	290;"	d	language:C	file:
 appendQueue	src/queue.c	/^int appendQueue(mibNodeInfoQueue *q, tableInfo *pData) {$/;"	f	language:C
+assert_false	src/unitTest/cmocka.h	1079;"	d	language:C++
+assert_in_range	src/unitTest/cmocka.h	1313;"	d	language:C++
+assert_in_set	src/unitTest/cmocka.h	1358;"	d	language:C++
+assert_int_equal	src/unitTest/cmocka.h	1190;"	d	language:C++
+assert_int_not_equal	src/unitTest/cmocka.h	1211;"	d	language:C++
+assert_memory_equal	src/unitTest/cmocka.h	1270;"	d	language:C++
+assert_memory_not_equal	src/unitTest/cmocka.h	1292;"	d	language:C++
+assert_non_null	src/unitTest/cmocka.h	1118;"	d	language:C++
+assert_not_in_range	src/unitTest/cmocka.h	1336;"	d	language:C++
+assert_not_in_set	src/unitTest/cmocka.h	1377;"	d	language:C++
+assert_null	src/unitTest/cmocka.h	1135;"	d	language:C++
+assert_ptr_equal	src/unitTest/cmocka.h	1152;"	d	language:C++
+assert_ptr_not_equal	src/unitTest/cmocka.h	1171;"	d	language:C++
+assert_return_code	src/unitTest/cmocka.h	1098;"	d	language:C++
+assert_string_equal	src/unitTest/cmocka.h	1230;"	d	language:C++
+assert_string_not_equal	src/unitTest/cmocka.h	1248;"	d	language:C++
+assert_true	src/unitTest/cmocka.h	1061;"	d	language:C++
 base	include/stack.h	/^    unsigned char *base;$/;"	m	language:C++	struct:identStack
 beginFrom	src/docGenerate.c	/^char *beginFrom;$/;"	v	language:C
 beginOid	src/docGenerate.c	/^int beginOid;$/;"	v	language:C
@@ -749,7 +813,24 @@ buffer	include/stack.h	/^    unsigned char *buffer;$/;"	m	language:C++	struct:id
 bufferInfo	include/dispatcher.h	/^    YY_BUFFER_STATE bufferInfo;$/;"	m	language:C++	struct:switchInfo
 bufferSize	include/stack.h	/^    int bufferSize;$/;"	m	language:C++	struct:identStack
 cSpace	include/type.h	22;"	d	language:C++
+calloc	src/unitTest/cmocka.h	1943;"	d	language:C++
+cast_ptr_to_largest_integral_type	src/unitTest/cmocka.h	146;"	d	language:C++
+cast_to_largest_integral_type	src/unitTest/cmocka.h	109;"	d	language:C++
+cast_to_pointer_integral_type	src/unitTest/cmocka.h	142;"	d	language:C++
+check_expected	src/unitTest/cmocka.h	1002;"	d	language:C++
+check_expected_ptr	src/unitTest/cmocka.h	1020;"	d	language:C++
+check_value	src/unitTest/cmocka.h	/^    CheckParameterValue check_value;$/;"	m	language:C++	struct:CheckParameterEvent
+check_value_data	src/unitTest/cmocka.h	/^    LargestIntegralType check_value_data;$/;"	m	language:C++	struct:CheckParameterEvent
 child	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *child;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode::mibObjectTreeNode
+cm_message_output	src/unitTest/cmocka.h	/^enum cm_message_output {$/;"	g	language:C++
+cmocka_run_group_tests	src/unitTest/cmocka.h	1765;"	d	language:C++
+cmocka_run_group_tests_name	src/unitTest/cmocka.h	1834;"	d	language:C++
+cmocka_unit_test	src/unitTest/cmocka.h	1669;"	d	language:C++
+cmocka_unit_test_prestate	src/unitTest/cmocka.h	1690;"	d	language:C++
+cmocka_unit_test_prestate_setup_teardown	src/unitTest/cmocka.h	1699;"	d	language:C++
+cmocka_unit_test_setup	src/unitTest/cmocka.h	1672;"	d	language:C++
+cmocka_unit_test_setup_teardown	src/unitTest/cmocka.h	1681;"	d	language:C++
+cmocka_unit_test_teardown	src/unitTest/cmocka.h	1675;"	d	language:C++
 collectInfo	include/dispatcher.h	/^typedef struct collectInfo {$/;"	s	language:C++
 collectInfo	include/dispatcher.h	/^} collectInfo;$/;"	t	language:C++	typeref:struct:collectInfo
 collectInfoInit	src/dispatcher.c	/^static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo) {$/;"	f	language:C	file:
@@ -764,11 +845,12 @@ deal_with_sequence	src/mibTreeGen.c	/^void deal_with_sequence() {}$/;"	f	languag
 desc	include/docGenerate.h	/^    char *desc;$/;"	m	language:C++	struct:tableInfo
 desc	include/mibTreeObjTree.h	/^    char *desc;$/;"	m	language:C++	struct:mibInfo
 desc_test	src/unitTest/basicDataStruct_Test.c	/^static void desc_test(void ** state) {$/;"	f	language:C	file:
-descriptionDeal	src/mibTreeObjTree.c	/^int descriptionDeal(mibObjectTreeNode *node) {$/;"	f	language:C
+descriptionDeal	src/mibTreeObjTree.c	/^static int descriptionDeal(mibObjectTreeNode *node) {$/;"	f	language:C	file:
 detail	include/mibTreeObjTree.h	/^    char *detail;$/;"	m	language:C++	struct:mibInfo
 disParamConstruct	src/list.c	/^dispatchParam * disParamConstruct(void *param) {$/;"	f	language:C
 disParamRetrive	src/list.c	/^dispatchParam * disParamRetrive(dispatchParam **head) {$/;"	f	language:C
 disParamStore	src/list.c	/^dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {$/;"	f	language:C
+disParam_test	src/unitTest/basicDataStruct_Test.c	/^static void disParam_test(void **state) {$/;"	f	language:C	file:
 dispatch	src/dispatcher.c	/^int dispatch(dispatch_type disType, dispatchParam *param) {$/;"	f	language:C
 dispatchInit	src/dispatcher.c	/^int dispatchInit() {$/;"	f	language:C
 dispatchMakeChoice	src/dispatcher.c	/^static int dispatchMakeChoice(dispatch_type dType) {$/;"	f	language:C	file:
@@ -784,12 +866,42 @@ dispatch_type	include/dispatcher.h	/^} dispatch_type;$/;"	t	language:C++	typeref
 docGenerate	src/docGenerate.c	/^static int docGenerate(void *arg, mibObjectTreeNode *node) {$/;"	f	language:C	file:
 documentGen	src/docGenerate.c	/^int documentGen(mibObjectTreeNode *root, FILE *writeTo) {$/;"	f	language:C
 elementType	include/list.h	/^enum elementType {$/;"	g	language:C++
-entryRecognize	src/docGenerate.c	/^static int entryRecognize(char *buffer, int size) {$/;"	f	language:C	file:
+entryRecognize	src/util.c	/^int entryRecognize(char *buffer, int size) {$/;"	f	language:C
 errorType	include/type.h	/^typedef enum errorType {$/;"	g	language:C++
 errorType	include/type.h	/^} errorType;$/;"	t	language:C++	typeref:enum:errorType
+expect_any	src/unitTest/cmocka.h	962;"	d	language:C++
+expect_any_count	src/unitTest/cmocka.h	985;"	d	language:C++
+expect_assert_failure	src/unitTest/cmocka.h	2028;"	d	language:C++
+expect_check	src/unitTest/cmocka.h	458;"	d	language:C++
+expect_function_call	src/unitTest/cmocka.h	1481;"	d	language:C++
+expect_function_call_any	src/unitTest/cmocka.h	1495;"	d	language:C++
+expect_function_calls	src/unitTest/cmocka.h	1466;"	d	language:C++
+expect_in_range	src/unitTest/cmocka.h	578;"	d	language:C++
+expect_in_range_count	src/unitTest/cmocka.h	605;"	d	language:C++
+expect_in_set	src/unitTest/cmocka.h	480;"	d	language:C++
+expect_in_set_count	src/unitTest/cmocka.h	505;"	d	language:C++
+expect_memory	src/unitTest/cmocka.h	864;"	d	language:C++
+expect_memory_count	src/unitTest/cmocka.h	891;"	d	language:C++
+expect_not_in_range	src/unitTest/cmocka.h	629;"	d	language:C++
+expect_not_in_range_count	src/unitTest/cmocka.h	656;"	d	language:C++
+expect_not_in_set	src/unitTest/cmocka.h	527;"	d	language:C++
+expect_not_in_set_count	src/unitTest/cmocka.h	552;"	d	language:C++
+expect_not_memory	src/unitTest/cmocka.h	915;"	d	language:C++
+expect_not_memory_count	src/unitTest/cmocka.h	942;"	d	language:C++
+expect_not_string	src/unitTest/cmocka.h	816;"	d	language:C++
+expect_not_string_count	src/unitTest/cmocka.h	841;"	d	language:C++
+expect_not_value	src/unitTest/cmocka.h	723;"	d	language:C++
+expect_not_value_count	src/unitTest/cmocka.h	747;"	d	language:C++
+expect_string	src/unitTest/cmocka.h	769;"	d	language:C++
+expect_string_count	src/unitTest/cmocka.h	794;"	d	language:C++
+expect_value	src/unitTest/cmocka.h	678;"	d	language:C++
+expect_value_count	src/unitTest/cmocka.h	702;"	d	language:C++
 fa_test	src/unitTest/basicDataStruct_Test.c	/^static void fa_test(void **state) {$/;"	f	language:C	file:
+fail	src/unitTest/cmocka.h	1547;"	d	language:C++
+fail_msg	src/unitTest/cmocka.h	1576;"	d	language:C++
 features	CMakeFiles/feature_tests.c	/^  const char features[] = {"\\n"$/;"	v	language:C
 features	CMakeFiles/feature_tests.cxx	/^  const char features[] = {"\\n"$/;"	v	language:C++
+file	src/unitTest/cmocka.h	/^    const char* file;$/;"	m	language:C++	struct:SourceLocation
 flex_int16_t	include/lexer.h	/^typedef int16_t flex_int16_t;$/;"	t	language:C++
 flex_int16_t	include/lexer.h	/^typedef short int flex_int16_t;$/;"	t	language:C++
 flex_int16_t	src/lexer.c	/^typedef int16_t flex_int16_t;$/;"	t	language:C	file:
@@ -816,6 +928,10 @@ flex_uint8_t	src/lexer.c	/^typedef uint8_t flex_uint8_t;$/;"	t	language:C	file:
 flex_uint8_t	src/lexer.c	/^typedef unsigned char flex_uint8_t; $/;"	t	language:C	file:
 fontSize	include/options.h	/^    int fontSize;$/;"	m	language:C++	struct:options
 found	include/dispatcher.h	/^    int found;$/;"	m	language:C++	struct:identList
+free	src/unitTest/cmocka.h	1944;"	d	language:C++
+function	src/unitTest/cmocka.h	/^    UnitTestFunction function;$/;"	m	language:C++	struct:UnitTest
+function_called	src/unitTest/cmocka.h	1450;"	d	language:C++
+function_type	src/unitTest/cmocka.h	/^    UnitTestFunctionType function_type;$/;"	m	language:C++	struct:UnitTest
 genericStack	include/stack.h	/^} genericStack;$/;"	t	language:C++	typeref:struct:identStack
 genericStackConstruct	src/stack.c	/^int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize) {$/;"	f	language:C
 getCurrentBufferState	src/lexer.c	/^YY_BUFFER_STATE getCurrentBufferState() {$/;"	f	language:C
@@ -825,6 +941,8 @@ getOption_SourceMibFilePath	src/options.c	/^const char * getOption_SourceMibFile
 getOption_includePath	src/options.c	/^const char * getOption_includePath(int *index) {$/;"	f	language:C
 getOption_targetPdfPath	src/options.c	/^const char * getOption_targetPdfPath() {$/;"	f	language:C
 getQueue	src/queue.c	/^tableInfo *getQueue(mibNodeInfoQueue *q) {$/;"	f	language:C
+group_test_setup	src/unitTest/cmocka.h	1645;"	d	language:C++
+group_test_teardown	src/unitTest/cmocka.h	1652;"	d	language:C++
 head	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *head;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode::mibObjectTreeNode
 head	include/queue.h	/^    int head;$/;"	m	language:C++	struct:mibNodeInfoQueue
 helpInfoPrint	src/options.c	/^static void helpInfoPrint() {}$/;"	f	language:C	file:
@@ -835,6 +953,7 @@ identList	include/dispatcher.h	/^} identList;$/;"	t	language:C++	typeref:struct:
 identStack	include/stack.h	/^typedef struct identStack {$/;"	s	language:C++
 identifier	include/docGenerate.h	/^    char *identifier;$/;"	m	language:C++	struct:tableInfo
 identifier	include/mibTreeObjTree.h	/^    char *identifier;$/;"	m	language:C++	struct:mibObjectTreeNode
+ignore_function_calls	src/unitTest/cmocka.h	1509;"	d	language:C++
 importInfo	include/dispatcher.h	/^    collectInfo importInfo;$/;"	m	language:C++	struct:switchInfo
 incPathList	include/options.h	/^typedef struct incPathList {$/;"	s	language:C++
 incPathList	include/options.h	/^} incPathList;$/;"	t	language:C++	typeref:struct:incPathList
@@ -860,6 +979,8 @@ info_version	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const info_
 info_version	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version[] = {$/;"	v	language:C++
 info_version_internal	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const info_version_internal[] = {$/;"	v	language:C
 info_version_internal	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version_internal[] = {$/;"	v	language:C++
+initial_state	src/unitTest/cmocka.h	/^    void *initial_state;$/;"	m	language:C++	struct:CMUnitTest
+inline	src/unitTest/cmocka.h	25;"	d	language:C++
 insert_MibTree	src/mibTreeObjTree.c	/^int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ident) {$/;"	f	language:C
 isInitilized	src/docGenerate.c	/^int isInitilized;$/;"	v	language:C
 isNeedSwitchInit	src/dispatcher.c	/^static unsigned char isNeedSwitchInit = TRUE;$/;"	v	language:C	file:
@@ -874,6 +995,7 @@ leaveMeta	include/symbolTbl.h	/^       leaveMeta_t leaveMeta;$/;"	m	language:C++
 leaveMeta_t	include/symbolTbl.h	/^typedef struct leaveMeta_t {$/;"	s	language:C++
 leaveMeta_t	include/symbolTbl.h	/^} leaveMeta_t;$/;"	t	language:C++	typeref:struct:leaveMeta_t
 lexBufferSwitching	src/dispatcher.c	/^static int lexBufferSwitching(char *newModule) {$/;"	f	language:C	file:
+line	src/unitTest/cmocka.h	/^    int line;$/;"	m	language:C++	struct:SourceLocation
 listNode	include/list.h	/^typedef struct listNode {$/;"	s	language:C++
 listNode	include/list.h	/^} listNode;$/;"	t	language:C++	typeref:struct:listNode
 listNodeAppend	src/list.c	/^listNode * listNodeAppend(listNode *listH, listNode *listN) {$/;"	f	language:C
@@ -886,6 +1008,7 @@ listNodeTail	src/list.c	/^listNode * listNodeTail(listNode *head) {$/;"	f	langua
 listNodeTask	include/list.h	/^typedef void (*listNodeTask)(listNode *head, void *arg);$/;"	t	language:C++
 listNodeTravel	src/list.c	/^int listNodeTravel(listNode *head, listNodeTask func, void *arg) {$/;"	f	language:C
 list_test	src/unitTest/basicDataStruct_Test.c	/^static void list_test(void **state) {$/;"	f	language:C	file:
+location	src/unitTest/cmocka.h	/^    SourceLocation location;$/;"	m	language:C++	struct:CheckParameterEvent
 long2Short	src/docGenerate.c	/^char * long2Short(char *str) {$/;"	f	language:C
 main	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^int main(argc, argv) int argc; char *argv[];$/;"	f	language:C
 main	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^void main() {}$/;"	f	language:C
@@ -895,6 +1018,7 @@ main	CMakeFiles/feature_tests.cxx	/^int main(int argc, char** argv) { (void)argv
 main	src/main.c	/^int main(int argc, char *argv[]) {$/;"	f	language:C
 main	src/unitTest/basicDataStruct_Test.c	/^int main(void) {$/;"	f	language:C
 makeDecision	src/docGenerate.c	/^static int makeDecision(mibObjectTreeNode *node) {$/;"	f	language:C	file:
+malloc	src/unitTest/cmocka.h	1941;"	d	language:C++
 mappingTable	src/options.c	/^static char * mappingTable[NumOfOptions];$/;"	v	language:C	file:
 mappingTableInit	src/options.c	/^static void mappingTableInit() {$/;"	f	language:C	file:
 mib2docError	src/misc.c	/^int mib2docError;$/;"	v	language:C
@@ -919,8 +1043,13 @@ mibTreeLeaveAdd	src/mibTreeGen.c	/^static int mibTreeLeaveAdd(char *ident, char 
 mibTreeNodeAdd	src/mibTreeGen.c	/^static int mibTreeNodeAdd(char *ident, char *oid, char *parent) {$/;"	f	language:C	file:
 mibTree_test	src/unitTest/basicDataStruct_Test.c	/^static void mibTree_test(void **state) {$/;"	f	language:C	file:
 miscInit	src/misc.c	/^void miscInit() {$/;"	f	language:C
+mock	src/unitTest/cmocka.h	/^LargestIntegralType mock(void);$/;"	t	language:C++
+mock_ptr_type	src/unitTest/cmocka.h	279;"	d	language:C++
+mock_type	src/unitTest/cmocka.h	252;"	d	language:C++
 modName	include/dispatcher.h	/^    char *modName;$/;"	m	language:C++	struct:collectInfo
 modName	include/symbolTbl.h	/^    char *modName;$/;"	m	language:C++	struct:symbolTable
+name	src/unitTest/cmocka.h	/^    const char *name;$/;"	m	language:C++	struct:CMUnitTest
+name	src/unitTest/cmocka.h	/^    const char* name;$/;"	m	language:C++	struct:UnitTest
 next	include/list.h	/^    struct listNode *next;$/;"	m	language:C++	struct:listNode	typeref:struct:listNode::listNode
 node	include/dispatcher.h	/^    listNode node;$/;"	m	language:C++	struct:dispatchParam
 node	include/dispatcher.h	/^    listNode node;$/;"	m	language:C++	struct:identList
@@ -933,6 +1062,7 @@ nodeMeta	include/symbolTbl.h	/^       nodeMeta_t nodeMeta;$/;"	m	language:C++	un
 nodeMeta_t	include/symbolTbl.h	/^typedef struct nodeMeta_t {$/;"	s	language:C++
 nodeMeta_t	include/symbolTbl.h	/^} nodeMeta_t;$/;"	t	language:C++	typeref:struct:nodeMeta_t
 null	include/type.h	23;"	d	language:C++
+number_of_tests	src/unitTest/cmocka.h	/^    const size_t number_of_tests;$/;"	m	language:C++	struct:GroupTest
 oid	include/docGenerate.h	/^    char *oid;$/;"	m	language:C++	struct:tableInfo
 oid	include/mibTreeObjTree.h	/^    char *oid;$/;"	m	language:C++	struct:mibNodeInfo
 oidComplement	src/mibTreeGen.c	/^static char * oidComplement(char *parent, char *suffix) {$/;"	f	language:C	file:
@@ -944,6 +1074,7 @@ optionsManager	src/options.c	/^options_t optionsManager;$/;"	v	language:C
 options_t	include/options.h	/^} options_t;$/;"	t	language:C++	typeref:struct:options
 param	include/dispatcher.h	/^    void *param;$/;"	m	language:C++	struct:dispatchParam
 paramMapping	src/options.c	/^static int paramMapping(char *param) {$/;"	f	language:C	file:
+parameter_name	src/unitTest/cmocka.h	/^    const char *parameter_name;$/;"	m	language:C++	struct:CheckParameterEvent
 parent	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *parent;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode::mibObjectTreeNode
 parent	include/symbolTbl.h	/^    char *parent;$/;"	m	language:C++	struct:leaveMeta_t
 parentIdent	include/symbolTbl.h	/^    char *parentIdent;$/;"	m	language:C++	struct:nodeMeta_t
@@ -957,17 +1088,24 @@ push	src/stack.c	/^int push(genericStack *gStack, void *unit) {$/;"	f	language:C
 pushByIndex	include/stack.h	18;"	d	language:C++
 qnxnto	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v	language:C
 qnxnto	CMakeFiles/3.10.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const* qnxnto = "INFO" ":" "qnxnto[]";$/;"	v	language:C++
+realloc	src/unitTest/cmocka.h	1942;"	d	language:C++
 rmSymFromIdentList	src/dispatcher.c	/^int rmSymFromIdentList(identList *listHead, char *symbolIdent) {$/;"	f	language:C
 root	src/mibTreeGen.c	/^mibObjectTreeNode root;$/;"	v	language:C
+run_group_tests	src/unitTest/cmocka.h	1702;"	d	language:C++
+run_test	src/unitTest/cmocka.h	1604;"	d	language:C++
+run_tests	src/unitTest/cmocka.h	1701;"	d	language:C++
 rw	include/docGenerate.h	/^    char *rw;$/;"	m	language:C++	struct:tableInfo
 rw	include/mibTreeObjTree.h	/^    char *rw;$/;"	m	language:C++	struct:mibInfo
 search_MibTree	src/mibTreeObjTree.c	/^mibObjectTreeNode * search_MibTree(mibObjectTreeNode *root, char *const ident) {$/;"	f	language:C
 sectionGen_Latex	src/docGenerate.c	/^static int sectionGen_Latex(char *secName, char *OID, FILE *writeTo) {$/;"	f	language:C	file:
 sectionRecord	src/main.c	/^char *sectionRecord[SIZE_OF_SECTION_RECORD];$/;"	v	language:C
 sectionRecord	src/unitTest/basicDataStruct_Test.c	/^char *sectionRecord[SIZE_OF_SECTION_RECORD];$/;"	v	language:C
-short	src/yy_syn.tab.c	165;"	d	language:C	file:
+setup	src/unitTest/cmocka.h	/^    UnitTestFunction setup;$/;"	m	language:C++	struct:GroupTest
+setup_func	src/unitTest/cmocka.h	/^    CMFixtureFunction setup_func;$/;"	m	language:C++	struct:CMUnitTest
+short	src/yy_syn.tab.c	168;"	d	language:C	file:
 showTree	src/mibTreeObjTree.c	/^void showTree(mibObjectTreeNode *root) {$/;"	f	language:C
 sibling	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *sibling;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode::mibObjectTreeNode
+skip	src/unitTest/cmocka.h	1556;"	d	language:C++
 sliKey	include/list.h	/^    int sliKey;$/;"	m	language:C++	struct:slice
 sliNode	include/list.h	/^    listNode sliNode;$/;"	m	language:C++	struct:slice
 sliVal	include/list.h	/^    char *sliVal;$/;"	m	language:C++	struct:slice
@@ -981,6 +1119,7 @@ sliceGet	src/list.c	/^slice * sliceGet(slice *sliHead, int sliKey) {$/;"	f	langu
 sliceNext	src/list.c	/^slice * sliceNext(slice *sli) {$/;"	f	language:C
 slicePrev	src/list.c	/^slice * slicePrev(slice *sli) {$/;"	f	language:C
 sliceRelease	src/list.c	/^bool sliceRelease(slice *sli) {$/;"	f	language:C
+sliceRelease_STATIC	src/list.c	/^bool sliceRelease_STATIC(slice *sli) {$/;"	f	language:C
 sliceReset	src/list.c	/^bool sliceReset(slice *sli) {$/;"	f	language:C
 sliceStore	src/list.c	/^int sliceStore(slice *sliHead, slice *newSli) {$/;"	f	language:C
 sliceType	include/list.h	/^} sliceType;$/;"	v	language:C++	typeref:enum:elementType
@@ -1054,22 +1193,39 @@ tableInfo	include/docGenerate.h	/^} tableInfo;$/;"	t	language:C++	typeref:struct
 tableInfoQueue_test	src/unitTest/basicDataStruct_Test.c	/^static void tableInfoQueue_test(void **state) {$/;"	f	language:C	file:
 tableItemGen_Latex	src/docGenerate.c	/^static char * tableItemGen_Latex(tableInfo *info, int index) {$/;"	f	language:C	file:
 tablePrint	src/mibTreeGen.c	/^static int tablePrint(char *ident, char *oid, char *rw, char *detail, FILE *output) {$/;"	f	language:C	file:
-tableRecognize	src/docGenerate.c	/^static int tableRecognize(char *buffer, int size) {$/;"	f	language:C	file:
+tableRecognize	src/util.c	/^int tableRecognize(char *buffer, int size) {$/;"	f	language:C
 tail	include/queue.h	/^    int tail;$/;"	m	language:C++	struct:mibNodeInfoQueue
 targetPdfPATH	include/options.h	/^    char *targetPdfPATH;$/;"	m	language:C++	struct:options
 targetSymbolList	include/mibTreeGen.h	/^typedef struct targetSymbolList {$/;"	s	language:C++
 targetSymbolList	include/mibTreeGen.h	/^} targetSymbolList;$/;"	t	language:C++	typeref:struct:targetSymbolList
+teardown	src/unitTest/cmocka.h	/^    UnitTestFunction teardown;$/;"	m	language:C++	struct:GroupTest
+teardown_func	src/unitTest/cmocka.h	/^    CMFixtureFunction teardown_func;$/;"	m	language:C++	struct:CMUnitTest
+test_calloc	src/unitTest/cmocka.h	1907;"	d	language:C++
+test_free	src/unitTest/cmocka.h	1936;"	d	language:C++
+test_func	src/unitTest/cmocka.h	/^    CMUnitTestFunction test_func;$/;"	m	language:C++	struct:CMUnitTest
+test_malloc	src/unitTest/cmocka.h	1888;"	d	language:C++
+test_realloc	src/unitTest/cmocka.h	1923;"	d	language:C++
+tests	src/unitTest/cmocka.h	/^    const UnitTest *tests;$/;"	m	language:C++	struct:GroupTest
 top	include/stack.h	/^    int top;$/;"	m	language:C++	struct:identStack
 travel_MibTree	src/mibTreeObjTree.c	/^mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, $/;"	f	language:C
 type	include/docGenerate.h	/^    char *type;$/;"	m	language:C++	struct:tableInfo
 type	include/mibTreeObjTree.h	/^    char *type;$/;"	m	language:C++	struct:mibInfo
 type	include/symbolTbl.h	/^    char *type;$/;"	m	language:C++	struct:leaveMeta_t
+uintptr_t	src/unitTest/cmocka.h	/^    typedef unsigned int uintptr_t;$/;"	t	language:C++
 unitSize	include/stack.h	/^    int unitSize;$/;"	m	language:C++	struct:identStack
 unitType	include/type.h	/^typedef enum unitType {$/;"	g	language:C++
 unitType	include/type.h	/^} unitType;$/;"	t	language:C++	typeref:enum:unitType
+unit_test	src/unitTest/cmocka.h	1615;"	d	language:C++
+unit_test_setup	src/unitTest/cmocka.h	1624;"	d	language:C++
+unit_test_setup_teardown	src/unitTest/cmocka.h	1662;"	d	language:C++
+unit_test_teardown	src/unitTest/cmocka.h	1636;"	d	language:C++
 unput	src/lexer.c	182;"	d	language:C	file:
 upperTreeGeneration	src/mibTreeGen.c	/^int upperTreeGeneration(symbolTable *symTbl) {$/;"	f	language:C
 volatile	CMakeFiles/3.10.2/CompilerIdC/CMakeCCompilerId.c	11;"	d	language:C	file:
+will_return	src/unitTest/cmocka.h	310;"	d	language:C++
+will_return_always	src/unitTest/cmocka.h	356;"	d	language:C++
+will_return_count	src/unitTest/cmocka.h	333;"	d	language:C++
+will_return_maybe	src/unitTest/cmocka.h	384;"	d	language:C++
 yyHEADER_H	include/lexer.h	2;"	d	language:C++
 yyIN_HEADER	include/lexer.h	3;"	d	language:C++
 yyIN_HEADER	include/lexer.h	473;"	d	language:C++
@@ -1166,7 +1322,7 @@ yyalloc	src/lexer.c	/^void *yyalloc (yy_size_t  size )$/;"	f	language:C
 yyalloc	src/yy_syn.tab.c	/^union yyalloc$/;"	u	language:C	file:
 yychar	src/yy_syn.tab.c	/^int yychar;$/;"	v	language:C
 yycheck	src/yy_syn.tab.c	/^static const yytype_int8 yycheck[] =$/;"	v	language:C	file:
-yyclearin	src/yy_syn.tab.c	625;"	d	language:C	file:
+yyclearin	src/yy_syn.tab.c	628;"	d	language:C	file:
 yyconst	include/lexer.h	102;"	d	language:C++
 yyconst	src/lexer.c	98;"	d	language:C	file:
 yydebug	src/yy_syn.tab.c	/^int yydebug;$/;"	v	language:C
@@ -1175,7 +1331,7 @@ yydefgoto	src/yy_syn.tab.c	/^static const yytype_int8 yydefgoto[] =$/;"	v	langua
 yydestruct	src/yy_syn.tab.c	/^yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep)$/;"	f	language:C	file:
 yyensure_buffer_stack	include/lexer.h	358;"	d	language:C++
 yyensure_buffer_stack	src/lexer.c	/^static void yyensure_buffer_stack (void)$/;"	f	language:C	file:
-yyerrok	src/yy_syn.tab.c	624;"	d	language:C	file:
+yyerrok	src/yy_syn.tab.c	627;"	d	language:C	file:
 yyerror	src/yy_syn.tab.c	/^    void yyerror(char const *s) {$/;"	f	language:C
 yyfree	include/lexer.h	439;"	d	language:C++
 yyfree	src/lexer.c	/^void yyfree (void * ptr )$/;"	f	language:C
@@ -1220,7 +1376,7 @@ yynoreturn	src/lexer.c	103;"	d	language:C	file:
 yyout	include/lexer.h	451;"	d	language:C++
 yyout	src/lexer.c	/^FILE *yyin = NULL, *yyout = NULL;$/;"	v	language:C
 yypact	src/yy_syn.tab.c	/^static const yytype_int8 yypact[] =$/;"	v	language:C	file:
-yypact_value_is_default	src/yy_syn.tab.c	503;"	d	language:C	file:
+yypact_value_is_default	src/yy_syn.tab.c	506;"	d	language:C	file:
 yyparse	src/yy_syn.tab.c	/^yyparse (void)$/;"	f	language:C
 yypgoto	src/yy_syn.tab.c	/^static const yytype_int8 yypgoto[] =$/;"	v	language:C	file:
 yypop_buffer_state	include/lexer.h	355;"	d	language:C++
@@ -1249,12 +1405,12 @@ yyset_out	src/lexer.c	/^void yyset_out (FILE *  _out_str )$/;"	f	language:C
 yyss_alloc	src/yy_syn.tab.c	/^  yytype_int16 yyss_alloc;$/;"	m	language:C	union:yyalloc	file:
 yystos	src/yy_syn.tab.c	/^static const yytype_uint8 yystos[] =$/;"	v	language:C	file:
 yystpcpy	src/yy_syn.tab.c	/^yystpcpy (char *yydest, const char *yysrc)$/;"	f	language:C	file:
-yystpcpy	src/yy_syn.tab.c	826;"	d	language:C	file:
+yystpcpy	src/yy_syn.tab.c	829;"	d	language:C	file:
 yystrlen	src/yy_syn.tab.c	/^yystrlen (const char *yystr)$/;"	f	language:C	file:
-yystrlen	src/yy_syn.tab.c	810;"	d	language:C	file:
+yystrlen	src/yy_syn.tab.c	813;"	d	language:C	file:
 yysyntax_error	src/yy_syn.tab.c	/^yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,$/;"	f	language:C	file:
 yytable	src/yy_syn.tab.c	/^static const yytype_int8 yytable[] =$/;"	v	language:C	file:
-yytable_value_is_error	src/yy_syn.tab.c	508;"	d	language:C	file:
+yytable_value_is_error	src/yy_syn.tab.c	511;"	d	language:C	file:
 yytables_destroy	include/lexer.h	463;"	d	language:C++
 yytables_fload	include/lexer.h	460;"	d	language:C++
 yyterminate	src/lexer.c	782;"	d	language:C	file:
