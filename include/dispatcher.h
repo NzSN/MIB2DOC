@@ -66,6 +66,7 @@ typedef struct switchingState {
 extern dispatch_mode dispatchMode;
 extern switchingState swState;
 
+int dispatchInit();
 dispatchParam * disParamConstruct(void *arg);
 dispatchParam * disParamStore(dispatchParam *head, dispatchParam *pl);
 dispatchParam * disParamRetrive(dispatchParam **head);

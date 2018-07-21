@@ -15,14 +15,14 @@
  *     * TOP - index of TOP of stack
  *     * MAX - max index that can use for the stack
  */
-#define pushByIndex(STACK_BASE, ELEMENT, /* int */TOP, /* int */MAX, /* int */UNIT_SIZE) ({\
+#define pushByIndex(STACK_BASE, ELEMENT, /* int */TOP, /* int */BUFFER_SIZE, /* int */UNIT_SIZE) ({\
     int ret;\
-    if (TOP >= MAX || TOP+UNIT_SIZE >= MAX) {\
+    if (TOP >= STACK_BASE+BUFFER_SIZE || TOP+UNIT_SIZE >= STACK_BASE+BUFFER_SIZE) {\
         /* Stack is full just do nothing */\
         ret = 0;\
     } else {\
         TOP += UNIT_SIZE;\
-        memcpy(STACK_BASE - TOP, ELEMENT, UNIT_SIZE); \
+        memcpy(STACK_BASE, ELEMENT, UNIT_SIZE); \
         ret = 1;\
     }\
     ret;\
@@ -35,10 +35,10 @@
  */
 #define popByIndex(STACK_BASE, /* int */TOP, UNIT, UNIT_SIZE) ({\
     int ret;\
-    if (TOP <= 0) {\
+    if (TOP <= 0 || TOP-UNIT_SIZE <= 0) {\
         ret = 0;\
     } else {\
-        memcpy(UNIT, STACK_BASE + TOP, UNIT_SIZE);\
+        memcpy(UNIT, TOP-UNIT_SIZE, UNIT_SIZE);\
         TOP -= UNIT_SIZE;\
         ret = 1;\
     }\
@@ -50,14 +50,14 @@
 // of objects buffer into one genericStack 
 // is not supported.
 typedef struct identStack {
-    int top;
+    unsigned char *top;
     int bufferSize;
     int unitSize;
     unsigned char *base;
     unsigned char *buffer;
 } genericStack;
 
-int genericStackConstruct();
+int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize);
 int push(genericStack *ps, void *unit);
 int pop(genericStack *ps, void *unit);
 

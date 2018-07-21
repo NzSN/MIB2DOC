@@ -182,6 +182,26 @@ static void fa_test(void **state) {
         fail();
 }
 
+static void stack_test(void **state) {
+    typedef struct {
+        int drive1;
+        int drive2; 
+    } Gundam_OO;
+    genericStack stack;  
+    
+    Gundam_OO OO_1 = { 1, 2 };
+    Gundam_OO OO_2 = { 2, 1 };
+    
+    Gundam_OO OO_R_1;
+    Gundam_OO OO_R_2;
+
+    genericStackConstruct(&stack, 10*sizeof(Gundam_OO), sizeof(Gundam_OO));
+    push(&stack, &OO_1);    
+    push(&stack, &OO_2); 
+    pop(&stack, &OO_R_1);
+    pop(&stack, &OO_R_2);
+}
+
 int main(void) {
     const struct CMUnitTest tests[] = {
             cmocka_unit_test(list_test),
@@ -189,7 +209,8 @@ int main(void) {
             cmocka_unit_test(disParam_test),
             cmocka_unit_test(fa_test),
             cmocka_unit_test(tableInfoQueue_test),
-            cmocka_unit_test(desc_test)
+            cmocka_unit_test(desc_test),
+            cmocka_unit_test(stack_test)
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

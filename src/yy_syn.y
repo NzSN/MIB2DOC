@@ -11,6 +11,7 @@
 
 // Prologue
 %code top {
+    #define YY_YY_HOME_TOTORO_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
     #include <stdio.h>
     #include "type.h"
     #include "mibTreeGen.h"
@@ -30,7 +31,7 @@
 %%
 
 MIB :
-	DEFINITION IMPORT MAIN_PART { printf("MIB\n"); return; };
+	DEFINITION IMPORT MAIN_PART { printf("PARSE DONE\n"); return; };
     
 MAIN_PART :
 	OBJ_DEAL MAIN_PART
@@ -38,29 +39,25 @@ MAIN_PART :
 	| TRAP MAIN_PART
 	| SEQUENCE MAIN_PART
     | SMI MAIN_PART
-	| END_ { printf("MAIN\n"); };
+	| END_;
 
 DEFINITION :
-	IDENTIFIER DEF ASSIGNED BEGIN_ { printf("llll\n"); };
+	IDENTIFIER DEF ASSIGNED BEGIN_;
 
 IMPORT :
 	IMPORTS_ MODULES SEMICOLON    {
-        #if 0
         if (swState.counter == 0) {
             /* importStack is empty */
             upperTreeGeneration(&symTable);
         } else {
             /* do nothing */
         }
-        #endif
-        printf("IMPORT\n");
     };
 
 MODULES :
 	ITEMS FROM_ IDENTIFIER MODULES {
-		//dispatchParam *param = disParamConstruct($IDENTIFIER);
-		//disParamStore(param, disParamConstruct($ITEMS));
-        printf("MODULES\n");
+		dispatchParam *param = disParamConstruct($IDENTIFIER);
+		disParamStore(param, disParamConstruct($ITEMS));
 	} | 
     /* empty */  ;
 
@@ -108,7 +105,7 @@ OBJ_IDENTIFIER :
 };
 
 OBJ :
-	HEAD BODY { printf("ll\n");/* dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT));*/ };
+	HEAD BODY { /*dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT));*/ };
 
 TRAP :
 	TRAP_HEAD PROPERTY    { dispatch(MIBTREE_GENERATION, disParamConstruct(TRAP)); };
@@ -123,11 +120,9 @@ TRAP_HEAD :
 
 HEAD :
 	IDENTIFIER OBJ_SPECIFIER {
-        #if 0
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct($IDENTIFIER));
 		dispatch(DISPATCH_PARAM_STAGE, param);
-        #endif
 	};
 
 BODY :
@@ -155,27 +150,21 @@ SYNTAX :
 
 SYNTAX_VALUE :
 	TYPE {
-        #if 0
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct($TYPE));
 		dispatch(DISPATCH_PARAM_STAGE, param);
-        #endif
     }
     | IDENTIFIER {
-        #if 0
  		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct($IDENTIFIER));
 		dispatch(DISPATCH_PARAM_STAGE, param);
-        #endif
  	};
 
 ACCESS :
 	ACCESS_SPECIFIER ACCESS_VALUE {
-        #if 0
 		dispatchParam *param = disParamConstruct(SLICE_PERMISSION);
 		disParamStore(param, disParamConstruct($ACCESS_VALUE));
 		dispatch(DISPATCH_PARAM_STAGE, param);
-        #endif
 	};
 
 STATUS :
@@ -183,11 +172,9 @@ STATUS :
 
 DESCRIPTION :
 	DESC_SPECIFIER DESC_VALUE {
-        #if 0 
 		dispatchParam *param = disParamConstruct(SLICE_DESCRIPTION);
 		disParamStore(param, disParamConstruct($DESC_VALUE));
 		dispatch(DISPATCH_PARAM_STAGE, param);
-        #endif
 	};
 
 INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE;
@@ -198,7 +185,6 @@ INDEX_ITEM :
 
 MOUNT :
 	ASSIGNED L_BRACE IDENTIFIER NUM R_BRACE {
-        #if 0
 		dispatchParam *param = disParamConstruct(SLICE_PARENT);
 		disParamStore(param, disParamConstruct($IDENTIFIER));
 		dispatch(DISPATCH_PARAM_STAGE, param);
@@ -206,7 +192,6 @@ MOUNT :
 		param = disParamConstruct(SLICE_OID_SUFFIX);
 	    disParamStore(param, disParamConstruct($NUM));
 		dispatch(DISPATCH_PARAM_STAGE, param);
-        #endif
 	};
 
 %%

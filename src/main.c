@@ -2,7 +2,7 @@
 #include "list.h"
 #include "type.h"
 #include "docGenerate.h"
-
+#include "dispatcher.h"
 extern int yylex(void);
 extern FILE *yyin;
 extern int yyparse (void);
@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
     mibObjectTreeNode *node;
     
     beginFrom = "gponConfig";
+    dispatchInit();
     mibObjectTreeInit(&mibObjectTreeRoot);
     node = &mibObjectTreeRoot;
     //optionsInit(argc, argv);
@@ -34,8 +35,10 @@ int main(int argc, char *argv[]) {
     }
 
     writeTo = fopen("src/result/result", "w");
-    if (writeTo == NULL)
-        printf("%s\n", "open failed");
+    if (writeTo == NULL) {
+        printf("%s\n", "fatal:open failed");
+        return -1;
+    }
 
     documentGen(&mibObjectTreeRoot, writeTo);
     showTree(&mibObjectTreeRoot);
