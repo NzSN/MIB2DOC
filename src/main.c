@@ -3,6 +3,7 @@
 #include "type.h"
 #include "docGenerate.h"
 #include "options.h"
+#include "dispatcher.h"
 
 extern int yylex(void);
 extern FILE *yyin;
@@ -21,6 +22,7 @@ int main(int argc, char *argv[]) {
     mibObjectTreeNode *node;
     
     beginFrom = "gponConfig";
+    dispatchInit();
     mibObjectTreeInit(&mibObjectTreeRoot);
     node = &mibObjectTreeRoot;
     optionsInit(argc, argv);

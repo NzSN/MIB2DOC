@@ -73,6 +73,7 @@ C_DIALECT	CMakeFiles/3.12.0/CompilerIdC/CMakeCCompilerId.c	/^# define C_DIALECT 
 CheckParameterEvent	include/cmocka.h	/^typedef struct CheckParameterEvent {$/;"	s	language:C++
 CheckParameterEvent	include/cmocka.h	/^} CheckParameterEvent;$/;"	t	language:C++	typeref:struct:CheckParameterEvent
 CheckParameterValue	include/cmocka.h	/^typedef int (*CheckParameterValue)(const LargestIntegralType value,$/;"	t	language:C++
+DEBUGING	include/dispatcher.h	/^    DEBUGING$/;"	e	language:C++	enum:dispatch_type
 DEC	CMakeFiles/3.12.0/CompilerIdC/CMakeCCompilerId.c	/^#define DEC(/;"	d	language:C	file:
 DEC	CMakeFiles/3.12.0/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define DEC(/;"	d	language:C++	file:
 DEF	include/yy_syn.tab.h	/^    DEF = 271,$/;"	e	language:C++	enum:yytokentype
@@ -83,7 +84,8 @@ DESC_SPECIFIER	include/yy_syn.tab.h	/^    DESC_SPECIFIER = 265,$/;"	e	language:C
 DESC_SPECIFIER	src/yy_syn.tab.c	/^    DESC_SPECIFIER = 265,$/;"	e	language:C	enum:yytokentype	file:
 DESC_VALUE	include/yy_syn.tab.h	/^    DESC_VALUE = 266,$/;"	e	language:C++	enum:yytokentype
 DESC_VALUE	src/yy_syn.tab.c	/^    DESC_VALUE = 266,$/;"	e	language:C	enum:yytokentype	file:
-DISPATCH_MODE_DOC_GENERATING	include/dispatcher.h	/^    DISPATCH_MODE_DOC_GENERATING = 1$/;"	e	language:C++	enum:dispatch_mode
+DISPATCH_MODE_DEBUG	include/dispatcher.h	/^    DISPATCH_MODE_DEBUG = 2$/;"	e	language:C++	enum:dispatch_mode
+DISPATCH_MODE_DOC_GENERATING	include/dispatcher.h	/^    DISPATCH_MODE_DOC_GENERATING = 1,$/;"	e	language:C++	enum:dispatch_mode
 DISPATCH_MODE_SYMBOL_COLLECTING	include/dispatcher.h	/^    DISPATCH_MODE_SYMBOL_COLLECTING = 0,$/;"	e	language:C++	enum:dispatch_mode
 DISPATCH_PARAM_STAGE	include/dispatcher.h	/^    DISPATCH_PARAM_STAGE = 0,$/;"	e	language:C++	enum:dispatch_type
 ECHO	src/lexer.c	/^#define ECHO /;"	d	language:C	file:
@@ -121,7 +123,7 @@ HEX	CMakeFiles/3.12.0/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define HEX(/;"	d	l
 IDENTIFIER	include/yy_syn.tab.h	/^    IDENTIFIER = 258,$/;"	e	language:C++	enum:yytokentype
 IDENTIFIER	src/yy_syn.tab.c	/^    IDENTIFIER = 258,$/;"	e	language:C	enum:yytokentype	file:
 ID_VOID_MAIN	CMakeFiles/3.12.0/CompilerIdC/CMakeCCompilerId.c	/^# define ID_VOID_MAIN$/;"	d	language:C	file:
-IGNORE	include/dispatcher.h	/^    IGNORE$/;"	e	language:C++	enum:dispatch_type
+IGNORE	include/dispatcher.h	/^    IGNORE,$/;"	e	language:C++	enum:dispatch_type
 IMPORT	src/yy_syn.y	/^IMPORT :$/;"	l	language:YACC
 IMPORTS_	include/yy_syn.tab.h	/^    IMPORTS_ = 284$/;"	e	language:C++	enum:yytokentype
 IMPORTS_	src/yy_syn.tab.c	/^    IMPORTS_ = 284$/;"	e	language:C	enum:yytokentype	file:
@@ -522,6 +524,7 @@ detail	include/mibTreeObjTree.h	/^    char *detail;$/;"	m	language:C++	struct:mi
 disParamConstruct	src/list.c	/^dispatchParam * disParamConstruct(void *param) {$/;"	f	language:C
 disParamRetrive	src/list.c	/^dispatchParam * disParamRetrive(dispatchParam **head) {$/;"	f	language:C
 disParamStore	src/list.c	/^dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {$/;"	f	language:C
+disParam_test	src/unitTest/basicDataStruct_Test.c	/^static void disParam_test(void **state) { $/;"	f	language:C	file:
 dispatch	src/dispatcher.c	/^int dispatch(dispatch_type disType, dispatchParam *param) {$/;"	f	language:C
 dispatchInit	src/dispatcher.c	/^int dispatchInit() {$/;"	f	language:C
 dispatchMakeChoice	src/dispatcher.c	/^static int dispatchMakeChoice(dispatch_type dType) {$/;"	f	language:C	file:

@@ -124,7 +124,7 @@ bool sliceDestruct(slice *sli) {
     if (isNullPtr(sli)) {
         return FALSE;
     }
-    if (isNullPtr(sli->sliVal)) {
+    if (!isNullPtr(sli->sliVal)) {
         RELEASE_MEM(sli->sliVal);
     }
     RELEASE_MEM(sli);
@@ -132,14 +132,14 @@ bool sliceDestruct(slice *sli) {
 }
 
 slice * slicePrev(slice *sli) {
-    if (isNullPtr(sli)) {
+    if (isNullPtr(sli) || isNullPtr(sli->sliNode.prev)) {
         return NULL;
     }
     return containerOf(sli->sliNode.prev, slice, sliNode);
 }
 
 slice * sliceNext(slice *sli) {
-    if (isNullPtr(sli)) {
+    if (isNullPtr(sli) || isNullPtr(sli->sliNode.next)) {
         return NULL;
     }
     return containerOf(sli->sliNode.next, slice, sliNode);
@@ -181,9 +181,10 @@ bool sliceRelease(slice *sli) {
     slice *pSli;
     slice *pSli_next;
 
-    if (isNullPtr(sli)) {
+    if (isNullPtr(sli)) 
         return FALSE;
-    }
+    
+    sli = sliceNext(sli);
     for (pSli = sli; pSli != NULL; pSli = pSli_next) {
         pSli_next = sliceNext(pSli);
         sliceDestruct(pSli);

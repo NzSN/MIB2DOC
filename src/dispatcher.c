@@ -23,7 +23,7 @@ switchingState swState;
 
 /* Definition Section */
 int dispatchInit() {
-    dispatchMode = DISPATCH_MODE_DOC_GENERATING;
+    dispatchMode = DISPATCH_MODE_DEBUG;
     return ERROR_NONE;
 }
 
@@ -54,6 +54,12 @@ int dispatch(dispatch_type disType, dispatchParam *param) {
         case IGNORE:
             /* Do nothing */
             break;
+        case DEBUGING:
+           /* printf("DEBUGGING\n");
+            printf("KEY is %d\n", 
+                (unsigned long)disParamRetrive(&param)->param);
+            printf("VAL is %s\n", 
+                disParamRetrive(&param)->param);*/
         default:
             ret = ERROR_WRONG_IDX;
     }
@@ -73,6 +79,8 @@ static int dispatchMakeChoice(dispatch_type dType) {
             choice = dType;
         }
     }
+    if (dispatchMode == DISPATCH_MODE_DEBUG)
+        choice = DEBUGING;
 
     return choice;
 }

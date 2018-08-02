@@ -41,10 +41,7 @@ static void list_test(void **state) {
         fail();
 
     sliceRelease(&sliceContainer);
-    got = sliceGet(&sliceContainer, SLICE_IDENTIFIER);
-    if (got != NULL)
-        fail();
-
+    memset(&sliceContainer, 0, sizeof(slice));
 }
 
 
@@ -68,9 +65,11 @@ static void mibTree_test(void **state) {
     sliceStore(&sliceContainer, sliceConstruct(SLICE_OID_SUFFIX, suffix));
     sliceStore(&sliceContainer, sliceConstruct(SLICE_PARENT, parent));
 
+    mibObjectTreeInit(&mibObjectTreeRoot);
     mibObjGen_InnerNode();
     pNode = search_MibTree(&mibObjectTreeRoot, "gogo");
-
+    if (strncmp(pNode->identifier, "gogo", strlen("gogo")) != 0)
+        fail();
 }
 
 static void tableInfoQueue_test(void **state) {
@@ -167,13 +166,24 @@ static void fa_test(void **state) {
         fail();
 }
 
+static void disParam_test(void **state) { 
+    char *IDENTIFIER_S = "GOGO";
+    dispatchParam *param = disParamConstruct((void *)SLICE_PARENT);
+    disParamStore(param, disParamConstruct((void *)IDENTIFIER_S));
+    if ((unsigned long)disParamRetrive(&param)->param != SLICE_PARENT)
+        fail();
+    if (strncmp(disParamRetrive(&param)->param, IDENTIFIER_S, strlen(IDENTIFIER_S)) != 0)
+        fail();
+}
+
 int main(void) {
     const struct CMUnitTest tests[] = {
             cmocka_unit_test(list_test),
             cmocka_unit_test(mibTree_test),
             cmocka_unit_test(fa_test),
             cmocka_unit_test(tableInfoQueue_test),
-            cmocka_unit_test(desc_test)
+            cmocka_unit_test(desc_test),
+            cmocka_unit_test(disParam_test)
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

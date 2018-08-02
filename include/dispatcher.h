@@ -17,12 +17,14 @@ typedef enum dispatch_type {
     MIBTREE_GENERATION,
     SYMBOL_COLLECTING,
     SWITCH_TO_INC_BUFFER,
-    IGNORE
+    IGNORE,
+    DEBUGING
 } dispatch_type;
 
 typedef enum dispatch_mode {
     DISPATCH_MODE_SYMBOL_COLLECTING = 0,
-    DISPATCH_MODE_DOC_GENERATING = 1
+    DISPATCH_MODE_DOC_GENERATING = 1,
+    DISPATCH_MODE_DEBUG = 2
 } dispatch_mode;
 
 typedef struct identList {
@@ -65,6 +67,8 @@ typedef struct switchingState {
 
 extern dispatch_mode dispatchMode;
 extern switchingState swState;
+
+int dispatchInit();
 
 dispatchParam * disParamConstruct(void *arg);
 dispatchParam * disParamStore(dispatchParam *head, dispatchParam *pl);

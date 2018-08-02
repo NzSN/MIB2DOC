@@ -52,14 +52,12 @@ void mibObjectTreeInit(mibObjectTreeNode *root) {
     root->info = (void *)rootInfo;
     root->head = root;
 
-    #if FALSE
     insert_MibTree(root, mibNodeBuild("iso", "1"), "root");
     insert_MibTree(root, mibNodeBuild("org", "1.3"), "iso");
     insert_MibTree(root, mibNodeBuild("dod", "1.3.6"), "org");
     insert_MibTree(root, mibNodeBuild("internet", "1.3.6.1"), "dod");
     insert_MibTree(root, mibNodeBuild("private", "1.3.6.1.4"), "internet");
     insert_MibTree(root, mibNodeBuild("enterprises", "1.3.6.1.4.1"), "private");
-    #endif
 
 }
 

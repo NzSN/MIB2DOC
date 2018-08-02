@@ -30,7 +30,7 @@
 %%
 
 MIB :
-	DEFINITION IMPORT MAIN_PART;
+	DEFINITION IMPORT MAIN_PART { printf("MIB\n"); };
     
 MAIN_PART :
 	OBJ_DEAL MAIN_PART
@@ -57,13 +57,12 @@ IMPORT :
 MODULES :
 	ITEMS FROM_ IDENTIFIER MODULES {
 		dispatchParam *param = disParamConstruct($IDENTIFIER);
-		disParamStore(param, disParamConstruct($ITEMS));
 	} | 
     /* empty */  ;
 
 ITEMS :
 	IDENTIFIER
-	| IDENTIFIER COMMA ITEMS
+	| IDENTIFIER COMMA ITEMS {}
 	| /* empty */ ;
 
 SEQUENCE :
