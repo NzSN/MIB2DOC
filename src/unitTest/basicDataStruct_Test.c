@@ -6,7 +6,7 @@
 #include <stddef.h>
 #include <setjmp.h>
 #include <cmocka.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 #include "type.h"
 #include "list.h"
@@ -26,10 +26,10 @@ static void list_test(void **state) {
 
     memset(&sliceContainer, 0, sizeof(slice));
 
-    new1 = sliceConstruct(SLICE_IDENTIFIER, "LLLL");
+    new1 = sliceConstruct(SLICE_IDENTIFIER, strdup("LLLL"));
     sliceStore(&sliceContainer, new1);
 
-    new2 = sliceConstruct(SLICE_TYPE, "lllll");
+    new2 = sliceConstruct(SLICE_TYPE, strdup("lllll"));
     sliceStore(&sliceContainer, new2);
 
     got = sliceGet(&sliceContainer, SLICE_IDENTIFIER);
@@ -169,10 +169,10 @@ static void fa_test(void **state) {
 
 int main(void) {
     const struct CMUnitTest tests[] = {
-            //cmocka_unit_test(list_test),
-            //cmocka_unit_test(mibTree_test),
-            //cmocka_unit_test(fa_test),
-            //cmocka_unit_test(tableInfoQueue_test),
+            cmocka_unit_test(list_test),
+            cmocka_unit_test(mibTree_test),
+            cmocka_unit_test(fa_test),
+            cmocka_unit_test(tableInfoQueue_test),
             cmocka_unit_test(desc_test)
     };
     return cmocka_run_group_tests(tests, NULL, NULL);

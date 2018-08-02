@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 project(Mib2Doc)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wint-conversion")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(HOME_DIR /home/totoro/Projects/MIB2DOC)
+set(HOME_DIR /usr/home/aydenlin/Codes/MIB2DOC)
 set(SRC_DIR ${HOME_DIR}/src)
 set(CMAKE_C_STANDARD 11)
 set(SOURCE_FILES 
@@ -22,7 +22,9 @@ set(UNIT_TEST_SRC ${UTEST_DIR}/basicDataStruct_Test.c
     ${SRC_DIR}/mibTreeGen.c ${SRC_DIR}/lexer.c
     ${SRC_DIR}/yy_syn.tab.c ${SRC_DIR}/queue.c 
     ${SRC_DIR}/mibTreeObjTree.c ${SRC_DIR}/stack.c 
-    ${SRC_DIR}/list.c)
+    ${SRC_DIR}/list.c ${SRC_DIR}/dispatcher.c
+    ${SRC_DIR}/lexDeal.c ${SRC_DIR}/misc.c
+    ${SRC_DIR}/util.c ${SRC_DIR}/options.c)
 
 link_libraries(cmocka)
 add_executable(UNIT_TEST ${UNIT_TEST_SRC})

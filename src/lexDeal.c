@@ -2,7 +2,7 @@
 // Created by ayden on 17-5-2.
 //
 
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 #include "lexDeal.h"
 #include "type.h"

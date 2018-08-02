@@ -48,7 +48,7 @@ IMPORT :
         /* build upper tree if all including is finished */
         if (swState.counter == 0) {
             /* importStack is empty */
-            upperTreeGeneration(&symTable);
+            //upperTreeGeneration(&symTable);
         } else {
             /* do nothing */
         }

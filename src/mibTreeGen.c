@@ -2,7 +2,7 @@
 // Created by ayden on 2017/4/19.
 //
 
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 #include "mibTreeGen.h"
 #include "type.h"

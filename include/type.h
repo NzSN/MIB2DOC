@@ -9,7 +9,6 @@
 #include <stdbool.h>
 #include "mibTreeObjTree.h"
 #include "lexer.h"
-#include "yy_syn.tab.h"
 
 /* define */
 #ifndef FALSE

@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <memory.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include "mibTreeObjTree.h"
 #include "docGenerate.h"
 #include "queue.h"

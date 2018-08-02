@@ -3,7 +3,7 @@
 //
 
 #include <stddef.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 #include "mibTreeObjTree.h"
 #include "type.h"

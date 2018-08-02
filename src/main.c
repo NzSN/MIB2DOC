@@ -2,6 +2,7 @@
 #include "list.h"
 #include "type.h"
 #include "docGenerate.h"
+#include "options.h"
 
 extern int yylex(void);
 extern FILE *yyin;
@@ -24,9 +25,9 @@ int main(int argc, char *argv[]) {
     node = &mibObjectTreeRoot;
     optionsInit(argc, argv);
     
-    yyin = fopen("src/case", "r");
+    yyin = fopen("src/case.mib", "r");
     if (yyin == NULL)
-        printf("%s\n", "open failed");
+        printf("%s\n", "case open failed");
     
     ret = yyparse();
 
@@ -36,7 +37,7 @@ int main(int argc, char *argv[]) {
 
     writeTo = fopen("src/result/result", "w");
     if (writeTo == NULL)
-        printf("%s\n", "open failed");
+        printf("%s\n", "result open failed");
 
     documentGen(&mibObjectTreeRoot, writeTo);
     showTree(&mibObjectTreeRoot);
