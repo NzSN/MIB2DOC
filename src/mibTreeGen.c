@@ -211,10 +211,10 @@ int upperTreeGeneration(symbolTable *symTbl) {
                     push(&stack, childNode);
                 } else if (child->symType == SYMBOL_TYPE_LEAVE) {
                     childNode = mibLeaveBuild(strdup(child->symIdent),
-                                    strdup(child->symInfo.leaveMeta.type),
-                                    strdup(child->symInfo.leaveMeta.permission),
-                                    NULL,
-                                    strdup(child->symInfo.leaveMeta.suffix));
+                        strdup(child->symInfo.leaveMeta.type),
+                        strdup(child->symInfo.leaveMeta.permission),
+                        NULL,
+                        strdup(child->symInfo.leaveMeta.suffix));
                     insert_MibTree(root, childNode, strdup(current->identifier));
                 }
                 temp = child;

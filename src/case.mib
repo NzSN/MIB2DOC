@@ -1,0 +1,14 @@
+CASE DEFINITIONS ::= BEGIN
+
+IMPORTS
+    XYZ, ZYX FROM ALIALI;
+
+sys OBJECT-TYPE
+    SYNTAX INTEGER
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION
+        "Just a case"
+    ::= { enterpirse 1 }
+
+END

@@ -54,14 +54,7 @@ DESCRIPTION                         { return DESC_SPECIFIER; }
 
 ([a-zA-Z0-9]|"-")+                  { yylval = strDuplicate(yytext); return IDENTIFIER; }
 
-<<EOF>>                             {
-                                        //if (--swState.counter < 0) {
-                                        //    yyterminate();
-                                        //} else {
-                                        //    yy_delete_buffer(SW_CUR_BUFFER_INFO(swState));
-                                            //yy_switch_to_buffer(swState.importStack[swState.importStackIndex]);
-                                        //}
-                                    }
+<<EOF>>                             { }
 
 %%
 int yywrap() {

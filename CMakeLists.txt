@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 project(Mib2Doc)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wint-conversion")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(HOME_DIR /usr/home/aydenlin/Codes/MIB2DOC)
+set(HOME_DIR /home/aydenlin/Projects/MIB2DOC)
 set(SRC_DIR ${HOME_DIR}/src)
 set(CMAKE_C_STANDARD 11)
 set(SOURCE_FILES 

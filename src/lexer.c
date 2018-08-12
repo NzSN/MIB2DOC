@@ -1088,21 +1088,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 #line 57 "src/yy_lex.l"
-{
-                                        //if (--swState.counter < 0) {
-                                        //    yyterminate();
-                                        //} else {
-                                        //    yy_delete_buffer(SW_CUR_BUFFER_INFO(swState));
-                                            //yy_switch_to_buffer(swState.importStack[swState.importStackIndex]);
-                                        //}
-                                    }
+{ }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 66 "src/yy_lex.l"
+#line 59 "src/yy_lex.l"
 ECHO;
 	YY_BREAK
-#line 1105 "src/lexer.c"
+#line 1098 "src/lexer.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2105,7 +2098,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 66 "src/yy_lex.l"
+#line 59 "src/yy_lex.l"
 
 int yywrap() {
     return 1;

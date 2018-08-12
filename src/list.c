@@ -132,14 +132,14 @@ bool sliceDestruct(slice *sli) {
 }
 
 slice * slicePrev(slice *sli) {
-    if (isNullPtr(sli) || isNullPtr(sli->sliNode.prev)) {
+    if (!isNullPtr(sli) && isNullPtr(sli->sliNode.prev)) {
         return NULL;
     }
     return containerOf(sli->sliNode.prev, slice, sliNode);
 }
 
 slice * sliceNext(slice *sli) {
-    if (isNullPtr(sli) || isNullPtr(sli->sliNode.next)) {
+    if (!isNullPtr(sli) && isNullPtr(sli->sliNode.next)) {
         return NULL;
     }
     return containerOf(sli->sliNode.next, slice, sliNode);
@@ -155,6 +155,14 @@ slice * sliceGet(slice *sliHead, int sliKey) {
         if (sliHead->sliKey == sliKey)
             return sliHead;
     }
+    return NULL;
+}
+
+char * sliceGetVal(slice *sliHead, int sliKey) {
+    slice *sli;
+
+    if (sli = sliceGet(sliHead, sliKey))
+        return sli->sliVal;
     return NULL;
 }
 
@@ -225,11 +233,17 @@ dispatchParam * disParamConstruct(void *param) {
 }
 
 dispatchParam * dispatchParamPrev(dispatchParam *disparam) {
-    return containerOf(disparam->node.prev, dispatchParam, node);
+    listNode *prev = disparam->node.prev;
+    if (isNullPtr(prev))
+        return NULL;
+    return containerOf(prev, dispatchParam, node);
 }
 
 dispatchParam * dispatchParamNext(dispatchParam *disparam) {
-    return containerOf(disparam->node.next, dispatchParam, node);
+    listNode *next = disparam->node.next; 
+    if (isNullPtr(next))
+        return NULL;
+    return containerOf(next, dispatchParam, node);
 }
 
 dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {
@@ -250,7 +264,7 @@ dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {
 dispatchParam * disParamRetrive(dispatchParam **head) {
     dispatchParam *ret;
 
-    if (isNullPtr(head) || isNullPtr(*head)) {
+    if (!isNullPtr(head) && isNullPtr(*head)) {
         mib2docError = ERROR_NULL_REF;
         return NULL;
     }

@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.0.5.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_USR_HOME_AYDENLIN_CODES_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
-# define YY_YY_USR_HOME_AYDENLIN_CODES_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
+#ifndef YY_YY_HOME_AYDENLIN_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
+# define YY_YY_HOME_AYDENLIN_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -87,4 +87,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_USR_HOME_AYDENLIN_CODES_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED  */
+#endif /* !YY_YY_HOME_AYDENLIN_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED  */

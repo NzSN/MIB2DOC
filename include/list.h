@@ -8,7 +8,8 @@
 #include <stdbool.h>
 
 enum elementType {
-    SLICE_IDENTIFIER = 6,
+    SLICE_TYPE_MINIMUM = 5,
+    SLICE_IDENTIFIER,
     SLICE_TYPE,
     SLICE_PERMISSION,
     SLICE_DESCRIPTION,
@@ -27,6 +28,8 @@ typedef struct slice {
     char *sliVal;
     listNode sliNode;
 } slice;
+
+#define IS_VALID_SLICE_TYPE(Slice) (Slice > SLICE_TYPE_MINIMUM && Slice < SLICE_TYPE_MAXIMUM)
 
 /* ListNode */
 typedef void (*listNodeTask)(listNode *head, void *arg);

@@ -10,6 +10,7 @@
 #include <util.h>
 
 /* Declaration Section */
+static void debugging(dispatchParam *param);
 static int dispatchMakeChoice(dispatch_type dType);
 static int lexBufferSwitching(char *newModule);
 static int switchToModule(dispatchParam *param);
@@ -23,11 +24,14 @@ switchingState swState;
 
 /* Definition Section */
 int dispatchInit() {
-    dispatchMode = DISPATCH_MODE_DEBUG;
+    switchInit();
+    dispatchMode = DISPATCH_MODE_DOC_GENERATING;
     return ERROR_NONE;
 }
 
 int dispatch(dispatch_type disType, dispatchParam *param) {
+    unsigned long key;
+    char *val;
     errorType ret =  ERROR_NONE;
 
     if (isNullPtr(param)) {
@@ -36,9 +40,9 @@ int dispatch(dispatch_type disType, dispatchParam *param) {
     
     switch (dispatchMakeChoice(disType)) {
         case DISPATCH_PARAM_STAGE:
-            sliceStore(&sliceContainer,
-                    sliceConstruct((unsigned long)disParamRetrive(&param)->param,
-                        disParamRetrive(&param)->param));
+            key = (unsigned long)disParamRetrive(&param)->param;
+            val = (char *)disParamRetrive(&param)->param;
+            sliceStore(&sliceContainer, sliceConstruct(key, val));
             break;
         case MIBTREE_GENERATION:
             mibObjGen((unsigned long)disParamRetrive(&param)->param);
@@ -47,23 +51,39 @@ int dispatch(dispatch_type disType, dispatchParam *param) {
             symbolCollecting((unsigned long)disParamRetrive(&param)->param, param);
             break;
         case SWITCH_TO_INC_BUFFER:
-            if (isNeedSwitchInit)
-                switchInit();
             ret = switchToModule(param);
             break;
         case IGNORE:
             /* Do nothing */
             break;
         case DEBUGING:
-           /* printf("DEBUGGING\n");
-            printf("KEY is %d\n", 
-                (unsigned long)disParamRetrive(&param)->param);
-            printf("VAL is %s\n", 
-                disParamRetrive(&param)->param);*/
-        default:
+            debugging(param);
+            default:
             ret = ERROR_WRONG_IDX;
     }
     return ret;
+}
+
+static void debugging(dispatchParam *param) {
+    dispatchParam *result;
+    unsigned long key;
+    char *val;
+    
+    result = disParamRetrive(&param);
+    if (result == NULL)
+        return;
+    key = (unsigned long)result->param;
+    if (key == 1)
+        key = 1;
+    result = disParamRetrive(&param);
+    if (result == NULL)
+        return; 
+    val = (char *)result->param;
+
+    if (IS_VALID_SLICE_TYPE(key)) {
+        printf("DEBUGGING\n");
+        printf("Key:value Pair is %lu:%s\n", key, val);
+    }
 }
 
 static int dispatchMakeChoice(dispatch_type dType) {
@@ -89,9 +109,10 @@ static int dispatchMakeChoice(dispatch_type dType) {
 static int switchInit() {
     int retVal;
 
-    swState.state = DISPATCH_MODE_SYMBOL_COLLECTING;
+    swState.state = DISPATCH_MODE_DOC_GENERATING;
     swState.counter = 0;
-    memcpy(SW_CUR_BUFFER_INFO_REF(swState), getCurrentBufferState(), sizeof(YY_BUFFER_STATE));
+
+    memset(SW_CUR_BUFFER_INFO_REF(swState), 0, sizeof(YY_BUFFER_STATE));
     memset(SW_CUR_IMPORT_REF(swState), 0, sizeof(collectInfo));
     genericStackConstruct(&swState.swStack, 128 * sizeof(switchInfo), sizeof(switchInfo));
 
@@ -112,15 +133,15 @@ static int switchToModule(dispatchParam *param) {
     sCollection = (char *)disParamRetrive(&param)->param;
 
     // Step 1: Push currentSwitchInfo into stack
-    pushByIndex(SW_STACK_BASE(swState), SW_CUR_BUFFER_INFO_REF(swState), SW_STACK_TOP(swState), SW_STACK_BUFFER_SIZE(swState), SW_STACK_UNIT_SIZE(swState));
-    
-    // Step 2: Update currentSwitchInfo
-    
-
-    if (lexBufferSwitching(moduleName) == ERROR_GENERIC) {
+    pushByIndex(SW_STACK_BASE(swState), SW_CUR_BUFFER_INFO_REF(swState), 
+        SW_STACK_TOP(swState), SW_STACK_BUFFER_SIZE(swState), SW_STACK_UNIT_SIZE(swState));
+     
+    // Step 2: Update currentSwitchInfo  
+    if (lexBufferSwitching(moduleName) == ERROR_GENERIC)
         /* Terminate whole system */
         return ABORT;
-    }
+    memcpy(SW_CUR_BUFFER_INFO_REF(swState), getCurrentBufferState(), sizeof(YY_BUFFER_STATE));
+
     return 0;
 }
 
