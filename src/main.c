@@ -20,8 +20,9 @@ int main(int argc, char *argv[]) {
     int ret;
     FILE *writeTo;
     mibObjectTreeNode *node;
-    
-    beginFrom = "gponConfig";
+    mibLeaveInfo *pInfo; 
+
+    beginFrom = "sys";
     dispatchInit();
     mibObjectTreeInit(&mibObjectTreeRoot);
     node = &mibObjectTreeRoot;
@@ -32,12 +33,11 @@ int main(int argc, char *argv[]) {
         printf("%s\n", "case open failed");
     
     ret = yyparse();
-
     if (ret == ABORT) {
         return -1;
     }
 
-    writeTo = fopen("src/result/result", "w");
+    writeTo = fopen("src/result", "w+");
     if (writeTo == NULL)
         printf("%s\n", "result open failed");
 

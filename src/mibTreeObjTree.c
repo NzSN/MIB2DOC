@@ -208,7 +208,6 @@ void showTree(mibObjectTreeNode *root) {
 }
 
 static int Treeprint(void *arg, mibObjectTreeNode *node) {
-
     printf("%s : %s", getIdentFromInfo(node), getOidFromInfo(node));
     if (!node->isNode)
         printf(" -- %s -- %s\n", ((mibLeaveInfo *)node->info)->type,

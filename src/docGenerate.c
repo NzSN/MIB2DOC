@@ -59,6 +59,8 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
 
     writeTo = (FILE *) arg;
     pNode = search_MibTree(&mibObjectTreeRoot, beginFrom);
+    if (isNullPtr(pNode)) 
+        return -1; 
     beginOid = strlen(getOidFromInfo(pNode));
     laTexStrBuffer = (char *) malloc(SIZE_OF_LATEX_BUFFER);
 
@@ -178,6 +180,7 @@ static int tableGen_Latex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) 
                      "\\hline\n"
                      "Index & Name & Desc & OID & RW & Type & Detail \\\\ \n"
                      "\\hline\n");
+
     for (i=0; i<count; i++, index++) {
         fprintf(writeTo, "%s \\\\\n", tableItemGen_Latex((tableInfo *)getQueue(queue), index));
         fprintf(writeTo, "\\hline\n");

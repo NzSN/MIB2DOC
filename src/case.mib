@@ -9,6 +9,6 @@ sys OBJECT-TYPE
     STATUS current
     DESCRIPTION
         "Just a case"
-    ::= { enterpirse 1 }
+    ::= { enterprises 1 }
 
 END

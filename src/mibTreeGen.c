@@ -133,6 +133,7 @@ static int mibTreeLeaveAdd(char *ident, char *type,
     char *parent, char *oid) {
 
     mibObjectTreeNode *obj;
+    mibLeaveInfo *pLeaveInfo;
 
     if (isNullPtr(ident)
         || isNullPtr(type)
@@ -144,7 +145,6 @@ static int mibTreeLeaveAdd(char *ident, char *type,
     obj = mibLeaveBuild(ident, type, rw, desc, oid);
     if (isNullPtr(obj))
         return -1;
-
     insert_MibTree(&mibObjectTreeRoot, obj, parent);
 }
 

@@ -1297,13 +1297,7 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 2:
-#line 33 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
-    { printf("MIB\n"); }
-#line 1304 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
-    break;
-
-  case 10:
+        case 10:
 #line 47 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
     {
         /* build upper tree if all including is finished */
@@ -1314,7 +1308,7 @@ yyreduce:
             /* do nothing */
         }
     }
-#line 1318 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1312 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 11:
@@ -1322,13 +1316,13 @@ yyreduce:
     {
 		dispatchParam *param = disParamConstruct((yyvsp[-1]));
 	}
-#line 1326 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1320 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 14:
 #line 65 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
-    {}
-#line 1332 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+    { }
+#line 1326 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 19:
@@ -1340,7 +1334,7 @@ yyreduce:
         dispatch(DISPATCH_PARAM_STAGE, param);
         dispatch(MIBTREE_GENERATION, disParamConstruct(SMI_DEF));
     }
-#line 1344 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1338 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 20:
@@ -1349,7 +1343,7 @@ yyreduce:
         dispatchParam *param = disParamConstruct(OBJECT_IDENTIFIER);
         dispatch(MIBTREE_GENERATION, param);
     }
-#line 1353 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1347 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 21:
@@ -1367,19 +1361,19 @@ yyreduce:
 		disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 }
-#line 1371 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1365 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 22:
 #line 107 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
     { dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT)); }
-#line 1377 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1371 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 23:
 #line 110 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
     { dispatch(MIBTREE_GENERATION, disParamConstruct(TRAP)); }
-#line 1383 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1377 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 24:
@@ -1390,7 +1384,7 @@ yyreduce:
 
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1394 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1388 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 25:
@@ -1400,7 +1394,7 @@ yyreduce:
 		disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1404 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1398 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 39:
@@ -1410,7 +1404,7 @@ yyreduce:
 	    disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
     }
-#line 1414 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1408 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 40:
@@ -1420,7 +1414,7 @@ yyreduce:
 	    disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
  	}
-#line 1424 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1418 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 41:
@@ -1430,7 +1424,7 @@ yyreduce:
 		disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1434 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1428 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 43:
@@ -1440,7 +1434,7 @@ yyreduce:
 		disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1444 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1438 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
   case 47:
@@ -1454,11 +1448,11 @@ yyreduce:
 	    disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1458 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1452 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
     break;
 
 
-#line 1462 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1456 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
