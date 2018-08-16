@@ -192,7 +192,6 @@ bool sliceRelease(slice *sli) {
     if (isNullPtr(sli)) 
         return FALSE;
     
-    sli = sliceNext(sli);
     for (pSli = sli; pSli != NULL; pSli = pSli_next) {
         pSli_next = sliceNext(pSli);
         sliceDestruct(pSli);
@@ -201,11 +200,16 @@ bool sliceRelease(slice *sli) {
 }
 
 bool sliceReset(slice *sli) {
+    slice *pSli;
+
     if (isNullPtr(sli)) {
         return FALSE;
     }
-    sliceRelease(sliceNext(sli));
-    sli->sliNode.next = NULL;
+    while (sli != NULL) {
+        pSli = sli;
+        sli = sliceNext(sli);
+        RELEASE_MEM(pSli); 
+    }
 
     return TRUE;
 }

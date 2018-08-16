@@ -42,6 +42,7 @@ bool listNodeIsEmpty(listNode *node);
 int listNodeTravel(listNode *head, listNodeTask func, void *arg);
 
 /* Slice */
+slice * sliceNext(slice *sli);
 slice * sliceConstruct(int sliKey, char *sliVal);
 slice * sliceGet(slice *sli, int sliKey);
 int sliceStore(slice *sli, slice *next);

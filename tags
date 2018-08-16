@@ -797,6 +797,7 @@ sliceContainer	src/main.c	/^slice sliceContainer;$/;"	v	language:C	typeref:typen
 sliceContainer	src/unitTest/basicDataStruct_Test.c	/^slice sliceContainer;$/;"	v	language:C	typeref:typename:slice
 sliceDestruct	src/list.c	/^bool sliceDestruct(slice *sli) {$/;"	f	language:C	typeref:typename:bool
 sliceGet	src/list.c	/^slice * sliceGet(slice *sliHead, int sliKey) {$/;"	f	language:C	typeref:typename:slice *
+sliceGetVal	src/list.c	/^char * sliceGetVal(slice *sliHead, int sliKey) {$/;"	f	language:C	typeref:typename:char *
 sliceNext	src/list.c	/^slice * sliceNext(slice *sli) {$/;"	f	language:C	typeref:typename:slice *
 slicePrev	src/list.c	/^slice * slicePrev(slice *sli) {$/;"	f	language:C	typeref:typename:slice *
 sliceRelease	src/list.c	/^bool sliceRelease(slice *sli) {$/;"	f	language:C	typeref:typename:bool

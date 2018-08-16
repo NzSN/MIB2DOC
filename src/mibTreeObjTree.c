@@ -211,7 +211,7 @@ static int Treeprint(void *arg, mibObjectTreeNode *node) {
     printf("%s : %s", getIdentFromInfo(node), getOidFromInfo(node));
     if (!node->isNode)
         printf(" -- %s -- %s\n", ((mibLeaveInfo *)node->info)->type,
-               ((mibLeaveInfo *)node->info)->desc);
+               ((mibLeaveInfo *)node->info)->detail);
     else
         printf("\n");
     return 0;

@@ -68,7 +68,7 @@ int mibObjGen_Leave() {
     oid = oidComplement(parent, suffix);
     mibTreeLeaveAdd(ident, type, rw, desc, parent, oid);
 
-    sliceReset(&sliceContainer);
+    sliceReset(sliceNext(&sliceContainer));
     RELEASE_MEM(suffix);
     RELEASE_MEM(parent);
     return 0;
@@ -87,7 +87,7 @@ int mibObjGen_InnerNode() {
     oid = oidComplement(parent, suffix);
     mibTreeNodeAdd(ident, oid, parent);
 
-    sliceReset(&sliceContainer);
+    sliceReset(sliceNext(&sliceContainer));
     RELEASE_MEM(suffix);
     RELEASE_MEM(parent);
     return 0;
@@ -110,7 +110,7 @@ int mibObjGen_trap() {
     oid = oidComplement(parent, suffix);
     mibTreeLeaveAdd(ident, type, NULL, NULL, parent, oid);
 
-    sliceReset(&sliceContainer);
+    sliceReset(sliceNext(&sliceContainer));
 
     RELEASE_MEM(desc);
     RELEASE_MEM(suffix);
