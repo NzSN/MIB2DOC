@@ -52,12 +52,12 @@ int mibObjGen(int type) {
 int mibObjGen_Leave() {
     char *ident, *type, *rw, *desc, *parent, *suffix, *oid;
 
-    ident = sliceGet(&sliceContainer, SLICE_IDENTIFIER)->sliVal;
-    type = sliceGet(&sliceContainer, SLICE_TYPE)->sliVal;
-    rw = sliceGet(&sliceContainer, SLICE_PERMISSION)->sliVal;
-    desc = sliceGet(&sliceContainer, SLICE_DESCRIPTION)->sliVal;
-    parent = sliceGet(&sliceContainer, SLICE_PARENT)->sliVal;
-    suffix = sliceGet(&sliceContainer, SLICE_OID_SUFFIX)->sliVal;
+    ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER);
+    type = sliceGetVal(&sliceContainer, SLICE_TYPE);
+    rw = sliceGetVal(&sliceContainer, SLICE_PERMISSION);
+    desc = sliceGetVal(&sliceContainer, SLICE_DESCRIPTION);
+    parent = sliceGetVal(&sliceContainer, SLICE_PARENT);
+    suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX);
 
     if (isNullPtr(ident) || isNullPtr(type) || isNullPtr(rw)
         || isNullPtr(desc) || isNullPtr(desc) || isNullPtr(parent)
@@ -77,9 +77,9 @@ int mibObjGen_Leave() {
 int mibObjGen_InnerNode() {
     char *ident, *parent, *suffix, *oid;
 
-    ident = sliceGet(&sliceContainer, SLICE_IDENTIFIER)->sliVal;
-    parent = sliceGet(&sliceContainer, SLICE_PARENT)->sliVal;
-    suffix = sliceGet(&sliceContainer, SLICE_OID_SUFFIX)->sliVal;
+    ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER);
+    parent = sliceGetVal(&sliceContainer, SLICE_PARENT);
+    suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX);
 
     if (isNullPtr(ident) || isNullPtr(parent) || isNullPtr(suffix))
         return -1;
@@ -96,13 +96,13 @@ int mibObjGen_InnerNode() {
 int mibObjGen_trap() {
     char *ident, *parent, *suffix, *oid, *desc, *type;
 
-    ident = sliceGet(&sliceContainer, SLICE_IDENTIFIER)->sliVal;
+    ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER);
     type = (char *)malloc(strlen("trap")+1);
     memset(type, 0, strlen("trap")+1);
     strncpy(type, "trap", strlen("trap"));
-    parent = sliceGet(&sliceContainer, SLICE_PARENT)->sliVal;
-    suffix = sliceGet(&sliceContainer, SLICE_OID_SUFFIX)->sliVal;
-    desc = sliceGet(&sliceContainer, SLICE_DESCRIPTION)->sliVal;
+    parent = sliceGetVal(&sliceContainer, SLICE_PARENT);
+    suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX);
+    desc = sliceGetVal(&sliceContainer, SLICE_DESCRIPTION);
 
     if (isNullPtr(ident) || isNullPtr(type) || isNullPtr(parent) || isNullPtr(suffix))
         return -1;
@@ -281,8 +281,8 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
     char *symbolIdent;
     char *parentIdent ;
     
-    parentIdent = sliceGet(&symCollectSlice, SLICE_PARENT)->sliVal;
-    symbolIdent = sliceGet(&symCollectSlice, SLICE_IDENTIFIER)->sliVal;
+    parentIdent = sliceGetVal(&symCollectSlice, SLICE_PARENT);
+    symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
 
     /* Is the symbol exists in symbol table ? */
     if (symbolSearching(&symTable, symbolIdent)) {
@@ -292,7 +292,7 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
 
     modIdent = (char *)malloc(MAX_CHAR_OF_MOD_IDENT);
     switch_CurrentMod(modIdent, MAX_CHAR_OF_MOD_IDENT);
-    parentIdent = sliceGet(&symCollectSlice, SLICE_PARENT)->sliVal;
+    parentIdent = sliceGetVal(&symCollectSlice, SLICE_PARENT);
 
     /* Is the module specify by modIdent is exists ? */
     if (!symbolTableSearch(&symTable, modIdent)) {
@@ -317,7 +317,7 @@ MOD_STACK_OP_REMOVE:
 
 static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
     int retVal;
-    char *symbolIdent = sliceGet(&symCollectSlice, SLICE_IDENTIFIER)->sliVal;
+    char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
     retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
     sliceRelease(&symCollectSlice);
     return retVal;
@@ -325,7 +325,7 @@ static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
 
 static int symbolCollect_BUILD_LEAVE_NODE(dispatchParam *param) {
     int retVal;
-    char *symbolIdent = sliceGet(&symCollectSlice, SLICE_IDENTIFIER)->sliVal;
+    char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
     retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
     sliceRelease(&symCollectSlice);
     return retVal;
@@ -333,7 +333,7 @@ static int symbolCollect_BUILD_LEAVE_NODE(dispatchParam *param) {
 
 static int symbolCollect_BUILD_SEQUENCE(dispatchParam *param) {
     int retVal;
-    char *symbolIdent = sliceGet(&symCollectSlice, SLICE_IDENTIFIER)->sliVal;
+    char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
     retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
     sliceRelease(&symCollectSlice);
     return retVal;
@@ -341,7 +341,7 @@ static int symbolCollect_BUILD_SEQUENCE(dispatchParam *param) {
 
 static int symbolCollect_BUILD_SMI_DEF(dispatchParam *param) {
     int retVal;
-    char *symbolIdent = sliceGet(&symCollectSlice, SLICE_IDENTIFIER)->sliVal;
+    char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
     retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
     sliceRelease(&symCollectSlice);
     return retVal;
