@@ -546,6 +546,7 @@ directory	compile_commands.json	/^  "directory": "\/home\/aydenlin\/Projects\/MI
 directory	compile_commands.json	/^  "directory": "\/home\/aydenlin\/Projects\/MIB2DOC",$/;"	s	language:JSON	object:8
 directory	compile_commands.json	/^  "directory": "\/home\/aydenlin\/Projects\/MIB2DOC",$/;"	s	language:JSON	object:9
 disParamConstruct	src/list.c	/^dispatchParam * disParamConstruct(void *param) {$/;"	f	language:C	typeref:typename:dispatchParam *
+disParamGet	src/list.c	/^void * disParamGet(dispatchParam *disparam) {$/;"	f	language:C	typeref:typename:void *
 disParamRetrive	src/list.c	/^dispatchParam * disParamRetrive(dispatchParam **head) {$/;"	f	language:C	typeref:typename:dispatchParam *
 disParamStore	src/list.c	/^dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {$/;"	f	language:C	typeref:typename:dispatchParam *
 disParam_test	src/unitTest/basicDataStruct_Test.c	/^static void disParam_test(void **state) { $/;"	f	language:C	typeref:typename:void	file:
@@ -691,7 +692,7 @@ lexBufferSwitching	src/dispatcher.c	/^static int lexBufferSwitching(char *newMod
 listNode	include/list.h	/^typedef struct listNode {$/;"	s	language:C++
 listNode	include/list.h	/^} listNode;$/;"	t	language:C++	typeref:struct:listNode
 listNodeAppend	src/list.c	/^listNode * listNodeAppend(listNode *listH, listNode *listN) {$/;"	f	language:C	typeref:typename:listNode *
-listNodeDelete	src/list.c	/^listNode *listNodeDelete(listNode *sliNode) {$/;"	f	language:C	typeref:typename:listNode *
+listNodeDelete	src/list.c	/^listNode * listNodeDelete(listNode *sliNode) {$/;"	f	language:C	typeref:typename:listNode *
 listNodeInsert	src/list.c	/^listNode * listNodeInsert(listNode *head, listNode *sliNode) {$/;"	f	language:C	typeref:typename:listNode *
 listNodeIsEmpty	src/list.c	/^bool listNodeIsEmpty(listNode *head) {$/;"	f	language:C	typeref:typename:bool
 listNodeNext	src/list.c	/^listNode * listNodeNext(listNode *sliNode) {$/;"	f	language:C	typeref:typename:listNode *

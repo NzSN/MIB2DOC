@@ -40,15 +40,15 @@ int dispatch(dispatch_type disType, dispatchParam *param) {
     
     switch (dispatchMakeChoice(disType)) {
         case DISPATCH_PARAM_STAGE:
-            key = (unsigned long)disParamRetrive(&param)->param;
-            val = (char *)disParamRetrive(&param)->param;
+            key = (unsigned long)disParamGet(disParamRetrive(&param));
+            val = (char *)disParamGet(disParamRetrive(&param));
             sliceStore(&sliceContainer, sliceConstruct(key, val));
             break;
         case MIBTREE_GENERATION:
-            mibObjGen((unsigned long)disParamRetrive(&param)->param);
+            mibObjGen((unsigned long)disParamGet(disParamRetrive(&param)));
             break;
         case SYMBOL_COLLECTING:
-            symbolCollecting((unsigned long)disParamRetrive(&param)->param, param);
+            symbolCollecting((unsigned long)disParamGet(disParamRetrive(&param)), param);
             break;
         case SWITCH_TO_INC_BUFFER:
             ret = switchToModule(param);

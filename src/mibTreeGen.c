@@ -126,8 +126,6 @@ static int tablePrint(char *ident, char *oid, char *rw, char *detail, FILE *outp
         return -1;
 }
 
-
-
 static int mibTreeLeaveAdd(char *ident, char *type,
     char *rw, char *desc,
     char *parent, char *oid) {

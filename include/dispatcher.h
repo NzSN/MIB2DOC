@@ -73,6 +73,7 @@ int dispatchInit();
 dispatchParam * disParamConstruct(void *arg);
 dispatchParam * disParamStore(dispatchParam *head, dispatchParam *pl);
 dispatchParam * disParamRetrive(dispatchParam **head);
+void * disParamGet(dispatchParam *disparam);
 
 YY_BUFFER_STATE getCurrentBufferState();
 char * switch_CurrentMod(char *modName, int len);

@@ -48,5 +48,6 @@ slice * sliceGet(slice *sli, int sliKey);
 int sliceStore(slice *sli, slice *next);
 bool sliceRelease(slice *sli);
 bool sliceReset(slice *sli);
+char * sliceGetVal(slice *sliceHead, int sliKey);
 
 #endif /* _MIB2DOC_LIST_H_ */
