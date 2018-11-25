@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.0.5.  */
+/* A Bison parser, made by GNU Bison 3.2.2.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
@@ -40,11 +40,14 @@
    define necessary library symbols; they are noted "INFRINGES ON
    USER NAME SPACE" below.  */
 
+/* Undocumented macros, especially those whose name start with YY_,
+   are private implementation details.  Do not rely on them.  */
+
 /* Identify Bison output.  */
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.5"
+#define YYBISON_VERSION "3.2.2"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -75,19 +78,20 @@
         fprintf(stderr, "%s: %s\n", s, yylval);
     }
 
-#line 79 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:316  */
+#line 82 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:316  */
 
 
 
-/* Copy the first part of user declarations.  */
-
-#line 85 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
-#  if defined __cplusplus && 201103L <= __cplusplus
-#   define YY_NULLPTR nullptr
+#  if defined __cplusplus
+#   if 201103L <= __cplusplus
+#    define YY_NULLPTR nullptr
+#   else
+#    define YY_NULLPTR 0
+#   endif
 #  else
-#   define YY_NULLPTR 0
+#   define YY_NULLPTR ((void*)0)
 #  endif
 # endif
 
@@ -160,9 +164,7 @@ int yyparse (void);
 
 #endif /* !YY_YY_HOME_AYDENLIN_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED  */
 
-/* Copy the second part of user declarations.  */
 
-#line 166 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -183,13 +185,13 @@ typedef signed char yytype_int8;
 #ifdef YYTYPE_UINT16
 typedef YYTYPE_UINT16 yytype_uint16;
 #else
-typedef unsigned short int yytype_uint16;
+typedef unsigned short yytype_uint16;
 #endif
 
 #ifdef YYTYPE_INT16
 typedef YYTYPE_INT16 yytype_int16;
 #else
-typedef short int yytype_int16;
+typedef short yytype_int16;
 #endif
 
 #ifndef YYSIZE_T
@@ -201,7 +203,7 @@ typedef short int yytype_int16;
 #  include <stddef.h> /* INFRINGES ON USER NAME SPACE */
 #  define YYSIZE_T size_t
 # else
-#  define YYSIZE_T unsigned int
+#  define YYSIZE_T unsigned
 # endif
 #endif
 
@@ -237,15 +239,6 @@ typedef short int yytype_int16;
 # define YY_ATTRIBUTE_UNUSED YY_ATTRIBUTE ((__unused__))
 #endif
 
-#if !defined _Noreturn \
-     && (!defined __STDC_VERSION__ || __STDC_VERSION__ < 201112)
-# if defined _MSC_VER && 1200 <= _MSC_VER
-#  define _Noreturn __declspec (noreturn)
-# else
-#  define _Noreturn YY_ATTRIBUTE ((__noreturn__))
-# endif
-#endif
-
 /* Suppress unused-variable warnings by "using" E.  */
 #if ! defined lint || defined __GNUC__
 # define YYUSE(E) ((void) (E))
@@ -253,7 +246,7 @@ typedef short int yytype_int16;
 # define YYUSE(E) /* empty */
 #endif
 
-#if defined __GNUC__ && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
+#if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
 /* Suppress an incorrect diagnostic about yylval being uninitialized.  */
 # define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN \
     _Pragma ("GCC diagnostic push") \
@@ -421,7 +414,7 @@ union yyalloc
 #define YYMAXUTOK   285
 
 #define YYTRANSLATE(YYX)                                                \
-  ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
+  ((unsigned) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
 
 /* YYTRANSLATE[TOKEN-NUM] -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, without out-of-bounds checking.  */
@@ -463,10 +456,10 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    33,    33,    36,    37,    38,    39,    40,    41,    44,
-      47,    58,    60,    64,    65,    66,    69,    72,    73,    76,
-      86,    92,   107,   110,   113,   121,   128,   131,   132,   133,
-     134,   135,   136,   137,   138,   141,   144,   145,   148,   151,
-     156,   163,   170,   173,   179,   182,   183,   186
+      47,    58,    61,    65,    66,    67,    70,    73,    74,    77,
+      87,    93,   108,   111,   114,   122,   129,   132,   133,   134,
+     135,   136,   137,   138,   139,   142,   145,   146,   149,   152,
+     157,   164,   171,   174,   180,   183,   184,   187
 };
 #endif
 
@@ -691,37 +684,37 @@ do {                                                                      \
 } while (0)
 
 
-/*----------------------------------------.
-| Print this symbol's value on YYOUTPUT.  |
-`----------------------------------------*/
+/*-----------------------------------.
+| Print this symbol's value on YYO.  |
+`-----------------------------------*/
 
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)
+yy_symbol_value_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep)
 {
-  FILE *yyo = yyoutput;
-  YYUSE (yyo);
+  FILE *yyoutput = yyo;
+  YYUSE (yyoutput);
   if (!yyvaluep)
     return;
 # ifdef YYPRINT
   if (yytype < YYNTOKENS)
-    YYPRINT (yyoutput, yytoknum[yytype], *yyvaluep);
+    YYPRINT (yyo, yytoknum[yytype], *yyvaluep);
 # endif
   YYUSE (yytype);
 }
 
 
-/*--------------------------------.
-| Print this symbol on YYOUTPUT.  |
-`--------------------------------*/
+/*---------------------------.
+| Print this symbol on YYO.  |
+`---------------------------*/
 
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)
+yy_symbol_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep)
 {
-  YYFPRINTF (yyoutput, "%s %s (",
+  YYFPRINTF (yyo, "%s %s (",
              yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
 
-  yy_symbol_value_print (yyoutput, yytype, yyvaluep);
-  YYFPRINTF (yyoutput, ")");
+  yy_symbol_value_print (yyo, yytype, yyvaluep);
+  YYFPRINTF (yyo, ")");
 }
 
 /*------------------------------------------------------------------.
@@ -755,7 +748,7 @@ do {                                                            \
 static void
 yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule)
 {
-  unsigned long int yylno = yyrline[yyrule];
+  unsigned long yylno = yyrline[yyrule];
   int yynrhs = yyr2[yyrule];
   int yyi;
   YYFPRINTF (stderr, "Reducing stack by rule %d (line %lu):\n",
@@ -888,7 +881,7 @@ yytnamerr (char *yyres, const char *yystr)
   if (! yyres)
     return yystrlen (yystr);
 
-  return yystpcpy (yyres, yystr) - yyres;
+  return (YYSIZE_T) (yystpcpy (yyres, yystr) - yyres);
 }
 # endif
 
@@ -1130,12 +1123,12 @@ yyparse (void)
   yyssp++;
 
  yysetstate:
-  *yyssp = yystate;
+  *yyssp = (yytype_int16) yystate;
 
   if (yyss + yystacksize - 1 <= yyssp)
     {
       /* Get the current used size of the three stacks, in elements.  */
-      YYSIZE_T yysize = yyssp - yyss + 1;
+      YYSIZE_T yysize = (YYSIZE_T) (yyssp - yyss + 1);
 
 #ifdef yyoverflow
       {
@@ -1153,7 +1146,6 @@ yyparse (void)
                     &yyss1, yysize * sizeof (*yyssp),
                     &yyvs1, yysize * sizeof (*yyvsp),
                     &yystacksize);
-
         yyss = yyss1;
         yyvs = yyvs1;
       }
@@ -1187,7 +1179,7 @@ yyparse (void)
       yyvsp = yyvs + yysize - 1;
 
       YYDPRINTF ((stderr, "Stack size increased to %lu\n",
-                  (unsigned long int) yystacksize));
+                  (unsigned long) yystacksize));
 
       if (yyss + yystacksize - 1 <= yyssp)
         YYABORT;
@@ -1298,7 +1290,7 @@ yyreduce:
   switch (yyn)
     {
         case 10:
-#line 47 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 47 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
         /* build upper tree if all including is finished */
         if (swState.counter == 0) {
@@ -1308,25 +1300,32 @@ yyreduce:
             /* do nothing */
         }
     }
-#line 1312 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1304 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 11:
-#line 58 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 58 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct((yyvsp[-1]));
+        printf("ITEMS:%s\nMODULE:%s\n", (yyvsp[-3]), (yyvsp[-1]));
 	}
-#line 1320 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1313 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+    break;
+
+  case 13:
+#line 65 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+    { printf("%s\n", (yyvsp[0])); }
+#line 1319 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 14:
-#line 65 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
-    { }
-#line 1326 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 66 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+    { printf("%s\n", (yyvsp[-2])); }
+#line 1325 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 19:
-#line 76 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 77 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
         dispatchParam *param  = disParamConstruct(SLICE_IDENTIFIER);
         disParamStore(param, disParamConstruct((yyvsp[0])));
@@ -1334,20 +1333,20 @@ yyreduce:
         dispatch(DISPATCH_PARAM_STAGE, param);
         dispatch(MIBTREE_GENERATION, disParamConstruct(SMI_DEF));
     }
-#line 1338 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1337 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 20:
-#line 86 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 87 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     { 
         dispatchParam *param = disParamConstruct(OBJECT_IDENTIFIER);
         dispatch(MIBTREE_GENERATION, param);
     }
-#line 1347 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1346 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 21:
-#line 92 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 93 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[-6])));
@@ -1361,84 +1360,84 @@ yyreduce:
 		disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 }
-#line 1365 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1364 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 22:
-#line 107 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 108 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     { dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT)); }
-#line 1371 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1370 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 23:
-#line 110 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 111 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     { dispatch(MIBTREE_GENERATION, disParamConstruct(TRAP)); }
-#line 1377 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1376 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 24:
-#line 113 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 114 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[-1])));
 
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1388 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1387 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 25:
-#line 121 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 122 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1398 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1397 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 39:
-#line 151 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 152 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
     }
-#line 1408 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1407 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 40:
-#line 156 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 157 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
  		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
  	}
-#line 1418 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1417 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 41:
-#line 163 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 164 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_PERMISSION);
 		disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1428 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1427 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 43:
-#line 173 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 174 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_DESCRIPTION);
 		disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1438 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1437 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 47:
-#line 186 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1648  */
+#line 187 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_PARENT);
 		disParamStore(param, disParamConstruct((yyvsp[-2])));
@@ -1448,11 +1447,11 @@ yyreduce:
 	    disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1452 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1451 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
 
-#line 1456 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1648  */
+#line 1455 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1477,14 +1476,13 @@ yyreduce:
   /* Now 'shift' the result of the reduction.  Determine what state
      that goes to, based on the state we popped back to and the rule
      number reduced by.  */
-
-  yyn = yyr1[yyn];
-
-  yystate = yypgoto[yyn - YYNTOKENS] + *yyssp;
-  if (0 <= yystate && yystate <= YYLAST && yycheck[yystate] == *yyssp)
-    yystate = yytable[yystate];
-  else
-    yystate = yydefgoto[yyn - YYNTOKENS];
+  {
+    const int yylhs = yyr1[yyn] - YYNTOKENS;
+    const int yyi = yypgoto[yylhs] + *yyssp;
+    yystate = (0 <= yyi && yyi <= YYLAST && yycheck[yyi] == *yyssp
+               ? yytable[yyi]
+               : yydefgoto[yylhs]);
+  }
 
   goto yynewstate;
 
@@ -1680,7 +1678,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 196 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1907  */
+#line 197 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1903  */
 
 
 // Epilogue

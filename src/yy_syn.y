@@ -61,7 +61,7 @@ MODULES :
     /* empty */  ;
 
 ITEMS :
-	IDENTIFIER
+	IDENTIFIER { }
 	| IDENTIFIER COMMA ITEMS { }
 	| /* empty */ ;
 
