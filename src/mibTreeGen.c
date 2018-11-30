@@ -312,7 +312,6 @@ MOD_STACK_OP_REMOVE:
     return retVal;
 }
 
-
 static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
