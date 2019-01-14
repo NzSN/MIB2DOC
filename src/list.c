@@ -50,6 +50,7 @@ listNode * listNodeDelete(listNode *sliNode) {
     if (isNullPtr(sliNode)) {
         return NULL;
     }
+
     if (sliNode->prev != NULL && sliNode->next != NULL) {
         /* Middle */
         sliNode->prev->next = sliNode->next;
@@ -214,10 +215,9 @@ bool sliceReset(slice *sli) {
     return TRUE;
 }
 
-
-/**************************************
+/*******************************************
  * dispatchParam Operation function define *
- **************************************/
+ *******************************************/
 
  /*
   * append sliNode to tail of list

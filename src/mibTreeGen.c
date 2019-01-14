@@ -354,7 +354,6 @@ static int symbolCollect_PARAM_IDENT(dispatchParam *param) {
 }
 
 static int symbolCollect_PARAM_TYPE(dispatchParam *param) {
-
     if (isNullPtr(param)) {
         return -1;
     }
@@ -398,3 +397,4 @@ static int symbolCollect_PARAM_SUFFIX(dispatchParam *param) {
     PARAM_STORE_TO_SYM_LIST(SLICE_OID_SUFFIX, param);
     return 0;
 }
+

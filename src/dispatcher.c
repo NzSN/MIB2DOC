@@ -78,6 +78,7 @@ static void debugging(dispatchParam *param) {
     result = disParamRetrive(&param);
     if (result == NULL)
         return; 
+
     val = (char *)result->param;
 
     if (IS_VALID_SLICE_TYPE(key)) {
@@ -133,7 +134,7 @@ static int switchToModule(dispatchParam *param) {
     sCollection = (char *)disParamRetrive(&param)->param;
 
     // Step 1: Push currentSwitchInfo into stack
-    pushByIndex(SW_STACK_BASE(swState), SW_CUR_BUFFER_INFO_REF(swState), 
+    pushByIndex(SW_STACK_BASE(swState), &swState.currentSwitchInfo, 
         SW_STACK_TOP(swState), SW_STACK_BUFFER_SIZE(swState), SW_STACK_UNIT_SIZE(swState));
      
     // Step 2: Update currentSwitchInfo  
@@ -217,3 +218,4 @@ int rmSymFromIdentList(identList *listHead, char *symbolIdent) {
 }
 
 /* End of file */
+

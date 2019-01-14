@@ -55,12 +55,12 @@ IMPORT :
     };
 
 MODULES :
-	ITEMS FROM_ IDENTIFIER MODULES {  } 
+	ITEMS FROM_ IDENTIFIER MODULES { } 
     | /* empty */  ;
 
 ITEMS :
-	IDENTIFIER {   }
-	| IDENTIFIER COMMA ITEMS {   }
+	IDENTIFIER { }
+	| IDENTIFIER COMMA ITEMS { }
 	| /* empty */ ;
 
 SEQUENCE :
