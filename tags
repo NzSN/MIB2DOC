@@ -325,8 +325,10 @@ SW_CUR_IMPORT	include/dispatcher.h	/^#define SW_CUR_IMPORT(/;"	d	language:C++
 SW_CUR_IMPORT_REF	include/dispatcher.h	/^#define SW_CUR_IMPORT_REF(/;"	d	language:C++
 SW_CUR_SWITCH_INFO	include/dispatcher.h	/^#define SW_CUR_SWITCH_INFO(/;"	d	language:C++
 SW_CUR_SWITCH_INFO_REF	include/dispatcher.h	/^#define SW_CUR_SWITCH_INFO_REF(/;"	d	language:C++
+SW_STACK	include/dispatcher.h	/^#define SW_STACK(/;"	d	language:C++
 SW_STACK_BASE	include/dispatcher.h	/^#define SW_STACK_BASE(/;"	d	language:C++
 SW_STACK_BUFFER_SIZE	include/dispatcher.h	/^#define SW_STACK_BUFFER_SIZE(/;"	d	language:C++
+SW_STACK_REF	include/dispatcher.h	/^#define SW_STACK_REF(/;"	d	language:C++
 SW_STACK_TOP	include/dispatcher.h	/^#define SW_STACK_TOP(/;"	d	language:C++
 SW_STACK_UNIT_SIZE	include/dispatcher.h	/^#define SW_STACK_UNIT_SIZE(/;"	d	language:C++
 SYMBOL_COLLECTING	include/dispatcher.h	/^    SYMBOL_COLLECTING,$/;"	e	language:C++	enum:dispatch_type
@@ -997,7 +999,7 @@ swState	src/dispatcher.c	/^switchingState swState;$/;"	v	language:C	typeref:type
 switchInfo	include/dispatcher.h	/^typedef struct switchInfo {$/;"	s	language:C++
 switchInfo	include/dispatcher.h	/^} switchInfo;$/;"	t	language:C++	typeref:struct:switchInfo
 switchInit	src/dispatcher.c	/^static int switchInit() {$/;"	f	language:C	typeref:typename:int	file:
-switchToModule	src/dispatcher.c	/^static int switchToModule(dispatchParam *param) {$/;"	f	language:C	typeref:typename:int	file:
+switchToModule	src/dispatcher.c	/^static int switchToModule(char *moduleName, char *sCollection) {$/;"	f	language:C	typeref:typename:int	file:
 switch_CurrentMod	src/dispatcher.c	/^char * switch_CurrentMod(char *modName, int len) {$/;"	f	language:C	typeref:typename:char *
 switchingState	include/dispatcher.h	/^typedef struct switchingState {$/;"	s	language:C++
 switchingState	include/dispatcher.h	/^} switchingState;$/;"	t	language:C++	typeref:struct:switchingState

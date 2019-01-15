@@ -12,8 +12,8 @@ int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize) {
     gStack->top = 0;
     gStack->unitSize = unitSize;
     gStack->bufferSize = bufferSize;
-    gStack->buffer = (unsigned char *)malloc(bufferSize);
-    gStack->base = gStack->buffer + bufferSize;
+    gStack->buffer = (unsigned char *)malloc(bufferSize * unitSize);
+    gStack->base = gStack->buffer + bufferSize * unitSize;
     return 0;
 }
 
@@ -22,7 +22,7 @@ int push(genericStack *gStack, void *unit) {
         return -1;
 
     pushByIndex(gStack->base, unit, gStack->top, 
-            gStack->bufferSize-1, gStack->unitSize);
+            gStack->bufferSize, gStack->unitSize);
     return 0;
 }
 
@@ -36,4 +36,13 @@ int pop(genericStack *gStack, void *unit) {
     popByIndex(gStack->base, gStack->top, unit, gStack->unitSize);
     return 0;
 }
+
+#ifdef MIB2DOC_UNIT_TESTING
+
+int genericStackTesting() {
+
+}
+
+#endif /* MIB2DOC_UNIT_TESTING */
+
 

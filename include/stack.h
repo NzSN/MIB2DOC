@@ -21,7 +21,7 @@
         /* Stack is full just do nothing */\
         ret = 0;\
     } else {\
-        TOP += UNIT_SIZE;\
+        TOP++;\
         memcpy(STACK_BASE - TOP, ELEMENT, UNIT_SIZE); \
         ret = 1;\
     }\
@@ -39,7 +39,7 @@
         ret = 0;\
     } else {\
         memcpy(UNIT, STACK_BASE + TOP, UNIT_SIZE);\
-        TOP -= UNIT_SIZE;\
+        TOP--;\
         ret = 1;\
     }\
     ret;\

@@ -63,6 +63,8 @@ typedef struct switchingState {
 #define SW_CUR_BUFFER_INFO(SW_STATE) (SW_CUR_SWITCH_INFO(SW_STATE).bufferInfo)
 #define SW_CUR_BUFFER_INFO_REF(SW_STATE) (&SW_CUR_BUFFER_INFO(SW_STATE))
 
+#define SW_STACK(SW_STATE) (SW_STATE.swStack)
+#define SW_STACK_REF(SW_STATE) (&SW_STATE.swStack)
 #define SW_STACK_BASE(SW_STATE) (SW_STATE.swStack.base)
 #define SW_STACK_TOP(SW_STATE) (SW_STATE.swStack.top)
 #define SW_STACK_BUFFER_SIZE(SW_STATE) (SW_STATE.swStack.bufferSize)
@@ -84,3 +86,4 @@ int dispatch(dispatch_type dType, dispatchParam * param);
 int rmSymFromIdentList(identList *listHead, char *symbolIdent);
 
 #endif /* _DISPATCHER_H_ */
+

@@ -13,7 +13,7 @@
 static void debugging(dispatchParam *param);
 static int dispatchMakeChoice(dispatch_type dType);
 static int lexBufferSwitching(char *newModule);
-static int switchToModule(dispatchParam *param);
+static int switchToModule(char *moduleName, char *sCollection);
 static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo);
 static int switchInit();
 /* Global */
@@ -31,7 +31,7 @@ int dispatchInit() {
 
 int dispatch(dispatch_type disType, dispatchParam *param) {
     unsigned long key;
-    char *val;
+    char *val, *moduleName, *sCollection;
     errorType ret =  ERROR_NONE;
 
     if (isNullPtr(param)) {
@@ -51,7 +51,9 @@ int dispatch(dispatch_type disType, dispatchParam *param) {
             symbolCollecting((unsigned long)disParamGet(disParamRetrive(&param)), param);
             break;
         case SWITCH_TO_INC_BUFFER:
-            ret = switchToModule(param);
+            moduleName = (char *)disParamGet(disParamRetrive(&param));
+            sCollection = (char *)disParamGet(disParamRetrive(&param));
+            ret = switchToModule(moduleName, sCollection);
             break;
         case IGNORE:
             /* Do nothing */
@@ -121,25 +123,19 @@ static int switchInit() {
     return retVal;
 }
 
-static int switchToModule(dispatchParam *param) {
-    char *moduleName;
-    char *sCollection;
+static int switchToModule(char *moduleName, char *sCollection) {
     collectInfo *cInfo;
 
-    if (isNullPtr(param)) {
+    if (isNullPtr(moduleName) || isNullPtr(sCollection)) {
         return null;
     }
 
-    moduleName = (char *)disParamRetrive(&param)->param;
-    sCollection = (char *)disParamRetrive(&param)->param;
-
     // Step 1: Push currentSwitchInfo into stack
-    pushByIndex(SW_STACK_BASE(swState), &swState.currentSwitchInfo, 
-        SW_STACK_TOP(swState), SW_STACK_BUFFER_SIZE(swState), SW_STACK_UNIT_SIZE(swState));
-     
+    push(SW_STACK_REF(swState), SW_CUR_SWITCH_INFO_REF(swState)); 
+
     // Step 2: Update currentSwitchInfo  
     if (lexBufferSwitching(moduleName) == ERROR_GENERIC)
-        /* Terminate whole system */
+        /* Terminate program */
         return ABORT;
     memcpy(SW_CUR_BUFFER_INFO_REF(swState), getCurrentBufferState(), sizeof(YY_BUFFER_STATE));
 
