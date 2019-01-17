@@ -25,8 +25,9 @@ set(UNIT_TEST_SRC ${UTEST_DIR}/basicDataStruct_Test.c
     ${SRC_DIR}/list.c ${SRC_DIR}/dispatcher.c
     ${SRC_DIR}/lexDeal.c ${SRC_DIR}/misc.c
     ${SRC_DIR}/util.c ${SRC_DIR}/options.c)
-
+add_compile_definitions(MIB2DOC_UNIT_TESTING)
 link_libraries(cmocka)
+
 add_executable(UNIT_TEST ${UNIT_TEST_SRC})
 add_custom_target(lexBison ALL DEPENDS)
 add_custom_command(TARGET lexBison PRE_BUILD

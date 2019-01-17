@@ -39,8 +39,18 @@ int pop(genericStack *gStack, void *unit) {
 
 #ifdef MIB2DOC_UNIT_TESTING
 
-int genericStackTesting() {
+#include <stdarg.h>
+#include <stddef.h>
+#include <setjmp.h>
+#include <cmocka.h>
 
+int genericStackTesting() {
+    int ret, value = 4;
+    genericStack gStack, *pStack = &gStack;
+    genericStackConstruct(pStack, 10, sizeof(int));
+    push(pStack, &value);
+    pop(pStack, &ret);
+    assert_int_equal(ret, 4);
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

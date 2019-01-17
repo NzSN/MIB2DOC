@@ -1,137 +1,137 @@
 [
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/main.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/main.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/main.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/main.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/main.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/mibTreeGen.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/mibTreeGen.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/mibTreeGen.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/mibTreeGen.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/mibTreeGen.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/lexer.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/lexer.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/lexer.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/lexer.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/lexer.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/yy_syn.tab.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/yy_syn.tab.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/queue.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/queue.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/queue.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/queue.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/queue.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/mibTreeObjTree.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/mibTreeObjTree.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/mibTreeObjTree.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/mibTreeObjTree.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/mibTreeObjTree.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/stack.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/stack.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/stack.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/stack.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/stack.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/list.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/list.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/list.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/list.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/list.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/lexDeal.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/lexDeal.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/lexDeal.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/lexDeal.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/lexDeal.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/options.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/options.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/options.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/options.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/options.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/util.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/util.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/util.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/util.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/util.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/dispatcher.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/dispatcher.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/dispatcher.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/dispatcher.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/dispatcher.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/docGenerate.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/docGenerate.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/docGenerate.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/docGenerate.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/docGenerate.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/misc.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/misc.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/Mib2Doc.dir/src/misc.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/misc.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/misc.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/unitTest/basicDataStruct_Test.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/unitTest/basicDataStruct_Test.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/unitTest/basicDataStruct_Test.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/unitTest/basicDataStruct_Test.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/unitTest/basicDataStruct_Test.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/mibTreeGen.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/mibTreeGen.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/mibTreeGen.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/mibTreeGen.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/mibTreeGen.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/lexer.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/lexer.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/lexer.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/lexer.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/lexer.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/yy_syn.tab.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/yy_syn.tab.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/queue.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/queue.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/queue.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/queue.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/queue.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/mibTreeObjTree.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/mibTreeObjTree.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/mibTreeObjTree.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/mibTreeObjTree.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/mibTreeObjTree.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/stack.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/stack.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/stack.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/stack.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/stack.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/list.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/list.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/list.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/list.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/list.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/dispatcher.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/dispatcher.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/dispatcher.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/dispatcher.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/dispatcher.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/lexDeal.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/lexDeal.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/lexDeal.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/lexDeal.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/lexDeal.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/misc.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/misc.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/misc.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/misc.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/misc.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/util.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/util.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/util.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/util.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/util.c"
 },
 {
   "directory": "/home/aydenlin/Projects/MIB2DOC",
-  "command": "/usr/bin/cc  -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/options.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/options.c",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/options.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/options.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/options.c"
 }
 ]

@@ -694,6 +694,7 @@ fontSize	include/options.h	/^    int fontSize;$/;"	m	language:C++	struct:options
 found	include/dispatcher.h	/^    int found;$/;"	m	language:C++	struct:identList	typeref:typename:int
 genericStack	include/stack.h	/^} genericStack;$/;"	t	language:C++	typeref:struct:identStack
 genericStackConstruct	src/stack.c	/^int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize) {$/;"	f	language:C	typeref:typename:int
+genericStackTesting	src/stack.c	/^int genericStackTesting() {$/;"	f	language:C	typeref:typename:int
 getCurrentBufferState	src/lexer.c	/^YY_BUFFER_STATE getCurrentBufferState() {$/;"	f	language:C	typeref:typename:YY_BUFFER_STATE
 getIdentFromInfo	src/mibTreeObjTree.c	/^char * getIdentFromInfo(mibObjectTreeNode *node) {$/;"	f	language:C	typeref:typename:char *
 getOidFromInfo	src/mibTreeObjTree.c	/^char *getOidFromInfo(mibObjectTreeNode *node) {$/;"	f	language:C	typeref:typename:char *
@@ -891,6 +892,7 @@ sliceGetVal	src/list.c	/^char * sliceGetVal(slice *sliHead, int sliKey) {$/;"	f	
 sliceNext	src/list.c	/^slice * sliceNext(slice *sli) {$/;"	f	language:C	typeref:typename:slice *
 slicePrev	src/list.c	/^slice * slicePrev(slice *sli) {$/;"	f	language:C	typeref:typename:slice *
 sliceRelease	src/list.c	/^bool sliceRelease(slice *sli) {$/;"	f	language:C	typeref:typename:bool
+sliceRelease_STATIC	src/list.c	/^bool sliceRelease_STATIC(slice *sli) {$/;"	f	language:C	typeref:typename:bool
 sliceReset	src/list.c	/^bool sliceReset(slice *sli) {$/;"	f	language:C	typeref:typename:bool
 sliceStore	src/list.c	/^int sliceStore(slice *sliHead, slice *newSli) {$/;"	f	language:C	typeref:typename:int
 sliceType	include/list.h	/^} sliceType;$/;"	v	language:C++	typeref:enum:elementType

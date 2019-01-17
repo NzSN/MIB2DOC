@@ -12,6 +12,7 @@
 #include "list.h"
 #include "mibTreeGen.h"
 #include "queue.h"
+#include "stack.h"
 
 mibObjectTreeNode mibObjectTreeRoot;
 slice sliceContainer;
@@ -40,7 +41,7 @@ static void list_test(void **state) {
     if ( (got->sliVal != new2->sliVal) || (got->sliKey != new2->sliKey))
         fail();
 
-    sliceRelease(&sliceContainer);
+    sliceRelease_STATIC(&sliceContainer);
     memset(&sliceContainer, 0, sizeof(slice));
 }
 
@@ -183,7 +184,12 @@ int main(void) {
             cmocka_unit_test(fa_test),
             cmocka_unit_test(tableInfoQueue_test),
             cmocka_unit_test(desc_test),
-            cmocka_unit_test(disParam_test)
+            cmocka_unit_test(disParam_test),
+            
+            // Module unit testing
+            #ifdef MIB2DOC_UNIT_TESTING
+            cmocka_unit_test(genericStackTesting)
+            #endif
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

@@ -17,7 +17,7 @@
  */
 #define pushByIndex(STACK_BASE, ELEMENT, /* int */TOP, /* int */MAX, /* int */UNIT_SIZE) ({\
     int ret;\
-    if (TOP >= MAX || TOP+UNIT_SIZE >= MAX) {\
+    if (TOP >= MAX) {\
         /* Stack is full just do nothing */\
         ret = 0;\
     } else {\
@@ -60,5 +60,12 @@ typedef struct identStack {
 int genericStackConstruct();
 int push(genericStack *ps, void *unit);
 int pop(genericStack *ps, void *unit);
+
+#ifdef MIB2DOC_UNIT_TESTING
+
+int genericStackTesting();
+
+#endif /* MIB2DOC_UNIT_TESTING */
+
 
 #endif /* GL5610_MIB_DOC_GEN_STACK_H */
