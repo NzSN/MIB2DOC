@@ -32,6 +32,7 @@ typedef struct slice {
 #define IS_VALID_SLICE_TYPE(Slice) (Slice > SLICE_TYPE_MINIMUM && Slice < SLICE_TYPE_MAXIMUM)
 
 /* ListNode */
+
 typedef void (*listNodeTask)(listNode *head, void *arg);
 listNode *listNodePrev(listNode *node);
 listNode *listNodeNext(listNode *node);
@@ -48,5 +49,6 @@ slice * sliceGet(slice *sli, int sliKey);
 int sliceStore(slice *sli, slice *next);
 bool sliceRelease(slice *sli);
 bool sliceReset(slice *sli);
+char * sliceGetVal(slice *sliHead, int sliKey);
 
 #endif /* _MIB2DOC_LIST_H_ */
