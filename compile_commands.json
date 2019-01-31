@@ -133,5 +133,10 @@
   "directory": "/home/aydenlin/Projects/MIB2DOC",
   "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/options.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/options.c",
   "file": "/home/aydenlin/Projects/MIB2DOC/src/options.c"
+},
+{
+  "directory": "/home/aydenlin/Projects/MIB2DOC",
+  "command": "/usr/bin/cc -DMIB2DOC_UNIT_TESTING -I/home/aydenlin/Projects/MIB2DOC/include   -g -Wint-conversion   -std=gnu11 -o CMakeFiles/UNIT_TEST.dir/src/hash.c.o   -c /home/aydenlin/Projects/MIB2DOC/src/hash.c",
+  "file": "/home/aydenlin/Projects/MIB2DOC/src/hash.c"
 }
 ]

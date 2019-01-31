@@ -206,6 +206,33 @@ src/docGenerate.c.s:
 	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/docGenerate.c.s
 .PHONY : src/docGenerate.c.s
 
+src/hash.o: src/hash.c.o
+
+.PHONY : src/hash.o
+
+# target to build an object file
+src/hash.c.o:
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/hash.c.o
+.PHONY : src/hash.c.o
+
+src/hash.i: src/hash.c.i
+
+.PHONY : src/hash.i
+
+# target to preprocess a source file
+src/hash.c.i:
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/hash.c.i
+.PHONY : src/hash.c.i
+
+src/hash.s: src/hash.c.s
+
+.PHONY : src/hash.s
+
+# target to generate assembly for a file
+src/hash.c.s:
+	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/hash.c.s
+.PHONY : src/hash.c.s
+
 src/lexDeal.o: src/lexDeal.c.o
 
 .PHONY : src/lexDeal.o
@@ -607,6 +634,9 @@ help:
 	@echo "... src/docGenerate.o"
 	@echo "... src/docGenerate.i"
 	@echo "... src/docGenerate.s"
+	@echo "... src/hash.o"
+	@echo "... src/hash.i"
+	@echo "... src/hash.s"
 	@echo "... src/lexDeal.o"
 	@echo "... src/lexDeal.i"
 	@echo "... src/lexDeal.s"

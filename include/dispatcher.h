@@ -55,6 +55,7 @@ typedef struct switchingState {
     genericStack swStack;
 } switchingState;
 
+// switchingState reference macros
 #define SW_CUR_SWITCH_INFO(SW_STATE) (SW_STATE.currentSwitchInfo)
 #define SW_CUR_SWITCH_INFO_REF(SW_STATE) (&SW_STATE.currentSwitchInfo)
 
@@ -70,6 +71,10 @@ typedef struct switchingState {
 #define SW_STACK_BUFFER_SIZE(SW_STATE) (SW_STATE.swStack.bufferSize)
 #define SW_STACK_UNIT_SIZE(SW_STATE) (SW_STATE.swStack.unitSize)
 
+// identList macros
+#define IDENT_FOUND (1)
+#define IDENT_NOT_FOUND (0)
+
 extern dispatch_mode dispatchMode;
 extern switchingState swState;
 
@@ -83,7 +88,20 @@ void * disParamGet(dispatchParam *disparam);
 YY_BUFFER_STATE getCurrentBufferState();
 char * switch_CurrentMod(char *modName, int len);
 int dispatch(dispatch_type dType, dispatchParam * param);
+int appendSymToIdentList(identList *listHead, char *symbolIdent);
 int rmSymFromIdentList(identList *listHead, char *symbolIdent);
+
+// collectInfo functions
+int collectInfoInit(char *modName, char *sString, collectInfo *cInfo);
+int collectInfo_add(collectInfo *cInfo, char *symbol);
+int collectInfo_del(collectInfo *cInfo, char *symbol);
+
+#ifdef MIB2DOC_UNIT_TESTING
+
+int identListTesting();
+int collectInfoTesting();
+
+#endif /* MIB2DOC_UNIT_TESTING */
 
 #endif /* _DISPATCHER_H_ */
 

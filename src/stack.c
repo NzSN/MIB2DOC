@@ -21,18 +21,14 @@ int push(genericStack *gStack, void *unit) {
     if (isNullPtr(gStack) || isNullPtr(unit))
         return -1;
 
-    pushByIndex(gStack->base, unit, gStack->top, 
-            gStack->bufferSize, gStack->unitSize);
+    pushByIndex(gStack->base, unit, gStack->top, gStack->bufferSize, gStack->unitSize);
     return 0;
 }
 
 int pop(genericStack *gStack, void *unit) {
-    int top;
-
     if (isNullPtr(gStack) || isNullPtr(unit))
         return -1;
 
-    top = gStack->top;
     popByIndex(gStack->base, gStack->top, unit, gStack->unitSize);
     return 0;
 }
@@ -45,11 +41,22 @@ int pop(genericStack *gStack, void *unit) {
 #include <cmocka.h>
 
 int genericStackTesting() {
-    int ret, value = 4;
+    int ret, value = 4, idx = 0;
     genericStack gStack, *pStack = &gStack;
     genericStackConstruct(pStack, 10, sizeof(int));
-    push(pStack, &value);
-    pop(pStack, &ret);
+    
+    while (idx < 10) {
+        push(pStack, &value);
+        idx++;
+    }
+    
+    idx = 0;
+    while (idx < 10) { 
+        pop(pStack, &ret);
+        idx++;
+    }
+
+    assert_int_equal(pStack->top , 0);
     assert_int_equal(ret, 4);
 }
 

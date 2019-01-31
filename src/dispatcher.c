@@ -14,8 +14,8 @@ static void debugging(dispatchParam *param);
 static int dispatchMakeChoice(dispatch_type dType);
 static int lexBufferSwitching(char *newModule);
 static int switchToModule(char *moduleName, char *sCollection);
-static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo);
 static int switchInit();
+
 /* Global */
 extern slice sliceContainer;
 dispatch_mode dispatchMode;
@@ -173,7 +173,7 @@ char * switch_CurrentMod(char *modName, int len) {
  **************************/
 #define SYMBOL_SEPERATOR ','
 
-static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo) {
+int collectInfoInit(char *modName, char *sString, collectInfo *cInfo) {
     identList *head;
 
     if (isNullPtr(modName) || isNullPtr(sString) || isNullPtr(cInfo))
@@ -186,6 +186,38 @@ static int collectInfoInit(char *modName, char *sString, collectInfo *cInfo) {
     cInfo->symbols = head;
 
     return 0;
+}
+
+int collectInfo_add(collectInfo *cInfo, char *symbol) {
+    if (isNullPtr(cInfo))
+        return FALSE;
+    return appendSymToIdentList(cInfo->symbols, symbol);   
+}
+
+int collectInfo_del(collectInfo *cInfo, char *symbol) {
+    if (isNullPtr(cInfo))
+        return FALSE;
+    return rmSymFromIdentList(cInfo->symbols, symbol);
+}
+
+identList * identListConstruct(identList *iList, char *symbolIdent) {
+    if (isNullPtr(iList) || isNullPtr(symbolIdent))
+        return NULL;
+    memset(iList, 0, sizeof(identList));
+    iList->symName = symbolIdent;
+    return iList;
+}
+
+int appendSymToIdentList(identList *listHead, char *symbolIdent) {
+    identList *iList;
+
+    if (isNullPtr(listHead) || isNullPtr(symbolIdent))
+        return FALSE;
+    
+    iList = (identList *)malloc(sizeof(identList));
+    listNodeAppend(&listHead->node, &identListConstruct(iList, symbolIdent)->node);
+    
+    return TRUE;
 }
 
 int rmSymFromIdentList(identList *listHead, char *symbolIdent) {
@@ -212,6 +244,30 @@ int rmSymFromIdentList(identList *listHead, char *symbolIdent) {
     }
     return ERROR_NONE;
 }
+
+
+
+#ifdef MIB2DOC_UNIT_TESTING
+
+#include <stdarg.h>
+#include <stddef.h>
+#include <setjmp.h>
+#include <cmocka.h>
+
+int identListTesting() {
+    char *str = "Hello, World";
+    identList *iList = (identList *)malloc(sizeof(identList)); 
+    
+    iList = identListConstruct(iList, str);
+    appendSymToIdentList(iList, "TT");
+    assert_string_equal(iList->symName, str);
+}
+
+int collectInfoTesting() {
+
+}
+
+#endif /* MIB2DOC_UNIT_TESTING */
 
 /* End of file */
 

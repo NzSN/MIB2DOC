@@ -13,6 +13,7 @@
 #include "mibTreeGen.h"
 #include "queue.h"
 #include "stack.h"
+#include "dispatcher.h"
 
 mibObjectTreeNode mibObjectTreeRoot;
 slice sliceContainer;
@@ -188,7 +189,9 @@ int main(void) {
             
             // Module unit testing
             #ifdef MIB2DOC_UNIT_TESTING
-            cmocka_unit_test(genericStackTesting)
+            cmocka_unit_test(genericStackTesting),
+            cmocka_unit_test(identListTesting),
+            cmocka_unit_test(collectInfoTesting)
             #endif
     };
     return cmocka_run_group_tests(tests, NULL, NULL);

@@ -456,10 +456,10 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    33,    33,    36,    37,    38,    39,    40,    41,    44,
-      47,    58,    61,    65,    66,    67,    70,    73,    74,    77,
-      87,    93,   108,   111,   114,   122,   129,   132,   133,   134,
-     135,   136,   137,   138,   139,   142,   145,   146,   149,   152,
-     157,   164,   171,   174,   180,   183,   184,   187
+      47,    58,    59,    62,    63,    64,    67,    70,    71,    74,
+      84,    90,   105,   108,   111,   119,   126,   129,   130,   131,
+     132,   133,   134,   135,   136,   139,   142,   143,   146,   149,
+     154,   161,   168,   171,   177,   180,   181,   184
 };
 #endif
 
@@ -1305,27 +1305,24 @@ yyreduce:
 
   case 11:
 #line 58 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
-    {
-		dispatchParam *param = disParamConstruct((yyvsp[-1]));
-        printf("ITEMS:%s\nMODULE:%s\n", (yyvsp[-3]), (yyvsp[-1]));
-	}
-#line 1313 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+    { }
+#line 1310 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 13:
-#line 65 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
-    { printf("%s\n", (yyvsp[0])); }
-#line 1319 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 62 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+    { }
+#line 1316 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 14:
-#line 66 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
-    { printf("%s\n", (yyvsp[-2])); }
-#line 1325 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 63 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+    { }
+#line 1322 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 19:
-#line 77 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+#line 74 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
         dispatchParam *param  = disParamConstruct(SLICE_IDENTIFIER);
         disParamStore(param, disParamConstruct((yyvsp[0])));
@@ -1333,20 +1330,20 @@ yyreduce:
         dispatch(DISPATCH_PARAM_STAGE, param);
         dispatch(MIBTREE_GENERATION, disParamConstruct(SMI_DEF));
     }
-#line 1337 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1334 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 20:
-#line 87 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+#line 84 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     { 
         dispatchParam *param = disParamConstruct(OBJECT_IDENTIFIER);
         dispatch(MIBTREE_GENERATION, param);
     }
-#line 1346 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1343 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 21:
-#line 93 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+#line 90 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[-6])));
@@ -1360,84 +1357,84 @@ yyreduce:
 		disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 }
-#line 1364 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1361 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 22:
-#line 108 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+#line 105 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     { dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT)); }
-#line 1370 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1367 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 23:
-#line 111 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+#line 108 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     { dispatch(MIBTREE_GENERATION, disParamConstruct(TRAP)); }
-#line 1376 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1373 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 24:
-#line 114 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+#line 111 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[-1])));
 
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1387 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1384 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 25:
-#line 122 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+#line 119 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1397 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1394 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 39:
-#line 152 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+#line 149 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
     }
-#line 1407 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1404 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 40:
-#line 157 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+#line 154 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
  		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
  	}
-#line 1417 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1414 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 41:
-#line 164 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+#line 161 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_PERMISSION);
 		disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1427 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1424 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 43:
-#line 174 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+#line 171 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_DESCRIPTION);
 		disParamStore(param, disParamConstruct((yyvsp[0])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1437 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1434 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
   case 47:
-#line 187 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
+#line 184 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1645  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_PARENT);
 		disParamStore(param, disParamConstruct((yyvsp[-2])));
@@ -1447,11 +1444,11 @@ yyreduce:
 	    disParamStore(param, disParamConstruct((yyvsp[-1])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1451 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1448 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
     break;
 
 
-#line 1455 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
+#line 1452 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1645  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1678,7 +1675,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 197 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1903  */
+#line 194 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1903  */
 
 
 // Epilogue

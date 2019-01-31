@@ -22,7 +22,7 @@
         ret = 0;\
     } else {\
         TOP++;\
-        memcpy(STACK_BASE - TOP, ELEMENT, UNIT_SIZE); \
+        memcpy(STACK_BASE - (TOP * UNIT_SIZE), ELEMENT, UNIT_SIZE); \
         ret = 1;\
     }\
     ret;\
@@ -38,7 +38,7 @@
     if (TOP <= 0) {\
         ret = 0;\
     } else {\
-        memcpy(UNIT, STACK_BASE + TOP, UNIT_SIZE);\
+        memcpy(UNIT, STACK_BASE - (TOP * UNIT_SIZE), UNIT_SIZE);\
         TOP--;\
         ret = 1;\
     }\
@@ -69,3 +69,4 @@ int genericStackTesting();
 
 
 #endif /* GL5610_MIB_DOC_GEN_STACK_H */
+
