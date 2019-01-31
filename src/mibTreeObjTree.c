@@ -58,7 +58,6 @@ void mibObjectTreeInit(mibObjectTreeNode *root) {
     insert_MibTree(root, mibNodeBuild("internet", "1.3.6.1"), "dod");
     insert_MibTree(root, mibNodeBuild("private", "1.3.6.1.4"), "internet");
     insert_MibTree(root, mibNodeBuild("enterprises", "1.3.6.1.4.1"), "private");
-
 }
 
 mibObjectTreeNode * mibNodeBuild(char *ident, char *oid) {

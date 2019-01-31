@@ -46,7 +46,7 @@ listNode * listNodeInsert(listNode *head, listNode *sliNode) {
     return sliNode;
 }
 
-listNode *listNodeDelete(listNode *sliNode) {
+listNode * listNodeDelete(listNode *sliNode) {
     if (isNullPtr(sliNode)) {
         return NULL;
     }
@@ -258,6 +258,12 @@ dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {
 
     listNodeInsert(listNodeTail(&head->node), &new->node);
     return new;
+}
+
+void * disParamGet(dispatchParam *disparam) {
+    if (disparam == NULL) 
+        return NULL;
+    return disparam->param;
 }
 
 /*
