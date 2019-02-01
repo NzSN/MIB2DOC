@@ -18,13 +18,13 @@ enum {
 /************
  * ListNode *
  ************/
-listNode *listNodePrev(listNode *sliNode) {
+listNode *listNodeNext(listNode *sliNode) {
     if (isNullPtr(sliNode) || isNullPtr(sliNode->next))
         return NULL;
     return sliNode->next;
 }
 
-listNode * listNodeNext(listNode *sliNode) {
+listNode * listNodePrev(listNode *sliNode) {
     if (isNullPtr(sliNode) || isNullPtr(sliNode->prev))
         return NULL;
     return sliNode->prev;

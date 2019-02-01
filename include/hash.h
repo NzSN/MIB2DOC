@@ -6,11 +6,11 @@
 #define _MIB2DOC_HASHMAP_H_
 
 /* Defines */
-typedef int (*hashFunction)(void *);
-
 #define HASH_ELEM_COLLIDE (1)
 #define HASH_ELEM_NOT_COLLIDE (2)
 #define HASH_ELEM_IS_COLLIDE(ELEM) (ELEM->isCollide == HASH_ELEM_COLLIDE)
+
+#define HASH_CHAIN_IS_LAST(C) (C->node.next == NULL)
 
 #define PAIR_KEY_REF(P) (P->key)
 #define PAIR_VAL_REF(P) (P->val)
@@ -21,9 +21,21 @@ typedef int (*hashFunction)(void *);
 #define PAIR_KEY_SET(P, K) (P.key = K)
 #define PAIR_VAL_SET(P, V) (P.val = V)
 
+typedef int (*hashFunction)(void *);
+
 typedef struct {
-    void * key;
-    void * val;
+    // Compare 
+    int (*isEqual)(void *lKey, void *rKey);
+} pair_key_base;
+
+typedef struct {
+    // Compare
+    int (*isEqual)(void *lVal, void *rVal);
+} pair_val_base;
+
+typedef struct {
+    pair_key_base *key;
+    pair_val_base *val;
 } pair_kv;
 
 typedef struct {
@@ -42,6 +54,7 @@ typedef struct {
     hashFunction hashFunc;    
     hashElem *space;
 } hashMap;
+
 
 /* Function declarations */
 hashMap * hashMapConstruct(int size, hashFunction func);

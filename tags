@@ -133,6 +133,7 @@ GL5610_MIB_DOC_GEN_QUEUE_H	include/queue.h	/^#define GL5610_MIB_DOC_GEN_QUEUE_H$
 GL5610_MIB_DOC_GEN_STACK_H	include/stack.h	/^#define GL5610_MIB_DOC_GEN_STACK_H$/;"	d	language:C++
 GL5610_MIB_DOC_GEN_TOKENOP_H	include/mibTreeGen.h	/^#define GL5610_MIB_DOC_GEN_TOKENOP_H$/;"	d	language:C++
 GL5610_MIB_DOC_GEN_TREE_H	include/mibTreeObjTree.h	/^#define GL5610_MIB_DOC_GEN_TREE_H$/;"	d	language:C++
+HASH_CHAIN_IS_LAST	include/hash.h	/^#define HASH_CHAIN_IS_LAST(/;"	d	language:C++
 HASH_ELEM_COLLIDE	include/hash.h	/^#define HASH_ELEM_COLLIDE /;"	d	language:C++
 HASH_ELEM_IS_COLLIDE	include/hash.h	/^#define HASH_ELEM_IS_COLLIDE(/;"	d	language:C++
 HASH_ELEM_NOT_COLLIDE	include/hash.h	/^#define HASH_ELEM_NOT_COLLIDE /;"	d	language:C++
@@ -474,6 +475,10 @@ __anon50dc7d720108	include/hash.h	/^typedef struct {$/;"	s	language:C++
 __anon50dc7d720208	include/hash.h	/^typedef struct {$/;"	s	language:C++
 __anon50dc7d720308	include/hash.h	/^typedef struct {$/;"	s	language:C++
 __anon50dc7d720408	include/hash.h	/^typedef struct {$/;"	s	language:C++
+__anon50dc7d720508	include/hash.h	/^typedef struct {$/;"	s	language:C++
+__anon50dc7d720608	include/hash.h	/^typedef struct {$/;"	s	language:C++
+__anon5ef278910108	src/hash.c	/^typedef struct {$/;"	s	language:C	file:
+__anon5ef278910208	src/hash.c	/^typedef struct {$/;"	s	language:C	file:
 __anon68d812290103	src/list.c	/^enum {$/;"	g	language:C	file:
 __anon7e97ef8b0103	src/util.c	/^    enum { identRecognize, identTracking };$/;"	g	language:C	function:stringToIdentList	file:
 __anon899435f00103	include/mibTreeGen.h	/^enum {$/;"	g	language:C++
@@ -485,13 +490,15 @@ alloca	src/yy_syn.tab.c	/^#    define alloca /;"	d	language:C	file:
 appendQueue	src/queue.c	/^int appendQueue(mibNodeInfoQueue *q, tableInfo *pData) {$/;"	f	language:C	typeref:typename:int
 appendSymToIdentList	src/dispatcher.c	/^int appendSymToIdentList(identList *listHead, char *symbolIdent) {$/;"	f	language:C	typeref:typename:int
 base	include/stack.h	/^    unsigned char *base;$/;"	m	language:C++	struct:identStack	typeref:typename:unsigned char *
+base	src/hash.c	/^    pair_key_base base;$/;"	m	language:C	struct:__anon5ef278910108	typeref:typename:pair_key_base	file:
+base	src/hash.c	/^    pair_val_base base;$/;"	m	language:C	struct:__anon5ef278910208	typeref:typename:pair_val_base	file:
 beginFrom	src/docGenerate.c	/^char *beginFrom;$/;"	v	language:C	typeref:typename:char *
 beginOid	src/docGenerate.c	/^int beginOid;$/;"	v	language:C	typeref:typename:int
 buffer	include/stack.h	/^    unsigned char *buffer;$/;"	m	language:C++	struct:identStack	typeref:typename:unsigned char *
 bufferInfo	include/dispatcher.h	/^    YY_BUFFER_STATE bufferInfo;$/;"	m	language:C++	struct:switchInfo	typeref:typename:YY_BUFFER_STATE
 bufferSize	include/stack.h	/^    int bufferSize;$/;"	m	language:C++	struct:identStack	typeref:typename:int
 cSpace	include/type.h	/^#define cSpace /;"	d	language:C++
-chain	include/hash.h	/^    hashChain *chain;$/;"	m	language:C++	struct:__anon50dc7d720308	typeref:typename:hashChain *
+chain	include/hash.h	/^    hashChain *chain;$/;"	m	language:C++	struct:__anon50dc7d720508	typeref:typename:hashChain *
 child	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *child;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode *
 clean	Makefile	/^clean:$/;"	t	language:Make
 clean/fast	Makefile	/^clean\/fast: clean$/;"	t	language:Make
@@ -667,14 +674,17 @@ getOption_SourceMibFilePath	src/options.c	/^const char * getOption_SourceMibFile
 getOption_includePath	src/options.c	/^const char * getOption_includePath(int *index) {$/;"	f	language:C	typeref:typename:const char *
 getOption_targetPdfPath	src/options.c	/^const char * getOption_targetPdfPath() {$/;"	f	language:C	typeref:typename:const char *
 getQueue	src/queue.c	/^tableInfo *getQueue(mibNodeInfoQueue *q) {$/;"	f	language:C	typeref:typename:tableInfo *
-hashChain	include/hash.h	/^} hashChain;$/;"	t	language:C++	typeref:struct:__anon50dc7d720208
-hashChainAppend	src/hash.c	/^static int hashChainAppend(hashChain *chain, pair_kv pair) {$/;"	f	language:C	typeref:typename:int	file:
+hashChain	include/hash.h	/^} hashChain;$/;"	t	language:C++	typeref:struct:__anon50dc7d720408
+hashChainAppend	src/hash.c	/^static int hashChainAppend(hashChain *chainNode, pair_kv pair) {$/;"	f	language:C	typeref:typename:int	file:
 hashChainConstruct	src/hash.c	/^static hashChain * hashChainConstruct(pair_kv pair) {$/;"	f	language:C	typeref:typename:hashChain *	file:
-hashChainSearch	src/hash.c	/^static void * hashChainSearch(hashChain *chain, pair_kv pair) {$/;"	f	language:C	typeref:typename:void *	file:
-hashElem	include/hash.h	/^} hashElem;$/;"	t	language:C++	typeref:struct:__anon50dc7d720308
-hashFunc	include/hash.h	/^    hashFunction hashFunc;    $/;"	m	language:C++	struct:__anon50dc7d720408	typeref:typename:hashFunction
+hashChainNext	src/hash.c	/^static hashChain * hashChainNext(hashChain *chain) {$/;"	f	language:C	typeref:typename:hashChain *	file:
+hashChainPrev	src/hash.c	/^static hashChain *hashChainPrev(hashChain *chain) {$/;"	f	language:C	typeref:typename:hashChain *	file:
+hashChainSearch	src/hash.c	/^static hashChain * hashChainSearch(hashChain *chainNode, pair_kv pair) {$/;"	f	language:C	typeref:typename:hashChain *	file:
+hashChainTail	src/hash.c	/^static hashChain * hashChainTail(hashChain *chainNode) {$/;"	f	language:C	typeref:typename:hashChain *	file:
+hashElem	include/hash.h	/^} hashElem;$/;"	t	language:C++	typeref:struct:__anon50dc7d720508
+hashFunc	include/hash.h	/^    hashFunction hashFunc;    $/;"	m	language:C++	struct:__anon50dc7d720608	typeref:typename:hashFunction
 hashFunction	include/hash.h	/^typedef int (*hashFunction)(void *);$/;"	t	language:C++	typeref:typename:int (*)(void *)
-hashMap	include/hash.h	/^} hashMap;$/;"	t	language:C++	typeref:struct:__anon50dc7d720408
+hashMap	include/hash.h	/^} hashMap;$/;"	t	language:C++	typeref:struct:__anon50dc7d720608
 hashMapConstruct	src/hash.c	/^hashMap * hashMapConstruct(int size, hashFunction func) {$/;"	f	language:C	typeref:typename:hashMap *
 hashMapGet	src/hash.c	/^void * hashMapGet(hashMap *map, pair_kv pair) {$/;"	f	language:C	typeref:typename:void *
 hashMapPut	src/hash.c	/^int hashMapPut(hashMap *map, pair_kv pair) {$/;"	f	language:C	typeref:typename:int
@@ -722,14 +732,17 @@ info_version	CMakeFiles/3.13.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const
 info_version_internal	CMakeFiles/3.13.3/CompilerIdC/CMakeCCompilerId.c	/^char const info_version_internal[] = {$/;"	v	language:C	typeref:typename:char const[]
 info_version_internal	CMakeFiles/3.13.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version_internal[] = {$/;"	v	language:C++	typeref:typename:char const[]
 insert_MibTree	src/mibTreeObjTree.c	/^int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ident) {$/;"	f	language:C	typeref:typename:int
-isCollide	include/hash.h	/^    int isCollide;$/;"	m	language:C++	struct:__anon50dc7d720308	typeref:typename:int
+isCollide	include/hash.h	/^    int isCollide;$/;"	m	language:C++	struct:__anon50dc7d720508	typeref:typename:int
+isEqual	include/hash.h	/^    int (*isEqual)(void *lKey, void *rKey);$/;"	m	language:C++	struct:__anon50dc7d720108	typeref:typename:int (*)(void * lKey,void * rKey)
+isEqual	include/hash.h	/^    int (*isEqual)(void *lVal, void *rVal);$/;"	m	language:C++	struct:__anon50dc7d720208	typeref:typename:int (*)(void * lVal,void * rVal)
 isInitilized	src/docGenerate.c	/^int isInitilized;$/;"	v	language:C	typeref:typename:int
 isNeedSwitchInit	src/dispatcher.c	/^static unsigned char isNeedSwitchInit = TRUE;$/;"	v	language:C	typeref:typename:unsigned char	file:
 isNode	include/mibTreeObjTree.h	/^    int isNode;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:typename:int
 isNullPtr	include/type.h	/^#define isNullPtr(/;"	d	language:C++
 isQueueEmpty	src/queue.c	/^static int isQueueEmpty(mibNodeInfoQueue *q) {$/;"	f	language:C	typeref:typename:int	file:
 isQueueFull	src/queue.c	/^static int isQueueFull(mibNodeInfoQueue *q) {$/;"	f	language:C	typeref:typename:int	file:
-key	include/hash.h	/^    void * key;$/;"	m	language:C++	struct:__anon50dc7d720108	typeref:typename:void *
+key	include/hash.h	/^    pair_key_base *key;$/;"	m	language:C++	struct:__anon50dc7d720308	typeref:typename:pair_key_base *
+key	src/hash.c	/^    int key;$/;"	m	language:C	struct:__anon5ef278910108	typeref:typename:int	file:
 laTexStrBuffer	src/docGenerate.c	/^char *laTexStrBuffer;$/;"	v	language:C	typeref:typename:char *
 latexHeaderGen	src/docGenerate.c	/^static int latexHeaderGen() {}$/;"	f	language:C	typeref:typename:int	file:
 latexTailGen	src/docGenerate.c	/^static int latexTailGen() {}$/;"	f	language:C	typeref:typename:int	file:
@@ -745,8 +758,8 @@ listNodeAppend	src/list.c	/^listNode * listNodeAppend(listNode *listH, listNode 
 listNodeDelete	src/list.c	/^listNode * listNodeDelete(listNode *sliNode) {$/;"	f	language:C	typeref:typename:listNode *
 listNodeInsert	src/list.c	/^listNode * listNodeInsert(listNode *head, listNode *sliNode) {$/;"	f	language:C	typeref:typename:listNode *
 listNodeIsEmpty	src/list.c	/^bool listNodeIsEmpty(listNode *head) {$/;"	f	language:C	typeref:typename:bool
-listNodeNext	src/list.c	/^listNode * listNodeNext(listNode *sliNode) {$/;"	f	language:C	typeref:typename:listNode *
-listNodePrev	src/list.c	/^listNode *listNodePrev(listNode *sliNode) {$/;"	f	language:C	typeref:typename:listNode *
+listNodeNext	src/list.c	/^listNode *listNodeNext(listNode *sliNode) {$/;"	f	language:C	typeref:typename:listNode *
+listNodePrev	src/list.c	/^listNode * listNodePrev(listNode *sliNode) {$/;"	f	language:C	typeref:typename:listNode *
 listNodeTail	src/list.c	/^listNode * listNodeTail(listNode *head) {$/;"	f	language:C	typeref:typename:listNode *
 listNodeTask	include/list.h	/^typedef void (*listNodeTask)(listNode *head, void *arg);$/;"	t	language:C++	typeref:typename:void (*)(listNode * head,void * arg)
 listNodeTravel	src/list.c	/^int listNodeTravel(listNode *head, listNodeTask func, void *arg) {$/;"	f	language:C	typeref:typename:int
@@ -789,7 +802,7 @@ modName	include/symbolTbl.h	/^    char *modName;$/;"	m	language:C++	struct:symbo
 next	include/list.h	/^    struct listNode *next;$/;"	m	language:C++	struct:listNode	typeref:struct:listNode *
 node	include/dispatcher.h	/^    listNode node;$/;"	m	language:C++	struct:dispatchParam	typeref:typename:listNode
 node	include/dispatcher.h	/^    listNode node;$/;"	m	language:C++	struct:identList	typeref:typename:listNode
-node	include/hash.h	/^    listNode node;$/;"	m	language:C++	struct:__anon50dc7d720208	typeref:typename:listNode
+node	include/hash.h	/^    listNode node;$/;"	m	language:C++	struct:__anon50dc7d720408	typeref:typename:listNode
 node	include/mibTreeGen.h	/^    listNode node;$/;"	m	language:C++	struct:targetSymbolList	typeref:typename:listNode
 node	include/options.h	/^    listNode node;$/;"	m	language:C++	struct:incPathList	typeref:typename:listNode
 nodeCmp	src/mibTreeObjTree.c	/^int nodeCmp(void *arg, mibObjectTreeNode *node) {$/;"	f	language:C	typeref:typename:int
@@ -808,9 +821,11 @@ options	include/options.h	/^typedef struct options {$/;"	s	language:C++
 optionsInit	src/options.c	/^int optionsInit(int argc, char *argv[]) {$/;"	f	language:C	typeref:typename:int
 optionsManager	src/options.c	/^options_t optionsManager;$/;"	v	language:C	typeref:typename:options_t
 options_t	include/options.h	/^} options_t;$/;"	t	language:C++	typeref:struct:options
-pair	include/hash.h	/^    pair_kv pair;$/;"	m	language:C++	struct:__anon50dc7d720208	typeref:typename:pair_kv
-pair	include/hash.h	/^    pair_kv pair;$/;"	m	language:C++	struct:__anon50dc7d720308	typeref:typename:pair_kv
-pair_kv	include/hash.h	/^} pair_kv;$/;"	t	language:C++	typeref:struct:__anon50dc7d720108
+pair	include/hash.h	/^    pair_kv pair;$/;"	m	language:C++	struct:__anon50dc7d720408	typeref:typename:pair_kv
+pair	include/hash.h	/^    pair_kv pair;$/;"	m	language:C++	struct:__anon50dc7d720508	typeref:typename:pair_kv
+pair_key_base	include/hash.h	/^} pair_key_base;$/;"	t	language:C++	typeref:struct:__anon50dc7d720108
+pair_kv	include/hash.h	/^} pair_kv;$/;"	t	language:C++	typeref:struct:__anon50dc7d720308
+pair_val_base	include/hash.h	/^} pair_val_base;$/;"	t	language:C++	typeref:struct:__anon50dc7d720208
 paragraph	src/docGenerate.c	/^        paragraph = 4,$/;"	e	language:C	enum:sectionGen_Latex::__anonb9c30cee0203	file:
 param	include/dispatcher.h	/^    void *param;$/;"	m	language:C++	struct:dispatchParam	typeref:typename:void *
 paramMapping	src/options.c	/^static int paramMapping(char *param) {$/;"	f	language:C	typeref:typename:int	file:
@@ -842,7 +857,7 @@ sectionRecord	src/main.c	/^char *sectionRecord[SIZE_OF_SECTION_RECORD];$/;"	v	la
 sectionRecord	src/unitTest/basicDataStruct_Test.c	/^char *sectionRecord[SIZE_OF_SECTION_RECORD];$/;"	v	language:C	typeref:typename:char * []
 showTree	src/mibTreeObjTree.c	/^void showTree(mibObjectTreeNode *root) {$/;"	f	language:C	typeref:typename:void
 sibling	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *sibling;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode *
-size	include/hash.h	/^    int size;$/;"	m	language:C++	struct:__anon50dc7d720408	typeref:typename:int
+size	include/hash.h	/^    int size;$/;"	m	language:C++	struct:__anon50dc7d720608	typeref:typename:int
 sliKey	include/list.h	/^    int sliKey;$/;"	m	language:C++	struct:slice	typeref:typename:int
 sliNode	include/list.h	/^    listNode sliNode;$/;"	m	language:C++	struct:slice	typeref:typename:listNode
 sliVal	include/list.h	/^    char *sliVal;$/;"	m	language:C++	struct:slice	typeref:typename:char *
@@ -862,7 +877,7 @@ sliceReset	src/list.c	/^bool sliceReset(slice *sli) {$/;"	f	language:C	typeref:t
 sliceStore	src/list.c	/^int sliceStore(slice *sliHead, slice *newSli) {$/;"	f	language:C	typeref:typename:int
 sliceType	include/list.h	/^} sliceType;$/;"	v	language:C++	typeref:enum:elementType
 sourceMibFilePath	include/options.h	/^    char *sourceMibFilePath;$/;"	m	language:C++	struct:options	typeref:typename:char *
-space	include/hash.h	/^    hashElem *space;$/;"	m	language:C++	struct:__anon50dc7d720408	typeref:typename:hashElem *
+space	include/hash.h	/^    hashElem *space;$/;"	m	language:C++	struct:__anon50dc7d720608	typeref:typename:hashElem *
 src/dispatcher.c.i	Makefile	/^src\/dispatcher.c.i:$/;"	t	language:Make
 src/dispatcher.c.o	Makefile	/^src\/dispatcher.c.o:$/;"	t	language:Make
 src/dispatcher.c.s	Makefile	/^src\/dispatcher.c.s:$/;"	t	language:Make
@@ -1038,6 +1053,12 @@ targetSymbolList	include/mibTreeGen.h	/^typedef struct targetSymbolList {$/;"	s	
 targetSymbolList	include/mibTreeGen.h	/^} targetSymbolList;$/;"	t	language:C++	typeref:struct:targetSymbolList
 top	include/stack.h	/^    int top;$/;"	m	language:C++	struct:identStack	typeref:typename:int
 travel_MibTree	src/mibTreeObjTree.c	/^mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, $/;"	f	language:C	typeref:typename:mibObjectTreeNode *
+tryKeyConstruct	src/hash.c	/^try_key * tryKeyConstruct(int key) {$/;"	f	language:C	typeref:typename:try_key *
+tryKeyEqual	src/hash.c	/^int tryKeyEqual(try_key *lK, try_key *rK) {$/;"	f	language:C	typeref:typename:int
+tryValConstruct	src/hash.c	/^try_val * tryValConstruct(int val) {$/;"	f	language:C	typeref:typename:try_val *
+tryValEqual	src/hash.c	/^int tryValEqual(try_val *lV, try_val *rV) {$/;"	f	language:C	typeref:typename:int
+try_key	src/hash.c	/^} try_key;$/;"	t	language:C	typeref:struct:__anon5ef278910108	file:
+try_val	src/hash.c	/^} try_val;$/;"	t	language:C	typeref:struct:__anon5ef278910208	file:
 type	include/docGenerate.h	/^    char *type;$/;"	m	language:C++	struct:tableInfo	typeref:typename:char *
 type	include/mibTreeObjTree.h	/^    char *type;$/;"	m	language:C++	struct:mibInfo	typeref:typename:char *
 type	include/symbolTbl.h	/^    char *type;$/;"	m	language:C++	struct:leaveMeta_t	typeref:typename:char *
@@ -1046,7 +1067,8 @@ unitType	include/type.h	/^typedef enum unitType {$/;"	g	language:C++
 unitType	include/type.h	/^} unitType;$/;"	t	language:C++	typeref:enum:unitType
 unput	src/lexer.c	/^#define unput(/;"	d	language:C	file:
 upperTreeGeneration	src/mibTreeGen.c	/^int upperTreeGeneration(symbolTable *symTbl) {$/;"	f	language:C	typeref:typename:int
-val	include/hash.h	/^    void * val;$/;"	m	language:C++	struct:__anon50dc7d720108	typeref:typename:void *
+val	include/hash.h	/^    pair_val_base *val;$/;"	m	language:C++	struct:__anon50dc7d720308	typeref:typename:pair_val_base *
+val	src/hash.c	/^    int val;$/;"	m	language:C	struct:__anon5ef278910208	typeref:typename:int	file:
 volatile	CMakeFiles/3.13.3/CompilerIdC/CMakeCCompilerId.c	/^# define volatile$/;"	d	language:C	file:
 yyHEADER_H	include/lexer.h	/^#define yyHEADER_H /;"	d	language:C++
 yyIN_HEADER	include/lexer.h	/^#define yyIN_HEADER /;"	d	language:C++
