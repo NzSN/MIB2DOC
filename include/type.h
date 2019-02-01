@@ -13,10 +13,15 @@
 /* define */
 #ifndef FALSE
 #define FALSE false 
-#endif /* FALSE */
+#endif 
+
 #ifndef TRUE
 #define TRUE true
-#endif /* TRUE */
+#endif
+
+#ifndef NOT
+#define NOT !
+#endif 
 
 #define cSpace ' '
 #define null (0)

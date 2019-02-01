@@ -7,22 +7,32 @@
 
 /* Defines */
 typedef char * HASH_KEY;
+typedef void * HASH_VAL;
 typedef int (*hashFunction)(HASH_KEY);
 
 #define HASH_ELEM_COLLIDE (1)
 #define HASH_ELEM_NOT_COLLIDE (2)
 #define HASH_ELEM_IS_COLLIDE(ELEM) (ELEM->isCollide == HASH_ELEM_COLLIDE)
 
+#define PAIR_KEY(P) (P.key)
+#define PAIR_VAL(P) (P.val)
+
+#define PAIR_KEY_SET(P, K) (P.key = K)
+#define PAIR_VAL_SET(P, V) (P.val = V)
+
 typedef struct {
     HASH_KEY key;
-    void *value;
+    HASH_VAL val;
+} pair_kv;
+
+typedef struct {
+    pair_kv pair;
     listNode node;
 } hashChain;
 
 typedef struct {
     int isCollide;
-    HASH_KEY key;
-    void *value;
+    pair_kv pair;
     hashChain *chain;
 } hashElem;
 

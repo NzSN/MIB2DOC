@@ -34,7 +34,7 @@ void * hashMapGet(hashMap *map, HASH_KEY key) {
     if (HASH_ELEM_IS_COLLIDE(pElem)) {
         return hashChainSearch(pElem->chain, key);             
     }
-    return pElem->value;
+    return PAIR_VAL(pElem->pair);
 }
 
 int hashMapPut(hashMap *map, HASH_KEY key, void *value) {
@@ -48,7 +48,7 @@ int hashMapPut(hashMap *map, HASH_KEY key, void *value) {
     if (HASH_ELEM_IS_COLLIDE(pElem)) {
         return hashChainAppend(pElem->chain, key, value);        
     }
-    pElem->value = value;
+    PAIR_VAL_SET(pElem->pair, value);
     return TRUE;
 }
 
@@ -58,8 +58,9 @@ static hashChain * hashChainConstruct(HASH_KEY key, void *value) {
     }
 
     hashChain *pChain = (hashChain *)malloc(sizeof(hashChain));
-    pChain->key = key;
-    pChain->value = value;
+
+    PAIR_KEY_SET(pChain->pair, key);
+    PAIR_VAL_SET(pChain->pair, value);
     memset(&pChain->node, 0, sizeof(listNode));
 
     return pChain;

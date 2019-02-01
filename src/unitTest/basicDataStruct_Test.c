@@ -2,10 +2,7 @@
 // Created by ayden on 2017/4/25.
 //
 
-#include <stdarg.h>
-#include <stddef.h>
-#include <setjmp.h>
-#include <cmocka.h>
+#include "test.h"
 #include <stdlib.h>
 #include <string.h>
 #include "type.h"

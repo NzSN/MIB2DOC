@@ -35,10 +35,7 @@ int pop(genericStack *gStack, void *unit) {
 
 #ifdef MIB2DOC_UNIT_TESTING
 
-#include <stdarg.h>
-#include <stddef.h>
-#include <setjmp.h>
-#include <cmocka.h>
+#include "test.h"
 
 int genericStackTesting() {
     int ret, value = 4, idx = 0;
