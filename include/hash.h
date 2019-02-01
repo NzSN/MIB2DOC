@@ -6,13 +6,14 @@
 #define _MIB2DOC_HASHMAP_H_
 
 /* Defines */
-typedef char * HASH_KEY;
-typedef void * HASH_VAL;
-typedef int (*hashFunction)(HASH_KEY);
+typedef int (*hashFunction)(void *);
 
 #define HASH_ELEM_COLLIDE (1)
 #define HASH_ELEM_NOT_COLLIDE (2)
 #define HASH_ELEM_IS_COLLIDE(ELEM) (ELEM->isCollide == HASH_ELEM_COLLIDE)
+
+#define PAIR_KEY_REF(P) (P->key)
+#define PAIR_VAL_REF(P) (P->val)
 
 #define PAIR_KEY(P) (P.key)
 #define PAIR_VAL(P) (P.val)
@@ -21,8 +22,8 @@ typedef int (*hashFunction)(HASH_KEY);
 #define PAIR_VAL_SET(P, V) (P.val = V)
 
 typedef struct {
-    HASH_KEY key;
-    HASH_VAL val;
+    void * key;
+    void * val;
 } pair_kv;
 
 typedef struct {
@@ -43,8 +44,16 @@ typedef struct {
 } hashMap;
 
 /* Function declarations */
-hashMap * hashMapConstruct(hashMap *mem, int size, hashFunction func);
-void * hashMapGet(hashMap *map, HASH_KEY key);
+hashMap * hashMapConstruct(int size, hashFunction func);
+int hashMapRelease(hashMap *map);
+void * hashMapGet(hashMap *map, pair_kv pair);
+int hashMapPut(hashMap *map, pair_kv pair);
+
+#ifdef MIB2DOC_UNIT_TESTING
+
+void hashTesting(void **state);
+
+#endif /* MIB2DOC_UNIT_TESTING */
 
 #endif /* _MIB2DOC_HASHMAP_H_ */
 

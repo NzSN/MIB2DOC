@@ -4,14 +4,18 @@
 #include "hash.h"
 #include "string.h"
 
-static hashChain * hashChainConstruct(HASH_KEY key, void *value);
-static void * hashChainSearch(hashChain *chain, HASH_KEY key);
-static int hashChainAppend(hashChain *chain, HASH_KEY key, void *value);
+static hashChain * hashChainConstruct(pair_kv pair);
+static void * hashChainSearch(hashChain *chain, pair_kv pair);
+static int hashChainAppend(hashChain *chain, pair_kv pair);
 
-hashMap * hashMapConstruct(hashMap *mem, int size, hashFunction func) {
-    if (isNullPtr(mem) || isNullPtr(func) || size <= 0) {
+hashMap * hashMapConstruct(int size, hashFunction func) {
+    hashMap *mem;
+    
+    if (isNullPtr(func) || size <= 0) {
         return null; 
     }
+    
+    mem = (hashMap *)malloc(sizeof(hashMap));
     memset(mem, 0, size);
 
     mem->size = size;
@@ -22,55 +26,83 @@ hashMap * hashMapConstruct(hashMap *mem, int size, hashFunction func) {
     return mem;
 }
 
-void * hashMapGet(hashMap *map, HASH_KEY key) {
-    if (isNullPtr(map) || key < 0) {
+int hashMapRelease(hashMap *map) {
+
+}
+
+void * hashMapGet(hashMap *map, pair_kv pair) {
+    if (isNullPtr(map)) {
         return NULL; 
     }
-
-
-    int hashValue = map->hashFunc(key) % map->size; 
+    
+    int hashValue = map->hashFunc(PAIR_KEY(pair)) % map->size; 
     hashElem *pElem = map->space + hashValue;
     
     if (HASH_ELEM_IS_COLLIDE(pElem)) {
-        return hashChainSearch(pElem->chain, key);             
+        return hashChainSearch(pElem->chain, pair);             
     }
     return PAIR_VAL(pElem->pair);
 }
 
-int hashMapPut(hashMap *map, HASH_KEY key, void *value) {
-    if (isNullPtr(map) || key < 0 || isNullPtr(value)) {
+int hashMapPut(hashMap *map, pair_kv pair) {
+    if (isNullPtr(map)) {
         return FALSE; 
     }
 
-    int hashValue = map->hashFunc(key) % map->size; 
+    int hashValue = map->hashFunc(PAIR_KEY(pair)) % map->size; 
     hashElem *pElem = map->space + hashValue;
 
     if (HASH_ELEM_IS_COLLIDE(pElem)) {
-        return hashChainAppend(pElem->chain, key, value);        
+        return hashChainAppend(pElem->chain, pair);        
     }
-    PAIR_VAL_SET(pElem->pair, value);
+    PAIR_VAL_SET(pElem->pair, PAIR_VAL(pair));
     return TRUE;
 }
 
-static hashChain * hashChainConstruct(HASH_KEY key, void *value) {
-    if (key < 0 || isNullPtr(value)) {
-        return NULL; 
-    }
-
+static hashChain * hashChainConstruct(pair_kv pair) {
     hashChain *pChain = (hashChain *)malloc(sizeof(hashChain));
 
-    PAIR_KEY_SET(pChain->pair, key);
-    PAIR_VAL_SET(pChain->pair, value);
+    PAIR_KEY_SET(pChain->pair, PAIR_KEY(pair));
+    PAIR_VAL_SET(pChain->pair, PAIR_VAL(pair));
     memset(&pChain->node, 0, sizeof(listNode));
-
+    
     return pChain;
 }
 
-static void * hashChainSearch(hashChain *chain, HASH_KEY key) {
-       
+static void * hashChainSearch(hashChain *chain, pair_kv pair) {
+           
 }
 
-static int hashChainAppend(hashChain *chain, HASH_KEY key, void *value) {
+static int hashChainAppend(hashChain *chain, pair_kv pair) {
 
 }
+
+#ifdef MIB2DOC_UNIT_TESTING
+
+#include "test.h"
+#include <stdio.h>
+
+int hashing(void *key) {
+    int iKey = (int)key;
+    iKey *= 10;
+    
+    return iKey;
+}
+
+void hashTesting(void **state) {
+    pair_kv pair;
+    int value;
+    PAIR_KEY_SET(pair, 1);
+    PAIR_VAL_SET(pair, 3);
+    hashMap *pMap = hashMapConstruct(10, hashing);
+    if (isNullPtr(pMap))
+        fail();
+    hashMapPut(pMap, pair);
+    value = (int)hashMapGet(pMap, pair);
+
+    assert_int_equal(value, 3);
+}
+
+#endif /* MIB2DOC_UNIT_TESTING */
+
 

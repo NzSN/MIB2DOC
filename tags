@@ -136,8 +136,6 @@ GL5610_MIB_DOC_GEN_TREE_H	include/mibTreeObjTree.h	/^#define GL5610_MIB_DOC_GEN_
 HASH_ELEM_COLLIDE	include/hash.h	/^#define HASH_ELEM_COLLIDE /;"	d	language:C++
 HASH_ELEM_IS_COLLIDE	include/hash.h	/^#define HASH_ELEM_IS_COLLIDE(/;"	d	language:C++
 HASH_ELEM_NOT_COLLIDE	include/hash.h	/^#define HASH_ELEM_NOT_COLLIDE /;"	d	language:C++
-HASH_KEY	include/hash.h	/^typedef char * HASH_KEY;$/;"	t	language:C++	typeref:typename:char *
-HASH_VAL	include/hash.h	/^typedef void * HASH_VAL;$/;"	t	language:C++	typeref:typename:void *
 HEAD	src/yy_syn.y	/^HEAD :$/;"	l	language:YACC
 HEX	CMakeFiles/3.13.3/CompilerIdC/CMakeCCompilerId.c	/^#define HEX(/;"	d	language:C	file:
 HEX	CMakeFiles/3.13.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define HEX(/;"	d	language:C++	file:
@@ -209,7 +207,11 @@ OBJ_SPECIFIER	include/yy_syn.tab.h	/^    OBJ_SPECIFIER = 259,$/;"	e	language:C++
 OBJ_SPECIFIER	src/yy_syn.tab.c	/^    OBJ_SPECIFIER = 259,$/;"	e	language:C	enum:yytokentype	file:
 OID_LENGTH	src/mibTreeObjTree.c	/^#define OID_LENGTH /;"	d	language:C	file:
 PAIR_KEY	include/hash.h	/^#define PAIR_KEY(/;"	d	language:C++
+PAIR_KEY_REF	include/hash.h	/^#define PAIR_KEY_REF(/;"	d	language:C++
+PAIR_KEY_SET	include/hash.h	/^#define PAIR_KEY_SET(/;"	d	language:C++
 PAIR_VAL	include/hash.h	/^#define PAIR_VAL(/;"	d	language:C++
+PAIR_VAL_REF	include/hash.h	/^#define PAIR_VAL_REF(/;"	d	language:C++
+PAIR_VAL_SET	include/hash.h	/^#define PAIR_VAL_SET(/;"	d	language:C++
 PARAM_STORE_TO_SYM_LIST	include/mibTreeGen.h	/^#define PARAM_STORE_TO_SYM_LIST(/;"	d	language:C++
 PLATFORM_ID	CMakeFiles/3.13.3/CompilerIdC/CMakeCCompilerId.c	/^#  define PLATFORM_ID /;"	d	language:C	file:
 PLATFORM_ID	CMakeFiles/3.13.3/CompilerIdC/CMakeCCompilerId.c	/^#  define PLATFORM_ID$/;"	d	language:C	file:
@@ -666,16 +668,19 @@ getOption_includePath	src/options.c	/^const char * getOption_includePath(int *in
 getOption_targetPdfPath	src/options.c	/^const char * getOption_targetPdfPath() {$/;"	f	language:C	typeref:typename:const char *
 getQueue	src/queue.c	/^tableInfo *getQueue(mibNodeInfoQueue *q) {$/;"	f	language:C	typeref:typename:tableInfo *
 hashChain	include/hash.h	/^} hashChain;$/;"	t	language:C++	typeref:struct:__anon50dc7d720208
-hashChainAppend	src/hash.c	/^static int hashChainAppend(hashChain *chain, HASH_KEY key, void *value) {$/;"	f	language:C	typeref:typename:int	file:
-hashChainConstruct	src/hash.c	/^static hashChain * hashChainConstruct(HASH_KEY key, void *value) {$/;"	f	language:C	typeref:typename:hashChain *	file:
-hashChainSearch	src/hash.c	/^static void * hashChainSearch(hashChain *chain, HASH_KEY key) {$/;"	f	language:C	typeref:typename:void *	file:
+hashChainAppend	src/hash.c	/^static int hashChainAppend(hashChain *chain, pair_kv pair) {$/;"	f	language:C	typeref:typename:int	file:
+hashChainConstruct	src/hash.c	/^static hashChain * hashChainConstruct(pair_kv pair) {$/;"	f	language:C	typeref:typename:hashChain *	file:
+hashChainSearch	src/hash.c	/^static void * hashChainSearch(hashChain *chain, pair_kv pair) {$/;"	f	language:C	typeref:typename:void *	file:
 hashElem	include/hash.h	/^} hashElem;$/;"	t	language:C++	typeref:struct:__anon50dc7d720308
 hashFunc	include/hash.h	/^    hashFunction hashFunc;    $/;"	m	language:C++	struct:__anon50dc7d720408	typeref:typename:hashFunction
-hashFunction	include/hash.h	/^typedef int (*hashFunction)(HASH_KEY);$/;"	t	language:C++	typeref:typename:int (*)(HASH_KEY)
+hashFunction	include/hash.h	/^typedef int (*hashFunction)(void *);$/;"	t	language:C++	typeref:typename:int (*)(void *)
 hashMap	include/hash.h	/^} hashMap;$/;"	t	language:C++	typeref:struct:__anon50dc7d720408
-hashMapConstruct	src/hash.c	/^hashMap * hashMapConstruct(hashMap *mem, int size, hashFunction func) {$/;"	f	language:C	typeref:typename:hashMap *
-hashMapGet	src/hash.c	/^void * hashMapGet(hashMap *map, HASH_KEY key) {$/;"	f	language:C	typeref:typename:void *
-hashMapPut	src/hash.c	/^int hashMapPut(hashMap *map, HASH_KEY key, void *value) {$/;"	f	language:C	typeref:typename:int
+hashMapConstruct	src/hash.c	/^hashMap * hashMapConstruct(int size, hashFunction func) {$/;"	f	language:C	typeref:typename:hashMap *
+hashMapGet	src/hash.c	/^void * hashMapGet(hashMap *map, pair_kv pair) {$/;"	f	language:C	typeref:typename:void *
+hashMapPut	src/hash.c	/^int hashMapPut(hashMap *map, pair_kv pair) {$/;"	f	language:C	typeref:typename:int
+hashMapRelease	src/hash.c	/^int hashMapRelease(hashMap *map) {$/;"	f	language:C	typeref:typename:int
+hashTesting	src/hash.c	/^void hashTesting(void **state) {$/;"	f	language:C	typeref:typename:void
+hashing	src/hash.c	/^int hashing(void *key) {$/;"	f	language:C	typeref:typename:int
 head	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *head;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode *
 head	include/queue.h	/^    int head;$/;"	m	language:C++	struct:mibNodeInfoQueue	typeref:typename:int
 help	Makefile	/^help:$/;"	t	language:Make
@@ -724,7 +729,7 @@ isNode	include/mibTreeObjTree.h	/^    int isNode;$/;"	m	language:C++	struct:mibO
 isNullPtr	include/type.h	/^#define isNullPtr(/;"	d	language:C++
 isQueueEmpty	src/queue.c	/^static int isQueueEmpty(mibNodeInfoQueue *q) {$/;"	f	language:C	typeref:typename:int	file:
 isQueueFull	src/queue.c	/^static int isQueueFull(mibNodeInfoQueue *q) {$/;"	f	language:C	typeref:typename:int	file:
-key	include/hash.h	/^    HASH_KEY key;$/;"	m	language:C++	struct:__anon50dc7d720108	typeref:typename:HASH_KEY
+key	include/hash.h	/^    void * key;$/;"	m	language:C++	struct:__anon50dc7d720108	typeref:typename:void *
 laTexStrBuffer	src/docGenerate.c	/^char *laTexStrBuffer;$/;"	v	language:C	typeref:typename:char *
 latexHeaderGen	src/docGenerate.c	/^static int latexHeaderGen() {}$/;"	f	language:C	typeref:typename:int	file:
 latexTailGen	src/docGenerate.c	/^static int latexTailGen() {}$/;"	f	language:C	typeref:typename:int	file:
@@ -1041,7 +1046,7 @@ unitType	include/type.h	/^typedef enum unitType {$/;"	g	language:C++
 unitType	include/type.h	/^} unitType;$/;"	t	language:C++	typeref:enum:unitType
 unput	src/lexer.c	/^#define unput(/;"	d	language:C	file:
 upperTreeGeneration	src/mibTreeGen.c	/^int upperTreeGeneration(symbolTable *symTbl) {$/;"	f	language:C	typeref:typename:int
-val	include/hash.h	/^    HASH_VAL val;$/;"	m	language:C++	struct:__anon50dc7d720108	typeref:typename:HASH_VAL
+val	include/hash.h	/^    void * val;$/;"	m	language:C++	struct:__anon50dc7d720108	typeref:typename:void *
 volatile	CMakeFiles/3.13.3/CompilerIdC/CMakeCCompilerId.c	/^# define volatile$/;"	d	language:C	file:
 yyHEADER_H	include/lexer.h	/^#define yyHEADER_H /;"	d	language:C++
 yyIN_HEADER	include/lexer.h	/^#define yyIN_HEADER /;"	d	language:C++

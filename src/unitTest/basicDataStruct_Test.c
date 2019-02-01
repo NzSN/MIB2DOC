@@ -11,6 +11,7 @@
 #include "queue.h"
 #include "stack.h"
 #include "dispatcher.h"
+#include "hash.h"
 
 mibObjectTreeNode mibObjectTreeRoot;
 slice sliceContainer;
@@ -188,7 +189,8 @@ int main(void) {
             #ifdef MIB2DOC_UNIT_TESTING
             cmocka_unit_test(genericStackTesting),
             cmocka_unit_test(identListTesting),
-            cmocka_unit_test(collectInfoTesting)
+            cmocka_unit_test(collectInfoTesting),
+            cmocka_unit_test(hashTesting)
             #endif
     };
     return cmocka_run_group_tests(tests, NULL, NULL);
