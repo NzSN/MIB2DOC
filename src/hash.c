@@ -31,10 +31,12 @@ int hashMapRelease(hashMap *map) {
 }
 
 void * hashMapGet(hashMap *map, pair_kv pair) {
+    pair_key_base *key;
+
     if (isNullPtr(map)) {
         return NULL; 
     }
-    
+     
     int hashValue = map->hashFunc(PAIR_KEY(pair)) % map->size; 
     hashElem *pElem = map->space + hashValue;
     
@@ -52,9 +54,18 @@ int hashMapPut(hashMap *map, pair_kv pair) {
     int hashValue = map->hashFunc(PAIR_KEY(pair)) % map->size; 
     hashElem *pElem = map->space + hashValue;
 
-    if (HASH_ELEM_IS_COLLIDE(pElem)) {
+    if (HASH_ELEM_IS_USED(pElem)) {
+        // First I need to check is the key exists.
+        if (hashChainSearch(pElem->chain, pair)) {
+            // The key is already exist in the map. 
+            return FALSE;
+        }
+        pElem->collide = HASH_ELEM_COLLIDE;  
         return hashChainAppend(pElem->chain, pair);        
     }
+
+    pElem->used = HASH_ELEM_USED;
+    PAIR_KEY_SET(pElem->pair, PAIR_KEY(pair));
     PAIR_VAL_SET(pElem->pair, PAIR_VAL(pair));
     return TRUE;
 }
@@ -125,6 +136,7 @@ static int hashChainAppend(hashChain *chainNode, pair_kv pair) {
 
 int hashing(void *key) {
     int iKey = (int)key;
+    printf("key is %d\n", iKey);
     iKey *= 10;
     
     return iKey;
@@ -139,6 +151,10 @@ typedef struct {
     pair_val_base base;
     int val;
 } try_val;
+
+void * tryKeyValue(try_key *key) {
+    return (void *)key->key;
+} 
 
 int tryKeyEqual(try_key *lK, try_key *rK) {
     if (isNullPtr(lK) || isNullPtr(rK))
@@ -156,6 +172,7 @@ try_key * tryKeyConstruct(int key) {
     try_key *pK = (try_key *)malloc(sizeof(try_key));
     pK->key = key;
     pK->base.isEqual = tryKeyEqual;
+    pK->base.value = tryKeyValue;
 
     return pK;
 }
@@ -166,6 +183,13 @@ try_val * tryValConstruct(int val) {
    pV->base.isEqual = tryValEqual;
 
    return pV;
+}
+
+int simpleHashing(pair_key_base *key) {
+    try_key *tK = (try_key *)key;    
+    int keyVal = tK->key;
+    
+    return (keyVal << 5) + keyVal;
 }
 
 void hashTesting(void **state) {
@@ -214,20 +238,29 @@ void hashTesting(void **state) {
     tFoundKey = found->pair.key;
     assert_int_equal(tFoundKey->key, 2);    
 
-    // HashMap testing
-    int simpleHashing(pair_val_base *key) {
-        try_key *tK = (try_key *)key;    
-        int keyVal = tK->key;
-
-        return (keyVal << 5) + key;
-    }
-
     hashMap *pMap = hashMapConstruct(10, simpleHashing);  
-    // Situation: No collide 
-    hashMapGet(pMap, p1);
 
+    // Situation: No collide 
+    try_val *tVal = hashMapGet(pMap, p1);
+    if (NOT isNullPtr(tVal)) {
+        fail(); 
+    }
+    /*
+    hashMapPut(pMap, p1);
+    tVal = hashMapGet(pMap, p1);
+    assert_int_equal(tVal->val, 1);
+
+    /*
     // Situation: collide
-}
+    pair_kv collidePair;
+    PAIR_KEY_SET(collidePair, tryKeyConstruct(1));
+    PAIR_VAL_SET(collidePair, tryValConstruct(3));
+
+    // Key unique check.
+    if (hashMapPut(pMap, collidePair) != FALSE)
+        fail();
+   */  
+   }
 
 
 

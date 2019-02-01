@@ -6,9 +6,12 @@
 #define _MIB2DOC_HASHMAP_H_
 
 /* Defines */
+#define HASH_ELEM_USED (1)
+#define HASH_ELEM_NOT_USED (0)
+#define HASH_ELEM_IS_USED(ELEM) (ELEM->used == HASH_ELEM_USED)
 #define HASH_ELEM_COLLIDE (1)
-#define HASH_ELEM_NOT_COLLIDE (2)
-#define HASH_ELEM_IS_COLLIDE(ELEM) (ELEM->isCollide == HASH_ELEM_COLLIDE)
+#define HASH_ELEM_NOT_COLLIDE (0)
+#define HASH_ELEM_IS_COLLIDE(ELEM) (ELEM->collide == HASH_ELEM_COLLIDE)
 
 #define HASH_CHAIN_IS_LAST(C) (C->node.next == NULL)
 
@@ -24,6 +27,7 @@
 typedef int (*hashFunction)(void *);
 
 typedef struct {
+    void * (*value)(void *key);
     // Compare 
     int (*isEqual)(void *lKey, void *rKey);
 } pair_key_base;
@@ -44,7 +48,8 @@ typedef struct {
 } hashChain;
 
 typedef struct {
-    int isCollide;
+    int used;
+    int collide;
     pair_kv pair;
     hashChain *chain;
 } hashElem;

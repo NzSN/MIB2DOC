@@ -136,7 +136,10 @@ GL5610_MIB_DOC_GEN_TREE_H	include/mibTreeObjTree.h	/^#define GL5610_MIB_DOC_GEN_
 HASH_CHAIN_IS_LAST	include/hash.h	/^#define HASH_CHAIN_IS_LAST(/;"	d	language:C++
 HASH_ELEM_COLLIDE	include/hash.h	/^#define HASH_ELEM_COLLIDE /;"	d	language:C++
 HASH_ELEM_IS_COLLIDE	include/hash.h	/^#define HASH_ELEM_IS_COLLIDE(/;"	d	language:C++
+HASH_ELEM_IS_USED	include/hash.h	/^#define HASH_ELEM_IS_USED(/;"	d	language:C++
 HASH_ELEM_NOT_COLLIDE	include/hash.h	/^#define HASH_ELEM_NOT_COLLIDE /;"	d	language:C++
+HASH_ELEM_NOT_USED	include/hash.h	/^#define HASH_ELEM_NOT_USED /;"	d	language:C++
+HASH_ELEM_USED	include/hash.h	/^#define HASH_ELEM_USED /;"	d	language:C++
 HEAD	src/yy_syn.y	/^HEAD :$/;"	l	language:YACC
 HEX	CMakeFiles/3.13.3/CompilerIdC/CMakeCCompilerId.c	/^#define HEX(/;"	d	language:C	file:
 HEX	CMakeFiles/3.13.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define HEX(/;"	d	language:C++	file:
@@ -510,6 +513,7 @@ collectInfoInit	src/dispatcher.c	/^int collectInfoInit(char *modName, char *sStr
 collectInfoTesting	src/dispatcher.c	/^int collectInfoTesting() {$/;"	f	language:C	typeref:typename:int
 collectInfo_add	src/dispatcher.c	/^int collectInfo_add(collectInfo *cInfo, char *symbol) {$/;"	f	language:C	typeref:typename:int
 collectInfo_del	src/dispatcher.c	/^int collectInfo_del(collectInfo *cInfo, char *symbol) {$/;"	f	language:C	typeref:typename:int
+collide	include/hash.h	/^    int collide;$/;"	m	language:C++	struct:__anon50dc7d720508	typeref:typename:int
 command	compile_commands.json	/^  "command": "\/usr\/bin\/cc -DMIB2DOC_UNIT_TESTING -I\/home\/aydenlin\/Projects\/MIB2DOC\/inclu/;"	s	language:JSON	object:0
 command	compile_commands.json	/^  "command": "\/usr\/bin\/cc -DMIB2DOC_UNIT_TESTING -I\/home\/aydenlin\/Projects\/MIB2DOC\/inclu/;"	s	language:JSON	object:1
 command	compile_commands.json	/^  "command": "\/usr\/bin\/cc -DMIB2DOC_UNIT_TESTING -I\/home\/aydenlin\/Projects\/MIB2DOC\/inclu/;"	s	language:JSON	object:10
@@ -732,7 +736,6 @@ info_version	CMakeFiles/3.13.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const
 info_version_internal	CMakeFiles/3.13.3/CompilerIdC/CMakeCCompilerId.c	/^char const info_version_internal[] = {$/;"	v	language:C	typeref:typename:char const[]
 info_version_internal	CMakeFiles/3.13.3/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version_internal[] = {$/;"	v	language:C++	typeref:typename:char const[]
 insert_MibTree	src/mibTreeObjTree.c	/^int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent_ident) {$/;"	f	language:C	typeref:typename:int
-isCollide	include/hash.h	/^    int isCollide;$/;"	m	language:C++	struct:__anon50dc7d720508	typeref:typename:int
 isEqual	include/hash.h	/^    int (*isEqual)(void *lKey, void *rKey);$/;"	m	language:C++	struct:__anon50dc7d720108	typeref:typename:int (*)(void * lKey,void * rKey)
 isEqual	include/hash.h	/^    int (*isEqual)(void *lVal, void *rVal);$/;"	m	language:C++	struct:__anon50dc7d720208	typeref:typename:int (*)(void * lVal,void * rVal)
 isInitilized	src/docGenerate.c	/^int isInitilized;$/;"	v	language:C	typeref:typename:int
@@ -1055,6 +1058,7 @@ top	include/stack.h	/^    int top;$/;"	m	language:C++	struct:identStack	typeref:
 travel_MibTree	src/mibTreeObjTree.c	/^mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, $/;"	f	language:C	typeref:typename:mibObjectTreeNode *
 tryKeyConstruct	src/hash.c	/^try_key * tryKeyConstruct(int key) {$/;"	f	language:C	typeref:typename:try_key *
 tryKeyEqual	src/hash.c	/^int tryKeyEqual(try_key *lK, try_key *rK) {$/;"	f	language:C	typeref:typename:int
+tryKeyValue	src/hash.c	/^void *tryKeyValue(try_key *key) {$/;"	f	language:C	typeref:typename:void *
 tryValConstruct	src/hash.c	/^try_val * tryValConstruct(int val) {$/;"	f	language:C	typeref:typename:try_val *
 tryValEqual	src/hash.c	/^int tryValEqual(try_val *lV, try_val *rV) {$/;"	f	language:C	typeref:typename:int
 try_key	src/hash.c	/^} try_key;$/;"	t	language:C	typeref:struct:__anon5ef278910108	file:
@@ -1067,8 +1071,10 @@ unitType	include/type.h	/^typedef enum unitType {$/;"	g	language:C++
 unitType	include/type.h	/^} unitType;$/;"	t	language:C++	typeref:enum:unitType
 unput	src/lexer.c	/^#define unput(/;"	d	language:C	file:
 upperTreeGeneration	src/mibTreeGen.c	/^int upperTreeGeneration(symbolTable *symTbl) {$/;"	f	language:C	typeref:typename:int
+used	include/hash.h	/^    int used;$/;"	m	language:C++	struct:__anon50dc7d720508	typeref:typename:int
 val	include/hash.h	/^    pair_val_base *val;$/;"	m	language:C++	struct:__anon50dc7d720308	typeref:typename:pair_val_base *
 val	src/hash.c	/^    int val;$/;"	m	language:C	struct:__anon5ef278910208	typeref:typename:int	file:
+value	include/hash.h	/^    void * (*value)(void *key);$/;"	m	language:C++	struct:__anon50dc7d720108	typeref:typename:void * (*)(void * key)
 volatile	CMakeFiles/3.13.3/CompilerIdC/CMakeCCompilerId.c	/^# define volatile$/;"	d	language:C	file:
 yyHEADER_H	include/lexer.h	/^#define yyHEADER_H /;"	d	language:C++
 yyIN_HEADER	include/lexer.h	/^#define yyIN_HEADER /;"	d	language:C++
