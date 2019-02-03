@@ -12,6 +12,7 @@
 #define HASH_ELEM_COLLIDE (1)
 #define HASH_ELEM_NOT_COLLIDE (0)
 #define HASH_ELEM_IS_COLLIDE(ELEM) (ELEM->collide == HASH_ELEM_COLLIDE)
+#define HASH_ELEM_CHAIN_REF(ELEM) (&(ELEM->chain))
 
 #define HASH_CHAIN_IS_LAST(C) (C->node.next == NULL)
 
@@ -51,7 +52,7 @@ typedef struct {
     int used;
     int collide;
     pair_kv pair;
-    hashChain *chain;
+    hashChain chain;
 } hashElem;
 
 typedef struct {

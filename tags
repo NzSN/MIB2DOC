@@ -134,6 +134,7 @@ GL5610_MIB_DOC_GEN_STACK_H	include/stack.h	/^#define GL5610_MIB_DOC_GEN_STACK_H$
 GL5610_MIB_DOC_GEN_TOKENOP_H	include/mibTreeGen.h	/^#define GL5610_MIB_DOC_GEN_TOKENOP_H$/;"	d	language:C++
 GL5610_MIB_DOC_GEN_TREE_H	include/mibTreeObjTree.h	/^#define GL5610_MIB_DOC_GEN_TREE_H$/;"	d	language:C++
 HASH_CHAIN_IS_LAST	include/hash.h	/^#define HASH_CHAIN_IS_LAST(/;"	d	language:C++
+HASH_ELEM_CHAIN_REF	include/hash.h	/^#define HASH_ELEM_CHAIN_REF(/;"	d	language:C++
 HASH_ELEM_COLLIDE	include/hash.h	/^#define HASH_ELEM_COLLIDE /;"	d	language:C++
 HASH_ELEM_IS_COLLIDE	include/hash.h	/^#define HASH_ELEM_IS_COLLIDE(/;"	d	language:C++
 HASH_ELEM_IS_USED	include/hash.h	/^#define HASH_ELEM_IS_USED(/;"	d	language:C++
@@ -501,7 +502,7 @@ buffer	include/stack.h	/^    unsigned char *buffer;$/;"	m	language:C++	struct:id
 bufferInfo	include/dispatcher.h	/^    YY_BUFFER_STATE bufferInfo;$/;"	m	language:C++	struct:switchInfo	typeref:typename:YY_BUFFER_STATE
 bufferSize	include/stack.h	/^    int bufferSize;$/;"	m	language:C++	struct:identStack	typeref:typename:int
 cSpace	include/type.h	/^#define cSpace /;"	d	language:C++
-chain	include/hash.h	/^    hashChain *chain;$/;"	m	language:C++	struct:__anon50dc7d720508	typeref:typename:hashChain *
+chain	include/hash.h	/^    hashChain chain;$/;"	m	language:C++	struct:__anon50dc7d720508	typeref:typename:hashChain
 child	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *child;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode *
 clean	Makefile	/^clean:$/;"	t	language:Make
 clean/fast	Makefile	/^clean\/fast: clean$/;"	t	language:Make
@@ -860,6 +861,7 @@ sectionRecord	src/main.c	/^char *sectionRecord[SIZE_OF_SECTION_RECORD];$/;"	v	la
 sectionRecord	src/unitTest/basicDataStruct_Test.c	/^char *sectionRecord[SIZE_OF_SECTION_RECORD];$/;"	v	language:C	typeref:typename:char * []
 showTree	src/mibTreeObjTree.c	/^void showTree(mibObjectTreeNode *root) {$/;"	f	language:C	typeref:typename:void
 sibling	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *sibling;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode *
+simpleHashing	src/hash.c	/^int simpleHashing(pair_key_base *key) {$/;"	f	language:C	typeref:typename:int
 size	include/hash.h	/^    int size;$/;"	m	language:C++	struct:__anon50dc7d720608	typeref:typename:int
 sliKey	include/list.h	/^    int sliKey;$/;"	m	language:C++	struct:slice	typeref:typename:int
 sliNode	include/list.h	/^    listNode sliNode;$/;"	m	language:C++	struct:slice	typeref:typename:listNode
@@ -1040,7 +1042,7 @@ symbolType	include/symbolTbl.h	/^typedef enum symbolType {$/;"	g	language:C++
 symbolType	include/symbolTbl.h	/^} symbolType;$/;"	t	language:C++	typeref:enum:symbolType
 symbol_t	include/symbolTbl.h	/^typedef struct symbol_t {$/;"	s	language:C++
 symbol_t	include/symbolTbl.h	/^} symbol_t;$/;"	t	language:C++	typeref:struct:symbol_t
-symbols	include/dispatcher.h	/^    identList *symbols;$/;"	m	language:C++	struct:collectInfo	typeref:typename:identList *
+symbols	include/dispatcher.h	/^    hashMap *symbols;$/;"	m	language:C++	struct:collectInfo	typeref:typename:hashMap *
 tSymListHead	src/mibTreeGen.c	/^targetSymbolList tSymListHead;$/;"	v	language:C	typeref:typename:targetSymbolList
 tableBuffer	include/queue.h	/^    tableInfo *tableBuffer[SIZE_OF_QUEUE];$/;"	m	language:C++	struct:mibNodeInfoQueue	typeref:typename:tableInfo * []
 tableGen_Latex	src/docGenerate.c	/^static int tableGen_Latex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) {$/;"	f	language:C	typeref:typename:int	file:
@@ -1058,7 +1060,7 @@ top	include/stack.h	/^    int top;$/;"	m	language:C++	struct:identStack	typeref:
 travel_MibTree	src/mibTreeObjTree.c	/^mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, $/;"	f	language:C	typeref:typename:mibObjectTreeNode *
 tryKeyConstruct	src/hash.c	/^try_key * tryKeyConstruct(int key) {$/;"	f	language:C	typeref:typename:try_key *
 tryKeyEqual	src/hash.c	/^int tryKeyEqual(try_key *lK, try_key *rK) {$/;"	f	language:C	typeref:typename:int
-tryKeyValue	src/hash.c	/^void *tryKeyValue(try_key *key) {$/;"	f	language:C	typeref:typename:void *
+tryKeyValue	src/hash.c	/^void * tryKeyValue(try_key *key) {$/;"	f	language:C	typeref:typename:void *
 tryValConstruct	src/hash.c	/^try_val * tryValConstruct(int val) {$/;"	f	language:C	typeref:typename:try_val *
 tryValEqual	src/hash.c	/^int tryValEqual(try_val *lV, try_val *rV) {$/;"	f	language:C	typeref:typename:int
 try_key	src/hash.c	/^} try_key;$/;"	t	language:C	typeref:struct:__anon5ef278910108	file:

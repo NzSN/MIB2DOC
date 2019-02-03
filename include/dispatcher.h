@@ -4,6 +4,7 @@
 #include "type.h"
 #include "stack.h"
 #include "list.h"
+#include "hash.h"
 #include "lexer.h"
 
 
@@ -35,7 +36,7 @@ typedef struct identList {
 
 typedef struct collectInfo {
     char *modName;
-    identList *symbols;
+    hashMap *symbols;
 } collectInfo;
 
 typedef struct switchInfo {

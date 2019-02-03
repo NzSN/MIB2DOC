@@ -16,7 +16,7 @@ hashMap * hashMapConstruct(int size, hashFunction func) {
     }
     
     mem = (hashMap *)malloc(sizeof(hashMap));
-    memset(mem, 0, size);
+    memset(mem, 0, sizeof(hashMap));
 
     mem->size = size;
     mem->hashFunc = func;
@@ -27,11 +27,12 @@ hashMap * hashMapConstruct(int size, hashFunction func) {
 }
 
 int hashMapRelease(hashMap *map) {
-
+    
 }
 
 void * hashMapGet(hashMap *map, pair_kv pair) {
-    pair_key_base *key;
+    hashChain *chainBeFound;
+    pair_key_base *beChecked, *selectedKey;
 
     if (isNullPtr(map)) {
         return NULL; 
@@ -40,8 +41,19 @@ void * hashMapGet(hashMap *map, pair_kv pair) {
     int hashValue = map->hashFunc(PAIR_KEY(pair)) % map->size; 
     hashElem *pElem = map->space + hashValue;
     
+    beChecked = PAIR_KEY(pair); 
+
     if (HASH_ELEM_IS_COLLIDE(pElem)) {
-        return hashChainSearch(pElem->chain, pair);             
+        selectedKey = PAIR_KEY(pElem->pair);
+
+        if (isNullPtr(selectedKey)) {
+            return NULL;
+        }
+        if (selectedKey->isEqual(selectedKey, beChecked)) { 
+            return PAIR_VAL(pElem->pair); 
+        }
+        chainBeFound = hashChainSearch(HASH_ELEM_CHAIN_REF(pElem), pair);             
+        return PAIR_VAL(chainBeFound->pair);
     }
     return PAIR_VAL(pElem->pair);
 }
@@ -52,21 +64,28 @@ int hashMapPut(hashMap *map, pair_kv pair) {
     }
 
     int hashValue = map->hashFunc(PAIR_KEY(pair)) % map->size; 
-    hashElem *pElem = map->space + hashValue;
+    hashElem *pElem = map->space + hashValue; 
 
     if (HASH_ELEM_IS_USED(pElem)) {
+        int match;
+        pair_key_base *key = PAIR_KEY(pElem->pair);
+
         // First I need to check is the key exists.
-        if (hashChainSearch(pElem->chain, pair)) {
+        match = key->isEqual(key, PAIR_KEY(pair)); 
+        if (match || hashChainSearch(HASH_ELEM_CHAIN_REF(pElem), pair)) {
             // The key is already exist in the map. 
             return FALSE;
         }
+
         pElem->collide = HASH_ELEM_COLLIDE;  
-        return hashChainAppend(pElem->chain, pair);        
+        return hashChainAppend(HASH_ELEM_CHAIN_REF(pElem), pair);        
     }
 
     pElem->used = HASH_ELEM_USED;
+
     PAIR_KEY_SET(pElem->pair, PAIR_KEY(pair));
     PAIR_VAL_SET(pElem->pair, PAIR_VAL(pair));
+
     return TRUE;
 }
 
@@ -87,8 +106,9 @@ static hashChain *hashChainPrev(hashChain *chain) {
 }
 
 static hashChain * hashChainNext(hashChain *chain) {
-    if (isNullPtr(chain))
+    if (isNullPtr(chain) || HASH_CHAIN_IS_LAST(chain)) {
         return NULL;
+    }
     return containerOf(listNodeNext(&chain->node), hashChain, node);
 }
 
@@ -104,18 +124,19 @@ static hashChain * hashChainSearch(hashChain *chainNode, pair_kv pair) {
 
     if (isNullPtr(chainNode))
         return NULL;
-
     do {
         selectedKey = PAIR_KEY(chainNode->pair);
         beChecked = PAIR_KEY(pair);
-        
-        if (selectedKey->isEqual(selectedKey, beChecked)) {
-            break;
-        } else {
-            // Continue to check next chian node.     
+                     
+        if (!isNullPtr(selectedKey)) {
+            if (selectedKey->isEqual(selectedKey, beChecked)) {
+                break;
+            } else {
+                // Continue to check next chian node.     
+            }
         }
     } while(chainNode = hashChainNext(chainNode));
-    
+
     return chainNode;
 }
 
@@ -129,6 +150,22 @@ static int hashChainAppend(hashChain *chainNode, pair_kv pair) {
     return TRUE;
 }
 
+static int hashChainRelease(hashChain *chainNode) {
+    hashChain *released;    
+    
+    do {
+        released = chainNode;  
+        RELEASE_MEM(released);     
+    } while(chainNode = hashChainNext(chainNode));
+    
+    return TRUE;     
+}
+
+static int hashChainRelease_STATIC(hashChain *chainNode) {
+
+    return TRUE;
+}
+
 #ifdef MIB2DOC_UNIT_TESTING
 
 #include "test.h"
@@ -136,7 +173,6 @@ static int hashChainAppend(hashChain *chainNode, pair_kv pair) {
 
 int hashing(void *key) {
     int iKey = (int)key;
-    printf("key is %d\n", iKey);
     iKey *= 10;
     
     return iKey;
@@ -188,7 +224,7 @@ try_val * tryValConstruct(int val) {
 int simpleHashing(pair_key_base *key) {
     try_key *tK = (try_key *)key;    
     int keyVal = tK->key;
-    
+
     return (keyVal << 5) + keyVal;
 }
 
@@ -215,11 +251,13 @@ void hashTesting(void **state) {
     assert_int_equal(tP3->base.isEqual(tP3, tP4), TRUE);
 
     // hashChain Testing
+    printf("hashChain Testing\n");
     pair_kv p1; 
     PAIR_KEY_SET(p1, tK1);
     PAIR_VAL_SET(p1, tP1);
     
     // Situation: only one node
+    printf("Situation: only one node\n");
     hashChain *found, *pChain = hashChainConstruct(p1);
     found = hashChainSearch(pChain, p1); 
     
@@ -227,42 +265,57 @@ void hashTesting(void **state) {
     assert_int_equal(tFoundKey->key, 1);
     
     // Situation: several node
+    printf("Situation: several node");
     pair_kv p2;
-    PAIR_KEY_SET(p2, tK2);
-    PAIR_VAL_SET(p2, tP2);
-    hashChainAppend(pChain, p2);
-    found = hashChainSearch(pChain, p2);
-    if (isNullPtr(found)) {
-        fail(); 
-    }  
-    tFoundKey = found->pair.key;
-    assert_int_equal(tFoundKey->key, 2);    
+    try_val *retVal;
+    int chain_count = 0;
+     
+    while (chain_count < 1000) {
+        PAIR_KEY_SET(p2, tryKeyConstruct(chain_count));
+        PAIR_VAL_SET(p2, tryValConstruct(chain_count));
+        hashChainAppend(pChain, p2);
+        found = hashChainSearch(pChain, p2);
+        retVal = PAIR_VAL(found->pair);
+        assert_int_equal(retVal->val, chain_count);
 
-    hashMap *pMap = hashMapConstruct(10, simpleHashing);  
+        ++chain_count;
+    }
+    hashMap *pMap = hashMapConstruct(1000, simpleHashing);  
 
     // Situation: No collide 
+    printf("Situation: No collide\n");
     try_val *tVal = hashMapGet(pMap, p1);
     if (NOT isNullPtr(tVal)) {
         fail(); 
     }
-    /*
     hashMapPut(pMap, p1);
     tVal = hashMapGet(pMap, p1);
     assert_int_equal(tVal->val, 1);
 
-    /*
     // Situation: collide
+    printf("Situation: collide\n");
     pair_kv collidePair;
     PAIR_KEY_SET(collidePair, tryKeyConstruct(1));
     PAIR_VAL_SET(collidePair, tryValConstruct(3));
 
     // Key unique check.
+    printf("Key unique check\n");
     if (hashMapPut(pMap, collidePair) != FALSE)
         fail();
-   */  
+
+    int count = 0;
+    pair_kv temp;
+    while (count < 1000000) {
+        PAIR_KEY_SET(temp, tryKeyConstruct(count));
+        PAIR_VAL_SET(temp, tryValConstruct(count));
+        hashMapPut(pMap, temp);
+        tVal = hashMapGet(pMap, temp);
+    
+
+        assert_int_equal(tVal->val, count);
+        ++count;
+    }
    }
-
-
 
 #endif /* MIB2DOC_UNIT_TESTING */
 
