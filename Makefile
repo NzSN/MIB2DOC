@@ -212,6 +212,7 @@ src/hash.o: src/hash.c.o
 
 # target to build an object file
 src/hash.c.o:
+	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/hash.c.o
 	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/hash.c.o
 .PHONY : src/hash.c.o
 
@@ -221,6 +222,7 @@ src/hash.i: src/hash.c.i
 
 # target to preprocess a source file
 src/hash.c.i:
+	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/hash.c.i
 	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/hash.c.i
 .PHONY : src/hash.c.i
 
@@ -230,6 +232,7 @@ src/hash.s: src/hash.c.s
 
 # target to generate assembly for a file
 src/hash.c.s:
+	$(MAKE) -f CMakeFiles/Mib2Doc.dir/build.make CMakeFiles/Mib2Doc.dir/src/hash.c.s
 	$(MAKE) -f CMakeFiles/UNIT_TEST.dir/build.make CMakeFiles/UNIT_TEST.dir/src/hash.c.s
 .PHONY : src/hash.c.s
 

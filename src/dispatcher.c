@@ -8,12 +8,14 @@
 #include <list.h>
 #include <options.h>
 #include <util.h>
+#include "hash.h"
 
 /* Declaration Section */
 static void debugging(dispatchParam *param);
 static int dispatchMakeChoice(dispatch_type dType);
 static int lexBufferSwitching(char *newModule);
 static int switchToModule(char *moduleName, char *sCollection);
+static int symbolHashing(void *key);
 static int switchInit();
 
 /* Global */
@@ -21,6 +23,16 @@ extern slice sliceContainer;
 dispatch_mode dispatchMode;
 static unsigned char isNeedSwitchInit = TRUE;
 switchingState swState;
+
+typedef struct {
+    pair_key_base base;
+    char *symbolIndex;
+} symbolKey;
+
+typedef struct {
+    pair_val_base base;
+    char *symbol;
+} symbolVal;
 
 /* Definition Section */
 int dispatchInit() {
@@ -173,79 +185,172 @@ char * switch_CurrentMod(char *modName, int len) {
  **************************/
 #define SYMBOL_SEPERATOR ','
 
+static int symbolHashing(void *key) { 
+    int hashVal = 0;
+    char *keyString;
+    symbolKey *sKey = (symbolKey *)key;  
+
+    if (isNullPtr(key))
+        return -1;
+
+    keyString = sKey->symbolIndex;
+
+    int index = 0, size, value;      
+    size = strlen(keyString);
+    
+    while (index < size) {
+        value = keyString[index];
+        hashVal += (value << 5) + value; 
+        ++index;
+    }
+
+    return hashVal;
+}
+
+static int symbolKeyEqual(void *lSymbol, void *rSymbol) {
+    int lLength, rLength;
+    symbolKey *lSymbol_ = (symbolKey *)lSymbol;
+    symbolKey *rSymbol_ = (symbolKey *)rSymbol;
+    
+    char *lStr = lSymbol_->symbolIndex;
+    char *rStr = rSymbol_->symbolIndex;
+    
+    if (isNullPtr(lStr) || isNullPtr(rStr))
+        return FALSE;
+
+    lLength = lLength > rLength ? lLength : rLength;
+    return ! strncmp(lStr, rStr, lLength);
+}
+
+static int symbolValEqual(void *lSymbol, void *rSymbol) {
+    int lLength, rLength;
+    symbolVal *lSymbol_ = (symbolVal *)lSymbol;
+    symbolVal *rSymbol_ = (symbolVal *)rSymbol;
+    
+    if (isNullPtr(lSymbol) || isNullPtr(rSymbol))
+        return FALSE;
+
+    char *lStr = lSymbol_->symbol; 
+    char *rStr = rSymbol_->symbol;
+    
+    if (isNullPtr(lStr) || isNullPtr(rStr))
+        return FALSE;
+
+    lLength = lLength > rLength ? lLength : rLength;
+    return ! strncmp(lStr, rStr, lLength);
+}
+
+static void * symbolKeyValue(void *symbol) {
+    symbolKey *symKey = (symbolKey *)symbol;
+
+    if (isNullPtr(symbol))
+        return NULL;
+
+    return symKey->symbolIndex;
+}
+
+static void * symbolValValue(void *symbol) {
+    symbolVal *symVal = (symbolVal *)symbol;
+    return symVal->symbol;
+}
+
+static int symbolKeyRelease(void *symbol) {
+    symbolKey *symKey = (symbolKey *)symbol;
+    
+    if (isNullPtr(symbol))
+        return FALSE;
+
+    if (! isNullPtr(symKey->symbolIndex))
+        RELEASE_MEM(symKey->symbolIndex);
+
+    RELEASE_MEM(symKey);
+
+    return TRUE;
+} 
+
+static int symbolValRelease(void *symbol) {
+    symbolVal *symVal = (symbolVal *)symbol;
+
+    if (isNullPtr(symbol))
+        return FALSE;
+
+    if (! isNullPtr(symVal->symbol))
+        RELEASE_MEM(symVal->symbol);
+
+    RELEASE_MEM(symVal);
+
+    return TRUE;
+}
+
+symbolKey * symbolKeyConst(char *symbols) {
+    pair_key_base *base;
+    symbolKey *key = (symbolKey *)malloc(sizeof(symbolKey)); 
+
+    base = &key->base;
+    
+    // base init
+    base->isEqual = symbolKeyEqual; 
+    base->release = symbolKeyRelease; 
+    base->value = symbolKeyValue;
+
+    key->symbolIndex = symbols; 
+    
+    return key;
+}
+
+symbolVal * symbolValConst(char *symbol) {
+    pair_val_base *base;
+    symbolVal *val = (symbolVal *)malloc(sizeof(symbolVal));
+
+    base = &val->base;
+
+    // base init
+    base->isEqual = symbolValEqual;
+    base->release = symbolValRelease;
+    base->value = symbolValValue;
+
+    val->symbol = symbol;
+
+    return val;
+}
+
 int collectInfoInit(char *modName, char *sString, collectInfo *cInfo) {
-    identList *head;
+    hashMap *symbolMap;
 
     if (isNullPtr(modName) || isNullPtr(sString) || isNullPtr(cInfo))
         return -1;
 
-    head = (identList *)malloc(sizeof(identList));
-    stringToIdentList(sString, head, SYMBOL_SEPERATOR);
+    symbolMap = hashMapConstruct(100, symbolHashing);
+
+    stringToIdentList(sString, symbolMap, SYMBOL_SEPERATOR);
 
     cInfo->modName = modName;
-    cInfo->symbols = head;
+    cInfo->symbols = symbolMap;
 
     return 0;
 }
 
 int collectInfo_add(collectInfo *cInfo, char *symbol) {
+    pair_kv pair;
+
     if (isNullPtr(cInfo))
         return FALSE;
-    return appendSymToIdentList(cInfo->symbols, symbol);   
+    
+    PAIR_KEY_SET(pair, (pair_key_base *)symbolKeyConst(symbol));
+    PAIR_VAL_SET(pair, (pair_val_base *)symbolValConst(symbol));
+    return hashMapPut(cInfo->symbols, pair);
 }
 
 int collectInfo_del(collectInfo *cInfo, char *symbol) {
+    pair_kv pair;
+
     if (isNullPtr(cInfo))
         return FALSE;
-    return rmSymFromIdentList(cInfo->symbols, symbol);
+
+    PAIR_KEY_SET(pair, (pair_key_base *)symbolKeyConst(symbol));
+    PAIR_VAL_SET(pair, (pair_val_base *)symbolValConst(symbol));
+    return hashMapDelete(cInfo->symbols, pair);
 }
-
-identList * identListConstruct(identList *iList, char *symbolIdent) {
-    if (isNullPtr(iList) || isNullPtr(symbolIdent))
-        return NULL;
-    memset(iList, 0, sizeof(identList));
-    iList->symName = symbolIdent;
-    return iList;
-}
-
-int appendSymToIdentList(identList *listHead, char *symbolIdent) {
-    identList *iList;
-
-    if (isNullPtr(listHead) || isNullPtr(symbolIdent))
-        return FALSE;
-    
-    iList = (identList *)malloc(sizeof(identList));
-    listNodeAppend(&listHead->node, &identListConstruct(iList, symbolIdent)->node);
-    
-    return TRUE;
-}
-
-int rmSymFromIdentList(identList *listHead, char *symbolIdent) {
-    identList *listProcessing;
-
-    if (isNullPtr(listHead)) {
-        return ERROR_NULL_REF;
-    }
-
-    listProcessing = listHead;
-
-    while (listHead) {
-        if (!strncmp(listProcessing->symName, symbolIdent, strlen(symbolIdent))) {
-            /* delete this node from lsit */
-            listNodeDelete(&listProcessing->node);
-            if (listProcessing == listHead && listHead->node.next != NULL) {
-                SW_CUR_IMPORT(swState).symbols = containerOf(listHead->node.next, identList, node);
-            }
-            RELEASE_MEM(listProcessing->symName);
-            RELEASE_MEM(listProcessing);
-            break;
-        }
-        listHead = containerOf(listHead->node.next, identList, node);
-    }
-    return ERROR_NONE;
-}
-
-
 
 #ifdef MIB2DOC_UNIT_TESTING
 
@@ -255,16 +360,11 @@ int rmSymFromIdentList(identList *listHead, char *symbolIdent) {
 #include <cmocka.h>
 
 int identListTesting() {
-    char *str = "Hello, World";
-    identList *iList = (identList *)malloc(sizeof(identList)); 
-    
-    iList = identListConstruct(iList, str);
-    appendSymToIdentList(iList, "TT");
-    assert_string_equal(iList->symName, str);
+    return 0;
 }
 
 int collectInfoTesting() {
-
+    return 0;
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

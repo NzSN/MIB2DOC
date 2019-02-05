@@ -7,7 +7,6 @@
 #include "hash.h"
 #include "lexer.h"
 
-
 typedef struct dispatchParam {
     void *param;
     listNode node;

@@ -307,7 +307,7 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
 
 MOD_STACK_OP_REMOVE:
     /* Need to remove the symbol found from list in the modStack */
-    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
+    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
     sliceRelease(&symCollectSlice);
     return retVal;
 }
@@ -315,32 +315,40 @@ MOD_STACK_OP_REMOVE:
 static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
+
+    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
     sliceRelease(&symCollectSlice);
+
     return retVal;
 }
 
 static int symbolCollect_BUILD_LEAVE_NODE(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
+
+    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
     sliceRelease(&symCollectSlice);
+
     return retVal;
 }
 
 static int symbolCollect_BUILD_SEQUENCE(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
+
+    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
     sliceRelease(&symCollectSlice);
+
     return retVal;
 }
 
 static int symbolCollect_BUILD_SMI_DEF(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
+
+    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
     sliceRelease(&symCollectSlice);
+
     return retVal;
 }
 

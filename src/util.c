@@ -2,14 +2,14 @@
 
 #include "util.h"
 
-int stringToIdentList(char *str, identList *list, char seperator) {
+int stringToIdentList(char *str, hashMap *symbolMap, char seperator) {
     enum { identRecognize, identTracking };
     int index = 0, index_ = 0, flag = identRecognize,
         beginPoint[256] = { 0 };
     char *strCopy = null;
     identList *listTmp;
     
-    if (isNullPtr(str) || isNullPtr(list)) {
+    if (isNullPtr(str) || isNullPtr(symbolMap)) {
         return ERROR_NULL_REF;
     }
     
@@ -34,11 +34,13 @@ int stringToIdentList(char *str, identList *list, char seperator) {
 
     index = 0;
     while (index_-- > 0) {
+        /*
         listTmp = (identList *)malloc(sizeof(identList));
         memset(listTmp, null, sizeof(identList));
         listTmp->symName = &strCopy[beginPoint[index]];
         list->node.next = &listTmp->node;
         index++;
+        */
     }
 
     return ERROR_NONE;

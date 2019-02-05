@@ -12,7 +12,7 @@ set(SOURCE_FILES
     ${SRC_DIR}/queue.c ${SRC_DIR}/mibTreeObjTree.c 
     ${SRC_DIR}/stack.c ${SRC_DIR}/list.c ${SRC_DIR}/lexDeal.c
     ${SRC_DIR}/options.c ${SRC_DIR}/util.c ${SRC_DIR}/dispatcher.c
-    ${SRC_DIR}/docGenerate.c ${SRC_DIR}/misc.c)
+    ${SRC_DIR}/docGenerate.c ${SRC_DIR}/misc.c ${SRC_DIR}/hash.c)
 set(HEADER_DIR ${HOME_DIR}/include)
 include_directories(${HEADER_DIR})
 
