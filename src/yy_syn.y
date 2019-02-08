@@ -80,10 +80,14 @@ MODULES_CONTENT :
             ret = collectInfo_add(importInfo, current->param);
             if (ret == FALSE) {
                 printf("IMPORT: Symbol conflict.\n"); 
-            }
-    
+                exit(1);
+            } 
         }
         disParamRelease_Static(&importParam, NULL);
+
+        // Build upper part of tree
+
+
     }
 
 ITEMS :
