@@ -4,6 +4,7 @@
 #include "docGenerate.h"
 #include "options.h"
 #include "dispatcher.h"
+#include "yy_syn.tab.h"
 
 extern int yylex(void);
 extern FILE *yyin;
@@ -23,8 +24,11 @@ int main(int argc, char *argv[]) {
     mibLeaveInfo *pInfo; 
 
     beginFrom = "sys";
+
+    syntaxParserInit();
     dispatchInit();
     mibObjectTreeInit(&mibObjectTreeRoot);
+
     node = &mibObjectTreeRoot;
     optionsInit(argc, argv);
     

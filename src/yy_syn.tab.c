@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.3.1.  */
+/* A Bison parser, made by GNU Bison 3.3.2.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
@@ -48,7 +48,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.3.1"
+#define YYBISON_VERSION "3.3.2"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -71,15 +71,22 @@
     #include "mibTreeObjTree.h"
     #include "dispatcher.h"
     #include "symbolTbl.h"
+    #include "string.h"
+
     #define YYSTYPE char *
-    
     extern symbolTable symTable; 
-    extern char *yylval;
+    extern YYSTYPE yylval;
     void yyerror(char const *s) {
         fprintf(stderr, "%s: %s\n", s, yylval);
+    }    
+
+    static dispatchParam importParam;
+
+    int syntaxParserInit(void) {
+        memset(&importParam, 0, sizeof(dispatchParam));
     }
 
-#line 83 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:315  */
+#line 90 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:315  */
 
 
 
@@ -104,10 +111,7 @@
 # define YYERROR_VERBOSE 0
 #endif
 
-/* In a future release of Bison, this section will be replaced
-   by #include "yy_syn.tab.h".  */
-#ifndef YY_YY_HOME_AYDENLIN_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
-# define YY_YY_HOME_AYDENLIN_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
+
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -163,7 +167,7 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_AYDENLIN_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED  */
+
 
 
 
@@ -398,16 +402,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  5
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   76
+#define YYLAST   73
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  31
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  28
+#define YYNNTS  29
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  47
+#define YYNRULES  48
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  100
+#define YYNSTATES  101
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   285
@@ -456,11 +460,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    33,    33,    36,    37,    38,    39,    40,    41,    44,
-      47,    58,    59,    62,    63,    64,    67,    70,    71,    74,
-      84,    90,   105,   108,   111,   119,   126,   129,   130,   131,
-     132,   133,   134,   135,   136,   139,   142,   143,   146,   149,
-     154,   161,   168,   171,   177,   180,   181,   184
+       0,    40,    40,    43,    44,    45,    46,    47,    48,    51,
+      54,    65,    66,    69,    90,    96,   102,   105,   108,   109,
+     112,   122,   128,   143,   146,   149,   157,   164,   167,   168,
+     169,   170,   171,   172,   173,   174,   177,   180,   181,   184,
+     187,   192,   199,   206,   209,   215,   218,   219,   222
 };
 #endif
 
@@ -476,9 +480,9 @@ static const char *const yytname[] =
   "SEMICOLON", "INDEX_", "TRAP_SPECIFIER", "OBJ_IDEN_", "L_BRACE",
   "R_BRACE", "OBJECTS_", "TYPE", "NUM", "FROM_", "IMPORTS_", "\"SMI\"",
   "$accept", "MIB", "MAIN_PART", "DEFINITION", "IMPORT", "MODULES",
-  "ITEMS", "SEQUENCE", "SEQ_ITEM", "SMI", "OBJ_DEAL", "OBJ_IDENTIFIER",
-  "OBJ", "TRAP", "TRAP_HEAD", "HEAD", "BODY", "PROPERTY", "OBJECT",
-  "OBJECT_ITEM", "SYNTAX", "SYNTAX_VALUE", "ACCESS", "STATUS",
+  "MODULES_CONTENT", "ITEMS", "SEQUENCE", "SEQ_ITEM", "SMI", "OBJ_DEAL",
+  "OBJ_IDENTIFIER", "OBJ", "TRAP", "TRAP_HEAD", "HEAD", "BODY", "PROPERTY",
+  "OBJECT", "OBJECT_ITEM", "SYNTAX", "SYNTAX_VALUE", "ACCESS", "STATUS",
   "DESCRIPTION", "INDEX", "INDEX_ITEM", "MOUNT", YY_NULLPTR
 };
 #endif
@@ -495,12 +499,12 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -37
+#define YYPACT_NINF -33
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-37)))
+  (!!((Yystate) == (-33)))
 
-#define YYTABLE_NINF -16
+#define YYTABLE_NINF -17
 
 #define yytable_value_is_error(Yytable_value) \
   0
@@ -509,16 +513,17 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -1,   -12,     5,   -22,    -5,   -37,     3,     0,     7,    -7,
-       1,    -6,    -3,   -37,    32,   -37,     0,     0,     0,   -37,
-       0,     0,    28,    28,   -37,    34,   -37,    36,   -37,    23,
-     -37,    29,   -37,   -37,   -37,   -37,   -37,   -37,     6,    37,
-      38,    35,    20,    22,    26,   -37,    28,    28,    28,    28,
-      28,    28,    28,   -37,   -37,   -37,     3,    27,    31,   -37,
-     -37,   -37,   -37,   -37,   -37,    48,    49,    52,   -37,   -37,
-     -37,   -37,   -37,   -37,   -37,   -37,    53,    54,    33,    40,
-      39,    41,    42,    43,    44,    45,    46,    49,   -37,    52,
-     -37,    47,   -37,    50,   -37,   -37,   -37,    53,   -37,   -37
+       0,   -15,     5,   -23,    -5,   -33,     4,     1,     8,    -9,
+      -7,     4,    10,    -2,   -33,    18,   -33,     1,     1,     1,
+     -33,     1,     1,    29,    29,   -33,    20,   -33,   -33,    33,
+     -33,    23,   -33,    28,   -33,   -33,   -33,   -33,   -33,   -33,
+       7,    36,    35,    34,    24,    25,    27,   -33,    29,    29,
+      29,    29,    29,    29,    29,   -33,   -33,   -33,   -33,    30,
+      32,   -33,   -33,   -33,   -33,   -33,   -33,    43,    48,    49,
+     -33,   -33,   -33,   -33,   -33,   -33,   -33,    53,    54,    31,
+      41,    37,    42,    38,    39,    40,    44,    45,    48,   -33,
+      49,   -33,    50,   -33,    46,   -33,   -33,   -33,    53,   -33,
+     -33
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -526,32 +531,33 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     0,     0,     0,     0,     1,    12,     0,     0,    13,
-       0,     0,     0,     8,     0,     2,     0,     0,     0,    20,
-       0,     0,    34,    34,     9,    15,    10,     0,    25,     0,
-      24,     0,    19,     6,     7,     3,     4,     5,     0,     0,
-       0,     0,     0,     0,     0,    23,    34,    34,    34,    34,
-      34,    34,    34,    22,    26,    14,    12,     0,     0,    40,
-      39,    38,    41,    42,    43,     0,     0,     0,    33,    27,
-      28,    29,    30,    31,    32,    11,     0,     0,     0,    46,
-       0,    37,     0,     0,     0,     0,     0,     0,    44,     0,
-      35,    18,    16,     0,    47,    45,    36,     0,    21,    17
+       0,     0,     0,     0,     0,     1,    12,     0,     0,    14,
+       0,    12,     0,     0,     8,     0,     2,     0,     0,     0,
+      21,     0,     0,    35,    35,     9,    16,    10,    11,     0,
+      26,     0,    25,     0,    20,     6,     7,     3,     4,     5,
+       0,     0,     0,     0,     0,     0,     0,    24,    35,    35,
+      35,    35,    35,    35,    35,    23,    27,    15,    13,     0,
+       0,    41,    40,    39,    42,    43,    44,     0,     0,     0,
+      34,    28,    29,    30,    31,    32,    33,     0,     0,     0,
+      47,     0,    38,     0,     0,     0,     0,     0,     0,    45,
+       0,    36,    19,    17,     0,    48,    46,    37,     0,    22,
+      18
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -37,   -37,    -4,   -37,   -37,     8,    51,   -37,   -36,   -37,
-     -37,   -37,   -37,   -37,   -37,   -37,   -37,   -23,   -37,   -27,
-     -37,   -37,   -37,   -37,   -37,   -37,   -20,   -37
+     -33,   -33,    -4,   -33,   -33,    52,   -33,    47,   -33,   -32,
+     -33,   -33,   -33,   -33,   -33,   -33,   -33,   -33,   -24,   -33,
+     -18,   -33,   -33,   -33,   -33,   -33,   -33,   -21,   -33
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     2,    15,     3,     7,    10,    11,    16,    84,    17,
-      18,    19,    20,    21,    22,    23,    53,    45,    46,    82,
-      47,    61,    48,    49,    50,    51,    80,    52
+      -1,     2,    16,     3,     7,    10,    11,    12,    17,    85,
+      18,    19,    20,    21,    22,    23,    24,    55,    47,    48,
+      83,    49,    63,    50,    51,    52,    53,    81,    54
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -559,26 +565,26 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      54,    28,     1,    12,     4,     5,     9,     6,     8,    59,
-      29,    25,    33,    34,    35,    13,    36,    37,    30,    31,
-      26,    24,    27,    68,    69,    70,    71,    72,    73,    74,
-      14,   -15,    60,    38,    39,    32,    40,     9,    41,    56,
-      57,    42,    58,    65,    62,    66,    64,    63,    43,    67,
-      76,    78,    79,    44,    77,    81,    83,    85,    87,    89,
-      86,    99,    96,    88,    75,    97,    90,    95,    92,    91,
-      94,     0,    93,     0,    98,     0,    55
+      56,     4,    30,     1,    13,     5,     6,     9,     8,    26,
+      61,    31,    27,    35,    36,    37,    14,    38,    39,    32,
+      33,    34,    25,     9,    70,    71,    72,    73,    74,    75,
+      76,    15,   -16,    62,    40,    41,    58,    42,    29,    43,
+      59,    60,    44,    64,    65,    66,    79,    67,    68,    45,
+      69,    80,    82,    77,    46,    78,    84,    86,    87,    88,
+      90,    89,    91,    28,    93,    92,   100,    96,    98,    95,
+      99,    94,    97,    57
 };
 
-static const yytype_int8 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-      23,     4,     3,     3,    16,     0,     3,    29,    13,     3,
-      13,    18,    16,    17,    18,    15,    20,    21,    21,    22,
-      19,    14,    28,    46,    47,    48,    49,    50,    51,    52,
-      30,    28,    26,     5,     6,     3,     8,     3,    10,     3,
-      17,    13,    13,    23,     7,    23,    11,     9,    20,    23,
-      23,     3,     3,    25,    23,     3,     3,     3,    18,    18,
-      27,    97,    89,    24,    56,    18,    24,    87,    24,    26,
-      24,    -1,    27,    -1,    24,    -1,    25
+      24,    16,     4,     3,     3,     0,    29,     3,    13,    18,
+       3,    13,    19,    17,    18,    19,    15,    21,    22,    21,
+      22,     3,    14,     3,    48,    49,    50,    51,    52,    53,
+      54,    30,    28,    26,     5,     6,     3,     8,    28,    10,
+      17,    13,    13,     7,     9,    11,     3,    23,    23,    20,
+      23,     3,     3,    23,    25,    23,     3,     3,    27,    18,
+      18,    24,    24,    11,    24,    26,    98,    88,    18,    24,
+      24,    27,    90,    26
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -586,35 +592,36 @@ static const yytype_int8 yycheck[] =
 static const yytype_uint8 yystos[] =
 {
        0,     3,    32,    34,    16,     0,    29,    35,    13,     3,
-      36,    37,     3,    15,    30,    33,    38,    40,    41,    42,
-      43,    44,    45,    46,    14,    18,    19,    28,     4,    13,
-      21,    22,     3,    33,    33,    33,    33,    33,     5,     6,
-       8,    10,    13,    20,    25,    48,    49,    51,    53,    54,
-      55,    56,    58,    47,    48,    37,     3,    17,    13,     3,
-      26,    52,     7,     9,    11,    23,    23,    23,    48,    48,
-      48,    48,    48,    48,    48,    36,    23,    23,     3,     3,
-      57,     3,    50,     3,    39,     3,    27,    18,    24,    18,
-      24,    26,    24,    27,    24,    57,    50,    18,    24,    39
+      36,    37,    38,     3,    15,    30,    33,    39,    41,    42,
+      43,    44,    45,    46,    47,    14,    18,    19,    36,    28,
+       4,    13,    21,    22,     3,    33,    33,    33,    33,    33,
+       5,     6,     8,    10,    13,    20,    25,    49,    50,    52,
+      54,    55,    56,    57,    59,    48,    49,    38,     3,    17,
+      13,     3,    26,    53,     7,     9,    11,    23,    23,    23,
+      49,    49,    49,    49,    49,    49,    49,    23,    23,     3,
+       3,    58,     3,    51,     3,    40,     3,    27,    18,    24,
+      18,    24,    26,    24,    27,    24,    58,    51,    18,    24,
+      40
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
        0,    31,    32,    33,    33,    33,    33,    33,    33,    34,
-      35,    36,    36,    37,    37,    37,    38,    39,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    48,    48,    48,
-      48,    48,    48,    48,    48,    49,    50,    50,    51,    52,
-      52,    53,    54,    55,    56,    57,    57,    58
+      35,    36,    36,    37,    38,    38,    38,    39,    40,    40,
+      41,    42,    43,    44,    45,    46,    47,    48,    49,    49,
+      49,    49,    49,    49,    49,    49,    50,    51,    51,    52,
+      53,    53,    54,    55,    56,    57,    58,    58,    59
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     3,     2,     2,     2,     2,     2,     1,     4,
-       3,     4,     0,     1,     3,     0,     6,     4,     2,     2,
-       1,     7,     2,     2,     2,     2,     1,     2,     2,     2,
-       2,     2,     2,     2,     0,     4,     3,     1,     2,     1,
-       1,     2,     2,     2,     4,     3,     1,     5
+       3,     2,     0,     3,     1,     3,     0,     6,     4,     2,
+       2,     1,     7,     2,     2,     2,     2,     1,     2,     2,
+       2,     2,     2,     2,     2,     0,     4,     3,     1,     2,
+       1,     1,     2,     2,     2,     4,     3,     1,     5
 };
 
 
@@ -1300,7 +1307,7 @@ yyreduce:
   switch (yyn)
     {
         case 10:
-#line 47 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+#line 54 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
     {
         /* build upper tree if all including is finished */
         if (swState.counter == 0) {
@@ -1310,29 +1317,57 @@ yyreduce:
             /* do nothing */
         }
     }
-#line 1314 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 11:
-#line 58 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
-    { }
-#line 1320 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 1321 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 62 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
-    { }
-#line 1326 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 69 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+    {
+        printf("Modules: %s\n", yyvsp[0]);
+
+        dispatchParam *current;    
+        current = &importParam;
+        
+        int ret = TRUE;
+        collectInfo *importInfo = SW_CUR_IMPORT_REF(swState);
+        
+        // Store symbols that should be included.
+        while (current = dispatchParamNext(current)) {
+            ret = collectInfo_add(importInfo, current->param);
+            if (ret == FALSE) {
+                printf("IMPORT: Symbol conflict.\n"); 
+            }
+    
+        }
+        disParamRelease_Static(&importParam, NULL);
+    }
+#line 1345 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 63 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
-    { }
-#line 1332 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 90 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+    { 
+        printf("SYMBOL: %s\n", yyvsp[0]);
+        if (disParamStore(&importParam, disParamConstruct(yyvsp[0])) == NULL) {
+            exit(1); 
+        }
+    }
+#line 1356 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
-  case 19:
-#line 74 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+  case 15:
+#line 96 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+    { 
+        printf("SYMBOL: %s\n", yyvsp[-2]);
+        if (disParamStore(&importParam, disParamConstruct(yyvsp[-2])) == NULL) {
+            exit(1); 
+        }
+    }
+#line 1367 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 20:
+#line 112 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
     {
         dispatchParam *param  = disParamConstruct(SLICE_IDENTIFIER);
         disParamStore(param, disParamConstruct(yyvsp[0]));
@@ -1340,20 +1375,20 @@ yyreduce:
         dispatch(DISPATCH_PARAM_STAGE, param);
         dispatch(MIBTREE_GENERATION, disParamConstruct(SMI_DEF));
     }
-#line 1344 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 1379 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
-  case 20:
-#line 84 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+  case 21:
+#line 122 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
     { 
         dispatchParam *param = disParamConstruct(OBJECT_IDENTIFIER);
         dispatch(MIBTREE_GENERATION, param);
     }
-#line 1353 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 1388 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
-  case 21:
-#line 90 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+  case 22:
+#line 128 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct(yyvsp[-6]));
@@ -1367,84 +1402,84 @@ yyreduce:
 		disParamStore(param, disParamConstruct(yyvsp[-1]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 }
-#line 1371 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 22:
-#line 105 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
-    { dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT)); }
-#line 1377 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 1406 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
   case 23:
-#line 108 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
-    { dispatch(MIBTREE_GENERATION, disParamConstruct(TRAP)); }
-#line 1383 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 143 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+    { dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT)); }
+#line 1412 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
   case 24:
-#line 111 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
-    {
-		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
-		disParamStore(param, disParamConstruct(yyvsp[-1]));
-
-		dispatch(DISPATCH_PARAM_STAGE, param);
-	}
-#line 1394 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 146 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+    { dispatch(MIBTREE_GENERATION, disParamConstruct(TRAP)); }
+#line 1418 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
   case 25:
-#line 119 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+#line 149 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+    {
+		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
+		disParamStore(param, disParamConstruct(yyvsp[-1]));
+
+		dispatch(DISPATCH_PARAM_STAGE, param);
+	}
+#line 1429 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 26:
+#line 157 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct(yyvsp[-1]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1404 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 1439 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
-  case 39:
-#line 149 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+  case 40:
+#line 187 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct(yyvsp[0]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
     }
-#line 1414 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 1449 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
-  case 40:
-#line 154 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+  case 41:
+#line 192 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
     {
  		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct(yyvsp[0]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
  	}
-#line 1424 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 1459 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
-  case 41:
-#line 161 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+  case 42:
+#line 199 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_PERMISSION);
 		disParamStore(param, disParamConstruct(yyvsp[0]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1434 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 1469 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
-  case 43:
-#line 171 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+  case 44:
+#line 209 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_DESCRIPTION);
 		disParamStore(param, disParamConstruct(yyvsp[0]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1444 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 1479 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
-  case 47:
-#line 184 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
+  case 48:
+#line 222 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1652  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_PARENT);
 		disParamStore(param, disParamConstruct(yyvsp[-2]));
@@ -1454,11 +1489,11 @@ yyreduce:
 	    disParamStore(param, disParamConstruct(yyvsp[-1]));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1458 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 1493 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1462 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
+#line 1497 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1689,7 +1724,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 194 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1918  */
+#line 232 "/home/aydenlin/Projects/MIB2DOC/src/yy_syn.y" /* yacc.c:1918  */
 
 
 // Epilogue

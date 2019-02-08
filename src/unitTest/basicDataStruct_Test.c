@@ -42,6 +42,30 @@ static void list_test(void **state) {
 
     sliceRelease_STATIC(&sliceContainer);
     memset(&sliceContainer, 0, sizeof(slice));
+
+    typedef struct {
+        int idx;
+        listNode node;
+    } test_list;
+    
+    int i = 1;
+    test_list head, *current;
+    memset(&head, 0, sizeof(test_list));
+
+    while (i < 100) {
+        current = (test_list *)malloc(sizeof(test_list)); 
+        current->idx = i;
+        listNodeInsert(listNodeTail(&head.node), &current->node);
+        ++i;
+    }
+    
+    current = &head;
+
+    do {
+        if (current->node.next == NULL)
+            return;
+        current = containerOf(listNodeNext(&current->node), test_list, node);     
+    } while (current != NULL); 
 }
 
 
@@ -170,10 +194,28 @@ static void disParam_test(void **state) {
     char *IDENTIFIER_S = "GOGO";
     dispatchParam *param = disParamConstruct((void *)SLICE_PARENT);
     disParamStore(param, disParamConstruct((void *)IDENTIFIER_S));
+
     if ((unsigned long)disParamRetrive(&param)->param != SLICE_PARENT)
         fail();
     if (strncmp(disParamRetrive(&param)->param, IDENTIFIER_S, strlen(IDENTIFIER_S)) != 0)
         fail();
+
+    int i = 0;
+    dispatchParam *massive = disParamConstruct((void *)100);
+    while (i < 100) {
+        disParamStore(massive, disParamConstruct((void *)i+1)); 
+        ++i;
+    }
+    
+    i = 0;
+    dispatchParam *current = massive;
+    while (current = dispatchParamNext(current)) {
+        if ((unsigned long)current->param != i+1)
+            fail();
+        ++i;
+    }
+    
+    disParamRelease(massive, NULL);
 }
 
 int main(void) {
@@ -188,7 +230,6 @@ int main(void) {
             // Module unit testing
             #ifdef MIB2DOC_UNIT_TESTING
             cmocka_unit_test(genericStackTesting),
-            cmocka_unit_test(identListTesting),
             cmocka_unit_test(collectInfoTesting),
             cmocka_unit_test(hashTesting)
             #endif

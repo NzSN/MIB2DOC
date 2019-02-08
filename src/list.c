@@ -38,6 +38,7 @@ listNode * listNodeInsert(listNode *head, listNode *sliNode) {
     }
     if (head->next == NULL) {
         head->next = sliNode;
+        sliNode->prev = head;
     } else {
         middle = head->next;
         head->next = sliNode;
@@ -241,7 +242,7 @@ dispatchParam * disParamConstruct(void *param) {
     if (isNullPtr(param)) {
         return NULL;
     }
-
+    
     ret  = (dispatchParam *)malloc(sizeof(dispatchParam));
     memset(ret, 0, sizeof(dispatchParam));
     ret->param = param;
@@ -251,19 +252,19 @@ dispatchParam * disParamConstruct(void *param) {
 
 dispatchParam * dispatchParamPrev(dispatchParam *disparam) {
     listNode *prev = disparam->node.prev;
-    if (isNullPtr(prev))
+    if (isNullPtr(prev) || isNullPtr(disparam))
         return NULL;
     return containerOf(prev, dispatchParam, node);
 }
 
 dispatchParam * dispatchParamNext(dispatchParam *disparam) {
-    listNode *next = disparam->node.next; 
-    if (isNullPtr(next))
+    if (isNullPtr(disparam->node.next) || isNullPtr(disparam))
         return NULL;
-    return containerOf(next, dispatchParam, node);
+    return containerOf(disparam->node.next, dispatchParam, node);
 }
 
 dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {
+
     if (head == NULL || new == NULL) {
         mib2docError = ERROR_NULL_REF;
         return NULL;
@@ -277,6 +278,40 @@ void * disParamGet(dispatchParam *disparam) {
     if (disparam == NULL) 
         return NULL;
     return disparam->param;
+}
+
+// fixme: should provide a version of release function that
+//        allow customer to provide destruction function for
+//        <dispatchParam->param>
+int disParamRelease(dispatchParam *disParam, int (*destruct)(void *)) {
+    dispatchParam *current, *released;
+   
+    if (isNullPtr(disParam))
+        return FALSE;
+
+    released = disParam;
+    current = dispatchParamNext(disParam);
+    
+    do {
+        if (!isNullPtr(destruct))
+            destruct(released->param);
+        RELEASE_MEM(released);
+        released = current;
+    } while (current = dispatchParamNext(current));
+
+    return TRUE;
+}
+
+int disParamRelease_Static(dispatchParam *disParam, int (*destruct)(void *)) {
+    int ret;
+
+    if (isNullPtr(disParam))
+        return FALSE;
+
+    ret = disParamRelease(dispatchParamNext(disParam), destruct);
+    memset(disParam, 0, sizeof(dispatchParam));
+
+    return ret; 
 }
 
 /*

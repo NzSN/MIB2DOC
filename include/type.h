@@ -28,6 +28,7 @@
 #define SIZE_OF_CURRENT_TABLE 64
 #define SIZE_OF_SECTION_RECORD 1024
 #define SIZE_OF_OID_STRING 256
+#define EXTRA_OF_OID_LEN 10
 #define isNullPtr(PTR) (PTR ? false : true)
 #define RELEASE_MEM(PTR) ({free(PTR); PTR=NULL;})
 #define containerOf(ptr, ConType, member) ({\

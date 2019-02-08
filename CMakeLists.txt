@@ -31,11 +31,15 @@ link_libraries(cmocka)
 
 add_executable(UNIT_TEST ${UNIT_TEST_SRC})
 add_custom_target(lexBison ALL DEPENDS)
+add_custom_target(lexBison_H ALL DEPENDS)
+
 add_custom_command(TARGET lexBison PRE_BUILD
     COMMAND flex -o ${SRC_DIR}/lex.yy.c ${SRC_DIR}/yy_lex.l)
 add_custom_command(TARGET lexBison PRE_BUILD
+    COMMAND bison -o ${SRC_DIR}/yy_syn.tab.c ${SRC_DIR}/yy_syn.y)
+add_custom_command(TARGET lexBison_H PRE_BUILD
     COMMAND bison -d -o ${SRC_DIR}/yy_syn.tab.c ${SRC_DIR}/yy_syn.y)
-add_custom_command(TARGET lexBison PRE_BUILD 
+add_custom_command(TARGET lexBison_H PRE_BUILD 
     COMMAND mv ${SRC_DIR}/yy_syn.tab.h ${HEADER_DIR})
 add_executable(Mib2Doc ${SOURCE_FILES})
 

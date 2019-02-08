@@ -17,12 +17,19 @@
     #include "mibTreeObjTree.h"
     #include "dispatcher.h"
     #include "symbolTbl.h"
+    #include "string.h"
+
     #define YYSTYPE char *
-    
     extern symbolTable symTable; 
-    extern char *yylval;
+    extern YYSTYPE yylval;
     void yyerror(char const *s) {
         fprintf(stderr, "%s: %s\n", s, yylval);
+    }    
+
+    static dispatchParam importParam;
+
+    int syntaxParserInit(void) {
+        memset(&importParam, 0, sizeof(dispatchParam));
     }
 }
 
@@ -55,12 +62,43 @@ IMPORT :
     };
 
 MODULES :
-	ITEMS FROM_ IDENTIFIER MODULES { } 
+	MODULES_CONTENT MODULES 
     | /* empty */  ;
 
+MODULES_CONTENT :
+    ITEMS FROM_ IDENTIFIER {
+        printf("Modules: %s\n", $IDENTIFIER);
+
+        dispatchParam *current;    
+        current = &importParam;
+        
+        int ret = TRUE;
+        collectInfo *importInfo = SW_CUR_IMPORT_REF(swState);
+        
+        // Store symbols that should be included.
+        while (current = dispatchParamNext(current)) {
+            ret = collectInfo_add(importInfo, current->param);
+            if (ret == FALSE) {
+                printf("IMPORT: Symbol conflict.\n"); 
+            }
+    
+        }
+        disParamRelease_Static(&importParam, NULL);
+    }
+
 ITEMS :
-	IDENTIFIER { }
-	| IDENTIFIER COMMA ITEMS { }
+	IDENTIFIER { 
+        printf("SYMBOL: %s\n", $IDENTIFIER);
+        if (disParamStore(&importParam, disParamConstruct($IDENTIFIER)) == NULL) {
+            exit(1); 
+        }
+    }
+	| IDENTIFIER COMMA ITEMS { 
+        printf("SYMBOL: %s\n", $IDENTIFIER);
+        if (disParamStore(&importParam, disParamConstruct($IDENTIFIER)) == NULL) {
+            exit(1); 
+        }
+    }
 	| /* empty */ ;
 
 SEQUENCE :

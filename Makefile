@@ -124,6 +124,19 @@ Mib2Doc/fast:
 .PHONY : Mib2Doc/fast
 
 #=============================================================================
+# Target rules for targets named lexBison_H
+
+# Build rule for target.
+lexBison_H: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 lexBison_H
+.PHONY : lexBison_H
+
+# fast build rule for target.
+lexBison_H/fast:
+	$(MAKE) -f CMakeFiles/lexBison_H.dir/build.make CMakeFiles/lexBison_H.dir/build
+.PHONY : lexBison_H/fast
+
+#=============================================================================
 # Target rules for targets named UNIT_TEST
 
 # Build rule for target.
@@ -629,6 +642,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... Mib2Doc"
+	@echo "... lexBison_H"
 	@echo "... UNIT_TEST"
 	@echo "... lexBison"
 	@echo "... src/dispatcher.o"

@@ -84,22 +84,22 @@ dispatchParam * disParamConstruct(void *arg);
 dispatchParam * disParamStore(dispatchParam *head, dispatchParam *pl);
 dispatchParam * disParamRetrive(dispatchParam **head);
 void * disParamGet(dispatchParam *disparam);
+dispatchParam * dispatchParamNext(dispatchParam *disparam);
+int disParamRelease(dispatchParam *disParam, int (*destruct)(void *));
+int disParamRelease_Static(dispatchParam *disParam, int (*destruct)(void *));
 
 YY_BUFFER_STATE getCurrentBufferState();
-char * switch_CurrentMod(char *modName, int len);
+char * switch_CurrentMod();
 int dispatch(dispatch_type dType, dispatchParam * param);
-int appendSymToIdentList(identList *listHead, char *symbolIdent);
-int rmSymFromIdentList(identList *listHead, char *symbolIdent);
 
 // collectInfo functions
-int collectInfoInit(char *modName, char *sString, collectInfo *cInfo);
+int collectInfoInit(collectInfo *cInfo, char *modName);
 int collectInfo_add(collectInfo *cInfo, char *symbol);
 int collectInfo_del(collectInfo *cInfo, char *symbol);
 
 #ifdef MIB2DOC_UNIT_TESTING
 
-int identListTesting();
-int collectInfoTesting();
+void collectInfoTesting(void **state);
 
 #endif /* MIB2DOC_UNIT_TESTING */
 

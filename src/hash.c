@@ -369,13 +369,11 @@ void hashTesting(void **state) {
     assert_int_equal(tP3->base.isEqual(tP3, tP4), TRUE);
 
     // hashChain Testing
-    printf("hashChain Testing\n");
     pair_kv p1; 
     PAIR_KEY_SET(p1, tK1);
     PAIR_VAL_SET(p1, tP1);
     
     // Situation: only one node
-    printf("Situation: only one node\n");
     hashChain *found, *pChain = hashChainConstruct(p1);
     found = hashChainSearch(pChain, p1); 
     
@@ -383,7 +381,6 @@ void hashTesting(void **state) {
     assert_int_equal(tFoundKey->key, 1);
     
     // Situation: several node
-    printf("Situation: several node");
     pair_kv p2;
     try_val *retVal;
     int chain_count = 0;
@@ -401,7 +398,6 @@ void hashTesting(void **state) {
     hashMap *pMap = hashMapConstruct(100000, simpleHashing);  
 
     // Situation: No collide 
-    printf("Situation: No collide\n");
     try_val *tVal = hashMapGet(pMap, p1);
     if (NOT isNullPtr(tVal)) {
         fail(); 
@@ -411,13 +407,11 @@ void hashTesting(void **state) {
     assert_int_equal(tVal->val, 1);
 
     // Situation: collide
-    printf("Situation: collide\n");
     pair_kv collidePair;
     PAIR_KEY_SET(collidePair, tryKeyConstruct(1));
     PAIR_VAL_SET(collidePair, tryValConstruct(3));
 
     // Key unique check.
-    printf("Key unique check\n");
     if (hashMapPut(pMap, collidePair) != FALSE)
         fail();
 
