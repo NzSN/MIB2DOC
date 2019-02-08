@@ -27,6 +27,7 @@ extern mibObjectTreeNode mibObjectTreeRoot;
 
 /* Global */
 mibObjectTreeNode root;
+mibTreeHead trees;
 symbolTable symTable;
 slice symCollectSlice;
 targetSymbolList tSymListHead;

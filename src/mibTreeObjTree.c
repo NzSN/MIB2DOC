@@ -276,3 +276,44 @@ mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
     else
         return targetS;
 }
+
+// mibTrees operations
+mibTree * mibTreeConstruction(mibTree *tree) {
+    if (isNullPtr(tree))
+        return NULL;
+    
+    memset(tree, 0, sizeof(mibTree));
+    mibObjectTreeInit(&tree->root);
+
+    return tree;
+}
+
+mibTree * mibTreeNext(mibTree *tree) {
+    if (isNullPtr(tree) || MIBTREE_IS_LAST_TREE(tree))
+        return NULL;
+
+    return containerOf(listNodeNext(&tree->node), mibTree, node);
+}
+
+mibTree * mibTreePrev(mibTree *tree) {
+    if (isNullPtr(tree) || MIBTREE_IS_FIRST_TREE(tree))
+        return NULL;
+
+    return containerOf(listNodePrev(&tree->node), mibTree, node);
+}
+
+mibTree * mibTreeSearch(mibTree *tree) {
+    mibTree *currentTree;
+
+    if (isNullPtr(tree) || MIBTREE_IS_LAST_TREE(tree)) 
+        return NULL;
+    
+    currentTree = tree; 
+
+    do {
+
+    } while (currentTree = mibTreeNext(currentTree));
+}
+
+/* mibTreeObjTree.c */
+

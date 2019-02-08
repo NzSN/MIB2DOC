@@ -236,6 +236,8 @@ MAX_CHAR_OF_MOD_IDENT	include/symbolTbl.h	/^#define MAX_CHAR_OF_MOD_IDENT /;"	d	
 MAX_INCLUDE_DEPTH	include/dispatcher.h	/^#define MAX_INCLUDE_DEPTH /;"	d	language:C++
 MIB	src/yy_syn.y	/^MIB :$/;"	l	language:YACC
 MIBTREE_GENERATION	include/dispatcher.h	/^    MIBTREE_GENERATION,$/;"	e	language:C++	enum:dispatch_type
+MIBTREE_IS_FIRST_TREE	include/mibTreeObjTree.h	/^#define MIBTREE_IS_FIRST_TREE(/;"	d	language:C++
+MIBTREE_IS_LAST_TREE	include/mibTreeObjTree.h	/^#define MIBTREE_IS_LAST_TREE(/;"	d	language:C++
 MODULES	src/yy_syn.y	/^MODULES :$/;"	l	language:YACC
 MODULES_CONTENT	src/yy_syn.y	/^MODULES_CONTENT :$/;"	l	language:YACC
 MOUNT	src/yy_syn.y	/^MOUNT :$/;"	l	language:YACC
@@ -542,6 +544,7 @@ _SYMBOLTBL_H_	include/symbolTbl.h	/^#define _SYMBOLTBL_H_$/;"	d	language:C++
 _UTIL_H	include/util.h	/^#define _UTIL_H$/;"	d	language:C++
 __STDC_LIMIT_MACROS	include/lexer.h	/^#define __STDC_LIMIT_MACROS /;"	d	language:C++
 __STDC_LIMIT_MACROS	src/lexer.c	/^#define __STDC_LIMIT_MACROS /;"	d	language:C	file:
+__anon0864d7810108	include/mibTreeObjTree.h	/^typedef struct {$/;"	s	language:C++
 __anon0f4d9f3c0108	src/unitTest/basicDataStruct_Test.c	/^    typedef struct {$/;"	s	language:C	function:list_test	file:
 __anon4ba81f06010a	include/symbolTbl.h	/^    union {$/;"	u	language:C++	struct:symbol_t
 __anon50dc7d720108	include/hash.h	/^typedef struct {$/;"	s	language:C++
@@ -665,8 +668,8 @@ directory	compile_commands.json	/^  "directory": "\/home\/aydenlin\/Projects\/MI
 directory	compile_commands.json	/^  "directory": "\/home\/aydenlin\/Projects\/MIB2DOC",$/;"	s	language:JSON	object:9
 disParamConstruct	src/list.c	/^dispatchParam * disParamConstruct(void *param) {$/;"	f	language:C	typeref:typename:dispatchParam *
 disParamGet	src/list.c	/^void * disParamGet(dispatchParam *disparam) {$/;"	f	language:C	typeref:typename:void *
-disParamRelease	src/list.c	/^int disParamRelease(dispatchParam *disParam) {$/;"	f	language:C	typeref:typename:int
-disParamRelease_Static	src/list.c	/^int disParamRelease_Static(dispatchParam *disParam) {$/;"	f	language:C	typeref:typename:int
+disParamRelease	src/list.c	/^int disParamRelease(dispatchParam *disParam, int (*destruct)(void *)) {$/;"	f	language:C	typeref:typename:int
+disParamRelease_Static	src/list.c	/^int disParamRelease_Static(dispatchParam *disParam, int (*destruct)(void *)) {$/;"	f	language:C	typeref:typename:int
 disParamRetrive	src/list.c	/^dispatchParam * disParamRetrive(dispatchParam **head) {$/;"	f	language:C	typeref:typename:dispatchParam *
 disParamStore	src/list.c	/^dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {$/;"	f	language:C	typeref:typename:dispatchParam *
 disParam_test	src/unitTest/basicDataStruct_Test.c	/^static void disParam_test(void **state) { $/;"	f	language:C	typeref:typename:void	file:
@@ -848,12 +851,15 @@ isQueueEmpty	src/queue.c	/^static int isQueueEmpty(mibNodeInfoQueue *q) {$/;"	f	
 isQueueFull	src/queue.c	/^static int isQueueFull(mibNodeInfoQueue *q) {$/;"	f	language:C	typeref:typename:int	file:
 key	include/hash.h	/^    pair_key_base *key;$/;"	m	language:C++	struct:__anon50dc7d720308	typeref:typename:pair_key_base *
 key	src/hash.c	/^    int key;$/;"	m	language:C	struct:__anon5ef278910108	typeref:typename:int	file:
+lRef	include/mibTreeObjTree.h	/^    leaveNodeRef lRef;$/;"	m	language:C++	struct:mibTree	typeref:typename:leaveNodeRef
+lRef	include/mibTreeObjTree.h	/^    mibObjectTreeNode *lRef;$/;"	m	language:C++	struct:__anon0864d7810108	typeref:typename:mibObjectTreeNode *
 laTexStrBuffer	src/docGenerate.c	/^char *laTexStrBuffer;$/;"	v	language:C	typeref:typename:char *
 latexHeaderGen	src/docGenerate.c	/^static int latexHeaderGen() {}$/;"	f	language:C	typeref:typename:int	file:
 latexTailGen	src/docGenerate.c	/^static int latexTailGen() {}$/;"	f	language:C	typeref:typename:int	file:
 leaveMeta	include/symbolTbl.h	/^       leaveMeta_t leaveMeta;$/;"	m	language:C++	union:symbol_t::__anon4ba81f06010a	typeref:typename:leaveMeta_t
 leaveMeta_t	include/symbolTbl.h	/^typedef struct leaveMeta_t {$/;"	s	language:C++
 leaveMeta_t	include/symbolTbl.h	/^} leaveMeta_t;$/;"	t	language:C++	typeref:struct:leaveMeta_t
+leaveNodeRef	include/mibTreeObjTree.h	/^} leaveNodeRef;$/;"	t	language:C++	typeref:struct:__anon0864d7810108
 lexBison	Makefile	/^lexBison: cmake_check_build_system$/;"	t	language:Make
 lexBison/fast	Makefile	/^lexBison\/fast:$/;"	t	language:Make
 lexBison_H	Makefile	/^lexBison_H: cmake_check_build_system$/;"	t	language:Make
@@ -903,9 +909,16 @@ mibObjectTreeNode	include/mibTreeObjTree.h	/^typedef struct mibObjectTreeNode {$
 mibObjectTreeNode	include/mibTreeObjTree.h	/^} mibObjectTreeNode;$/;"	t	language:C++	typeref:struct:mibObjectTreeNode
 mibObjectTreeRoot	src/mibTreeObjTree.c	/^mibObjectTreeNode mibObjectTreeRoot;$/;"	v	language:C	typeref:typename:mibObjectTreeNode
 mibObjectTreeRoot	src/unitTest/basicDataStruct_Test.c	/^mibObjectTreeNode mibObjectTreeRoot;$/;"	v	language:C	typeref:typename:mibObjectTreeNode
+mibTree	include/mibTreeObjTree.h	/^typedef struct mibTree {$/;"	s	language:C++
+mibTree	include/mibTreeObjTree.h	/^} mibTree;$/;"	t	language:C++	typeref:struct:mibTree
+mibTreeConstruction	src/mibTreeObjTree.c	/^mibTree * mibTreeConstruction(mibTree *tree) {$/;"	f	language:C	typeref:typename:mibTree *
 mibTreeGenTesting	src/mibTreeGen.c	/^void mibTreeGenTesting(void **state) {$/;"	f	language:C	typeref:typename:void
+mibTreeHead	include/mibTreeObjTree.h	/^typedef struct mibTreeHead {$/;"	s	language:C++
+mibTreeHead	include/mibTreeObjTree.h	/^} mibTreeHead;$/;"	t	language:C++	typeref:struct:mibTreeHead
 mibTreeLeaveAdd	src/mibTreeGen.c	/^static int mibTreeLeaveAdd(char *ident, char *type,$/;"	f	language:C	typeref:typename:int	file:
+mibTreeNext	src/mibTreeObjTree.c	/^mibTree * mibTreeNext(mibTree *tree) {$/;"	f	language:C	typeref:typename:mibTree *
 mibTreeNodeAdd	src/mibTreeGen.c	/^static int mibTreeNodeAdd(char *ident, char *oid, char *parent) {$/;"	f	language:C	typeref:typename:int	file:
+mibTreePrev	src/mibTreeObjTree.c	/^mibTree * mibTreePrev(mibTree *tree) {$/;"	f	language:C	typeref:typename:mibTree *
 mibTree_test	src/unitTest/basicDataStruct_Test.c	/^static void mibTree_test(void **state) {$/;"	f	language:C	typeref:typename:void	file:
 miscInit	src/misc.c	/^void miscInit() {$/;"	f	language:C	typeref:typename:void
 modName	include/dispatcher.h	/^    char *modName;$/;"	m	language:C++	struct:collectInfo	typeref:typename:char *
@@ -915,6 +928,8 @@ node	include/dispatcher.h	/^    listNode node;$/;"	m	language:C++	struct:dispatc
 node	include/dispatcher.h	/^    listNode node;$/;"	m	language:C++	struct:identList	typeref:typename:listNode
 node	include/hash.h	/^    listNode node;$/;"	m	language:C++	struct:__anon50dc7d720408	typeref:typename:listNode
 node	include/mibTreeGen.h	/^    listNode node;$/;"	m	language:C++	struct:targetSymbolList	typeref:typename:listNode
+node	include/mibTreeObjTree.h	/^    listNode node;$/;"	m	language:C++	struct:__anon0864d7810108	typeref:typename:listNode
+node	include/mibTreeObjTree.h	/^    listNode node;$/;"	m	language:C++	struct:mibTree	typeref:typename:listNode
 node	include/options.h	/^    listNode node;$/;"	m	language:C++	struct:incPathList	typeref:typename:listNode
 node	src/unitTest/basicDataStruct_Test.c	/^        listNode node;$/;"	m	language:C	struct:list_test::__anon0f4d9f3c0108	typeref:typename:listNode	file:
 nodeCmp	src/mibTreeObjTree.c	/^int nodeCmp(void *arg, mibObjectTreeNode *node) {$/;"	f	language:C	typeref:typename:int
@@ -924,6 +939,7 @@ nodeMeta	include/symbolTbl.h	/^       nodeMeta_t nodeMeta;$/;"	m	language:C++	un
 nodeMeta_t	include/symbolTbl.h	/^typedef struct nodeMeta_t {$/;"	s	language:C++
 nodeMeta_t	include/symbolTbl.h	/^} nodeMeta_t;$/;"	t	language:C++	typeref:struct:nodeMeta_t
 null	include/type.h	/^#define null /;"	d	language:C++
+numOfTree	include/mibTreeObjTree.h	/^    int numOfTree;$/;"	m	language:C++	struct:mibTreeHead	typeref:typename:int
 oid	include/docGenerate.h	/^    char *oid;$/;"	m	language:C++	struct:tableInfo	typeref:typename:char *
 oid	include/mibTreeObjTree.h	/^    char *oid;$/;"	m	language:C++	struct:mibNodeInfo	typeref:typename:char *
 oidComplement	src/mibTreeGen.c	/^static char * oidComplement(char *parent, char *suffix) {$/;"	f	language:C	typeref:typename:char *	file:
@@ -963,7 +979,9 @@ rebuild_cache	Makefile	/^rebuild_cache:$/;"	t	language:Make
 rebuild_cache/fast	Makefile	/^rebuild_cache\/fast: rebuild_cache$/;"	t	language:Make
 release	include/hash.h	/^    int (*release)(void *key);$/;"	m	language:C++	struct:__anon50dc7d720108	typeref:typename:int (*)(void * key)
 release	include/hash.h	/^    int (*release)(void *key);$/;"	m	language:C++	struct:__anon50dc7d720208	typeref:typename:int (*)(void * key)
+root	include/mibTreeObjTree.h	/^    mibObjectTreeNode root;$/;"	m	language:C++	struct:mibTree	typeref:typename:mibObjectTreeNode
 root	src/mibTreeGen.c	/^mibObjectTreeNode root;$/;"	v	language:C	typeref:typename:mibObjectTreeNode
+rootName	include/mibTreeObjTree.h	/^    char *rootName;$/;"	m	language:C++	struct:mibTree	typeref:typename:char *
 rw	include/docGenerate.h	/^    char *rw;$/;"	m	language:C++	struct:tableInfo	typeref:typename:char *
 rw	include/mibTreeObjTree.h	/^    char *rw;$/;"	m	language:C++	struct:mibInfo	typeref:typename:char *
 search_MibTree	src/mibTreeObjTree.c	/^mibObjectTreeNode * search_MibTree(mibObjectTreeNode *root, char *const ident) {$/;"	f	language:C	typeref:typename:mibObjectTreeNode *
@@ -1185,6 +1203,8 @@ targetSymbolList	include/mibTreeGen.h	/^} targetSymbolList;$/;"	t	language:C++	t
 test_list	src/unitTest/basicDataStruct_Test.c	/^    } test_list;$/;"	t	language:C	function:list_test	typeref:struct:list_test::__anon0f4d9f3c0108	file:
 top	include/stack.h	/^    int top;$/;"	m	language:C++	struct:identStack	typeref:typename:int
 travel_MibTree	src/mibTreeObjTree.c	/^mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, $/;"	f	language:C	typeref:typename:mibObjectTreeNode *
+trees	include/mibTreeObjTree.h	/^    mibTree *trees;$/;"	m	language:C++	struct:mibTreeHead	typeref:typename:mibTree *
+trees	src/mibTreeGen.c	/^mibTreeHead trees;$/;"	v	language:C	typeref:typename:mibTreeHead
 tryKeyConstruct	src/hash.c	/^try_key * tryKeyConstruct(int key) {$/;"	f	language:C	typeref:typename:try_key *
 tryKeyEqual	src/hash.c	/^int tryKeyEqual(try_key *lK, try_key *rK) {$/;"	f	language:C	typeref:typename:int
 tryKeyRelease	src/hash.c	/^int tryKeyRelease(try_key *key) {$/;"	f	language:C	typeref:typename:int
