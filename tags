@@ -238,6 +238,8 @@ MIB	src/yy_syn.y	/^MIB :$/;"	l	language:YACC
 MIBTREE_GENERATION	include/dispatcher.h	/^    MIBTREE_GENERATION,$/;"	e	language:C++	enum:dispatch_type
 MIBTREE_IS_FIRST_TREE	include/mibTreeObjTree.h	/^#define MIBTREE_IS_FIRST_TREE(/;"	d	language:C++
 MIBTREE_IS_LAST_TREE	include/mibTreeObjTree.h	/^#define MIBTREE_IS_LAST_TREE(/;"	d	language:C++
+MIBTREE_LEAVE_IS_FIRST	include/mibTreeObjTree.h	/^#define MIBTREE_LEAVE_IS_FIRST(/;"	d	language:C++
+MIBTREE_LEAVE_IS_LAST	include/mibTreeObjTree.h	/^#define MIBTREE_LEAVE_IS_LAST(/;"	d	language:C++
 MODULES	src/yy_syn.y	/^MODULES :$/;"	l	language:YACC
 MODULES_CONTENT	src/yy_syn.y	/^MODULES_CONTENT :$/;"	l	language:YACC
 MOUNT	src/yy_syn.y	/^MOUNT :$/;"	l	language:YACC
@@ -851,15 +853,14 @@ isQueueEmpty	src/queue.c	/^static int isQueueEmpty(mibNodeInfoQueue *q) {$/;"	f	
 isQueueFull	src/queue.c	/^static int isQueueFull(mibNodeInfoQueue *q) {$/;"	f	language:C	typeref:typename:int	file:
 key	include/hash.h	/^    pair_key_base *key;$/;"	m	language:C++	struct:__anon50dc7d720308	typeref:typename:pair_key_base *
 key	src/hash.c	/^    int key;$/;"	m	language:C	struct:__anon5ef278910108	typeref:typename:int	file:
-lRef	include/mibTreeObjTree.h	/^    leaveNodeRef lRef;$/;"	m	language:C++	struct:mibTree	typeref:typename:leaveNodeRef
 lRef	include/mibTreeObjTree.h	/^    mibObjectTreeNode *lRef;$/;"	m	language:C++	struct:__anon0864d7810108	typeref:typename:mibObjectTreeNode *
+lRef	include/mibTreeObjTree.h	/^    mibTreeLeaveNode lRef;$/;"	m	language:C++	struct:mibTree	typeref:typename:mibTreeLeaveNode
 laTexStrBuffer	src/docGenerate.c	/^char *laTexStrBuffer;$/;"	v	language:C	typeref:typename:char *
 latexHeaderGen	src/docGenerate.c	/^static int latexHeaderGen() {}$/;"	f	language:C	typeref:typename:int	file:
 latexTailGen	src/docGenerate.c	/^static int latexTailGen() {}$/;"	f	language:C	typeref:typename:int	file:
 leaveMeta	include/symbolTbl.h	/^       leaveMeta_t leaveMeta;$/;"	m	language:C++	union:symbol_t::__anon4ba81f06010a	typeref:typename:leaveMeta_t
 leaveMeta_t	include/symbolTbl.h	/^typedef struct leaveMeta_t {$/;"	s	language:C++
 leaveMeta_t	include/symbolTbl.h	/^} leaveMeta_t;$/;"	t	language:C++	typeref:struct:leaveMeta_t
-leaveNodeRef	include/mibTreeObjTree.h	/^} leaveNodeRef;$/;"	t	language:C++	typeref:struct:__anon0864d7810108
 lexBison	Makefile	/^lexBison: cmake_check_build_system$/;"	t	language:Make
 lexBison/fast	Makefile	/^lexBison\/fast:$/;"	t	language:Make
 lexBison_H	Makefile	/^lexBison_H: cmake_check_build_system$/;"	t	language:Make
@@ -916,13 +917,20 @@ mibTreeGenTesting	src/mibTreeGen.c	/^void mibTreeGenTesting(void **state) {$/;"	
 mibTreeHead	include/mibTreeObjTree.h	/^typedef struct mibTreeHead {$/;"	s	language:C++
 mibTreeHead	include/mibTreeObjTree.h	/^} mibTreeHead;$/;"	t	language:C++	typeref:struct:mibTreeHead
 mibTreeLeaveAdd	src/mibTreeGen.c	/^static int mibTreeLeaveAdd(char *ident, char *type,$/;"	f	language:C	typeref:typename:int	file:
+mibTreeLeaveNext	src/mibTreeObjTree.c	/^mibTreeLeaveNode * mibTreeLeaveNext(mibTreeLeaveNode *lNode) {$/;"	f	language:C	typeref:typename:mibTreeLeaveNode *
+mibTreeLeaveNode	include/mibTreeObjTree.h	/^} mibTreeLeaveNode;$/;"	t	language:C++	typeref:struct:__anon0864d7810108
+mibTreeLeavePrev	src/mibTreeObjTree.c	/^mibTreeLeaveNode * mibTreeLeavePrev(mibTreeLeaveNode *lNode) {$/;"	f	language:C	typeref:typename:mibTreeLeaveNode *
+mibTreeLeaveSearch	src/mibTreeObjTree.c	/^mibTreeLeaveNode * mibTreeLeaveSearch(mibTreeLeaveNode *lNode, char *ident) {$/;"	f	language:C	typeref:typename:mibTreeLeaveNode *
+mibTreeMerge	src/mibTreeObjTree.c	/^mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree) {$/;"	f	language:C	typeref:typename:mibTree *
 mibTreeNext	src/mibTreeObjTree.c	/^mibTree * mibTreeNext(mibTree *tree) {$/;"	f	language:C	typeref:typename:mibTree *
 mibTreeNodeAdd	src/mibTreeGen.c	/^static int mibTreeNodeAdd(char *ident, char *oid, char *parent) {$/;"	f	language:C	typeref:typename:int	file:
 mibTreePrev	src/mibTreeObjTree.c	/^mibTree * mibTreePrev(mibTree *tree) {$/;"	f	language:C	typeref:typename:mibTree *
+mibTreeSearch	src/mibTreeObjTree.c	/^mibTree * mibTreeSearch(mibTree *tree, char *name) {$/;"	f	language:C	typeref:typename:mibTree *
 mibTree_test	src/unitTest/basicDataStruct_Test.c	/^static void mibTree_test(void **state) {$/;"	f	language:C	typeref:typename:void	file:
 miscInit	src/misc.c	/^void miscInit() {$/;"	f	language:C	typeref:typename:void
 modName	include/dispatcher.h	/^    char *modName;$/;"	m	language:C++	struct:collectInfo	typeref:typename:char *
 modName	include/symbolTbl.h	/^    char *modName;$/;"	m	language:C++	struct:symbolTable	typeref:typename:char *
+name	include/mibTreeObjTree.h	/^    char *name;$/;"	m	language:C++	struct:__anon0864d7810108	typeref:typename:char *
 next	include/list.h	/^    struct listNode *next;$/;"	m	language:C++	struct:listNode	typeref:struct:listNode *
 node	include/dispatcher.h	/^    listNode node;$/;"	m	language:C++	struct:dispatchParam	typeref:typename:listNode
 node	include/dispatcher.h	/^    listNode node;$/;"	m	language:C++	struct:identList	typeref:typename:listNode
@@ -989,6 +997,7 @@ section	src/docGenerate.c	/^        section = 1,$/;"	e	language:C	enum:sectionGe
 sectionGen_Latex	src/docGenerate.c	/^static int sectionGen_Latex(char *secName, char *OID, FILE *writeTo) {$/;"	f	language:C	typeref:typename:int	file:
 sectionRecord	src/main.c	/^char *sectionRecord[SIZE_OF_SECTION_RECORD];$/;"	v	language:C	typeref:typename:char * []
 sectionRecord	src/unitTest/basicDataStruct_Test.c	/^char *sectionRecord[SIZE_OF_SECTION_RECORD];$/;"	v	language:C	typeref:typename:char * []
+setAsChild_MibTree	src/mibTreeObjTree.c	/^int setAsChild_MibTree(mibObjectTreeNode *parent, mibObjectTreeNode *child) {$/;"	f	language:C	typeref:typename:int
 showTree	src/mibTreeObjTree.c	/^void showTree(mibObjectTreeNode *root) {$/;"	f	language:C	typeref:typename:void
 sibling	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *sibling;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode *
 simpleHashing	src/hash.c	/^int simpleHashing(pair_key_base *key) {$/;"	f	language:C	typeref:typename:int

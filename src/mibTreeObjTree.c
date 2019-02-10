@@ -79,6 +79,7 @@ mibObjectTreeNode * mibNodeBuild(char *ident, char *oid) {
     obj->identifier = ident;
     obj->isNode = 1;
     obj->info = (void *)info;
+
     return obj;
 }
 
@@ -141,6 +142,10 @@ int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent
 MISC:
     descriptionDeal(obj);
     return 0;
+}
+
+int setAsChild_MibTree(mibObjectTreeNode *parent, mibObjectTreeNode *child) {
+
 }
 
 static int descriptionDeal(mibObjectTreeNode *node) {
@@ -302,18 +307,75 @@ mibTree * mibTreePrev(mibTree *tree) {
     return containerOf(listNodePrev(&tree->node), mibTree, node);
 }
 
-mibTree * mibTreeSearch(mibTree *tree) {
+mibTree * mibTreeSearch(mibTree *tree, char *name) {
     mibTree *currentTree;
 
     if (isNullPtr(tree) || MIBTREE_IS_LAST_TREE(tree)) 
         return NULL;
     
+    int match = FALSE;
     currentTree = tree; 
 
     do {
-
+        match = strncmp(currentTree->rootName, name, strlen(name));
+        if (match) {
+            break;
+        }
     } while (currentTree = mibTreeNext(currentTree));
+
+    return currentTree;
 }
+
+mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree) {
+    mibTreeLeaveNode *mergeNode;
+    char *lParent = lTree->root.parent->identifier;     
+    char *rParent = rTree->root.parent->identifier;   
+     
+
+    if (mergeNode = mibTreeLeaveSearch(&rTree->lRef, lParent)) {     
+        // Try to merge left to right.
+         
+    } else if (mergeNode = mibTreeLeaveSearch(&lTree->lRef, rParent)) {
+        // Try to merge right to left. 
+    } else {
+        // Unmergable 
+    }
+}
+
+// leaveNodeRef functions
+mibTreeLeaveNode * mibTreeLeavePrev(mibTreeLeaveNode *lNode) {
+    if (isNullPtr(lNode) || MIBTREE_LEAVE_IS_FIRST(lNode)) {
+        return NULL; 
+    }
+    return containerOf(listNodePrev(&lNode->node), mibTreeLeaveNode, node);
+}
+
+mibTreeLeaveNode * mibTreeLeaveNext(mibTreeLeaveNode *lNode) {
+    if (isNullPtr(lNode) || MIBTREE_LEAVE_IS_LAST(lNode)) {
+        return NULL; 
+    } 
+    return containerOf(listNodeNext(&lNode->node), mibTreeLeaveNode, node);
+}
+
+mibTreeLeaveNode * mibTreeLeaveSearch(mibTreeLeaveNode *lNode, char *ident) {
+    int match = FALSE;
+    mibTreeLeaveNode *currentLeave;
+
+    if (isNullPtr(lNode) || isNullPtr(ident)) {
+        return NULL; 
+    }
+    
+    currentLeave = lNode;
+    do {
+        match = !strncmp(currentLeave->lRef->identifier, ident, strlen(ident));
+        if (match) {
+            break;
+        }
+    } while (currentLeave = mibTreeLeaveNext(currentLeave));
+
+    return currentLeave;
+}
+
 
 /* mibTreeObjTree.c */
 
