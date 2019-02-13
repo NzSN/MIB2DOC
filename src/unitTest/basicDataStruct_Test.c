@@ -8,6 +8,7 @@
 #include "type.h"
 #include "list.h"
 #include "mibTreeGen.h"
+#include "mibTreeObjTree.h"
 #include "queue.h"
 #include "stack.h"
 #include "dispatcher.h"
@@ -231,7 +232,8 @@ int main(void) {
             #ifdef MIB2DOC_UNIT_TESTING
             cmocka_unit_test(genericStackTesting),
             cmocka_unit_test(collectInfoTesting),
-            cmocka_unit_test(hashTesting)
+            cmocka_unit_test(hashTesting),
+            cmocka_unit_test(mibTreeTesting)
             #endif
     };
     return cmocka_run_group_tests(tests, NULL, NULL);

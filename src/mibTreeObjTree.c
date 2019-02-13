@@ -145,7 +145,17 @@ MISC:
 }
 
 int setAsChild_MibTree(mibObjectTreeNode *parent, mibObjectTreeNode *child) {
+    if (isNullPtr(parent) || isNullPtr(child)) {
+        return FALSE; 
+    }  
+    
+    if (IS_NODE_HAS_CHILD_MT(parent)) {
+        return TRUE; 
+    }
 
+    parent->child = child;
+    
+    return TRUE;
 }
 
 static int descriptionDeal(mibObjectTreeNode *node) {
@@ -282,15 +292,23 @@ mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
         return targetS;
 }
 
-// mibTrees operations
+// mibTrees functions
 mibTree * mibTreeConstruction(mibTree *tree) {
     if (isNullPtr(tree))
         return NULL;
     
     memset(tree, 0, sizeof(mibTree));
-    mibObjectTreeInit(&tree->root);
+    mibObjectTreeInit(tree->root);
 
     return tree;
+}
+
+int mibTreeSetRoot(mibTree *tree, mibObjectTreeNode *rootNode) {
+    if (isNullPtr(tree) || isNullPtr(rootNode))
+        return FALSE;
+    tree->root = rootNode;
+
+    return TRUE;
 }
 
 mibTree * mibTreeNext(mibTree *tree) {
@@ -326,56 +344,215 @@ mibTree * mibTreeSearch(mibTree *tree, char *name) {
     return currentTree;
 }
 
-mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree) {
-    mibTreeLeaveNode *mergeNode;
-    char *lParent = lTree->root.parent->identifier;     
-    char *rParent = rTree->root.parent->identifier;   
-     
-
-    if (mergeNode = mibTreeLeaveSearch(&rTree->lRef, lParent)) {     
-        // Try to merge left to right.
-         
-    } else if (mergeNode = mibTreeLeaveSearch(&lTree->lRef, rParent)) {
-        // Try to merge right to left. 
-    } else {
-        // Unmergable 
+int mibTreeAppend(mibTree *head, mibTree *new) {
+    if (isNullPtr(head) || isNullPtr(new)) {
+        return FALSE; 
     }
-}
 
-// leaveNodeRef functions
-mibTreeLeaveNode * mibTreeLeavePrev(mibTreeLeaveNode *lNode) {
-    if (isNullPtr(lNode) || MIBTREE_LEAVE_IS_FIRST(lNode)) {
-        return NULL; 
-    }
-    return containerOf(listNodePrev(&lNode->node), mibTreeLeaveNode, node);
-}
-
-mibTreeLeaveNode * mibTreeLeaveNext(mibTreeLeaveNode *lNode) {
-    if (isNullPtr(lNode) || MIBTREE_LEAVE_IS_LAST(lNode)) {
-        return NULL; 
-    } 
-    return containerOf(listNodeNext(&lNode->node), mibTreeLeaveNode, node);
-}
-
-mibTreeLeaveNode * mibTreeLeaveSearch(mibTreeLeaveNode *lNode, char *ident) {
-    int match = FALSE;
-    mibTreeLeaveNode *currentLeave;
-
-    if (isNullPtr(lNode) || isNullPtr(ident)) {
-        return NULL; 
+    if (listNodeAppend(&head->node, &new->node) == NULL) {
+        return FALSE; 
     }
     
-    currentLeave = lNode;
-    do {
-        match = !strncmp(currentLeave->lRef->identifier, ident, strlen(ident));
-        if (match) {
-            break;
-        }
-    } while (currentLeave = mibTreeLeaveNext(currentLeave));
-
-    return currentLeave;
+    return TRUE;
 }
 
+mibTree * mibTreeDelete(mibTree *node) {
+    if (isNullPtr(node)) {
+        return NULL; 
+    }
+    if (listNodeDelete(&node->node) == NULL) {
+        return NULL; 
+    }
+    return node;
+}
+
+mibTree * mibTreeDeleteByName(mibTree *treeListHead, char *name) {
+    mibTree *beDeleted;    
+
+    if (isNullPtr(treeListHead) || isNullPtr(name)) {
+        return NULL;
+    }
+    
+    beDeleted = mibTreeSearch(treeListHead, name);
+    mibTreeDelete(beDeleted);
+
+    return beDeleted;
+}
+
+// Success: return the root of the new tree.
+// Failed : return NULL.
+mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree) {
+    int ret;
+    mibTree *merged;
+    
+    // Try to merge left tree into right tree.
+    ret = insert_MibTree(lTree->root, rTree->root, MIB_OBJ_TREE_NODE_PARENT_NAME(rTree));
+    if (ret != -1) {
+        return lTree;
+    } 
+    // Try to merge right tree into left tree.
+    ret = insert_MibTree(rTree->root, lTree->root, MIB_OBJ_TREE_NODE_PARENT_NAME(lTree));
+    if (ret != -1) {
+        return rTree;
+    }
+    return NULL;
+}
+
+/* mibTreeHead functions */
+int mibTreeHeadInit(mibTreeHead *treeHead) {
+    if (isNullPtr(treeHead)) 
+        return FALSE;
+
+    treeHead->last = NULL;
+    treeHead->numOfTree = 0; 
+    
+    if (mibTreeConstruction(&treeHead->trees) == NULL) {
+        printf("mibTreeHeadInit failed\n");  
+        exit(1);
+    }
+
+    return TRUE;
+}
+
+/* Desc: Try to merge last tree into another tree
+ * or merge another tree into last tree.
+ *
+ * Note: if merge failed you should terminate whole
+ * program cause the mibTree list is broken.
+ */
+int mibTreeHeadMerge_LAST(mibTreeHead *treeHead) {
+    mibTree *last, *current, *newTree, *current_tmp;
+
+    if (isNullPtr(treeHead)) {
+        return FALSE;
+    }
+    
+    last = treeHead->last;
+    current = &treeHead->trees;
+
+    do {
+        if (current == last) {
+            continue;
+        }
+        
+        newTree = mibTreeMerge(current, last);
+        // Merge success
+        // After that we should remove the two tree
+        // and place the new one into the mibTree list.
+        if (!isNullPtr(newTree)) {
+            current_tmp = mibTreeNext(current);
+
+            current = mibTreeDelete(current);
+            last = mibTreeDelete(last);
+
+            if (isNullPtr(current) || isNullPtr(last)) {
+                return FALSE; 
+            }
+            
+            mibTreeAppend(&treeHead->trees, newTree);            
+
+            last = newTree;
+            current = current_tmp;
+        }
+    } while (current = mibTreeNext(current));
+    
+    return TRUE;
+}
+
+/* Desc: Try to merge each tree of the list 
+ * to let the number of tree in the tree list 
+ * as small as possible.
+ */
+inline static mibTree * currentUpdate(mibTree *current, mibTree *currentMerge, mibTree *iterMerge) {
+    while (current = mibTreeNext(current)) {
+        if (current != currentMerge && current != iterMerge) {
+            break; 
+        }
+    }
+}
+
+int mibTreeHeadMerge(mibTreeHead *treeHead) {
+    mibTree *current, *current_merge, 
+            *current_merge_tmp, *newTree,
+            *iterMerge, *iterMerge_tmp;
+
+    if (isNullPtr(treeHead)) 
+        return FALSE;
+    
+    for (current = &treeHead->trees; ! isNullPtr(current); current = mibTreeNext(current)) {
+        current_merge = current;
+        iterMerge = mibTreeNext(current);
+
+        do {
+            if (current_merge == iterMerge) {
+                continue;
+            }
+
+            newTree = mibTreeMerge(current_merge, iterMerge);   
+            if (!isNullPtr(newTree)) {
+                // current update 
+                current = currentUpdate(current, current_merge, iterMerge);  
+                iterMerge_tmp = mibTreeNext(iterMerge);
+
+                mibTreeDelete(current_merge);
+                mibTreeDelete(iterMerge);
+                
+                mibTreeAppend(&treeHead->trees, newTree);
+
+                current_merge = newTree;  
+            }
+        } while (iterMerge = mibTreeNext(iterMerge)); 
+    } 
+    
+    return TRUE;
+}
+
+int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode, char *parent) {
+    mibTree *treeIter, *last;
+    mibObjectTreeNode *treeRoot; 
+
+    if (isNullPtr(treeHead) || isNullPtr(newNode)) {
+        return FALSE; 
+    }
+    
+    // First check last tree. 
+    treeIter = treeHead->last; 
+    treeRoot = treeIter->root;
+
+    if (insert_MibTree(treeRoot, newNode, parent) != -1) {
+        return TRUE; 
+    }
+    
+    // Iterate over all another trees.
+    last = treeHead->last;    
+    treeIter = &treeHead->trees;
+    
+    do {
+        if (insert_MibTree(treeIter->root, newNode, parent) != -1) {
+            treeHead->last = treeIter;
+            return TRUE;
+        }
+    } while (treeIter = mibTreeNext(treeIter));
+
+    // Build a new tree. 
+    treeIter = (mibTree *)malloc(sizeof(mibTree));
+    mibTreeConstruction(treeIter); 
+    mibTreeSetRoot(treeIter, newNode);
+    
+    mibTreeAppend(&treeHead->trees, treeIter);
+
+    return TRUE;
+}
+
+#ifdef MIB2DOC_UNIT_TESTING
+
+#include "test.h"
+
+void mibTreeTesting(void **state) {
+    // Merge testing
+}
+
+#endif /* MIB2DOC_UNIT_TESTING */
 
 /* mibTreeObjTree.c */
 

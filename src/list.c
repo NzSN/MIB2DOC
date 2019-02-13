@@ -65,6 +65,8 @@ listNode * listNodeDelete(listNode *sliNode) {
     } else {
         /* Single sliNode */
     }
+
+    return sliNode;
 }
 
 listNode * listNodeTail(listNode *head) {

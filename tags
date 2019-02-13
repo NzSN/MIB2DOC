@@ -238,8 +238,7 @@ MIB	src/yy_syn.y	/^MIB :$/;"	l	language:YACC
 MIBTREE_GENERATION	include/dispatcher.h	/^    MIBTREE_GENERATION,$/;"	e	language:C++	enum:dispatch_type
 MIBTREE_IS_FIRST_TREE	include/mibTreeObjTree.h	/^#define MIBTREE_IS_FIRST_TREE(/;"	d	language:C++
 MIBTREE_IS_LAST_TREE	include/mibTreeObjTree.h	/^#define MIBTREE_IS_LAST_TREE(/;"	d	language:C++
-MIBTREE_LEAVE_IS_FIRST	include/mibTreeObjTree.h	/^#define MIBTREE_LEAVE_IS_FIRST(/;"	d	language:C++
-MIBTREE_LEAVE_IS_LAST	include/mibTreeObjTree.h	/^#define MIBTREE_LEAVE_IS_LAST(/;"	d	language:C++
+MIB_OBJ_TREE_NODE_PARENT_NAME	include/mibTreeObjTree.h	/^#define MIB_OBJ_TREE_NODE_PARENT_NAME(/;"	d	language:C++
 MODULES	src/yy_syn.y	/^MODULES :$/;"	l	language:YACC
 MODULES_CONTENT	src/yy_syn.y	/^MODULES_CONTENT :$/;"	l	language:YACC
 MOUNT	src/yy_syn.y	/^MOUNT :$/;"	l	language:YACC
@@ -546,7 +545,6 @@ _SYMBOLTBL_H_	include/symbolTbl.h	/^#define _SYMBOLTBL_H_$/;"	d	language:C++
 _UTIL_H	include/util.h	/^#define _UTIL_H$/;"	d	language:C++
 __STDC_LIMIT_MACROS	include/lexer.h	/^#define __STDC_LIMIT_MACROS /;"	d	language:C++
 __STDC_LIMIT_MACROS	src/lexer.c	/^#define __STDC_LIMIT_MACROS /;"	d	language:C	file:
-__anon0864d7810108	include/mibTreeObjTree.h	/^typedef struct {$/;"	s	language:C++
 __anon0f4d9f3c0108	src/unitTest/basicDataStruct_Test.c	/^    typedef struct {$/;"	s	language:C	function:list_test	file:
 __anon4ba81f06010a	include/symbolTbl.h	/^    union {$/;"	u	language:C++	struct:symbol_t
 __anon50dc7d720108	include/hash.h	/^typedef struct {$/;"	s	language:C++
@@ -630,6 +628,7 @@ counter	include/dispatcher.h	/^    int counter;$/;"	m	language:C++	struct:switch
 currentSwitchInfo	include/dispatcher.h	/^    switchInfo currentSwitchInfo;$/;"	m	language:C++	struct:switchingState	typeref:typename:switchInfo
 currentTable	src/main.c	/^char currentTable[SIZE_OF_CURRENT_TABLE];$/;"	v	language:C	typeref:typename:char[]
 currentTable	src/mibTreeGen.c	/^char currentTable[64];$/;"	v	language:C	typeref:typename:char[64]
+currentUpdate	src/mibTreeObjTree.c	/^inline static mibTree * currentUpdate(mibTree *current, mibTree *currentMerge, mibTree *iterMerg/;"	f	language:C	typeref:typename:mibTree *	file:
 deal_with_sequence	src/mibTreeGen.c	/^void deal_with_sequence() {}$/;"	f	language:C	typeref:typename:void
 debugging	src/dispatcher.c	/^static void debugging(dispatchParam* param)$/;"	f	language:C	typeref:typename:void	file:
 default_target	Makefile	/^default_target: all$/;"	t	language:Make
@@ -853,9 +852,8 @@ isQueueEmpty	src/queue.c	/^static int isQueueEmpty(mibNodeInfoQueue *q) {$/;"	f	
 isQueueFull	src/queue.c	/^static int isQueueFull(mibNodeInfoQueue *q) {$/;"	f	language:C	typeref:typename:int	file:
 key	include/hash.h	/^    pair_key_base *key;$/;"	m	language:C++	struct:__anon50dc7d720308	typeref:typename:pair_key_base *
 key	src/hash.c	/^    int key;$/;"	m	language:C	struct:__anon5ef278910108	typeref:typename:int	file:
-lRef	include/mibTreeObjTree.h	/^    mibObjectTreeNode *lRef;$/;"	m	language:C++	struct:__anon0864d7810108	typeref:typename:mibObjectTreeNode *
-lRef	include/mibTreeObjTree.h	/^    mibTreeLeaveNode lRef;$/;"	m	language:C++	struct:mibTree	typeref:typename:mibTreeLeaveNode
 laTexStrBuffer	src/docGenerate.c	/^char *laTexStrBuffer;$/;"	v	language:C	typeref:typename:char *
+last	include/mibTreeObjTree.h	/^    mibTree *last;$/;"	m	language:C++	struct:mibTreeHead	typeref:typename:mibTree *
 latexHeaderGen	src/docGenerate.c	/^static int latexHeaderGen() {}$/;"	f	language:C	typeref:typename:int	file:
 latexTailGen	src/docGenerate.c	/^static int latexTailGen() {}$/;"	f	language:C	typeref:typename:int	file:
 leaveMeta	include/symbolTbl.h	/^       leaveMeta_t leaveMeta;$/;"	m	language:C++	union:symbol_t::__anon4ba81f06010a	typeref:typename:leaveMeta_t
@@ -901,7 +899,7 @@ mibNodeInfo	include/mibTreeObjTree.h	/^typedef struct mibNodeInfo {$/;"	s	langua
 mibNodeInfo	include/mibTreeObjTree.h	/^} mibNodeInfo;$/;"	t	language:C++	typeref:struct:mibNodeInfo
 mibNodeInfoQueue	include/queue.h	/^typedef struct mibNodeInfoQueue {$/;"	s	language:C++
 mibNodeInfoQueue	include/queue.h	/^} mibNodeInfoQueue;$/;"	t	language:C++	typeref:struct:mibNodeInfoQueue
-mibObjGen	src/mibTreeGen.c	/^int mibObjGen(int type) {$/;"	f	language:C	typeref:typename:int
+mibObjGen	src/mibTreeGen.c	/^int mibObjGen(int nodeType) {$/;"	f	language:C	typeref:typename:int
 mibObjGen_InnerNode	src/mibTreeGen.c	/^int mibObjGen_InnerNode() {$/;"	f	language:C	typeref:typename:int
 mibObjGen_Leave	src/mibTreeGen.c	/^int mibObjGen_Leave() {$/;"	f	language:C	typeref:typename:int
 mibObjGen_trap	src/mibTreeGen.c	/^int mibObjGen_trap() {$/;"	f	language:C	typeref:typename:int
@@ -912,31 +910,34 @@ mibObjectTreeRoot	src/mibTreeObjTree.c	/^mibObjectTreeNode mibObjectTreeRoot;$/;
 mibObjectTreeRoot	src/unitTest/basicDataStruct_Test.c	/^mibObjectTreeNode mibObjectTreeRoot;$/;"	v	language:C	typeref:typename:mibObjectTreeNode
 mibTree	include/mibTreeObjTree.h	/^typedef struct mibTree {$/;"	s	language:C++
 mibTree	include/mibTreeObjTree.h	/^} mibTree;$/;"	t	language:C++	typeref:struct:mibTree
+mibTreeAppend	src/mibTreeObjTree.c	/^int mibTreeAppend(mibTree *head, mibTree *new) {$/;"	f	language:C	typeref:typename:int
 mibTreeConstruction	src/mibTreeObjTree.c	/^mibTree * mibTreeConstruction(mibTree *tree) {$/;"	f	language:C	typeref:typename:mibTree *
+mibTreeDelete	src/mibTreeObjTree.c	/^mibTree * mibTreeDelete(mibTree *node) {$/;"	f	language:C	typeref:typename:mibTree *
+mibTreeDeleteByName	src/mibTreeObjTree.c	/^mibTree * mibTreeDeleteByName(mibTree *treeListHead, char *name) {$/;"	f	language:C	typeref:typename:mibTree *
 mibTreeGenTesting	src/mibTreeGen.c	/^void mibTreeGenTesting(void **state) {$/;"	f	language:C	typeref:typename:void
 mibTreeHead	include/mibTreeObjTree.h	/^typedef struct mibTreeHead {$/;"	s	language:C++
 mibTreeHead	include/mibTreeObjTree.h	/^} mibTreeHead;$/;"	t	language:C++	typeref:struct:mibTreeHead
-mibTreeLeaveAdd	src/mibTreeGen.c	/^static int mibTreeLeaveAdd(char *ident, char *type,$/;"	f	language:C	typeref:typename:int	file:
-mibTreeLeaveNext	src/mibTreeObjTree.c	/^mibTreeLeaveNode * mibTreeLeaveNext(mibTreeLeaveNode *lNode) {$/;"	f	language:C	typeref:typename:mibTreeLeaveNode *
-mibTreeLeaveNode	include/mibTreeObjTree.h	/^} mibTreeLeaveNode;$/;"	t	language:C++	typeref:struct:__anon0864d7810108
-mibTreeLeavePrev	src/mibTreeObjTree.c	/^mibTreeLeaveNode * mibTreeLeavePrev(mibTreeLeaveNode *lNode) {$/;"	f	language:C	typeref:typename:mibTreeLeaveNode *
-mibTreeLeaveSearch	src/mibTreeObjTree.c	/^mibTreeLeaveNode * mibTreeLeaveSearch(mibTreeLeaveNode *lNode, char *ident) {$/;"	f	language:C	typeref:typename:mibTreeLeaveNode *
+mibTreeHeadAppend	src/mibTreeObjTree.c	/^int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode, char *parent) {$/;"	f	language:C	typeref:typename:int
+mibTreeHeadInit	src/mibTreeObjTree.c	/^int mibTreeHeadInit(mibTreeHead *treeHead) {$/;"	f	language:C	typeref:typename:int
+mibTreeHeadMerge	src/mibTreeObjTree.c	/^int mibTreeHeadMerge(mibTreeHead *treeHead) {$/;"	f	language:C	typeref:typename:int
+mibTreeHeadMerge_LAST	src/mibTreeObjTree.c	/^int mibTreeHeadMerge_LAST(mibTreeHead *treeHead) {$/;"	f	language:C	typeref:typename:int
+mibTreeLeaveAdd	src/mibTreeGen.c	/^static int mibTreeLeaveAdd(mibObjectTreeNode *obj, char *parent) {$/;"	f	language:C	typeref:typename:int	file:
 mibTreeMerge	src/mibTreeObjTree.c	/^mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree) {$/;"	f	language:C	typeref:typename:mibTree *
 mibTreeNext	src/mibTreeObjTree.c	/^mibTree * mibTreeNext(mibTree *tree) {$/;"	f	language:C	typeref:typename:mibTree *
-mibTreeNodeAdd	src/mibTreeGen.c	/^static int mibTreeNodeAdd(char *ident, char *oid, char *parent) {$/;"	f	language:C	typeref:typename:int	file:
+mibTreeNodeAdd	src/mibTreeGen.c	/^static int mibTreeNodeAdd(mibObjectTreeNode *obj, char *parent) {$/;"	f	language:C	typeref:typename:int	file:
 mibTreePrev	src/mibTreeObjTree.c	/^mibTree * mibTreePrev(mibTree *tree) {$/;"	f	language:C	typeref:typename:mibTree *
 mibTreeSearch	src/mibTreeObjTree.c	/^mibTree * mibTreeSearch(mibTree *tree, char *name) {$/;"	f	language:C	typeref:typename:mibTree *
+mibTreeSetRoot	src/mibTreeObjTree.c	/^int mibTreeSetRoot(mibTree *tree) {$/;"	f	language:C	typeref:typename:int
+mibTreeTesting	src/mibTreeObjTree.c	/^void mibTreeTesting(void **state) {$/;"	f	language:C	typeref:typename:void
 mibTree_test	src/unitTest/basicDataStruct_Test.c	/^static void mibTree_test(void **state) {$/;"	f	language:C	typeref:typename:void	file:
 miscInit	src/misc.c	/^void miscInit() {$/;"	f	language:C	typeref:typename:void
 modName	include/dispatcher.h	/^    char *modName;$/;"	m	language:C++	struct:collectInfo	typeref:typename:char *
 modName	include/symbolTbl.h	/^    char *modName;$/;"	m	language:C++	struct:symbolTable	typeref:typename:char *
-name	include/mibTreeObjTree.h	/^    char *name;$/;"	m	language:C++	struct:__anon0864d7810108	typeref:typename:char *
 next	include/list.h	/^    struct listNode *next;$/;"	m	language:C++	struct:listNode	typeref:struct:listNode *
 node	include/dispatcher.h	/^    listNode node;$/;"	m	language:C++	struct:dispatchParam	typeref:typename:listNode
 node	include/dispatcher.h	/^    listNode node;$/;"	m	language:C++	struct:identList	typeref:typename:listNode
 node	include/hash.h	/^    listNode node;$/;"	m	language:C++	struct:__anon50dc7d720408	typeref:typename:listNode
 node	include/mibTreeGen.h	/^    listNode node;$/;"	m	language:C++	struct:targetSymbolList	typeref:typename:listNode
-node	include/mibTreeObjTree.h	/^    listNode node;$/;"	m	language:C++	struct:__anon0864d7810108	typeref:typename:listNode
 node	include/mibTreeObjTree.h	/^    listNode node;$/;"	m	language:C++	struct:mibTree	typeref:typename:listNode
 node	include/options.h	/^    listNode node;$/;"	m	language:C++	struct:incPathList	typeref:typename:listNode
 node	src/unitTest/basicDataStruct_Test.c	/^        listNode node;$/;"	m	language:C	struct:list_test::__anon0f4d9f3c0108	typeref:typename:listNode	file:
@@ -987,7 +988,7 @@ rebuild_cache	Makefile	/^rebuild_cache:$/;"	t	language:Make
 rebuild_cache/fast	Makefile	/^rebuild_cache\/fast: rebuild_cache$/;"	t	language:Make
 release	include/hash.h	/^    int (*release)(void *key);$/;"	m	language:C++	struct:__anon50dc7d720108	typeref:typename:int (*)(void * key)
 release	include/hash.h	/^    int (*release)(void *key);$/;"	m	language:C++	struct:__anon50dc7d720208	typeref:typename:int (*)(void * key)
-root	include/mibTreeObjTree.h	/^    mibObjectTreeNode root;$/;"	m	language:C++	struct:mibTree	typeref:typename:mibObjectTreeNode
+root	include/mibTreeObjTree.h	/^    mibObjectTreeNode *root;$/;"	m	language:C++	struct:mibTree	typeref:typename:mibObjectTreeNode *
 root	src/mibTreeGen.c	/^mibObjectTreeNode root;$/;"	v	language:C	typeref:typename:mibObjectTreeNode
 rootName	include/mibTreeObjTree.h	/^    char *rootName;$/;"	m	language:C++	struct:mibTree	typeref:typename:char *
 rw	include/docGenerate.h	/^    char *rw;$/;"	m	language:C++	struct:tableInfo	typeref:typename:char *
@@ -1212,7 +1213,7 @@ targetSymbolList	include/mibTreeGen.h	/^} targetSymbolList;$/;"	t	language:C++	t
 test_list	src/unitTest/basicDataStruct_Test.c	/^    } test_list;$/;"	t	language:C	function:list_test	typeref:struct:list_test::__anon0f4d9f3c0108	file:
 top	include/stack.h	/^    int top;$/;"	m	language:C++	struct:identStack	typeref:typename:int
 travel_MibTree	src/mibTreeObjTree.c	/^mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, $/;"	f	language:C	typeref:typename:mibObjectTreeNode *
-trees	include/mibTreeObjTree.h	/^    mibTree *trees;$/;"	m	language:C++	struct:mibTreeHead	typeref:typename:mibTree *
+trees	include/mibTreeObjTree.h	/^    mibTree trees;$/;"	m	language:C++	struct:mibTreeHead	typeref:typename:mibTree
 trees	src/mibTreeGen.c	/^mibTreeHead trees;$/;"	v	language:C	typeref:typename:mibTreeHead
 tryKeyConstruct	src/hash.c	/^try_key * tryKeyConstruct(int key) {$/;"	f	language:C	typeref:typename:try_key *
 tryKeyEqual	src/hash.c	/^int tryKeyEqual(try_key *lK, try_key *rK) {$/;"	f	language:C	typeref:typename:int

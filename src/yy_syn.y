@@ -85,8 +85,8 @@ MODULES_CONTENT :
         }
         disParamRelease_Static(&importParam, NULL);
 
-        // Build upper part of tree
-
+        // Searching symbols in the module.
+        
 
     }
 

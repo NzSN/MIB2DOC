@@ -31,25 +31,31 @@ typedef struct mibObjectTreeNode {
     struct mibObjectTreeNode *head;
 } mibObjectTreeNode;
 
-typedef struct {
-    char *name;
-    mibObjectTreeNode *lRef;
-    listNode node;
-} mibTreeLeaveNode;
-
 typedef struct mibTree {
     char *rootName;
-    mibObjectTreeNode root;
-    // References to leave node of the tree
-    // for the purpose of merge.
-    mibTreeLeaveNode lRef;
+    mibObjectTreeNode *root;
     listNode node;
 } mibTree;
 
 typedef struct mibTreeHead {
     int numOfTree;
-    mibTree *trees;
+    mibTree *last;
+    mibTree trees;
 } mibTreeHead;
+
+
+/* mibObjectTreeNode functions */
+#define MIB_OBJ_TREE_NODE_PARENT_NAME(node) ({\
+    char *parentName;\
+    mibObjectTreeNode *parent = node->root->parent;\
+    if (parent != NULL) {\
+        parentName = parent->identifier;\
+    } else {\
+        parentName = NULL;\
+    }\
+    parentName;\
+})
+
 
 void mibObjectTreeInit(mibObjectTreeNode *root);
 int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent);
@@ -68,20 +74,28 @@ mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
 #define MIBTREE_IS_LAST_TREE(MIBTREE) (MIBTREE->node.next == NULL)
 
 mibTree * mibTreeConstruction(mibTree *tree);
+int mibTreeSetRoot(mibTree *tree, mibObjectTreeNode *rootNode);
 mibTree * mibTreeNext(mibTree *tree);
 mibTree * mibTreePrev(mibTree *tree);
 mibTree * mibTreeSearch(mibTree *tree, char *name);
+int mibTreeAppend(mibTree *head, mibTree *now);
+mibTree * mibTreeDelete(mibTree *node);
+mibTree * mibTreeDeleteByName(mibTree *treeListHead, char *name);
 
 // Merge lTree and rTree and return the root of the tree.
 mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree);
 
-/* mibTreeLeaveNode functions */
-#define MIBTREE_LEAVE_IS_FIRST(lNode) (lNode->node.prev == NULL)
-#define MIBTREE_LEAVE_IS_LAST(lNode) (lNode->node.next == NULL)
+/* mibTreeHead functions */
+int mibTreeHeadInit(mibTreeHead *treeHead);
+int mibTreeHeadMerge_LAST(mibTreeHead *treeHead);
+int mibTreeHeadMerge(mibTreeHead *treeHead);
+int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode, char *parent);
 
-mibTreeLeaveNode *mibTreeLeavePrev(mibTreeLeaveNode *lNode);
-mibTreeLeaveNode *mibTreeLeaveNext(mibTreeLeaveNode *lNode);
-mibTreeLeaveNode * mibTreeLeaveSearch(mibTreeLeaveNode *lNode, char *ident);
+#ifdef MIB2DOC_UNIT_TESTING
+
+void mibTreeTesting(void **state);
+
+#endif /* MIB2DOC_UNIT_TESTING */
 
 #endif //GL5610_MIB_DOC_GEN_TREE_H
 
