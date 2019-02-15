@@ -202,7 +202,7 @@ static void disParam_test(void **state) {
         fail();
     if (strncmp(disParamRetrive(&param)->param, IDENTIFIER_S, strlen(IDENTIFIER_S)) != 0)
         fail();
-    /* 
+    
     int i = 0;
     dispatchParam *massive = disParamConstruct((void *)100);
     while (i < 100) {
@@ -219,7 +219,6 @@ static void disParam_test(void **state) {
     }
     
     disParamRelease(massive, NULL);
-    */
 }
 
 int main(void) {
