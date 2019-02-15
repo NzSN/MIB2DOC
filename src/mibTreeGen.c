@@ -434,7 +434,7 @@ static int symbolCollect_PARAM_SUFFIX(dispatchParam *param) {
 #ifdef MIB2DOC_UNIT_TESTING
 
 void mibTreeGenTesting(void **state) {
-               
+                   
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

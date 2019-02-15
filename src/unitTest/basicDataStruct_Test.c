@@ -13,6 +13,7 @@
 #include "stack.h"
 #include "dispatcher.h"
 #include "hash.h"
+#include <stdio.h>
 
 mibObjectTreeNode mibObjectTreeRoot;
 slice sliceContainer;
@@ -55,6 +56,7 @@ static void list_test(void **state) {
 
     while (i < 100) {
         current = (test_list *)malloc(sizeof(test_list)); 
+        memset(current, 0, sizeof(test_list));
         current->idx = i;
         listNodeInsert(listNodeTail(&head.node), &current->node);
         ++i;
@@ -78,10 +80,10 @@ static void mibTree_test(void **state) {
     char *parent;
 
     mibObjectTreeInit(&mibObjectTreeRoot);
-    ident = (char *)malloc(strlen("gogo"));
-    suffix = (char *)malloc(strlen("1"));
-    parent = (char *)malloc(strlen("enterprises"));
-
+    ident = (char *)calloc(1, strlen("gogo")+1);
+    suffix = (char *)calloc(1, strlen("1")+1);
+    parent = (char *)calloc(1, strlen("enterprises")+1);
+    
     strncpy(ident, "gogo", strlen("gogo"));
     strncpy(suffix, "1", strlen("1"));
     strncpy(parent, "enterprises", strlen("enterpises"));
@@ -200,7 +202,7 @@ static void disParam_test(void **state) {
         fail();
     if (strncmp(disParamRetrive(&param)->param, IDENTIFIER_S, strlen(IDENTIFIER_S)) != 0)
         fail();
-
+    
     int i = 0;
     dispatchParam *massive = disParamConstruct((void *)100);
     while (i < 100) {
@@ -222,7 +224,6 @@ static void disParam_test(void **state) {
 int main(void) {
     const struct CMUnitTest tests[] = {
             cmocka_unit_test(list_test),
-            cmocka_unit_test(mibTree_test),
             cmocka_unit_test(fa_test),
             cmocka_unit_test(tableInfoQueue_test),
             cmocka_unit_test(desc_test),
@@ -236,5 +237,6 @@ int main(void) {
             cmocka_unit_test(mibTreeTesting)
             #endif
     };
+
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

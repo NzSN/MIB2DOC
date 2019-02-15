@@ -225,6 +225,10 @@ static int hashChainRelease(hashChain *chainNode) {
 static int hashChainRelease_STATIC(hashChain *chainNode) {
     hashChain *released;
     
+    if (isNullPtr(chainNode) || HASH_CHAIN_IS_LAST(chainNode)) {
+        return TRUE; 
+    }
+
     chainNode = hashChainNext(chainNode);
 
     do {
@@ -232,8 +236,9 @@ static int hashChainRelease_STATIC(hashChain *chainNode) {
         if (pairRelease(HASH_CHAIN_PAIR_R(chainNode)) == FALSE)
             return FALSE;
         released = chainNode;
+        chainNode = hashChainNext(chainNode);
         RELEASE_MEM(released);
-    } while(chainNode = hashChainNext(chainNode));
+    } while(chainNode);
 
     return TRUE;
 }
@@ -429,7 +434,7 @@ void hashTesting(void **state) {
     
     // Release testing
     hashMapRelease(pMap);     
-
+    
     // Hash map deletion testing.
     try_val *valDel; 
     pair_kv pairDel;
