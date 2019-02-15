@@ -20,7 +20,7 @@ add_executable(Mib2Doc ${SOURCE_FILES})
 
 project(UNIT_TEST)
 set(UTEST_DIR ${SRC_DIR}/unitTest)
-set(UNIT_TEST_SRC ${UTEST_DIR}/basicDataStruct_Test.c 
+set(UNIT_TEST_SRC ${UTEST_DIR}/basicDataStruct_Test.c
     ${SRC_DIR}/mibTreeGen.c ${SRC_DIR}/lexer.c
     ${SRC_DIR}/yy_syn.tab.c ${SRC_DIR}/queue.c 
     ${SRC_DIR}/mibTreeObjTree.c ${SRC_DIR}/stack.c 
