@@ -38,26 +38,9 @@ mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
     int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
 
 void mibObjectTreeInit(mibObjectTreeNode *root) {
-    mibNodeInfo *rootInfo;
     mibObjectTreeNode *obj;
 
     memset(root, 0, sizeof(mibObjectTreeNode));
-
-    rootInfo = (mibNodeInfo *)malloc(sizeof(mibNodeInfo));
-    memset(rootInfo, 0, sizeof(mibNodeInfo));
-    rootInfo->ident = "root";
-    rootInfo->oid = "root";
-
-    root->isNode = 1;
-    root->info = (void *)rootInfo;
-    root->head = root;
-
-    insert_MibTree(root, mibNodeBuild("iso", "1"), "root");
-    insert_MibTree(root, mibNodeBuild("org", "1.3"), "iso");
-    insert_MibTree(root, mibNodeBuild("dod", "1.3.6"), "org");
-    insert_MibTree(root, mibNodeBuild("internet", "1.3.6.1"), "dod");
-    insert_MibTree(root, mibNodeBuild("private", "1.3.6.1.4"), "internet");
-    insert_MibTree(root, mibNodeBuild("enterprises", "1.3.6.1.4.1"), "private");
 }
 
 mibObjectTreeNode * mibNodeBuild(char *ident, char *oid) {
@@ -298,6 +281,7 @@ mibTree * mibTreeConstruction(mibTree *tree) {
         return NULL;
     
     memset(tree, 0, sizeof(mibTree));
+    tree->root = (mibObjectTreeNode *)malloc(sizeof(mibObjectTreeNode));
     mibObjectTreeInit(tree->root);
 
     return tree;
@@ -515,14 +499,24 @@ int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode, char *p
         return FALSE; 
     }
     
+    // A new root.
+    if (isNullPtr(parent)) {
+        goto NEW_TREE; 
+    }
+
     // First check last tree. 
     treeIter = treeHead->last; 
-    treeRoot = treeIter->root;
+    if (isNullPtr(treeIter))
+        goto ITERATE_OVER_ALL;
 
+LAST_TREE:
+    treeRoot = treeIter->root;
+    
     if (insert_MibTree(treeRoot, newNode, parent) != -1) {
         return TRUE; 
     }
-    
+
+ITERATE_OVER_ALL: 
     // Iterate over all another trees.
     last = treeHead->last;    
     treeIter = &treeHead->trees;
@@ -534,12 +528,14 @@ int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode, char *p
         }
     } while (treeIter = mibTreeNext(treeIter));
 
+NEW_TREE:
     // Build a new tree. 
     treeIter = (mibTree *)malloc(sizeof(mibTree));
     mibTreeConstruction(treeIter); 
     mibTreeSetRoot(treeIter, newNode);
     
     mibTreeAppend(&treeHead->trees, treeIter);
+    treeHead->numOfTree++;
 
     return TRUE;
 }
@@ -550,6 +546,27 @@ int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode, char *p
 
 void mibTreeTesting(void **state) {
     // Merge testing
+    mibObjectTreeNode *node;
+    mibTreeHead treeHead;
+    
+    memset(&treeHead, 0, sizeof(mibTreeHead));
+    
+    node = mibNodeBuild("A", "1"); 
+    mibTreeHeadAppend(&treeHead, node, NULL);
+    
+    node = mibNodeBuild("B", "2");
+    mibTreeHeadAppend(&treeHead, node, "A"); 
+    
+    node = mibNodeBuild("F", "2");
+    mibTreeHeadAppend(&treeHead, node, "C");
+    
+    node = mibNodeBuild("E", "2"); 
+    mibTreeHeadAppend(&treeHead, node, "C");
+
+    node = mibNodeBuild("C", "3");
+    mibTreeHeadAppend(&treeHead, node, "A");
+
+    assert_int_equal(treeHead.numOfTree, 3);
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

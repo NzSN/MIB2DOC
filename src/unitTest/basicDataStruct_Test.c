@@ -224,7 +224,6 @@ static void disParam_test(void **state) {
 int main(void) {
     const struct CMUnitTest tests[] = {
             cmocka_unit_test(list_test),
-            cmocka_unit_test(mibTree_test),
             cmocka_unit_test(fa_test),
             cmocka_unit_test(tableInfoQueue_test),
             cmocka_unit_test(desc_test),
