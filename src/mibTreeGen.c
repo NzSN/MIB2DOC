@@ -32,7 +32,7 @@ targetSymbolList tSymListHead;
 
 int mibObjGen(int nodeType) {
     mibObjectTreeNode *newNode;
-    char *ident, *type, *rw, *desc, *parent, *suffix, *oid;    
+    char *ident, *type, *rw, *desc, *parent, *suffix;    
     
     ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER);;
     type = sliceGetVal(&sliceContainer, SLICE_TYPE); 
@@ -51,8 +51,7 @@ int mibObjGen(int nodeType) {
             assert(parent != NULL);
             assert(suffix != NULL);
             
-            oid = oidComplement(parent, suffix);
-            newNode = mibLeaveBuild(ident, type, rw, desc, oid);
+            newNode = mibLeaveBuild(ident, type, rw, desc, suffix, parent);
             break;
         case TRAP:
             type = (char *)malloc(strlen("trap") + 1);
@@ -63,16 +62,14 @@ int mibObjGen(int nodeType) {
             assert(suffix != NULL);
             assert(desc != NULL);
             
-            oid = oidComplement(parent, suffix);
-            newNode = mibLeaveBuild(ident, type, NULL, NULL, oid); 
+            newNode = mibLeaveBuild(ident, type, NULL, NULL, suffix, parent); 
             break;
         case OBJECT_IDENTIFIER:
             assert(ident != NULL);
             assert(parent != NULL);
             assert(suffix != NULL);
 
-            oid = oidComplement(parent, suffix);
-            newNode = mibNodeBuild(ident, oid);
+            newNode = mibNodeBuild(ident, suffix, parent);
             break;
         case SEQUENCE:
             /* ignore */
@@ -81,7 +78,7 @@ int mibObjGen(int nodeType) {
             break;
     }
 
-    assert(mibTreeHeadAppend(&trees, newNode, parent) != FALSE);
+    assert(mibTreeHeadAppend(&trees, newNode) != FALSE);
 
     return 0;
 }
@@ -98,7 +95,7 @@ int mibObjGen_Leave() {
     assert((suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX)) != NULL);
 
     oid = oidComplement(parent, suffix);
-    obj = mibLeaveBuild(ident, type, rw, desc, oid);
+    obj = mibLeaveBuild(ident, type, rw, desc, oid, parent);
     mibTreeLeaveAdd(obj, parent);
 
     sliceReset(sliceNext(&sliceContainer));
@@ -117,7 +114,7 @@ int mibObjGen_InnerNode() {
 
     oid = oidComplement(parent, suffix);
 
-    node = mibNodeBuild(ident, oid);
+    node = mibNodeBuild(ident, oid, parent);
     mibTreeNodeAdd(node, parent);
 
     sliceReset(sliceNext(&sliceContainer));
@@ -144,7 +141,7 @@ int mibObjGen_trap() {
 
     oid = oidComplement(parent, suffix);
     
-    obj = mibLeaveBuild(ident, type, NULL, NULL, oid); 
+    obj = mibLeaveBuild(ident, type, NULL, NULL, oid, parent); 
     mibTreeLeaveAdd(obj, parent);
 
     sliceReset(sliceNext(&sliceContainer));
@@ -217,7 +214,7 @@ int upperTreeGeneration(symbolTable *symTbl) {
         return ERROR_NULL_REF;
     }
     root = &mibObjectTreeRoot;
-    insert_MibTree(root, mibNodeBuild("iso", "1"), "root");
+    insert_MibTree(root, mibNodeBuild("iso", "1", NULL), "root");
     push(&stack, root);
 
     sym = (symbol_t *)malloc(sizeof(symbol_t));
@@ -229,7 +226,7 @@ int upperTreeGeneration(symbolTable *symTbl) {
             while (child != NULL) {
                 if (child->symType == SYMBOL_TYPE_NODE) {
                     childNode = mibNodeBuild(strdup(child->symIdent),
-                        strdup(child->symInfo.nodeMeta.suffix));
+                        strdup(child->symInfo.nodeMeta.suffix), NULL);
                     insert_MibTree(root, childNode, strdup(current->identifier));
                     push(&stack, childNode);
                 } else if (child->symType == SYMBOL_TYPE_LEAVE) {
@@ -237,7 +234,7 @@ int upperTreeGeneration(symbolTable *symTbl) {
                         strdup(child->symInfo.leaveMeta.type),
                         strdup(child->symInfo.leaveMeta.permission),
                         NULL,
-                        strdup(child->symInfo.leaveMeta.suffix));
+                        strdup(child->symInfo.leaveMeta.suffix), NULL);
                     insert_MibTree(root, childNode, strdup(current->identifier));
                 }
                 temp = child;

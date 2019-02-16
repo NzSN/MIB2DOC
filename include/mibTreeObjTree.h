@@ -29,6 +29,9 @@ typedef struct mibObjectTreeNode {
     struct mibObjectTreeNode *child;
     struct mibObjectTreeNode *sibling;
     struct mibObjectTreeNode *head;
+    struct {
+        char *parent; 
+    } mergeInfo;
 } mibObjectTreeNode;
 
 typedef struct mibTree {
@@ -45,23 +48,14 @@ typedef struct mibTreeHead {
 
 
 /* mibObjectTreeNode functions */
-#define MIB_OBJ_TREE_NODE_PARENT_NAME(node) ({\
-    char *parentName;\
-    mibObjectTreeNode *parent = node->root->parent;\
-    if (parent != NULL) {\
-        parentName = parent->identifier;\
-    } else {\
-        parentName = NULL;\
-    }\
-    parentName;\
-})
-
+#define MIB_OBJ_TREE_NODE_PARENT_NAME(node) (node->mergeInfo.parent)
 
 void mibObjectTreeInit(mibObjectTreeNode *root);
 int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent);
 mibObjectTreeNode * parent_MibTree(mibObjectTreeNode *root, char *ident);
-mibObjectTreeNode * mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid);
-mibObjectTreeNode * mibNodeBuild(char *ident, char *oid);
+mibObjectTreeNode * mibLeaveBuild(char *ident, char *type, char *rw, 
+    char *desc, char *oid, char *parent);
+mibObjectTreeNode * mibNodeBuild(char *ident, char *oid, char *parent);
 mibObjectTreeNode * search_MibTree(mibObjectTreeNode *root, char *const ident);
 char * getIdentFromInfo(mibObjectTreeNode *node);
 char * getOidFromInfo(mibObjectTreeNode *node);
@@ -89,7 +83,7 @@ mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree);
 int mibTreeHeadInit(mibTreeHead *treeHead);
 int mibTreeHeadMerge_LAST(mibTreeHead *treeHead);
 int mibTreeHeadMerge(mibTreeHead *treeHead);
-int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode, char *parent);
+int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode);
 
 #ifdef MIB2DOC_UNIT_TESTING
 

@@ -32,8 +32,6 @@ static int descriptionDeal(mibObjectTreeNode *node);
 })
 
 /* Declaration */
-mibObjectTreeNode * mibNodeBuild(char *ident, char *oid);
-mibObjectTreeNode * mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid);
 mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, 
     int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
 
@@ -43,7 +41,7 @@ void mibObjectTreeInit(mibObjectTreeNode *root) {
     memset(root, 0, sizeof(mibObjectTreeNode));
 }
 
-mibObjectTreeNode * mibNodeBuild(char *ident, char *oid) {
+mibObjectTreeNode * mibNodeBuild(char *ident, char *oid, char *parent) {
     mibObjectTreeNode *obj;
     mibNodeInfo *info;
 
@@ -62,11 +60,12 @@ mibObjectTreeNode * mibNodeBuild(char *ident, char *oid) {
     obj->identifier = ident;
     obj->isNode = 1;
     obj->info = (void *)info;
+    obj->mergeInfo.parent = parent;
 
     return obj;
 }
 
-mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid) {
+mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid, char *parent) {
     mibObjectTreeNode *obj;
     mibLeaveInfo *info;
 
@@ -89,6 +88,7 @@ mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, 
     obj->identifier = ident;
     obj->info = (void *)info;
     obj->isNode = 0;
+    obj->mergeInfo.parent = parent;
 
     return obj;
 }
@@ -370,13 +370,13 @@ mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree) {
     mibTree *merged;
     
     // Try to merge left tree into right tree.
-    ret = insert_MibTree(lTree->root, rTree->root, MIB_OBJ_TREE_NODE_PARENT_NAME(rTree));
-    if (ret != -1) {
+    ret = insert_MibTree(lTree->root, rTree->root, MIB_OBJ_TREE_NODE_PARENT_NAME(rTree->root));
+    if (ret == 0) {
         return lTree;
     } 
     // Try to merge right tree into left tree.
-    ret = insert_MibTree(rTree->root, lTree->root, MIB_OBJ_TREE_NODE_PARENT_NAME(lTree));
-    if (ret != -1) {
+    ret = insert_MibTree(rTree->root, lTree->root, MIB_OBJ_TREE_NODE_PARENT_NAME(lTree->root));
+    if (ret == 0) {
         return rTree;
     }
     return NULL;
@@ -491,7 +491,8 @@ int mibTreeHeadMerge(mibTreeHead *treeHead) {
     return TRUE;
 }
 
-int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode, char *parent) {
+int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode) {
+    char *parent;
     mibTree *treeIter, *last;
     mibObjectTreeNode *treeRoot; 
 
@@ -499,6 +500,8 @@ int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode, char *p
         return FALSE; 
     }
     
+    parent = newNode->mergeInfo.parent;
+
     // A new root.
     if (isNullPtr(parent)) {
         goto NEW_TREE; 
@@ -548,25 +551,36 @@ void mibTreeTesting(void **state) {
     // Merge testing
     mibObjectTreeNode *node;
     mibTreeHead treeHead;
-    
+    mibTree *currentTree; 
+
     memset(&treeHead, 0, sizeof(mibTreeHead));
     
-    node = mibNodeBuild("A", "1"); 
-    mibTreeHeadAppend(&treeHead, node, NULL);
+    node = mibNodeBuild("A", "1", NULL); 
+    mibTreeHeadAppend(&treeHead, node);
     
-    node = mibNodeBuild("B", "2");
-    mibTreeHeadAppend(&treeHead, node, "A"); 
+    node = mibNodeBuild("B", "2", "A");
+    mibTreeHeadAppend(&treeHead, node); 
     
-    node = mibNodeBuild("F", "2");
-    mibTreeHeadAppend(&treeHead, node, "C");
+    node = mibNodeBuild("F", "1", "C");
+    mibTreeHeadAppend(&treeHead, node);
     
-    node = mibNodeBuild("E", "2"); 
-    mibTreeHeadAppend(&treeHead, node, "C");
+    node = mibNodeBuild("E", "2", "C"); 
+    mibTreeHeadAppend(&treeHead, node);
 
-    node = mibNodeBuild("C", "3");
-    mibTreeHeadAppend(&treeHead, node, "A");
+    node = mibNodeBuild("C", "3", "A");
+    mibTreeHeadAppend(&treeHead, node);
+     
+    node = mibNodeBuild("G", "2", "B");
+    mibTreeHeadAppend(&treeHead, node);
 
     assert_int_equal(treeHead.numOfTree, 3);
+
+    for (currentTree = &treeHead.trees; !isNullPtr(currentTree); currentTree = mibTreeNext(currentTree)) {
+        showTree(currentTree->root); 
+        printf("\n");
+    } 
+
+   mibTreeHeadMerge(&treeHead);
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */
