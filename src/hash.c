@@ -14,7 +14,7 @@ static int pairRelease(pair_kv *p);
 
 hashMap * hashMapConstruct(int size, hashFunction func) {
     hashMap *mem;
-    
+
     if (isNullPtr(func) || size <= 0) {
         return null; 
     }
@@ -247,7 +247,7 @@ static int pairRelease(pair_kv *p) {
     int ret;
     pair_key_base *key;
     pair_val_base *val;
-
+    
     if (isNullPtr(p)) 
         return FALSE; 
 
@@ -438,7 +438,7 @@ void hash__HASH_BASIC(void **state) {
     // Hash map deletion testing.
     try_val *valDel; 
     pair_kv pairDel;
-
+    
     PAIR_KEY_SET(pairDel, tryKeyConstruct(1));
     PAIR_VAL_SET(pairDel, tryValConstruct(1));
 

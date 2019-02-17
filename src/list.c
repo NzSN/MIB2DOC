@@ -8,7 +8,6 @@
 #include "list.h"
 #include "type.h"
 #include "dispatcher.h"
-#include "symbolTbl.h"
 
 enum {
     SYM_TRAVEL_CONTINUE = 10,
@@ -20,7 +19,7 @@ enum {
  ************/
 listNode *listNodeNext(listNode *sliNode) {
     if (isNullPtr(sliNode) || isNullPtr(sliNode->next))
-        return NULL;
+        return NULL;  
     return sliNode->next;
 }
 
@@ -93,6 +92,7 @@ listNode * listNodeAppend(listNode *listH, listNode *listN) {
 
 bool listNodeIsEmpty(listNode *head) {
     int i = 0;
+    
     if (isNullPtr(head)) {
         return FALSE;
     }
@@ -243,15 +243,15 @@ bool sliceReset(slice *sli) {
   */
 dispatchParam * disParamConstruct(void *param) {
     dispatchParam *ret;
-
+     
     if (isNullPtr(param)) {
         return NULL;
     }
-    
+     
     ret  = (dispatchParam *)malloc(sizeof(dispatchParam));
     memset(ret, 0, sizeof(dispatchParam));
     ret->param = param;
-
+    
     return ret;
 }
 
@@ -312,7 +312,7 @@ int disParamRelease_Static(dispatchParam *disParam, int (*destruct)(void *)) {
 
     if (isNullPtr(disParam))
         return FALSE;
-
+    
     ret = disParamRelease(dispatchParamNext(disParam), destruct);
     memset(disParam, 0, sizeof(dispatchParam));
 
@@ -342,161 +342,194 @@ dispatchParam * disParamRetrive(dispatchParam **head) {
 symErrorCode symTblError;
 extern symbolTable symTable;
 
-symbolTable * symbolTableConstruct(char *name) {
-    symbolTable *newTable;
+typedef struct {
+    pair_key_base base;
+    char *ident;
+} symbol_k;
 
-    if (isNullPtr(name)) {
-        mib2docError = ERROR_NULL_REF;
+static int symbolKRelease(symbol_k *key) {
+    symbol_k *pKey = key;
+ 
+    if (isNullPtr(key))
+        return FALSE;          
+    
+    RELEASE_MEM(pKey->ident);
+    RELEASE_MEM(pKey);
+
+    return TRUE;
+}
+
+static symbol_k * symbolKValue(symbol_k *key) {
+    if (isNullPtr(key)) 
         return NULL;
-    }
+
+    return (void *)key->ident;
+}
+
+static int symbolKIsEqual(symbol_k *lKey, symbol_k *rKey) {
+    if (isNullPtr(lKey) || isNullPtr(rKey))
+        return FALSE;
+
+    return !strncmp(lKey->ident, rKey->ident, strlen(lKey->ident));
+}
+
+static symbol_k * symbolKConst(char *name) {
+    symbol_k *pKey;
+    
+    if (isNullPtr(name))
+        return NULL;
+
+    pKey = (symbol_k *)malloc(sizeof(symbol_k));
+    pKey->ident = name;
+    pKey->base.release = symbolKRelease;
+    pKey->base.value = symbolKValue;
+    pKey->base.isEqual = symbolKIsEqual; 
+    
+    return pKey;
+}
+
+static symbol_k * symbolKInit(symbol_k *key, char *name) {
+    if (isNullPtr(key) || isNullPtr(name))
+        return FALSE;
+
+    key->ident = name;
+    key->base.isEqual = symbolKRelease;
+    key->base.release = symbolKRelease;
+    key->base.value = symbolKValue;
+
+    return TRUE;
+}
+
+symbolTable * symbolTableConstruct() {
+    symbolTable *newTable;
+     
     newTable = (symbolTable *)malloc(sizeof(symbolTable));
     memset(newTable, 0, sizeof(symbolTable));
-    newTable->modName = name;
     return newTable;
 }
 
-symbolTable * symbolTablePrev(symbolTable *tbl) {
-    return containerOf(tbl->symTblNode.prev, symbolTable, symTblNode);
+symbol_t * symbolTableSearch(symbolTable *tbl, char *sym) {
+    symbol_k key;
+    pair_kv pair;
+    hashMap *symMap;
+
+    if (isNullPtr(tbl) || isNullPtr(sym))
+       return NULL; 
+    
+    symbolKInit(&key, sym); 
+    pair.key = &key;
+
+    symMap = tbl->symbolMap;
+    return (symbol_t *)hashMapGet(symMap, pair);
 }
 
-symbolTable * symbolTableNext(symbolTable *tbl) {
-    return containerOf(tbl->symTblNode.next, symbolTable, symTblNode);
+int symbolTableAdd(symbolTable *tbl, symbol_t *sym) {
+    symbol_k *key;
+    pair_kv pair;
+    hashMap *symMap;
+
+    if (isNullPtr(tbl) || isNullPtr(sym)) 
+        return FALSE; 
+   
+    key = symbolKConst(sym->symIdent); 
+    pair.key = key;
+    pair.val = sym; 
+
+    return hashMapPut(symMap, pair);
 }
 
-/* Return :
- *  @NULL - if mib2docError == ERROR_NULL_REF means nul pointer
- *          otherwise symbol table not found.
- *  @pointer - pointer that point the table specify by modName
- */
-symbolTable * symbolTableSearch(symbolTable *tblRoot, char *modName) {
-    if (isNullPtr(tblRoot) || isNullPtr(modName)) {
-        mib2docError = ERROR_NULL_REF;
-        return NULL;
-    }
-    while (tblRoot) {
-        if (!strncmp(tblRoot->modName, modName, strlen(modName))) {
-            return tblRoot;
-        }
-        tblRoot = symbolTableNext(tblRoot);
-    }
-    mib2docError = SYM_TABLE_NOT_FOUND;
-    return NULL;
+int symbolTableDelete(symbolTable *tbl, char *symIdent) {
+ 
 }
 
-symbolTable * symbolModuleAdd(symbolTable *tblRoot, symbolTable *newTbl) {
-    if (isNullPtr(tblRoot) || isNullPtr(newTbl)) {
-        mib2docError = ERROR_NULL_REF;
-        return NULL;
-    }
-
-    listNodeInsert(listNodeTail(&tblRoot->symTblNode), &newTbl->symTblNode);
-    return newTbl;
-}
-
-symbol_t * symbolPrev(symbol_t *sym) {
-    return containerOf(sym->symNode.prev, symbol_t, symNode);
-}
-
-symbol_t * symbolNext(symbol_t *sym) {
-    return containerOf(sym->symNode.next, symbol_t, symNode);
-}
-
-symbol_t * symbolAdd(symbolTable *symTbl, symbol_t *newSym, char *modName) {
-    symbolTable *pSymTbl;
-    symbol_t *pSym;
-
-    if (isNullPtr(modName) || isNullPtr(newSym) || isNullPtr(symTbl)) {
-        mib2docError = ERROR_NULL_REF;
-        return NULL;
-    }
-    if ((pSymTbl = symbolTableSearch(symTbl, modName)) == NULL) {
-        if (mib2docError == SYM_TABLE_NOT_FOUND)
-            pSymTbl = symbolModuleAdd(symTbl, symbolTableConstruct(modName));
-    }
-
-    pSym = pSymTbl->symbol;
-    if (!symbolSearching(pSymTbl, newSym->symIdent)) {
-        if (mib2docError == SYM_NOT_FOUND)
-            listNodeInsert(listNodeTail(&pSym->symNode), &newSym->symNode);
-            return pSym;
-    }
-    return NULL;
-}
-
-symbol_t * symbolTravel(symbolTable *symTblRoot, int (*func)(symbol_t *sym, void *arg), void *arg) {
-    int retVal;
-    symbol_t *ret = NULL;
-    symbolTable *pSymTbl;
-    symbol_t *pSym;
-
-    if (isNullPtr(symTblRoot)) {
-        mib2docError = ERROR_NULL_REF;
-        return ret;
-    }
-
-    pSymTbl = symTblRoot;
-
-    while (symbolTableNext(pSymTbl) != NULL) {
-        pSym = pSymTbl->symbol;
-
-        while (pSym != NULL) {
-            retVal = func(pSym, arg);
-            if (retVal == SYM_TRAVEL_CONTINUE) {
-                continue;
-            } else if (retVal == SYM_TRAVEL_STOP) {
-                return pSym;
-            } else if (retVal == ERROR_NULL_REF) {
-                return NULL;
-            }
-            pSym = symbolNext(pSym);
-        }
-        pSymTbl = symbolTableNext(pSymTbl);
-    }
-    mib2docError = SYM_NOT_FOUND;
-
-FINISHED:
-    return ret;
-}
-
-static int symbolIsParentEqual(symbol_t *sym, void *arg) {
-    char *parent;
-    symbol_t *pSym;
-    symbol_t *foundSym;
-
-    if (isNullPtr(sym) || isNullPtr(arg)) {
-        return ERROR_NULL_REF;
-    }
-
-    pSym = (symbol_t *)arg;
-    parent = pSym->symIdent;
-
-    if (!strncmp(parent, sym->symIdent, strlen(parent))) {
-        foundSym = (symbol_t *)malloc(sizeof(symbol_t));
-        memcpy(foundSym, sym, sizeof(symbol_t));
-        pSym->symNode.next = &foundSym->symNode;
-    }
-
-    return SYM_TRAVEL_CONTINUE;
-}
-
-int symbolSearching(symbolTable *symTblRoot, char *sym) {
-    return 0;
-}
-
-int symbolSearchingByParent(symbolTable *symTblRoot, char *parent, symbol_t *sym) {
-    if (isNullPtr(symTblRoot) || isNullPtr(parent) || isNullPtr(sym)) {
-        return ERROR_NULL_REF;
-    }
-
-    memset(sym, 0, sizeof(symbol_t));
-    sym->symIdent = parent;
-    symbolTravel(symTblRoot, symbolIsParentEqual, (void *)sym);
-
-    if (sym->symNode.next != NULL) {
-        return TRUE;
-    } else {
+inline static int nodeMetaRelease(nodeMeta_t *nm) {
+    if (isNullPtr(nm))
         return FALSE;
-    }
+
+    RELEASE_MEM(nm->parentIdent);
+    RELEASE_MEM(nm->suffix);
+
+    return TRUE;
 }
+
+inline static int leaveMetaRelease(leaveMeta_t *lm) {
+    if (isNullPtr(lm))
+        return FALSE;
+
+    RELEASE_MEM(lm->parent);
+    RELEASE_MEM(lm->suffix);
+    RELEASE_MEM(lm->type);
+    RELEASE_MEM(lm->permission);
+    
+    return TRUE;
+}
+
+int symbolRelease(symbol_t *sym) {
+    if (isNullPtr(sym))
+        return FALSE;
+    
+    if (sym->symType == SYMBOL_TYPE_NODE)
+        nodeMetaRelease(&sym->symInfo.nodeMeta);
+    else
+        leaveMetaRelease(&sym->symInfo.leaveMeta);
+
+    RELEASE_MEM(sym->symIdent);     
+    RELEASE_MEM(sym);
+    
+    return TRUE;  
+}
+
+char * symbolIdent(symbol_t *sym) {
+    if (isNullPtr(sym))
+        return NULL;
+    return sym->symIdent;
+}
+
+int symbolIsEqual(symbol_t *symLeft, symbol_t *symRight) {
+    if (isNullPtr(symLeft) || isNullPtr(symRight))
+        return FALSE;
+    return !strncmp(symLeft->symIdent, symRight->symIdent, strlen(symLeft->symIdent));
+}
+
+symbol_t * symbolNodeConst(char *ident, char *parent, char *suffix) {
+    symbol_t *pSym;
+
+    if (isNullPtr(ident) || isNullPtr(parent) || isNullPtr(suffix))
+       return NULL; 
+
+    pSym = (symbol_t *)malloc(sizeof(symbol_t));
+    pSym->symType = SYMBOL_TYPE_NODE;
+    pSym->symIdent = ident;
+    pSym->symInfo.nodeMeta.parentIdent = parent;
+    pSym->symInfo.nodeMeta.suffix = suffix;
+
+    pSym->base.release = symbolRelease;
+    pSym->base.value = symbolIdent;
+    pSym->base.isEqual = symbolIsEqual;
+
+    return pSym;
+}
+
+symbol_t * symbolLeaveConst(char *ident, char *parent, char *suffix, char *type, char *perm) {
+    symbol_t *pSym;
+
+    if (isNullPtr(ident) || isNullPtr(parent) || isNullPtr(suffix) ||
+        isNullPtr(type) || isNullPtr(perm))
+        return NULL;
+
+    pSym = (symbol_t *)malloc(sizeof(symbol_t));
+    pSym->symType = SYMBOL_TYPE_LEAVE;
+    pSym->symIdent = ident;
+
+    pSym->symInfo.leaveMeta.parent = parent;
+    pSym->symInfo.leaveMeta.suffix = suffix;
+    pSym->symInfo.leaveMeta.type = type;
+    pSym->symInfo.leaveMeta.permission = perm; 
+
+    return pSym;
+}
+
+
 
 /* end of list.c */
+

@@ -3,6 +3,7 @@
  */
 
 #include "type.h"
+#include "symbolTbl.h"
 
 int mib2docError;
 

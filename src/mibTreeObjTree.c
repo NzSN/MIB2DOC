@@ -147,7 +147,7 @@ static int descriptionDeal(mibObjectTreeNode *node) {
     char *ident = getIdentFromInfo(node);
     char *parentIdent = getIdentFromInfo(node->parent);
     mibLeaveInfo *info;
-
+    
     if (strlen(ident) > strlen(parentIdent))
         size = strlen(parentIdent);
     else

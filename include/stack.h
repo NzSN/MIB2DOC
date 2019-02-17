@@ -57,7 +57,7 @@ typedef struct identStack {
     unsigned char *buffer;
 } genericStack;
 
-int genericStackConstruct();
+int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize);
 int push(genericStack *ps, void *unit);
 int pop(genericStack *ps, void *unit);
 

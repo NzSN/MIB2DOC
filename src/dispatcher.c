@@ -389,8 +389,7 @@ char * switch_CurrentMod()
 
 #include "test.h"
 
-void dispatcher__COLLECT_INFO(void** state)
-{
+void dispatcher__COLLECT_INFO(void** state) {
     char* symbol;
     collectInfo* cInfo = (collectInfo*)malloc(sizeof(collectInfo));
 
@@ -400,8 +399,12 @@ void dispatcher__COLLECT_INFO(void** state)
     collectInfo_add(cInfo, "try_symbol1");
     symbol = collectInfo_retrive(cInfo, "try_symbol1");
     assert_string_equal(symbol, "try_symbol1");
-
+    
     return;
+}
+
+void dispatcher__SYMBOLTABLE(void **state) {
+        
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

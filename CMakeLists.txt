@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.5)
-
 project(Mib2Doc)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wint-conversion")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -14,8 +13,6 @@ set(SOURCE_FILES
     ${SRC_DIR}/stack.c ${SRC_DIR}/list.c ${SRC_DIR}/lexDeal.c
     ${SRC_DIR}/options.c ${SRC_DIR}/util.c ${SRC_DIR}/dispatcher.c
     ${SRC_DIR}/docGenerate.c ${SRC_DIR}/misc.c ${SRC_DIR}/hash.c)
-set(HEADER_DIR ${HOME_DIR}/include)
-include_directories(${HEADER_DIR})
 add_executable(Mib2Doc ${SOURCE_FILES})
 
 project(UNIT_TEST)
@@ -31,6 +28,9 @@ set(UNIT_TEST_SRC ${UTEST_DIR}/basicDataStruct_Test.c
 link_libraries(cmocka)
 add_executable(UNIT_TEST ${UNIT_TEST_SRC})
 target_compile_definitions(UNIT_TEST PUBLIC MIB2DOC_UNIT_TESTING)
+
+set(HEADER_DIR ${HOME_DIR}/include)
+include_directories(${HEADER_DIR})
 
 add_custom_target(lexBison ALL DEPENDS)
 add_custom_target(lexBison_H ALL DEPENDS)

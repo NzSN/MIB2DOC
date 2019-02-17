@@ -75,7 +75,6 @@ typedef struct {
     hashElem *space;
 } hashMap;
 
-
 /* Function declarations */
 hashMap * hashMapConstruct(int size, hashFunction func);
 int hashMapRelease(hashMap *map);

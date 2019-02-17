@@ -40,7 +40,7 @@ int mibObjGen(int nodeType) {
     desc = sliceGetVal(&sliceContainer, SLICE_DESCRIPTION);
     parent = sliceGetVal(&sliceContainer, SLICE_PARENT); 
     suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX);
-
+    
     // Node Build
     switch (nodeType) {
         case OBJECT:
@@ -201,6 +201,7 @@ static char * oidComplement(char *parent, char *suffix) {
 
 extern mibObjectTreeNode mibObjectTreeRoot;
 int upperTreeGeneration(symbolTable *symTbl) {
+#if 0
     mibObjectTreeNode *root;
     mibObjectTreeNode *current;
     mibObjectTreeNode *childNode;
@@ -245,6 +246,7 @@ int upperTreeGeneration(symbolTable *symTbl) {
             }
         }
     }
+#endif
 }
 
 /*
@@ -292,6 +294,7 @@ int symbolCollecting(int type, dispatchParam *param) {
 }
 
 static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
+#if 0
     int retVal;
     symbolTable *newMod;
     collectInfo *pCollect;
@@ -325,13 +328,13 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
     newSymbol->symIdent = symbolIdent;
     newSymbol->symType = SYMBOL_TYPE_NODE;
     newSymbol->symInfo.nodeMeta.parentIdent = parentIdent;
-    symbolAdd(&symTable, newSymbol, newMod->modName);
 
 MOD_STACK_OP_REMOVE:
     /* Need to remove the symbol found from list in the modStack */
     retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
     sliceRelease(&symCollectSlice);
     return retVal;
+#endif
 }
 
 static int symbolCollect_BUILD_TRAP(dispatchParam *param) {

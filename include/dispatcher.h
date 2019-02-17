@@ -1,11 +1,12 @@
-#ifndef _DISPATCHER_H_
-#define _DISPATCHER_H_
-
 #include "type.h"
 #include "stack.h"
+#include "symbolTbl.h"
 #include "list.h"
 #include "hash.h"
 #include "lexer.h"
+
+#ifndef _DISPATCHER_H_
+#define _DISPATCHER_H_
 
 typedef struct dispatchParam {
     void *param;
@@ -100,6 +101,7 @@ int collectInfo_del(collectInfo *cInfo, char *symbol);
 #ifdef MIB2DOC_UNIT_TESTING
 
 void dispatcher__COLLECT_INFO(void **state);
+void dispatcher__SYMBOLTABLE(void **state);
 
 #endif /* MIB2DOC_UNIT_TESTING */
 
