@@ -453,41 +453,50 @@ inline static mibTree * currentUpdate(mibTree *current, mibTree *currentMerge, m
             break; 
         }
     }
+    return current;
 }
 
 int mibTreeHeadMerge(mibTreeHead *treeHead) {
+    int skip, numOfTree;
     mibTree *current, *current_merge, 
             *current_merge_tmp, *newTree,
             *iterMerge, *iterMerge_tmp;
 
     if (isNullPtr(treeHead)) 
         return FALSE;
-    
+   
+    numOfTree = treeHead->numOfTree;
+
     for (current = &treeHead->trees; ! isNullPtr(current); current = mibTreeNext(current)) {
         current_merge = current;
         iterMerge = mibTreeNext(current);
+        
+        skip = isNullPtr(current_merge->root) || MIBTREE_IS_LAST_TREE(current_merge);
+        if (skip) continue;
 
-        do {
-            if (current_merge == iterMerge) {
-                continue;
-            }
-
+        do { 
             newTree = mibTreeMerge(current_merge, iterMerge);   
             if (!isNullPtr(newTree)) {
                 // current update 
                 current = currentUpdate(current, current_merge, iterMerge);  
                 iterMerge_tmp = mibTreeNext(iterMerge);
+                
+                if (current_merge->node.prev != NULL || current_merge->node.next != NULL)
+                    numOfTree -= 1; 
 
                 mibTreeDelete(current_merge);
                 mibTreeDelete(iterMerge);
-                
-                mibTreeAppend(&treeHead->trees, newTree);
+                numOfTree -= 1; 
 
-                current_merge = newTree;  
+                current_merge = newTree;   
             }
-        } while (iterMerge = mibTreeNext(iterMerge)); 
+        } while (iterMerge = iterMerge_tmp); 
+        
+        mibTreeAppend(&treeHead->trees, newTree);
+        numOfTree += 1;
     } 
     
+    treeHead->numOfTree = numOfTree;
     return TRUE;
 }
 
@@ -547,7 +556,24 @@ NEW_TREE:
 
 #include "test.h"
 
-void mibTreeTesting(void **state) {
+typedef struct {
+    int idx;
+    char *order;
+} order;
+
+static int mibTreeMergeAssert(void *arg, mibObjectTreeNode *node) {
+    int idx;
+    order *pOrder = arg;
+    
+    idx = pOrder->idx; 
+    if (pOrder->order[idx] != node->identifier[0])
+        fail();
+
+    ++idx;
+    pOrder->idx = idx;
+}
+
+void mibTreeObjTree__MIBTREE_MERGE(void **state) {
     // Merge testing
     mibObjectTreeNode *node;
     mibTreeHead treeHead;
@@ -572,15 +598,24 @@ void mibTreeTesting(void **state) {
      
     node = mibNodeBuild("G", "2", "B");
     mibTreeHeadAppend(&treeHead, node);
+    
+    node = mibNodeBuild("D", "1", "B");
+    mibTreeHeadAppend(&treeHead, node);
 
     assert_int_equal(treeHead.numOfTree, 3);
 
-    for (currentTree = &treeHead.trees; !isNullPtr(currentTree); currentTree = mibTreeNext(currentTree)) {
-        showTree(currentTree->root); 
-        printf("\n");
-    } 
+    mibTreeHeadMerge(&treeHead);
 
-   mibTreeHeadMerge(&treeHead);
+    assert_int_equal(treeHead.numOfTree, 1);
+    
+    char nodeOrder[7] = {'A', 'B', 'G', 'D', 'C', 'F', 'E'};
+    order orderDeck;
+
+    orderDeck.idx = 0;
+    orderDeck.order = nodeOrder;
+    
+    currentTree = mibTreeNext(&treeHead.trees);
+    travel_MibTree(currentTree->root, mibTreeMergeAssert, &orderDeck);
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

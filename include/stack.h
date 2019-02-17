@@ -63,7 +63,7 @@ int pop(genericStack *ps, void *unit);
 
 #ifdef MIB2DOC_UNIT_TESTING
 
-int genericStackTesting();
+int stack__STACK_PUSH_POP();
 
 #endif /* MIB2DOC_UNIT_TESTING */
 

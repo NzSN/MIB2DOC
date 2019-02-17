@@ -99,7 +99,7 @@ int collectInfo_del(collectInfo *cInfo, char *symbol);
 
 #ifdef MIB2DOC_UNIT_TESTING
 
-void collectInfoTesting(void **state);
+void dispatcher__COLLECT_INFO(void **state);
 
 #endif /* MIB2DOC_UNIT_TESTING */
 

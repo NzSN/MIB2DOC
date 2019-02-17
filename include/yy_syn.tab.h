@@ -34,8 +34,8 @@
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
-#ifndef YY_YY_HOME_AYDENLIN_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
-# define YY_YY_HOME_AYDENLIN_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED
+#ifndef YY_YY_SRC_YY_SYN_TAB_H_INCLUDED
+# define YY_YY_SRC_YY_SYN_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -81,7 +81,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef char * YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -90,6 +90,5 @@ typedef char * YYSTYPE;
 extern YYSTYPE yylval;
 
 int yyparse (void);
-int syntaxParserInit(void);
 
-#endif /* !YY_YY_HOME_AYDENLIN_PROJECTS_MIB2DOC_SRC_YY_SYN_TAB_H_INCLUDED  */
+#endif /* !YY_YY_SRC_YY_SYN_TAB_H_INCLUDED  */

@@ -84,7 +84,7 @@ int hashMapPut(hashMap *map, pair_kv pair);
 int hashMapDelete(hashMap *map, pair_kv pair);
 #ifdef MIB2DOC_UNIT_TESTING
 
-void hashTesting(void **state);
+void hash__HASH_BASIC(void **state);
 
 #endif /* MIB2DOC_UNIT_TESTING */
 

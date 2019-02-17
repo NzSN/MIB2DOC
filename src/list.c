@@ -58,13 +58,16 @@ listNode * listNodeDelete(listNode *sliNode) {
         sliNode->next->prev = sliNode->prev;
     } else if(sliNode->prev != NULL) {
         /* Tail */
-        sliNode->next->prev = NULL;
+        sliNode->prev->next = NULL;
     } else if (sliNode->next != NULL) {
         /* Head */
-        sliNode->prev->next = NULL;
+        sliNode->next->prev = NULL;
     } else {
         /* Single sliNode */
     }
+    
+    sliNode->next = NULL;
+    sliNode->prev = NULL;
 
     return sliNode;
 }

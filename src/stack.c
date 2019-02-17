@@ -37,7 +37,7 @@ int pop(genericStack *gStack, void *unit) {
 
 #include "test.h"
 
-int genericStackTesting() {
+int stack__STACK_PUSH_POP() {
     int ret, value = 4, idx = 0;
     genericStack gStack, *pStack = &gStack;
     genericStackConstruct(pStack, 10, sizeof(int));

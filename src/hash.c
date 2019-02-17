@@ -351,7 +351,7 @@ int simpleHashing(pair_key_base *key) {
     return (keyVal << 5) + keyVal;
 }
 
-void hashTesting(void **state) {
+void hash__HASH_BASIC(void **state) {
     // Key, Value pair testing
     try_key *tK1 = tryKeyConstruct(1);    
     try_key *tK2 = tryKeyConstruct(2);

@@ -14,6 +14,7 @@
 #include "dispatcher.h"
 #include "hash.h"
 #include <stdio.h>
+#include "test.h"
 
 mibObjectTreeNode mibObjectTreeRoot;
 slice sliceContainer;
@@ -21,7 +22,7 @@ char *sectionRecord[SIZE_OF_SECTION_RECORD];
 
 int tableRecognize(char *buffer, int size);
 
-static void list_test(void **state) {
+static void list__LISTNODE_SLICE(void **state) {
     slice *new1;
     slice *new2;
     slice *got;
@@ -69,6 +70,9 @@ static void list_test(void **state) {
             return;
         current = containerOf(listNodeNext(&current->node), test_list, node);     
     } while (current != NULL); 
+
+    // list delete testing 
+     
 }
 
 
@@ -99,7 +103,7 @@ static void mibTree_test(void **state) {
         fail();
 }
 
-static void tableInfoQueue_test(void **state) {
+static void queue__QUEUE_APPEND(void **state) {
     mibNodeInfoQueue queue;
     tableInfo *pInfo;
 
@@ -154,7 +158,7 @@ static void tableInfoQueue_test(void **state) {
         fail();
 }
 
-static void desc_test(void ** state) {
+static void UNIT_TEST__DESC_CHECK(void ** state) {
     char *ident = "inactiveLineDeviceType";
     char *parentIdent = "inactiveLinePrimaryEntry";
     char *result;
@@ -183,7 +187,7 @@ static void desc_test(void ** state) {
     strncpy(result, ident+pos+1, size-(pos+1));
 }
 
-static void fa_test(void **state) {
+static void util__tableRecognize(void **state) {
     int ret;
     char *buffer = "inactiveVlanTable";
 
@@ -193,7 +197,7 @@ static void fa_test(void **state) {
         fail();
 }
 
-static void disParam_test(void **state) { 
+static void list__DISPATCH_PARAM_STORE(void **state) { 
     char *IDENTIFIER_S = "GOGO";
     dispatchParam *param = disParamConstruct((void *)SLICE_PARENT);
     disParamStore(param, disParamConstruct((void *)IDENTIFIER_S));
@@ -223,18 +227,18 @@ static void disParam_test(void **state) {
 
 int main(void) {
     const struct CMUnitTest tests[] = {
-            cmocka_unit_test(list_test),
-            cmocka_unit_test(fa_test),
-            cmocka_unit_test(tableInfoQueue_test),
-            cmocka_unit_test(desc_test),
-            cmocka_unit_test(disParam_test),
+            cmocka_unit_test(list__LISTNODE_SLICE),
+            cmocka_unit_test(util__tableRecognize),
+            cmocka_unit_test(queue__QUEUE_APPEND),
+            cmocka_unit_test(UNIT_TEST__DESC_CHECK),
+            cmocka_unit_test(list__DISPATCH_PARAM_STORE),
             
             // Module unit testing
             #ifdef MIB2DOC_UNIT_TESTING
-            cmocka_unit_test(genericStackTesting),
-            cmocka_unit_test(collectInfoTesting),
-            cmocka_unit_test(hashTesting),
-            cmocka_unit_test(mibTreeTesting)
+            cmocka_unit_test(stack__STACK_PUSH_POP),
+            cmocka_unit_test(dispatcher__COLLECT_INFO),
+            cmocka_unit_test(hash__HASH_BASIC),
+            cmocka_unit_test(mibTreeObjTree__MIBTREE_MERGE)
             #endif
     };
 

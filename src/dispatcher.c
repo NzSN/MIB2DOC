@@ -389,7 +389,7 @@ char * switch_CurrentMod()
 
 #include "test.h"
 
-void collectInfoTesting(void** state)
+void dispatcher__COLLECT_INFO(void** state)
 {
     char* symbol;
     collectInfo* cInfo = (collectInfo*)malloc(sizeof(collectInfo));
