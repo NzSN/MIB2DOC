@@ -8,6 +8,7 @@
 #include "list.h"
 #include "type.h"
 #include "dispatcher.h"
+#include "symbolTbl.h"
 
 enum {
     SYM_TRAVEL_CONTINUE = 10,
@@ -347,6 +348,18 @@ typedef struct {
     char *ident;
 } symbol_k;
 
+static symbol_k * symbolKInit(symbol_k *key, char *name);
+
+static symbol_k * symbolKCopy(symbol_k *key) {
+    symbol_k *copy;
+
+    if (isNullPtr(key))
+        return NULL;
+
+    copy = (symbol_k *)malloc(sizeof(symbol_k));
+    return symbolKInit(copy, strdup(key->ident));
+}
+
 static int symbolKRelease(symbol_k *key) {
     symbol_k *pKey = key;
  
@@ -380,7 +393,9 @@ static symbol_k * symbolKConst(char *name) {
         return NULL;
 
     pKey = (symbol_k *)malloc(sizeof(symbol_k));
+
     pKey->ident = name;
+
     pKey->base.release = symbolKRelease;
     pKey->base.value = symbolKValue;
     pKey->base.isEqual = symbolKIsEqual; 
@@ -400,46 +415,92 @@ static symbol_k * symbolKInit(symbol_k *key, char *name) {
     return TRUE;
 }
 
+static int symbolTblHash(symbol_k *key) {
+    char *keyStr;
+    int hashVal, size, index, value;
+
+    if (isNullPtr(key))
+        return NULL;
+
+    keyStr = key->ident; 
+
+    hashVal = 0;
+    size = strlen(keyStr);
+
+    for (index = 0; index < size; ++index) {
+        value = keyStr[index];
+        hashVal += HASH_DEFAULT_METHOD(value); 
+    } 
+    return hashVal;
+}
+
+symbolTable * symbolTableInit(symbolTable *tbl) {
+    if (isNullPtr(tbl))
+        return NULL;
+    
+    tbl->numOfSymbols = 0;
+    tbl->symbolMap = hashMapConstruct(SIZE_OF_SYMBOL_TBL, symbolTblHash);
+    return tbl;
+}
+
 symbolTable * symbolTableConstruct() {
     symbolTable *newTable;
      
     newTable = (symbolTable *)malloc(sizeof(symbolTable));
-    memset(newTable, 0, sizeof(symbolTable));
-    return newTable;
+    return symbolTableInit(newTable);
+}
+
+int symbolTableRelease(symbolTable *tbl) {
+    if (isNullPtr(tbl))
+        return FALSE;
+
+    hashMapRelease(tbl->symbolMap);
+    RELEASE_MEM(tbl);
+
+    return TRUE;
+}
+
+int symbolTableRelease_static(symbolTable *tbl) {
+    if (isNullPtr(tbl))
+        return FALSE;
+
+    hashMapRelease(tbl->symbolMap);
+
+    return TRUE;
 }
 
 symbol_t * symbolTableSearch(symbolTable *tbl, char *sym) {
     symbol_k key;
-    pair_kv pair;
     hashMap *symMap;
 
     if (isNullPtr(tbl) || isNullPtr(sym))
        return NULL; 
     
     symbolKInit(&key, sym); 
-    pair.key = &key;
 
     symMap = tbl->symbolMap;
-    return (symbol_t *)hashMapGet(symMap, pair);
+    return (symbol_t *)hashMapGet(symMap, &key);
 }
 
 int symbolTableAdd(symbolTable *tbl, symbol_t *sym) {
     symbol_k *key;
-    pair_kv pair;
-    hashMap *symMap;
 
     if (isNullPtr(tbl) || isNullPtr(sym)) 
         return FALSE; 
-   
-    key = symbolKConst(sym->symIdent); 
-    pair.key = key;
-    pair.val = sym; 
+     
+    key = symbolKConst(strdup(sym->symIdent));
 
-    return hashMapPut(symMap, pair);
+    return hashMapPut(tbl->symbolMap, key, sym);
 }
 
 int symbolTableDelete(symbolTable *tbl, char *symIdent) {
- 
+    symbol_k key;
+
+    if (isNullPtr(tbl) || isNullPtr(symIdent))
+        return FALSE; 
+    symbolKInit(&key, symIdent);
+    
+    return hashMapDelete(tbl->symbolMap, &key);
 }
 
 inline static int nodeMetaRelease(nodeMeta_t *nm) {
@@ -462,6 +523,24 @@ inline static int leaveMetaRelease(leaveMeta_t *lm) {
     RELEASE_MEM(lm->permission);
     
     return TRUE;
+}
+
+symbol_t * symbolCopy(symbol_t *origin) {
+    nodeMeta_t *node;
+    leaveMeta_t *leave;
+    if (isNullPtr(origin))
+        return NULL;
+    
+    if (origin->symType == SYMBOL_TYPE_NODE) {
+        node = &origin->symInfo.nodeMeta;
+        return symbolNodeConst(strdup(origin->symIdent),
+            strdup(node->parentIdent), strdup(node->suffix)); 
+    } else if (origin->symType = SYMBOL_TYPE_LEAVE) {
+        leave = &origin->symInfo.leaveMeta;
+        return symbolLeaveConst(strdup(origin->symIdent),
+            strdup(leave->parent), strdup(leave->suffix),
+            strdup(leave->type), strdup(leave->suffix));  
+    }
 }
 
 int symbolRelease(symbol_t *sym) {
@@ -506,6 +585,7 @@ symbol_t * symbolNodeConst(char *ident, char *parent, char *suffix) {
     pSym->base.release = symbolRelease;
     pSym->base.value = symbolIdent;
     pSym->base.isEqual = symbolIsEqual;
+    pSym->base.copy = symbolCopy;
 
     return pSym;
 }
@@ -520,16 +600,38 @@ symbol_t * symbolLeaveConst(char *ident, char *parent, char *suffix, char *type,
     pSym = (symbol_t *)malloc(sizeof(symbol_t));
     pSym->symType = SYMBOL_TYPE_LEAVE;
     pSym->symIdent = ident;
-
+    
     pSym->symInfo.leaveMeta.parent = parent;
     pSym->symInfo.leaveMeta.suffix = suffix;
     pSym->symInfo.leaveMeta.type = type;
     pSym->symInfo.leaveMeta.permission = perm; 
 
+    pSym->base.release = symbolRelease;
+    pSym->base.value = symbolIdent;
+    pSym->base.isEqual = symbolIsEqual;
+    pSym->base.copy = symbolCopy;
+
     return pSym;
 }
 
+#ifdef MIB2DOC_UNIT_TESTING
 
+void list_symbolTable(void **state) {
+    symbol_t *symbol, *found;
+    symbolTable symTbl; 
+    
+    symbolTableInit(&symTbl);    
+    
+    symbol = symbolNodeConst("B", "A", "1");
+    symbolTableAdd(&symTbl, symbol);
+
+    found = symbolTableSearch(&symTbl, "B");
+    assert_non_null(found);
+
+    assert_string_equal(found->symIdent, "B");
+}
+
+#endif /* MIB2DOC_UNIT_TESTING */
 
 /* end of list.c */
 

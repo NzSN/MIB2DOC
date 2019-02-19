@@ -1,5 +1,6 @@
 /* Created by Aydenlin at 2017/9/12 */
 
+#include <string.h>
 #include "dispatcher.h"
 #include "hash.h"
 #include "mibTreeGen.h"
@@ -14,7 +15,6 @@
 static void debugging(dispatchParam* param);
 static int dispatchMakeChoice(dispatch_type dType);
 static int lexBufferSwitching(char* newModule);
-static int switchToModule(char* moduleName, char* sCollection);
 static int symbolHashing(void* key);
 static int switchInit();
 
@@ -34,6 +34,13 @@ typedef struct {
     char* symbol;
 } symbolVal;
 
+static symbolKey * symbolKeyInit(symbolKey *key, char *symbols);
+static symbolVal * symbolValInit(symbolVal *val, char *symbol);
+
+static symbolKey * symbolKeyCopy(symbolKey *origin);
+static symbolVal * symbolValCopy(symbolVal *origin);
+
+
 /* Definition Section */
 int dispatchInit()
 {
@@ -41,13 +48,15 @@ int dispatchInit()
     dispatchMode = DISPATCH_MODE_DOC_GENERATING;
     return ERROR_NONE;
 }
-
+struct ll {
+    int a;
+};
 int dispatch(dispatch_type disType, dispatchParam* param)
 {
     unsigned long key;
     char *val, *moduleName, *sCollection;
     errorType ret = ERROR_NONE;
-
+    
     if (isNullPtr(param)) {
         return ERROR_NULL_REF;
     }
@@ -63,11 +72,6 @@ int dispatch(dispatch_type disType, dispatchParam* param)
         break;
     case SYMBOL_COLLECTING:
         symbolCollecting((unsigned long)disParamGet(disParamRetrive(&param)), param);
-        break;
-    case SWITCH_TO_INC_BUFFER:
-        moduleName = (char*)disParamGet(disParamRetrive(&param));
-        sCollection = (char*)disParamGet(disParamRetrive(&param));
-        ret = switchToModule(moduleName, sCollection);
         break;
     case IGNORE:
         /* Do nothing */
@@ -141,24 +145,31 @@ static int switchInit()
     return retVal;
 }
 
-static int switchToModule(char* moduleName, char* sCollection)
+int switchToModule(switchingState *swState, char* moduleName)
 {
     collectInfo* cInfo;
-
-    if (isNullPtr(moduleName) || isNullPtr(sCollection)) {
-        return null;
+    if (isNullPtr(swState) || isNullPtr(moduleName)) {
+        return NULL;
     }
 
     // Step 1: Push currentSwitchInfo into stack
-    push(SW_STACK_REF(swState), SW_CUR_SWITCH_INFO_REF(swState));
+    push(SW_STACK_REF((*swState)), SW_CUR_SWITCH_INFO_REF((*swState)));
 
     // Step 2: Update currentSwitchInfo
     if (lexBufferSwitching(moduleName) == ERROR_GENERIC)
         /* Terminate program */
         return ABORT;
-    memcpy(SW_CUR_BUFFER_INFO_REF(swState), getCurrentBufferState(), sizeof(YY_BUFFER_STATE));
+
+    SW_CUR_BUFFER_INFO((*swState)) = getCurrentBufferState();
 
     return 0;
+}
+
+int switchToPrevModule(switchingState *swState) {
+    if (isNullPtr(swState))
+       return NULL; 
+
+    
 }
 
 static int lexBufferSwitching(char* newModule)
@@ -166,7 +177,8 @@ static int lexBufferSwitching(char* newModule)
     int index = 0;
     const char* path;
     char* targetModulePath;
-
+    
+    #if 0 
     while (path = getOption_includePath(&index)) {
         targetModulePath = (char*)malloc(strlen(path) + strlen(newModule) + 1);
         strncpy(targetModulePath, path, strlen(path));
@@ -178,6 +190,13 @@ static int lexBufferSwitching(char* newModule)
         }
         yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
     }
+    #endif
+    
+    yyin = fopen(newModule, "r");
+    if (!yyin)
+        return ERROR_GENERIC;
+    yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
+
     if (path == null) {
         return ERROR_GENERIC;
     }
@@ -212,14 +231,34 @@ static int symbolHashing(void* key)
     return hashVal;
 }
 
-static int symbolKeyEqual(void* lSymbol, void* rSymbol)
+static symbolKey * symbolKeyCopy(symbolKey *origin) {
+    symbolKey *copy;
+
+    if (isNullPtr(origin))
+        return NULL;
+
+    copy = (symbolKey *)malloc(sizeof(symbolKey));
+
+    return symbolKeyInit(copy, strdup(origin->symbolIndex)); 
+}
+
+static symbolVal * symbolValCopy(symbolVal *origin) {
+    symbolVal *copy;
+
+    if (isNullPtr(origin))
+        return NULL;
+
+    copy = (symbolVal *)malloc(sizeof(symbolVal));
+
+    return symbolValInit(copy, strdup(origin->symbol));
+}
+
+static int symbolKeyEqual(symbolKey* lSymbol, symbolKey* rSymbol)
 {
     int lLength, rLength;
-    symbolKey* lSymbol_ = (symbolKey*)lSymbol;
-    symbolKey* rSymbol_ = (symbolKey*)rSymbol;
 
-    char* lStr = lSymbol_->symbolIndex;
-    char* rStr = rSymbol_->symbolIndex;
+    char* lStr = lSymbol->symbolIndex;
+    char* rStr = rSymbol->symbolIndex;
 
     if (isNullPtr(lStr) || isNullPtr(rStr))
         return FALSE;
@@ -228,17 +267,15 @@ static int symbolKeyEqual(void* lSymbol, void* rSymbol)
     return !strncmp(lStr, rStr, lLength);
 }
 
-static int symbolValEqual(void* lSymbol, void* rSymbol)
+static int symbolValEqual(symbolVal* lSymbol, symbolVal* rSymbol)
 {
     int lLength, rLength;
-    symbolVal* lSymbol_ = (symbolVal*)lSymbol;
-    symbolVal* rSymbol_ = (symbolVal*)rSymbol;
 
     if (isNullPtr(lSymbol) || isNullPtr(rSymbol))
         return FALSE;
 
-    char* lStr = lSymbol_->symbol;
-    char* rStr = rSymbol_->symbol;
+    char* lStr = lSymbol->symbol;
+    char* rStr = rSymbol->symbol;
 
     if (isNullPtr(lStr) || isNullPtr(rStr))
         return FALSE;
@@ -247,84 +284,102 @@ static int symbolValEqual(void* lSymbol, void* rSymbol)
     return !strncmp(lStr, rStr, lLength);
 }
 
-static void* symbolKeyValue(void* symbol)
+static char * symbolKeyValue(symbolKey* symbol)
 {
-    symbolKey* symKey = (symbolKey*)symbol;
-
     if (isNullPtr(symbol))
         return NULL;
 
-    return symKey->symbolIndex;
+    return symbol->symbolIndex;
 }
 
-static void* symbolValValue(void* symbol)
+static char * symbolValValue(symbolVal *symbol)
 {
-    symbolVal* symVal = (symbolVal*)symbol;
-    return symVal->symbol;
+    if (isNullPtr(symbol))
+        return NULL;
+    return symbol->symbol;
 }
 
-static int symbolKeyRelease(void* symbol)
+static int symbolKeyRelease(symbolKey *symbol)
 {
-    symbolKey* symKey = (symbolKey*)symbol;
-
     if (isNullPtr(symbol))
         return FALSE;
 
-    if (!isNullPtr(symKey->symbolIndex))
-        RELEASE_MEM(symKey->symbolIndex);
+    if (!isNullPtr(symbol->symbolIndex))
+        RELEASE_MEM(symbol->symbolIndex);
 
-    RELEASE_MEM(symKey);
+    RELEASE_MEM(symbol);
 
     return TRUE;
 }
 
-static int symbolValRelease(void* symbol)
+static int symbolValRelease(symbolVal *symbol)
 {
-    symbolVal* symVal = (symbolVal*)symbol;
-
     if (isNullPtr(symbol))
         return FALSE;
 
-    if (!isNullPtr(symVal->symbol))
-        RELEASE_MEM(symVal->symbol);
+    if (!isNullPtr(symbol->symbol))
+        RELEASE_MEM(symbol->symbol);
 
-    RELEASE_MEM(symVal);
+    RELEASE_MEM(symbol);
 
     return TRUE;
 }
 
-symbolKey* symbolKeyConst(char* symbols)
-{
-    pair_key_base* base;
-    symbolKey* key = (symbolKey*)malloc(sizeof(symbolKey));
+static symbolKey * symbolKeyInit(symbolKey *key, char *symbols) {
+    pair_key_base *base; 
 
-    base = &key->base;
-
+    if (isNullPtr(key) || isNullPtr(symbols))
+        return NULL;
+    base = &key->base; 
+    
     // base init
     base->isEqual = symbolKeyEqual;
     base->release = symbolKeyRelease;
-    base->value = symbolKeyValue;
+    base->value = symbolKeyValue; 
+    base->copy = symbolKeyCopy; 
 
     key->symbolIndex = symbols;
 
     return key;
 }
 
-symbolVal* symbolValConst(char* symbol)
+static symbolKey * symbolKeyConst(char* symbols)
 {
-    pair_val_base* base;
-    symbolVal* val = (symbolVal*)malloc(sizeof(symbolVal));
+    symbolKey* key;
+    
+    if (isNullPtr(symbols))
+        return NULL;
+    key = (symbolKey *)malloc(sizeof(symbolKey));
+    return symbolKeyInit(key, symbols);
+}
 
+static symbolVal * symbolValInit(symbolVal *val, char *symbol) {
+    pair_val_base *base;
+
+    if (isNullPtr(val) || isNullPtr(symbol))
+        return NULL;
+    
     base = &val->base;
 
     // base init
     base->isEqual = symbolValEqual;
     base->release = symbolValRelease;
     base->value = symbolValValue;
+    base->copy = symbolValCopy; 
 
     val->symbol = symbol;
-
     return val;
+}
+
+static symbolVal* symbolValConst(char* symbol)
+{
+    symbolVal* val;
+
+    if (isNullPtr(symbol))
+       return NULL;
+
+    val = (symbolVal *)malloc(sizeof(symbolVal));
+    return symbolValInit(val, symbol);
 }
 
 int collectInfoInit(collectInfo* cInfo, char* modName)
@@ -335,54 +390,115 @@ int collectInfoInit(collectInfo* cInfo, char* modName)
         return -1;
 
     symbolMap = hashMapConstruct(100, symbolHashing);
-
+    
     cInfo->symbols = symbolMap;
     cInfo->modName = modName;
 
     return 0;
 }
 
+int collectInfoConst(char *modName) {
+    collectInfo *cInfo;
+
+    if (isNullPtr(modName))
+        return FALSE;
+
+    cInfo = (collectInfo *)malloc(sizeof(collectInfo));
+    collectInfoInit(cInfo, modName);
+
+    return cInfo;
+}
+
 int collectInfo_add(collectInfo* cInfo, char* symbol)
 {
-    pair_kv pair;
-
     if (isNullPtr(cInfo))
         return FALSE;
 
-    PAIR_KEY_SET(pair, (pair_key_base*)symbolKeyConst(symbol));
-    PAIR_VAL_SET(pair, (pair_val_base*)symbolValConst(symbol));
-    return hashMapPut(cInfo->symbols, pair);
+    return hashMapPut(cInfo->symbols, 
+        (pair_key_base *)symbolKeyConst(strdup(symbol)),
+        (pair_val_base *)symbolValConst(symbol));
 }
 
 int collectInfo_del(collectInfo* cInfo, char* symbol)
 {
-    pair_kv pair;
-
+    symbolKey key;
     if (isNullPtr(cInfo))
         return FALSE;
-
-    PAIR_KEY_SET(pair, (pair_key_base*)symbolKeyConst(symbol));
-    PAIR_VAL_SET(pair, (pair_val_base*)symbolValConst(symbol));
-    return hashMapDelete(cInfo->symbols, pair);
+    
+    symbolKeyInit(&key, symbol);
+    return hashMapDelete(cInfo->symbols, (pair_key_base *)&key);
 }
 
 char* collectInfo_retrive(collectInfo* cInfo, char* symbol)
 {
-    pair_kv pair;
+    symbolKey key;
     pair_val_base* val;
 
     if (isNullPtr(cInfo))
         return FALSE;
+    
+    symbolKeyInit(&key, symbol); 
 
-    PAIR_KEY_SET(pair, (pair_key_base*)symbolKeyConst(symbol));
-    PAIR_VAL_SET(pair, (pair_val_base*)symbolValConst(symbol));
-    val = (pair_val_base*)hashMapGet(cInfo->symbols, pair);
+    val = (pair_val_base*)hashMapGet(cInfo->symbols, (pair_key_base *)&key);
     return (char*)val->value(val);
+}
+
+int collectInfo_exists(collectInfo *cInfo, char *symbol) {
+    symbolKey key;
+    
+    if (isNullPtr(cInfo) || isNullPtr(symbol)) 
+        return FALSE;
+    
+    symbolKeyInit(&key, symbol);
+
+    if (hashMapGet(cInfo->symbols, (pair_key_base *)&key))
+        return TRUE;
+    else
+        return FALSE;
+}
+
+int collectInfo_release(collectInfo *cInfo) {
+    if (isNullPtr(cInfo))
+        return FALSE;
+
+    if (cInfo->modName)
+        RELEASE_MEM(cInfo->modName);
+    if (cInfo->symbols)
+        hashMapRelease(cInfo->symbols);
+
+    return TRUE;
 }
 
 char * switch_CurrentMod()
 {
     return SW_CUR_IMPORT(swState).modName;
+}
+
+
+
+int importWorks(genericStack *importInfoStack) {
+    char *modName;
+    hashMap *symbolMap;
+    collectInfo *infoCollect;
+
+    if (isNullPtr(importInfoStack))
+       return FALSE; 
+    
+    while (pop(importInfoStack, &infoCollect) == 0) { 
+        modName = infoCollect->modName;
+        symbolMap = infoCollect->symbols;
+        
+        switchToModule(&swState, modName);         
+
+        SW_CUR_IMPORT(swState).modName = strdup(modName); 
+        SW_CUR_IMPORT(swState).symbols = hashMapDup(infoCollect->symbols);
+
+        // Clean
+        collectInfo_release(infoCollect);    
+        RELEASE_MEM(infoCollect);
+    } 
+    
+    return TRUE;
 }
 
 #ifdef MIB2DOC_UNIT_TESTING

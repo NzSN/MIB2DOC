@@ -4,13 +4,26 @@
 #include "hash.h"
 #include "string.h"
 
-static hashChain * hashChainConstruct(pair_kv pair);
-static hashChain * hashChainSearch(hashChain *chain, pair_kv pair);
-static int hashChainAppend(hashChain *chain, pair_kv pair);
+static hashChain * hashChainConstruct(pair_key_base *key, pair_val_base *val);
+static hashChain * hashChainSearch(hashChain *chain, pair_key_base *key);
+static int hashChainAppend(hashChain *chain, hashChain *new);
 static int hashChainRelease(hashChain *chainNode);
 static int hashChainRelease_STATIC(hashChain *chainNode);
-static int hashChainDelete(hashChain *chain, pair_kv pair);
-static int pairRelease(pair_kv *p);
+static hashChain * hashChainDup(hashChain *origin);
+static int hashChainDelete(hashChain *chain, pair_key_base *key);
+static hashChain *hashChainPrev(hashChain *chain);
+static hashChain * hashChainNext(hashChain *chain);
+
+hashMap * hashMapInit(hashMap *map, int size, hashFunction func) {
+    if (isNullPtr(map) || size < 1 || isNullPtr(func))
+        return NULL;
+    map->size = size;
+    map->hashFunc = func;
+    map->space = (hashElem *)malloc(size * sizeof(hashElem));
+    memset(map->space, 0, size * sizeof(hashElem));
+
+    return map;
+}
 
 hashMap * hashMapConstruct(int size, hashFunction func) {
     hashMap *mem;
@@ -20,14 +33,35 @@ hashMap * hashMapConstruct(int size, hashFunction func) {
     }
     
     mem = (hashMap *)malloc(sizeof(hashMap));
-    memset(mem, 0, sizeof(hashMap));
+    
+    return hashMapInit(mem, size, func);
+}
 
-    mem->size = size;
-    mem->hashFunc = func;
-    mem->space = (hashElem *)malloc(size * sizeof(hashElem));
-    memset(mem->space, 0, size * sizeof(hashElem));
+hashMap * hashMapDup(hashMap *origin) {
+    int idx, size;
+    hashMap *copy;
+    hashChain *copyChain, *copyFrom; 
 
-    return mem;
+    if (isNullPtr(origin)) {
+        return NULL; 
+    }    
+    
+    copy = hashMapConstruct(origin->size, origin->hashFunc); 
+
+    memcpy(copy->space, origin->space, origin->size * sizeof(hashElem)); 
+    
+    size = origin->size;
+    while (idx < size) {
+        copyFrom = &HASH_MAP_ELEM_SELECT(origin,idx)->chain;
+        copyFrom = hashChainNext(copyFrom);
+
+        copyChain = hashChainDup(copyFrom);
+        hashChainAppend(&HASH_MAP_ELEM_SELECT(copy, idx)->chain, copyChain);
+
+        ++idx; 
+    } 
+
+    return copy;
 }
 
 int hashMapRelease(hashMap *map) {
@@ -53,80 +87,87 @@ int hashMapRelease(hashMap *map) {
     return TRUE;
 }
 
-void * hashMapGet(hashMap *map, pair_kv pair) {
+void * hashMapGet(hashMap *map, pair_key_base *key) {
     hashChain *chainBeFound;
     pair_key_base *beChecked, *selectedKey;
 
-    if (isNullPtr(map)) {
+    if (isNullPtr(map) || isNullPtr(key)) {
         return NULL; 
     }
      
-    hashElem *pElem = HASH_MAP_HASH_GET(map, PAIR_KEY(pair));
+    hashElem *pElem = HASH_MAP_HASH_GET(map, key);
     
-    beChecked = PAIR_KEY(pair); 
+    beChecked = key; 
 
     if (HASH_ELEM_IS_COLLIDE(pElem)) {
-        selectedKey = PAIR_KEY(pElem->pair);
+        selectedKey = pElem->key;
 
         if (isNullPtr(selectedKey)) {
             return NULL;
         }
         if (selectedKey->isEqual(selectedKey, beChecked)) { 
-            return PAIR_VAL(pElem->pair); 
+            return pElem->val; 
         }
-        chainBeFound = hashChainSearch(HASH_ELEM_CHAIN_REF(pElem), pair);             
+        chainBeFound = hashChainSearch(HASH_ELEM_CHAIN_REF(pElem), key); 
         if (isNullPtr(chainBeFound)) 
             return NULL;
-        return PAIR_VAL(chainBeFound->pair);
+        return chainBeFound->val;
     }
-    return PAIR_VAL(pElem->pair);
+    return pElem->val;
 }
 
-int hashMapPut(hashMap *map, pair_kv pair) {
+int hashMapPut(hashMap *map, pair_key_base *key, pair_val_base *val) {
     if (isNullPtr(map)) {
         return FALSE; 
     }
 
-    hashElem *pElem = HASH_MAP_HASH_GET(map, PAIR_KEY(pair)); 
+    hashElem *pElem = HASH_MAP_HASH_GET(map, key); 
 
     if (HASH_ELEM_IS_USED(pElem)) {
         int match;
-        pair_key_base *key = PAIR_KEY(pElem->pair);
+        pair_key_base *selectedKey = pElem->key;
 
         // First I need to check is the key exists.
-        match = key->isEqual(key, PAIR_KEY(pair)); 
-        if (match || hashChainSearch(HASH_ELEM_CHAIN_REF(pElem), pair)) {
+        match = selectedKey->isEqual(selectedKey, key); 
+        if (match || hashChainSearch(HASH_ELEM_CHAIN_REF(pElem), key)) {
             // The key is already exist in the map. 
             return FALSE;
         }
 
         pElem->collide = HASH_ELEM_COLLIDE;  
-        return hashChainAppend(HASH_ELEM_CHAIN_REF(pElem), pair);        
+        return hashChainAppend(HASH_ELEM_CHAIN_REF(pElem), hashChainConstruct(key, val));        
     }
 
     pElem->used = HASH_ELEM_USED;
 
-    PAIR_KEY_SET(pElem->pair, PAIR_KEY(pair));
-    PAIR_VAL_SET(pElem->pair, PAIR_VAL(pair));
+    pElem->key = key;
+    pElem->val = val;
 
     return TRUE;
 }
 
-int hashMapDelete(hashMap *map, pair_kv pair) {
+int hashMapDelete(hashMap *map, pair_key_base *key) {
     hashElem *pElem;
     hashChain *pChain;
-    pair_key_base *pKey = PAIR_KEY(pair);    
-    
-    if (isNullPtr(map) || isNullPtr(pKey)) 
+    pair_key_base *theKey;
+    pair_val_base *theVal; 
+
+    if (isNullPtr(map) || isNullPtr(key)) 
         return FALSE;
     
-    pElem = HASH_MAP_HASH_GET(map, PAIR_KEY(pair));
+    pElem = HASH_MAP_HASH_GET(map, key);
 
     // Try to matching with the key outside of chain.
-    if (pKey->isEqual(pKey, PAIR_KEY(pElem->pair))) {
-        PAIR_KEY_SET(pElem->pair, NULL);
-        PAIR_VAL_SET(pElem->pair, NULL);
-    } else if (hashChainDelete(HASH_ELEM_CHAIN_REF(pElem), pair)) {
+    if (key->isEqual(key, pElem->key)) {
+        theKey = pElem->key;
+        theVal = pElem->val;
+
+        theKey->release(theKey);
+        theVal->release(theVal);
+        
+        pElem->key = NULL;
+        pElem->val = NULL;
+    } else if (hashChainDelete(HASH_ELEM_CHAIN_REF(pElem), key)) {
        // return true at the end of function block. 
     } else {
         return FALSE; 
@@ -134,11 +175,17 @@ int hashMapDelete(hashMap *map, pair_kv pair) {
     return TRUE;
 }
 
-static hashChain * hashChainConstruct(pair_kv pair) {
-    hashChain *pChain = (hashChain *)malloc(sizeof(hashChain));
+static hashChain * hashChainConstruct(pair_key_base *key, pair_val_base *val) {
+    hashChain *pChain;
+    
+    if (isNullPtr(key) || isNullPtr(val))
+        return NULL;
 
-    PAIR_KEY_SET(pChain->pair, PAIR_KEY(pair));
-    PAIR_VAL_SET(pChain->pair, PAIR_VAL(pair));
+    pChain = (hashChain *)malloc(sizeof(hashChain));
+    
+    pChain->key = key;
+    pChain->val = val;
+
     memset(&pChain->node, 0, sizeof(listNode));
     
     return pChain;
@@ -157,11 +204,36 @@ static hashChain * hashChainNext(hashChain *chain) {
     return containerOf(listNodeNext(&chain->node), hashChain, node);
 }
 
-static int hashChainDelete(hashChain *chain, pair_kv pair) {
+static hashChain * hashChainDup(hashChain *origin) {
+    hashChain *copy, *current, copyHead;
+    pair_key_base *key;
+    pair_val_base *val;
+
+    if (isNullPtr(origin))
+        return NULL;
+    
+    copyHead.key = NULL;
+    copyHead.val = NULL;
+
+    for (current = origin; !isNullPtr(current); current = hashChainNext(current)) {
+        key = current->key;
+        val = current->val;
+        
+        copy = hashChainConstruct(key->copy(key), val->copy(val));    
+        hashChainAppend(&copyHead, copy); 
+    }  
+
+    copy = hashChainNext(&copyHead);
+    copy->node.prev = NULL;
+
+    return copy;
+}
+
+static int hashChainDelete(hashChain *chain, pair_key_base *key) {
     hashChain *found;
-    if (isNullPtr(chain))
+    if (isNullPtr(chain) || isNullPtr(key))
         return FALSE;
-    found = hashChainSearch(chain, pair); 
+    found = hashChainSearch(chain, key); 
     if (found) {
         listNodeDelete(HASH_CHAIN_NODE_R(chain)); 
         RELEASE_MEM(chain);
@@ -177,14 +249,14 @@ static hashChain * hashChainTail(hashChain *chainNode) {
     return chainNode;
 }
 
-static hashChain * hashChainSearch(hashChain *chainNode, pair_kv pair) {
+static hashChain * hashChainSearch(hashChain *chainNode, pair_key_base *key) {
     pair_key_base *selectedKey, *beChecked;
 
     if (isNullPtr(chainNode))
         return NULL;
     do {
-        selectedKey = PAIR_KEY(chainNode->pair);
-        beChecked = PAIR_KEY(pair);
+        selectedKey = chainNode->key;
+        beChecked = key;
                      
         if (!isNullPtr(selectedKey)) {
             if (selectedKey->isEqual(selectedKey, beChecked)) {
@@ -198,13 +270,12 @@ static hashChain * hashChainSearch(hashChain *chainNode, pair_kv pair) {
     return chainNode;
 }
 
-static int hashChainAppend(hashChain *chainNode, pair_kv pair) {
-    hashChain *tailNode, *new = hashChainConstruct(pair);
+static int hashChainAppend(hashChain *chainNode, hashChain *newNode) {
     
-    if (isNullPtr(chainNode)) 
+    if (isNullPtr(chainNode) || isNullPtr(newNode)) 
         return FALSE;
-
-    listNodeAppend(&chainNode->node, &new->node);
+    
+    listNodeAppend(&chainNode->node, &newNode->node);
     return TRUE;
 }
 
@@ -213,9 +284,12 @@ static int hashChainRelease(hashChain *chainNode) {
     
     do {
         // Release pair
-        if (pairRelease(HASH_CHAIN_PAIR_R(chainNode)) == FALSE)
-            return FALSE;
+        if (chainNode->key)
+            chainNode->key->release(chainNode->key);
+        if (chainNode->val)
+            chainNode->val->release(chainNode->val);
         released = chainNode;  
+        chainNode = hashChainNext(chainNode);
         RELEASE_MEM(released);     
     } while(chainNode = hashChainNext(chainNode));
     
@@ -231,36 +305,7 @@ static int hashChainRelease_STATIC(hashChain *chainNode) {
 
     chainNode = hashChainNext(chainNode);
 
-    do {
-        // Release pair
-        if (pairRelease(HASH_CHAIN_PAIR_R(chainNode)) == FALSE)
-            return FALSE;
-        released = chainNode;
-        chainNode = hashChainNext(chainNode);
-        RELEASE_MEM(released);
-    } while(chainNode);
-
-    return TRUE;
-}
-
-static int pairRelease(pair_kv *p) {
-    int ret;
-    pair_key_base *key;
-    pair_val_base *val;
-    
-    if (isNullPtr(p)) 
-        return FALSE; 
-
-    key = PAIR_KEY_R(p);
-    val = PAIR_VAL_R(p);
-    
-    if (!key) {
-        ret = key->release(key); 
-    }
-    if (!val) {
-        ret = ret && val->release(key); 
-    }
-    return ret;
+    return hashChainRelease(chainNode);
 }
 
 #ifdef MIB2DOC_UNIT_TESTING
@@ -325,12 +370,29 @@ int tryValRelease(try_val *val) {
     return TRUE;
 }
 
+
+try_key * tryKeyConstruct(int key);
+try_val * tryValConstruct(int val);
+
+try_key * tryKeyCopy(try_key *origin) {
+    if (isNullPtr(origin))
+        return NULL;
+    return tryKeyConstruct(origin->key);
+}
+
+try_val *tryValCopy(try_val *origin) {
+    if (isNullPtr(origin))
+        return NULL;
+    return tryValConstruct(origin->val);
+}
+
 try_key * tryKeyConstruct(int key) {
     try_key *pK = (try_key *)malloc(sizeof(try_key));
     pK->key = key;
     pK->base.isEqual = tryKeyEqual;
     pK->base.value = tryKeyValue;
     pK->base.release = tryKeyRelease;
+    pK->base.copy = tryKeyCopy;
     return pK;
 }
 
@@ -341,6 +403,8 @@ try_val * tryValConstruct(int val) {
     pV->base.isEqual = tryValEqual;
     pV->base.value = tryValValue;
     pV->base.release = tryValRelease;
+    pV->base.copy = tryValCopy;
+
     return pV;
 }
 
@@ -374,28 +438,26 @@ void hash__HASH_BASIC(void **state) {
     assert_int_equal(tP3->base.isEqual(tP3, tP4), TRUE);
 
     // hashChain Testing
-    pair_kv p1; 
-    PAIR_KEY_SET(p1, tK1);
-    PAIR_VAL_SET(p1, tP1);
-    
     // Situation: only one node
-    hashChain *found, *pChain = hashChainConstruct(p1);
-    found = hashChainSearch(pChain, p1); 
+    hashChain *found, *pChain = hashChainConstruct(tK1, tP1);
+    found = hashChainSearch(pChain, tK1); 
     
-    try_key *tFoundKey = found->pair.key;
+    try_key *tFoundKey = found->key;
     assert_int_equal(tFoundKey->key, 1);
     
     // Situation: several node
-    pair_kv p2;
+    try_key *temp_key;
+    try_val *temp_val;
     try_val *retVal;
     int chain_count = 0;
      
     while (chain_count < 1000) {
-        PAIR_KEY_SET(p2, tryKeyConstruct(chain_count));
-        PAIR_VAL_SET(p2, tryValConstruct(chain_count));
-        hashChainAppend(pChain, p2);
-        found = hashChainSearch(pChain, p2);
-        retVal = PAIR_VAL(found->pair);
+        temp_key = tryKeyConstruct(chain_count);
+        temp_val = tryValConstruct(chain_count);
+
+        hashChainAppend(pChain, hashChainConstruct(temp_key, temp_val));
+        found = hashChainSearch(pChain, temp_key);
+        retVal = found->val;
         assert_int_equal(retVal->val, chain_count);
 
         ++chain_count;
@@ -403,48 +465,64 @@ void hash__HASH_BASIC(void **state) {
     hashMap *pMap = hashMapConstruct(100000, simpleHashing);  
 
     // Situation: No collide 
-    try_val *tVal = hashMapGet(pMap, p1);
+    try_val *tVal = hashMapGet(pMap, tK1);
     if (NOT isNullPtr(tVal)) {
         fail(); 
     }
-    hashMapPut(pMap, p1);
-    tVal = hashMapGet(pMap, p1);
+    hashMapPut(pMap, tK1, tP1);
+    tVal = hashMapGet(pMap, tK1);
     assert_int_equal(tVal->val, 1);
 
     // Situation: collide
-    pair_kv collidePair;
-    PAIR_KEY_SET(collidePair, tryKeyConstruct(1));
-    PAIR_VAL_SET(collidePair, tryValConstruct(3));
+    temp_key = tryKeyConstruct(1);
+    temp_val = tryValConstruct(3);
 
     // Key unique check.
-    if (hashMapPut(pMap, collidePair) != FALSE)
+    if (hashMapPut(pMap, temp_key, temp_val) != FALSE)
         fail();
 
     int count = 0;
-    pair_kv temp;
-    while (count < 1000000) {
-        PAIR_KEY_SET(temp, tryKeyConstruct(count));
-        PAIR_VAL_SET(temp, tryValConstruct(count));
-        hashMapPut(pMap, temp);
-        tVal = hashMapGet(pMap, temp);
+    int range = 1000;
+    while (count < range) {
+        temp_key = tryKeyConstruct(count);
+        temp_val = tryValConstruct(count);
+        hashMapPut(pMap, temp_key, temp_val);
+        tVal = hashMapGet(pMap, temp_key);
     
         assert_int_equal(tVal->val, count);
         ++count;
     }
     
+    count = 0;
+    while (count < range) {
+        temp_key = tryKeyConstruct(count);
+        temp_val = hashMapGet(pMap, temp_key); 
+        assert_int_equal(temp_val->val, count);
+        ++count;
+    }
+
+    // hashMap duplication
+    hashMap *pMap_copy = hashMapDup(pMap);  
+
+    count = 0;
+    while (count < range) {
+        temp_key = tryKeyConstruct(count);
+        temp_val = hashMapGet(pMap_copy, temp_key); 
+        assert_int_equal(temp_val->val, count);
+        ++count;
+    }
+
     // Release testing
     hashMapRelease(pMap);     
-    
+   
     // Hash map deletion testing.
-    try_val *valDel; 
-    pair_kv pairDel;
-    
-    PAIR_KEY_SET(pairDel, tryKeyConstruct(1));
-    PAIR_VAL_SET(pairDel, tryValConstruct(1));
+    temp_key = tryKeyConstruct(1);
+    temp_val = tryValConstruct(1); 
+    try_val *valDel;
 
     hashMap *mapDelTest = hashMapConstruct(10, simpleHashing);
-    hashMapDelete(mapDelTest, pairDel);
-    valDel = hashMapGet(mapDelTest, pairDel);
+    hashMapDelete(mapDelTest, temp_key);
+    valDel = hashMapGet(mapDelTest, temp_key);
     if (!isNullPtr(valDel))
         fail();
 } 

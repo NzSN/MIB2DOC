@@ -92,11 +92,17 @@ int disParamRelease_Static(dispatchParam *disParam, int (*destruct)(void *));
 YY_BUFFER_STATE getCurrentBufferState();
 char * switch_CurrentMod();
 int dispatch(dispatch_type dType, dispatchParam * param);
+int switchToModule(switchingState *swState, char* moduleName);
 
 // collectInfo functions
 int collectInfoInit(collectInfo *cInfo, char *modName);
+int collectInfoConst(char *modName);
 int collectInfo_add(collectInfo *cInfo, char *symbol);
 int collectInfo_del(collectInfo *cInfo, char *symbol);
+int collectInfo_exists(collectInfo *cInfo, char *symbol);
+int collectInfo_release(collectInfo *cInfo);
+
+int importWorks(genericStack *importInfoStack);
 
 #ifdef MIB2DOC_UNIT_TESTING
 

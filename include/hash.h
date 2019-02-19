@@ -1,6 +1,7 @@
 /* hash.h */
 
 #include "list.h"
+#include "type.h"
 
 #ifndef _MIB2DOC_HASHMAP_H_
 #define _MIB2DOC_HASHMAP_H_
@@ -38,34 +39,43 @@
 #define HASH_MAP_HASH_GET(MAP, KEY) \
     (HASH_MAP_ELEM_SELECT(MAP, HASH_MAP_HASH_COMPUTING(MAP, KEY)))
 
+// Hash method
+#define HASH_DEFAULT_METHOD(V) ((V << 5) + V)
+
 typedef int (*hashFunction)(void *);
 
-typedef struct {
-    int (*release)(void *key);
-    void * (*value)(void *key);
-    int (*isEqual)(void *lKey, void *rKey);
+typedef struct pair_key_base {
+    int (*release)(struct pair_key_base *key);
+    anything (*value)(struct pair_key_base *key);
+    int (*isEqual)(struct pair_key_base *lKey, struct pair_key_base *rKey);
+    int (*copy)(struct pair_key_base *key);
 } pair_key_base;
 
-typedef struct {
-    int (*release)(void *key);
-    void * (*value)(void *key);
-    int (*isEqual)(void *lVal, void *rVal);
+typedef struct pair_val_base {
+    int (*release)(struct pair_val_base *val);
+    anything (*value)(struct pair_val_base *key);
+    int (*isEqual)(struct pair_val_base *lVal, void *rVal);
+    int (*copy)(struct pair_val_base *val);
 } pair_val_base;
 
+#if 0
 typedef struct {
     pair_key_base *key;
     pair_val_base *val;
 } pair_kv;
+#endif
 
 typedef struct {
-    pair_kv pair;
+    pair_key_base *key;
+    pair_val_base *val;
     listNode node;
 } hashChain;
 
 typedef struct {
     int used;
     int collide;
-    pair_kv pair;
+    pair_key_base *key;
+    pair_val_base *val;
     hashChain chain;
 } hashElem;
 
@@ -76,11 +86,14 @@ typedef struct {
 } hashMap;
 
 /* Function declarations */
+hashMap * hashMapInit(hashMap *map, int size, hashFunction func);
 hashMap * hashMapConstruct(int size, hashFunction func);
+hashMap * hashMapDup(hashMap *origin);
 int hashMapRelease(hashMap *map);
-void * hashMapGet(hashMap *map, pair_kv pair);
-int hashMapPut(hashMap *map, pair_kv pair);
-int hashMapDelete(hashMap *map, pair_kv pair);
+void * hashMapGet(hashMap *map, pair_key_base *key);
+int hashMapPut(hashMap *map, pair_key_base *key, pair_val_base *val);
+int hashMapDelete(hashMap *map, pair_key_base *key);
+
 #ifdef MIB2DOC_UNIT_TESTING
 
 void hash__HASH_BASIC(void **state);

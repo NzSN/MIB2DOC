@@ -36,6 +36,8 @@
         (ConType *)((char *)__mptr - offsetof(ConType, member));\
 })
 
+typedef void * anything;
+
 typedef enum unitType {
     OBJECT = 1,
     TRAP,

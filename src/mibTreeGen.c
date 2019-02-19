@@ -33,7 +33,7 @@ targetSymbolList tSymListHead;
 int mibObjGen(int nodeType) {
     mibObjectTreeNode *newNode;
     char *ident, *type, *rw, *desc, *parent, *suffix;    
-    
+        
     ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER);;
     type = sliceGetVal(&sliceContainer, SLICE_TYPE); 
     rw = sliceGetVal(&sliceContainer, SLICE_PERMISSION);
@@ -287,54 +287,44 @@ int symbolCollectingInit() {
 }
 
 int symbolCollecting(int type, dispatchParam *param) {
-    // fixme: before collecting a symbol you should 
-    // check to see that whether the symbol you encounter
-    // is the one you want to include
+    char *ident;
+
+    if (type >= OBJECT && type <= SMI_DEF) {
+        ident = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
+        if (!collectInfo_exists(SW_CUR_IMPORT_REF(swState), ident))
+            return TRUE;
+    }   
     return symbolCollectRoutine[type](param);
 }
 
 static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
-#if 0
     int retVal;
     symbolTable *newMod;
     collectInfo *pCollect;
     symbol_t *newSymbol;
     identList *listHead, *listProcessing;
-    char *modIdent;
-    char *symbolIdent;
-    char *parentIdent ;
+
+    char *symbolIdent, *parentIdent, *suffix;
     
     parentIdent = sliceGetVal(&symCollectSlice, SLICE_PARENT);
     symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
+    suffix = sliceGetVal(&symCollectSlice, SLICE_OID_SUFFIX); 
 
-    /* Is the symbol exists in symbol table ? */
-    if (symbolSearching(&symTable, symbolIdent)) {
+    // Is the symbol exists in symbol table ?
+    if (symbolTableSearch(&symTable, symbolIdent)) {
         /* Already exist only need to remove it from modStack */
         goto MOD_STACK_OP_REMOVE;
     }
-
-    modIdent = (char *)malloc(MAX_CHAR_OF_MOD_IDENT);
-    modIdent = switch_CurrentMod();
-    parentIdent = sliceGetVal(&symCollectSlice, SLICE_PARENT);
-
-    /* Is the module specify by modIdent is exists ? */
-    if (!symbolTableSearch(&symTable, modIdent)) {
-        newMod = (symbolTable *)malloc(sizeof(symbolTable));
-        newMod->modName = modIdent;
-        symbolModuleAdd(&symTable, newMod);
-    }
-
-    newSymbol = (symbol_t *)malloc(sizeof(symbol_t));
-    newSymbol->symIdent = symbolIdent;
-    newSymbol->symType = SYMBOL_TYPE_NODE;
-    newSymbol->symInfo.nodeMeta.parentIdent = parentIdent;
+    
+    // Install the symbol into symbol table.
+    newSymbol = symbolNodeConst(symbolIdent, parentIdent, suffix);
+    symbolTableAdd(&symTable, newSymbol); 
 
 MOD_STACK_OP_REMOVE:
     /* Need to remove the symbol found from list in the modStack */
     retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
     sliceRelease(&symCollectSlice);
     return retVal;
-#endif
 }
 
 static int symbolCollect_BUILD_TRAP(dispatchParam *param) {

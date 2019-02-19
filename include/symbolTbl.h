@@ -5,6 +5,7 @@
 #ifndef _SYMBOLTBL_H_
 #define _SYMBOLTBL_H_
 
+#define SIZE_OF_SYMBOL_TBL (256)
 #define MAX_CHAR_OF_MOD_IDENT (64)
 
 typedef enum symErrorCode {
@@ -49,10 +50,24 @@ typedef struct symbolTable {
 } symbolTable;
 
 /* symbolTable functions */
+symbolTable * symbolTableInit();
 symbolTable * symbolTableConstruct();
 symbol_t * symbolTableSearch(symbolTable *tbl, char *symIdent);
 int symbolTableAdd(symbolTable *tbl, symbol_t *sym);
 int symbolTableDelete(symbolTable *tbl, char *symIdent);
+int symbolTableRelease(symbolTable *tbl);
+int symbolTableRelease_static(symbolTable *tbl);
+
+/* symbol_t functions */
+symbol_t * symbolNodeConst(char *ident, char *parent, char *suffix);
+symbol_t * symbolLeaveConst(char *ident, char *parent, char *suffix,
+    char *type, char *perm);
+
+#ifdef MIB2DOC_UNIT_TESTING
+
+void list_symbolTable(void **state);
+
+#endif /* MIB2DOC_UNIT_TESTING */
 
 #endif /* _SYMBOLTBL_H_ */
 

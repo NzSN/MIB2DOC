@@ -29,7 +29,8 @@ int pop(genericStack *gStack, void *unit) {
     if (isNullPtr(gStack) || isNullPtr(unit))
         return -1;
 
-    popByIndex(gStack->base, gStack->top, unit, gStack->unitSize);
+    if (popByIndex(gStack->base, gStack->top, unit, gStack->unitSize) == 0)
+        return -1;
     return 0;
 }
 

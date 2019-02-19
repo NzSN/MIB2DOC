@@ -238,7 +238,8 @@ int main(void) {
             cmocka_unit_test(stack__STACK_PUSH_POP),
             cmocka_unit_test(dispatcher__COLLECT_INFO),
             cmocka_unit_test(hash__HASH_BASIC),
-            cmocka_unit_test(mibTreeObjTree__MIBTREE_MERGE)
+            cmocka_unit_test(mibTreeObjTree__MIBTREE_MERGE),
+            cmocka_unit_test(list_symbolTable)
             #endif
     };
 

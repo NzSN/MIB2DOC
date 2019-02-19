@@ -25,11 +25,13 @@
     void yyerror(char const *s) {
         fprintf(stderr, "%s: %s\n", s, yylval);
     }    
-
-    static dispatchParam importParam;
-
+    
+    dispatchParam importParam;
+    genericStack importInfoStack; 
+     
     int syntaxParserInit(void) {
         memset(&importParam, 0, sizeof(dispatchParam));
+        genericStackConstruct(&importInfoStack, 20, sizeof(collectInfo *)); 
     }
 }
 
@@ -37,28 +39,26 @@
 %%
 
 MIB :
-	DEFINITION IMPORT MAIN_PART;
+	MAIN_PART;
     
 MAIN_PART :
-	OBJ_DEAL MAIN_PART
+	  OBJ_DEAL MAIN_PART
 	| OBJ MAIN_PART
 	| TRAP MAIN_PART
 	| SEQUENCE MAIN_PART
     | SMI MAIN_PART
-	| END_;
+	| END_ MAIN_PART
+    | DEFINITION MAIN_PART
+    | IMPORT MAIN_PART
+    | /* empty */ ;
 
 DEFINITION :
 	IDENTIFIER DEF ASSIGNED BEGIN_;
 
 IMPORT :
 	IMPORTS_ MODULES SEMICOLON    {
-        /* build upper tree if all including is finished */
-        if (swState.counter == 0) {
-            /* importStack is empty */
-            //upperTreeGeneration(&symTable);
-        } else {
-            /* do nothing */
-        }
+        // Begining to import symbol from another mib files.
+        importWorks(&importInfoStack); 
     };
 
 MODULES :
@@ -67,14 +67,12 @@ MODULES :
 
 MODULES_CONTENT :
     ITEMS FROM_ IDENTIFIER {
-        printf("Modules: %s\n", $IDENTIFIER);
-
         dispatchParam *current;    
         current = &importParam;
         
         int ret = TRUE;
-        collectInfo *importInfo = SW_CUR_IMPORT_REF(swState);
-        
+        collectInfo *importInfo = collectInfoConst($IDENTIFIER);
+         
         // Store symbols that should be included.
         while (current = dispatchParamNext(current)) {
             ret = collectInfo_add(importInfo, current->param);
@@ -83,22 +81,18 @@ MODULES_CONTENT :
                 exit(1);
             } 
         }
-        disParamRelease_Static(&importParam, NULL);
+        disParamRelease_Static(&importParam, NULL); 
 
-        // Searching symbols in the module.
-        
-
+        push(&importInfoStack, &importInfo); 
     }
 
 ITEMS :
 	IDENTIFIER { 
-        printf("SYMBOL: %s\n", $IDENTIFIER);
         if (disParamStore(&importParam, disParamConstruct($IDENTIFIER)) == NULL) {
             exit(1); 
         }
     }
 	| IDENTIFIER COMMA ITEMS { 
-        printf("SYMBOL: %s\n", $IDENTIFIER);
         if (disParamStore(&importParam, disParamConstruct($IDENTIFIER)) == NULL) {
             exit(1); 
         }
@@ -159,6 +153,7 @@ TRAP_HEAD :
 
 HEAD :
 	IDENTIFIER OBJ_SPECIFIER {
+        printf("IDENTIFIER: %s\n", $IDENTIFIER);
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct($IDENTIFIER));
 		dispatch(DISPATCH_PARAM_STAGE, param);
