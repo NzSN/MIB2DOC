@@ -151,6 +151,7 @@ int switchToModule(switchingState *swState, char* moduleName)
     }
 
     // Step 1: Push currentSwitchInfo into stack
+    SW_CUR_BUFFER_INFO((*swState)) = getCurrentBufferState();
     push(SW_STACK_REF((*swState)), SW_CUR_SWITCH_INFO_REF((*swState)));
 
     // Step 2: Update currentSwitchInfo
@@ -166,8 +167,19 @@ int switchToModule(switchingState *swState, char* moduleName)
 int switchToPrevModule(switchingState *swState) {
     if (isNullPtr(swState))
        return FALSE; 
-
     
+    // There is no more module to switch to just exit. 
+    if (SW_STACK_REF((*swState))->top == 0) {
+        exit(0);
+    }
+
+    collectInfo_release(SW_CUR_IMPORT_REF((*swState)) );
+    yy_delete_buffer(SW_CUR_BUFFER_INFO((*swState)) );
+
+    pop(SW_STACK_REF((*swState)), SW_CUR_SWITCH_INFO_REF((*swState)) ); 
+    yy_switch_to_buffer(SW_CUR_BUFFER_INFO((*swState)) );
+
+    return 0;
 }
 
 static int lexBufferSwitching(char* newModule)
@@ -472,8 +484,6 @@ char * switch_CurrentMod()
     return SW_CUR_IMPORT(swState).modName;
 }
 
-
-
 int importWorks(genericStack *importInfoStack) {
     char *modName;
     hashMap *symbolMap;
@@ -497,6 +507,10 @@ int importWorks(genericStack *importInfoStack) {
     } 
     
     return TRUE;
+}
+
+void * getCurSwInfo() {
+    return (void *)&swState;
 }
 
 #ifdef MIB2DOC_UNIT_TESTING

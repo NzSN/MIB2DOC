@@ -649,7 +649,7 @@ char *yytext;
  */
 #include <unistd.h>
 #endif
-
+    
 #ifndef YY_EXTRA_TYPE
 #define YY_EXTRA_TYPE void *
 #endif
@@ -1089,7 +1089,7 @@ YY_RULE_SETUP
 case YY_STATE_EOF(INITIAL):
 #line 57 "./src/yy_lex.l"
 {
-                                              
+                                        switchToPrevModule(getCurSwInfo());                  
                                     }
 	YY_BREAK
 case 39:

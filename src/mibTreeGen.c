@@ -33,7 +33,7 @@ targetSymbolList tSymListHead;
 int mibObjGen(int nodeType) {
     mibObjectTreeNode *newNode;
     char *ident, *type, *rw, *desc, *parent, *suffix;    
-        
+
     ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER);;
     type = sliceGetVal(&sliceContainer, SLICE_TYPE); 
     rw = sliceGetVal(&sliceContainer, SLICE_PERMISSION);

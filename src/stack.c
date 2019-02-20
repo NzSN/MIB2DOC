@@ -21,7 +21,8 @@ int push(genericStack *gStack, void *unit) {
     if (isNullPtr(gStack) || isNullPtr(unit))
         return -1;
 
-    pushByIndex(gStack->base, unit, gStack->top, gStack->bufferSize, gStack->unitSize);
+    if (pushByIndex(gStack->base, unit, gStack->top, gStack->bufferSize, gStack->unitSize) == 0)
+        return -1;
     return 0;
 }
 
@@ -38,24 +39,52 @@ int pop(genericStack *gStack, void *unit) {
 
 #include "test.h"
 
+int push_wrapper(genericStack *stack, int range) {
+    int idx = 0;
+    while (idx < range) {
+        if (push(stack, &idx) == -1) {
+            return -1; 
+        }
+        idx++;
+    }
+
+    return 0;
+}
+
+int pop_wrapper(genericStack *stack, int range) {
+    int idx = 0, ret;
+    while (idx < range) {
+        if (pop(stack, &ret) == -1) {
+            return -1; 
+        } 
+        assert_int_equal(ret, 10 - idx - 1);
+        idx++;
+    }
+    return 0;
+}
+
 int stack__STACK_PUSH_POP() {
     int ret, value = 4, idx = 0;
     genericStack gStack, *pStack = &gStack;
     genericStackConstruct(pStack, 10, sizeof(int));
     
-    while (idx < 10) {
-        push(pStack, &value);
-        idx++;
-    }
-    
-    idx = 0;
-    while (idx < 10) { 
-        pop(pStack, &ret);
+    // push & pop in normal range. 
+    while (idx < 100) {
+        push_wrapper(pStack, 10); 
+        pop_wrapper(pStack, 10); 
         idx++;
     }
 
     assert_int_equal(pStack->top , 0);
-    assert_int_equal(ret, 4);
+
+    // push overflow testing 
+    ret = push_wrapper(pStack, 11);  
+    assert_int_equal(ret, -1); 
+    // pop overflow testing
+    ret = pop_wrapper(pStack, 11);
+    assert_int_equal(ret, -1); 
+
+    assert_int_equal(pStack->top, 0);
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */
