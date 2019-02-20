@@ -13,6 +13,8 @@ static hashChain * hashChainDup(hashChain *origin);
 static int hashChainDelete(hashChain *chain, pair_key_base *key);
 static hashChain *hashChainPrev(hashChain *chain);
 static hashChain * hashChainNext(hashChain *chain);
+static int hashChainInsert(hashChain *chainNode, hashChain *newNode);
+
 
 hashMap * hashMapInit(hashMap *map, int size, hashFunction func) {
     if (isNullPtr(map) || size < 1 || isNullPtr(func))
@@ -50,13 +52,19 @@ hashMap * hashMapDup(hashMap *origin) {
 
     memcpy(copy->space, origin->space, origin->size * sizeof(hashElem)); 
     
+    idx = 0;
     size = origin->size;
-    while (idx < size) {
-        copyFrom = &HASH_MAP_ELEM_SELECT(origin,idx)->chain;
-        copyFrom = hashChainNext(copyFrom);
 
+    while (idx < size) {
+        copyFrom = &(HASH_MAP_ELEM_SELECT(origin, idx)->chain);
+        copyFrom = hashChainNext(copyFrom);
+        if (isNullPtr(copyFrom)) {
+            ++idx;
+            continue;
+        }
         copyChain = hashChainDup(copyFrom);
-        hashChainAppend(&HASH_MAP_ELEM_SELECT(copy, idx)->chain, copyChain);
+        memset(&HASH_MAP_ELEM_SELECT(copy, idx)->chain.node, 0, sizeof(listNode));
+        hashChainInsert(&HASH_MAP_ELEM_SELECT(copy, idx)->chain, copyChain);
 
         ++idx; 
     } 
@@ -214,6 +222,7 @@ static hashChain * hashChainDup(hashChain *origin) {
     
     copyHead.key = NULL;
     copyHead.val = NULL;
+    memset(&copyHead.node, 0, sizeof(listNode)); 
 
     for (current = origin; !isNullPtr(current); current = hashChainNext(current)) {
         key = current->key;
@@ -276,6 +285,14 @@ static int hashChainAppend(hashChain *chainNode, hashChain *newNode) {
         return FALSE;
     
     listNodeAppend(&chainNode->node, &newNode->node);
+    return TRUE;
+}
+
+static int hashChainInsert(hashChain *chainNode, hashChain *newNode) {
+    if (isNullPtr(chainNode) || isNullPtr(newNode))
+        return FALSE;
+
+    listNodeInsert(&chainNode->node, &newNode->node);
     return TRUE;
 }
 

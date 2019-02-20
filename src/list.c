@@ -386,6 +386,18 @@ static int symbolKIsEqual(symbol_k *lKey, symbol_k *rKey) {
     return !strncmp(lKey->ident, rKey->ident, strlen(lKey->ident));
 }
 
+static symbol_k * symbolKInit(symbol_k *key, char *name) {
+    if (isNullPtr(key) || isNullPtr(name))
+        return NULL;
+
+    key->ident = name;
+    key->base.isEqual = (pairKeyIsEqual)symbolKIsEqual;
+    key->base.release = (pairKeyRelease)symbolKRelease;
+    key->base.value = (pairKeyValue)symbolKValue;
+    key->base.copy = (pairKeyCopy)symbolKCopy;
+    return key;
+}
+
 static symbol_k * symbolKConst(char *name) {
     symbol_k *pKey;
     
@@ -394,25 +406,7 @@ static symbol_k * symbolKConst(char *name) {
 
     pKey = (symbol_k *)malloc(sizeof(symbol_k));
 
-    pKey->ident = name;
-
-    pKey->base.release = symbolKRelease;
-    pKey->base.value = symbolKValue;
-    pKey->base.isEqual = symbolKIsEqual; 
-    
-    return pKey;
-}
-
-static symbol_k * symbolKInit(symbol_k *key, char *name) {
-    if (isNullPtr(key) || isNullPtr(name))
-        return FALSE;
-
-    key->ident = name;
-    key->base.isEqual = symbolKRelease;
-    key->base.release = symbolKRelease;
-    key->base.value = symbolKValue;
-
-    return TRUE;
+    return symbolKInit(pKey, name);
 }
 
 static int symbolTblHash(symbol_k *key) {
@@ -420,7 +414,7 @@ static int symbolTblHash(symbol_k *key) {
     int hashVal, size, index, value;
 
     if (isNullPtr(key))
-        return NULL;
+        return FALSE;
 
     keyStr = key->ident; 
 
@@ -439,7 +433,7 @@ symbolTable * symbolTableInit(symbolTable *tbl) {
         return NULL;
     
     tbl->numOfSymbols = 0;
-    tbl->symbolMap = hashMapConstruct(SIZE_OF_SYMBOL_TBL, symbolTblHash);
+    tbl->symbolMap = hashMapConstruct(SIZE_OF_SYMBOL_TBL, (hashFunction)symbolTblHash);
     return tbl;
 }
 
@@ -479,7 +473,7 @@ symbol_t * symbolTableSearch(symbolTable *tbl, char *sym) {
     symbolKInit(&key, sym); 
 
     symMap = tbl->symbolMap;
-    return (symbol_t *)hashMapGet(symMap, &key);
+    return (symbol_t *)hashMapGet(symMap, (pair_key_base *)&key);
 }
 
 int symbolTableAdd(symbolTable *tbl, symbol_t *sym) {
@@ -490,7 +484,7 @@ int symbolTableAdd(symbolTable *tbl, symbol_t *sym) {
      
     key = symbolKConst(strdup(sym->symIdent));
 
-    return hashMapPut(tbl->symbolMap, key, sym);
+    return hashMapPut(tbl->symbolMap, (pair_key_base *)key, (pair_val_base *)sym);
 }
 
 int symbolTableDelete(symbolTable *tbl, char *symIdent) {
@@ -500,7 +494,7 @@ int symbolTableDelete(symbolTable *tbl, char *symIdent) {
         return FALSE; 
     symbolKInit(&key, symIdent);
     
-    return hashMapDelete(tbl->symbolMap, &key);
+    return hashMapDelete(tbl->symbolMap, (pair_key_base *)&key);
 }
 
 inline static int nodeMetaRelease(nodeMeta_t *nm) {
@@ -582,10 +576,10 @@ symbol_t * symbolNodeConst(char *ident, char *parent, char *suffix) {
     pSym->symInfo.nodeMeta.parentIdent = parent;
     pSym->symInfo.nodeMeta.suffix = suffix;
 
-    pSym->base.release = symbolRelease;
-    pSym->base.value = symbolIdent;
-    pSym->base.isEqual = symbolIsEqual;
-    pSym->base.copy = symbolCopy;
+    pSym->base.release = (pairValRelease)symbolRelease;
+    pSym->base.value = (pairValValue)symbolIdent;
+    pSym->base.isEqual = (pairValIsEqual)symbolIsEqual;
+    pSym->base.copy = (pairValCopy)symbolCopy;
 
     return pSym;
 }
@@ -606,10 +600,10 @@ symbol_t * symbolLeaveConst(char *ident, char *parent, char *suffix, char *type,
     pSym->symInfo.leaveMeta.type = type;
     pSym->symInfo.leaveMeta.permission = perm; 
 
-    pSym->base.release = symbolRelease;
-    pSym->base.value = symbolIdent;
-    pSym->base.isEqual = symbolIsEqual;
-    pSym->base.copy = symbolCopy;
+    pSym->base.release = (pairValRelease)symbolRelease;
+    pSym->base.value = (pairValValue)symbolIdent;
+    pSym->base.isEqual = (pairValIsEqual)symbolIsEqual;
+    pSym->base.copy = (pairValCopy)symbolCopy;
 
     return pSym;
 }

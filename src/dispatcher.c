@@ -48,9 +48,7 @@ int dispatchInit()
     dispatchMode = DISPATCH_MODE_DOC_GENERATING;
     return ERROR_NONE;
 }
-struct ll {
-    int a;
-};
+
 int dispatch(dispatch_type disType, dispatchParam* param)
 {
     unsigned long key;
@@ -149,7 +147,7 @@ int switchToModule(switchingState *swState, char* moduleName)
 {
     collectInfo* cInfo;
     if (isNullPtr(swState) || isNullPtr(moduleName)) {
-        return NULL;
+        return FALSE;
     }
 
     // Step 1: Push currentSwitchInfo into stack
@@ -167,7 +165,7 @@ int switchToModule(switchingState *swState, char* moduleName)
 
 int switchToPrevModule(switchingState *swState) {
     if (isNullPtr(swState))
-       return NULL; 
+       return FALSE; 
 
     
 }
@@ -397,7 +395,7 @@ int collectInfoInit(collectInfo* cInfo, char* modName)
     return 0;
 }
 
-int collectInfoConst(char *modName) {
+collectInfo * collectInfoConst(char *modName) {
     collectInfo *cInfo;
 
     if (isNullPtr(modName))

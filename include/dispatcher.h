@@ -96,7 +96,7 @@ int switchToModule(switchingState *swState, char* moduleName);
 
 // collectInfo functions
 int collectInfoInit(collectInfo *cInfo, char *modName);
-int collectInfoConst(char *modName);
+collectInfo * collectInfoConst(char *modName);
 int collectInfo_add(collectInfo *cInfo, char *symbol);
 int collectInfo_del(collectInfo *cInfo, char *symbol);
 int collectInfo_exists(collectInfo *cInfo, char *symbol);
