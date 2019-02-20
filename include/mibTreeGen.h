@@ -8,6 +8,9 @@
 #include "type.h"
 #include "list.h"
 #include "dispatcher.h"
+#include "mibTreeObjTree.h"
+
+extern mibTreeHead trees;
 
 enum {
     SYMBOL_FOUND,
@@ -22,7 +25,6 @@ typedef struct targetSymbolList {
     int state;
     listNode node;
 } targetSymbolList;
-
 
 int mibObjGen(int type);
 int mibObjGen_Leave();

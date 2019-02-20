@@ -23,6 +23,14 @@
 #define NOT !
 #endif 
 
+#ifndef OK
+#define OK 0
+#endif
+
+#ifndef ERROR
+#define ERROR 1
+#endif
+
 #define cSpace ' '
 #define null (0)
 #define SIZE_OF_CURRENT_TABLE 64

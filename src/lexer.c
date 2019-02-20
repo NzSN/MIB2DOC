@@ -1089,15 +1089,17 @@ YY_RULE_SETUP
 case YY_STATE_EOF(INITIAL):
 #line 57 "./src/yy_lex.l"
 {
-                                        switchToPrevModule(getCurSwInfo());                  
+                                        if (switchToPrevModule(getCurSwInfo()) == -1) {
+                                            yyterminate();
+                                        }
                                     }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 61 "./src/yy_lex.l"
+#line 63 "./src/yy_lex.l"
 ECHO;
 	YY_BREAK
-#line 1100 "src/lexer.c"
+#line 1102 "src/lexer.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2100,7 +2102,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 61 "./src/yy_lex.l"
+#line 63 "./src/yy_lex.l"
 
 int yywrap() {
     return 1;

@@ -166,11 +166,11 @@ int switchToModule(switchingState *swState, char* moduleName)
 
 int switchToPrevModule(switchingState *swState) {
     if (isNullPtr(swState))
-       return FALSE; 
+       return -1; 
     
     // There is no more module to switch to just exit. 
     if (SW_STACK_REF((*swState))->top == 0) {
-        exit(0);
+        return -1;
     }
 
     collectInfo_release(SW_CUR_IMPORT_REF((*swState)) );

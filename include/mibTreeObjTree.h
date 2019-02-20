@@ -50,7 +50,7 @@ typedef struct mibTreeHead {
 /* mibObjectTreeNode functions */
 #define MIB_OBJ_TREE_NODE_PARENT_NAME(node) (node->mergeInfo.parent)
 
-void mibObjectTreeInit(mibObjectTreeNode *root);
+int mibObjectTreeInit();
 int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent);
 mibObjectTreeNode * parent_MibTree(mibObjectTreeNode *root, char *ident);
 mibObjectTreeNode * mibLeaveBuild(char *ident, char *type, char *rw, 
@@ -67,7 +67,7 @@ mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
 #define MIBTREE_IS_FIRST_TREE(MIBTREE) (MIBTREE->node.prev == NULL)
 #define MIBTREE_IS_LAST_TREE(MIBTREE) (MIBTREE->node.next == NULL)
 
-mibTree * mibTreeConstruction(mibTree *tree);
+mibTree * mibTreeConstruction();
 int mibTreeSetRoot(mibTree *tree, mibObjectTreeNode *rootNode);
 mibTree * mibTreeNext(mibTree *tree);
 mibTree * mibTreePrev(mibTree *tree);

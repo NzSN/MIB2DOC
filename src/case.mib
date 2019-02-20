@@ -1,7 +1,7 @@
 CASE DEFINITIONS ::= BEGIN
 
 IMPORTS
-    XYZ, ZYX FROM ALIALI;
+    aliali FROM ALIALI;
 
 sys OBJECT-TYPE
     SYNTAX INTEGER
@@ -9,7 +9,7 @@ sys OBJECT-TYPE
     STATUS current
     DESCRIPTION
         "Just a case"
-    ::= { enterprises 1 }
+    ::= { aliali 1 }
 
 END
 

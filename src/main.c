@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 
     syntaxParserInit();
     dispatchInit();
-    mibObjectTreeInit(&mibObjectTreeRoot);
+    mibObjectTreeInit();
 
     node = &mibObjectTreeRoot;
     optionsInit(argc, argv);
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     if (writeTo == NULL)
         printf("%s\n", "result open failed");
 
-    documentGen(&mibObjectTreeRoot, writeTo);
-    showTree(&mibObjectTreeRoot);
+    //documentGen(&mibObjectTreeRoot, writeTo);
+    //showTree(&mibObjectTreeRoot);
     return 0;
 }

@@ -264,7 +264,7 @@ dispatchParam * dispatchParamPrev(dispatchParam *disparam) {
 }
 
 dispatchParam * dispatchParamNext(dispatchParam *disparam) {
-    if (isNullPtr(disparam->node.next) || isNullPtr(disparam))
+    if (isNullPtr(disparam) || isNullPtr(disparam->node.next))
         return NULL;
     return containerOf(disparam->node.next, dispatchParam, node);
 }

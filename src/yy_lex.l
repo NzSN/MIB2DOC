@@ -55,7 +55,9 @@ DESCRIPTION                         { return DESC_SPECIFIER; }
 ([a-zA-Z0-9]|"-")+                  { yylval = strDuplicate(yytext); return IDENTIFIER; }
 
 <<EOF>>                             {
-                                        switchToPrevModule(getCurSwInfo());                  
+                                        if (switchToPrevModule(getCurSwInfo()) == -1) {
+                                            yyterminate();
+                                        }
                                     }
 
 %%

@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "mibTreeObjTree.h"
+#include "mibTreeGen.h"
 #include "type.h"
 #include "docGenerate.h"
 #include "util.h"
@@ -35,10 +36,15 @@ static int descriptionDeal(mibObjectTreeNode *node);
 mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, 
     int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
 
-void mibObjectTreeInit(mibObjectTreeNode *root) {
+int mibObjectTreeInit() {
     mibObjectTreeNode *obj;
-
-    memset(root, 0, sizeof(mibObjectTreeNode));
+    
+    mibTreeHeadInit(&trees);
+    // Build a tree with only a 'iso' node.
+    // cause iso is not define by SNMPv2-SMI.
+    mibTreeHeadAppend(&trees, mibNodeBuild("iso", "1", NULL));
+    
+    return OK;
 }
 
 mibObjectTreeNode * mibNodeBuild(char *ident, char *oid, char *parent) {
@@ -276,13 +282,14 @@ mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
 }
 
 // mibTrees functions
-mibTree * mibTreeConstruction(mibTree *tree) {
+mibTree * mibTreeConstruction() {
+    mibTree *tree;
+
     if (isNullPtr(tree))
         return NULL;
     
+    tree = (mibTree *)malloc(sizeof(mibTree));
     memset(tree, 0, sizeof(mibTree));
-    tree->root = (mibObjectTreeNode *)malloc(sizeof(mibObjectTreeNode));
-    mibObjectTreeInit(tree->root);
 
     return tree;
 }
@@ -386,15 +393,8 @@ mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree) {
 int mibTreeHeadInit(mibTreeHead *treeHead) {
     if (isNullPtr(treeHead)) 
         return FALSE;
-
-    treeHead->last = NULL;
-    treeHead->numOfTree = 0; 
     
-    if (mibTreeConstruction(&treeHead->trees) == NULL) {
-        printf("mibTreeHeadInit failed\n");  
-        exit(1);
-    }
-
+    memset(treeHead, 0, sizeof(mibTreeHead));
     return TRUE;
 }
 
