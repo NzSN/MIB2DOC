@@ -34,12 +34,12 @@ int mibObjGen(int nodeType) {
     mibObjectTreeNode *newNode;
     char *ident, *type, *rw, *desc, *parent, *suffix;    
 
-    ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER);;
-    type = sliceGetVal(&sliceContainer, SLICE_TYPE); 
-    rw = sliceGetVal(&sliceContainer, SLICE_PERMISSION);
-    desc = sliceGetVal(&sliceContainer, SLICE_DESCRIPTION);
-    parent = sliceGetVal(&sliceContainer, SLICE_PARENT); 
-    suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX);
+    ident = sliceRetriVal(&sliceContainer, SLICE_IDENTIFIER);;
+    type = sliceRetriVal(&sliceContainer, SLICE_TYPE); 
+    rw = sliceRetriVal(&sliceContainer, SLICE_PERMISSION);
+    desc = sliceRetriVal(&sliceContainer, SLICE_DESCRIPTION);
+    parent = sliceRetriVal(&sliceContainer, SLICE_PARENT); 
+    suffix = sliceRetriVal(&sliceContainer, SLICE_OID_SUFFIX);
     
     // Node Build
     switch (nodeType) {
@@ -62,13 +62,16 @@ int mibObjGen(int nodeType) {
             assert(suffix != NULL);
             assert(desc != NULL);
             
+            if (!isNullPtr(rw))
+                RELEASE_MEM(rw);
+
             newNode = mibLeaveBuild(ident, type, NULL, NULL, suffix, parent); 
             break;
         case OBJECT_IDENTIFIER:
             assert(ident != NULL);
             assert(parent != NULL);
             assert(suffix != NULL);
-
+            
             newNode = mibNodeBuild(ident, suffix, parent);
             break;
         case SEQUENCE:
@@ -79,6 +82,8 @@ int mibObjGen(int nodeType) {
     }
 
     assert(mibTreeHeadAppend(&trees, newNode) != FALSE);
+    
+    sliceReset_STATIC(&sliceContainer);
 
     return 0;
 }
@@ -292,6 +297,7 @@ int symbolCollecting(int type, dispatchParam *param) {
     if (type >= OBJECT && type <= SMI_DEF) {
         ident = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
         if (!collectInfo_exists(SW_CUR_IMPORT_REF(swState), ident))
+            sliceRelease_STATIC(&symCollectSlice);
             return TRUE;
     }   
     return symbolCollectRoutine[type](param);
@@ -306,9 +312,9 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
 
     char *symbolIdent, *parentIdent, *suffix;
     
-    parentIdent = sliceGetVal(&symCollectSlice, SLICE_PARENT);
-    symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-    suffix = sliceGetVal(&symCollectSlice, SLICE_OID_SUFFIX); 
+    parentIdent = sliceRetriVal(&symCollectSlice, SLICE_PARENT);
+    symbolIdent = sliceRetriVal(&symCollectSlice, SLICE_IDENTIFIER);
+    suffix = sliceRetriVal(&symCollectSlice, SLICE_OID_SUFFIX); 
 
     // Is the symbol exists in symbol table ?
     if (symbolTableSearch(&symTable, symbolIdent)) {
@@ -323,7 +329,7 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
 MOD_STACK_OP_REMOVE:
     /* Need to remove the symbol found from list in the modStack */
     retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
-    sliceRelease(&symCollectSlice);
+    sliceRelease_STATIC(&symCollectSlice);
     return retVal;
 }
 

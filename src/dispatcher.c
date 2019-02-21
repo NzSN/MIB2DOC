@@ -20,7 +20,6 @@ static int switchInit();
 
 /* Global */
 extern slice sliceContainer;
-dispatch_mode dispatchMode;
 static unsigned char isNeedSwitchInit = TRUE;
 switchingState swState;
 
@@ -45,12 +44,12 @@ static symbolVal * symbolValCopy(symbolVal *origin);
 int dispatchInit()
 {
     switchInit();
-    dispatchMode = DISPATCH_MODE_DOC_GENERATING;
     return ERROR_NONE;
 }
 
 int dispatch(dispatch_type disType, dispatchParam* param)
 {
+    int symCollectType;
     unsigned long key;
     char *val, *moduleName, *sCollection;
     errorType ret = ERROR_NONE;
@@ -69,7 +68,8 @@ int dispatch(dispatch_type disType, dispatchParam* param)
         mibObjGen((unsigned long)disParamGet(disParamRetrive(&param)));
         break;
     case SYMBOL_COLLECTING:
-        symbolCollecting((unsigned long)disParamGet(disParamRetrive(&param)), param);
+        symCollectType = (int)disParamGet(disParamRetrive(&param)); 
+        symbolCollecting(symCollectType, param);
         break;
     case IGNORE:
         /* Do nothing */
@@ -110,9 +110,9 @@ static int dispatchMakeChoice(dispatch_type dType)
 {
     int choice = -1;
 
-    if (dispatchMode == DISPATCH_MODE_DOC_GENERATING) {
+    if (SW_STATE(swState) == DISPATCH_MODE_DOC_GENERATING) {
         choice = dType;
-    } else if (dispatchMode == DISPATCH_MODE_SYMBOL_COLLECTING) {
+    } else if (SW_STATE(swState) == DISPATCH_MODE_SYMBOL_COLLECTING) {
         if (dType == DISPATCH_PARAM_STAGE || dType == MIBTREE_GENERATION) {
             choice = SYMBOL_COLLECTING;
         } else {
@@ -120,7 +120,7 @@ static int dispatchMakeChoice(dispatch_type dType)
             choice = dType;
         }
     }
-    if (dispatchMode == DISPATCH_MODE_DEBUG)
+    if (SW_STATE(swState) == DISPATCH_MODE_DEBUG)
         choice = DEBUGING;
 
     return choice;
@@ -130,16 +130,20 @@ static int dispatchMakeChoice(dispatch_type dType)
 static int switchInit()
 {
     int retVal;
+    
+    memset(&swState, 0, sizeof(switchingState)); 
+    
 
-    swState.state = DISPATCH_MODE_DOC_GENERATING;
-    swState.counter = 0;
+    SW_COUNTER_SET(swState, 0);
+    SW_STATE_SET(swState, DISPATCH_MODE_DOC_GENERATING);
+    
+    SW_CUR_SWITCH_INFO(swState).purpose = SWITCHING_GEN_PURPOSE;
 
-    memset(SW_CUR_BUFFER_INFO_REF(swState), 0, sizeof(YY_BUFFER_STATE));
-    memset(SW_CUR_IMPORT_REF(swState), 0, sizeof(collectInfo));
     genericStackConstruct(&swState.swStack, 128 * sizeof(switchInfo), sizeof(switchInfo));
     SW_CUR_IMPORT_REF(swState)->symbols = hashMapConstruct(10, symbolHashing); 
 
     isNeedSwitchInit = FALSE;
+
     return retVal;
 }
 
@@ -178,6 +182,8 @@ int switchToPrevModule(switchingState *swState) {
 
     pop(SW_STACK_REF((*swState)), SW_CUR_SWITCH_INFO_REF((*swState)) ); 
     yy_switch_to_buffer(SW_CUR_BUFFER_INFO((*swState)) );
+         
+    SW_STATE_REFRESH((*swState));
 
     return 0;
 }
@@ -495,8 +501,11 @@ int importWorks(genericStack *importInfoStack) {
     while (pop(importInfoStack, &infoCollect) == 0) { 
         modName = infoCollect->modName;
         symbolMap = infoCollect->symbols;
-        
+         
         switchToModule(&swState, modName);         
+        
+        SW_STATE_SET(swState, DISPATCH_MODE_SYMBOL_COLLECTING); 
+        SW_CUR_SWITCH_INFO(swState).purpose = SWITCHING_INC_PURPOSE;
 
         SW_CUR_IMPORT(swState).modName = strdup(modName); 
         SW_CUR_IMPORT(swState).symbols = hashMapDup(infoCollect->symbols);

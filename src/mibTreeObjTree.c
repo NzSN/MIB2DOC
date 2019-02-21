@@ -206,8 +206,20 @@ mibObjectTreeNode * search_MibTree(mibObjectTreeNode *root, char *const ident) {
     return target;
 }
 
-void showTree(mibObjectTreeNode *root) {
-    travel_MibTree(root, Treeprint, NULL);
+int showTree(mibTreeHead *treeHead) {
+    mibTree *currentTree;
+
+    if (isNullPtr(treeHead))
+        return ERROR;
+    
+    for (currentTree = &treeHead->trees; !isNullPtr(currentTree); currentTree = mibTreeNext(currentTree)) {
+        if (isNullPtr(currentTree->root))
+            continue;
+        printf("Tree:\n");
+        travel_MibTree(currentTree->root, Treeprint, NULL);
+    }
+
+    return OK;
 }
 
 static int Treeprint(void *arg, mibObjectTreeNode *node) {

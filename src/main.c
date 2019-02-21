@@ -5,6 +5,7 @@
 #include "options.h"
 #include "dispatcher.h"
 #include "yy_syn.tab.h"
+#include "mibTreeGen.h"
 
 extern int yylex(void);
 extern FILE *yyin;
@@ -24,11 +25,13 @@ int main(int argc, char *argv[]) {
     mibLeaveInfo *pInfo; 
 
     beginFrom = "sys";
+    
 
     syntaxParserInit();
     dispatchInit();
     mibObjectTreeInit();
-
+    symbolCollectingInit();
+    
     node = &mibObjectTreeRoot;
     optionsInit(argc, argv);
     
@@ -46,6 +49,6 @@ int main(int argc, char *argv[]) {
         printf("%s\n", "result open failed");
 
     //documentGen(&mibObjectTreeRoot, writeTo);
-    //showTree(&mibObjectTreeRoot);
+    showTree(&trees);
     return 0;
 }

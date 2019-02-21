@@ -174,6 +174,17 @@ char * sliceGetVal(slice *sliHead, int sliKey) {
     return NULL;
 }
 
+char *sliceRetriVal(slice *sliHead, int sliKey) {
+    slice *sli;
+    char *val;
+    
+    if (sli = sliceGet(sliHead, sliKey)) {
+        val = sli->sliVal; 
+        sli->sliVal = NULL;
+    }
+    return val; 
+}
+
 int sliceStore(slice *sliHead, slice *newSli) {
     if (isNullPtr(sliHead) || isNullPtr(newSli)) {
         return ERROR_NULL_REF;
@@ -212,12 +223,14 @@ bool sliceRelease_STATIC(slice *sli) {
 
     if (isNullPtr(sli)) 
         return FALSE;
+
     sli = sliceNext(sli);
-    while (sli != NULL) {
-        pSli = sli;
-        sli = sliceNext(sli);
-        RELEASE_MEM(pSli);
-    }
+
+    sliceRelease(sli);
+
+    sli->sliNode.next = NULL;
+    sli->sliNode.prev = NULL;
+
     return TRUE;
 }
 
@@ -231,6 +244,18 @@ bool sliceReset(slice *sli) {
         pSli = sli;
         sli = sliceNext(sli);
         RELEASE_MEM(pSli); 
+    }
+    return TRUE;
+}
+
+bool sliceReset_STATIC(slice *sli) {
+    slice *pSli;
+    
+    if (isNullPtr(sli))
+        return FALSE;
+
+    if (sliceReset(sliceNext(sli))) {
+        memset(&sli->sliNode, 0, sizeof(listNode));     
     }
     return TRUE;
 }

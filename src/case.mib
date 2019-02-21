@@ -8,8 +8,8 @@ sys OBJECT-TYPE
     MAX-ACCESS read-only
     STATUS current
     DESCRIPTION
-        "Just a case"
-    ::= { aliali 1 }
+        "sys"
+    ::= { iso 1 }
 
 END
 
