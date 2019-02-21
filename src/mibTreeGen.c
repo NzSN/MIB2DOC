@@ -62,9 +62,6 @@ int mibObjGen(int nodeType) {
             assert(suffix != NULL);
             assert(desc != NULL);
             
-            if (!isNullPtr(rw))
-                RELEASE_MEM(rw);
-
             newNode = mibLeaveBuild(ident, type, NULL, NULL, suffix, parent); 
             break;
         case OBJECT_IDENTIFIER:
@@ -83,7 +80,7 @@ int mibObjGen(int nodeType) {
 
     assert(mibTreeHeadAppend(&trees, newNode) != FALSE);
     
-    sliceReset_STATIC(&sliceContainer);
+    sliceRelease_STATIC(&sliceContainer);
 
     return 0;
 }
