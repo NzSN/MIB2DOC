@@ -59,7 +59,7 @@ mibObjectTreeNode * mibNodeBuild(char *ident, char *oid, char *parent);
 mibObjectTreeNode * search_MibTree(mibObjectTreeNode *root, char *const ident);
 char * getIdentFromInfo(mibObjectTreeNode *node);
 char * getOidFromInfo(mibObjectTreeNode *node);
-void showTree(mibObjectTreeNode *root);
+int showTree(mibTreeHead *head);
 mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, 
     int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
 

@@ -38,9 +38,9 @@ $(VERBOSE).SILENT	Makefile	/^$(VERBOSE).SILENT:$/;"	t	language:Make
 ABORT	include/type.h	/^    ABORT$/;"	e	language:C++	enum:errorType
 ACCESS	src/yy_syn.y	/^ACCESS :$/;"	l	language:YACC
 ACCESS_SPECIFIER	include/yy_syn.tab.h	/^    ACCESS_SPECIFIER = 261,$/;"	e	language:C++	enum:yytokentype
-ACCESS_SPECIFIER	src/yy_syn.tab.c	/^     ACCESS_SPECIFIER = 261,$/;"	e	language:C	enum:yytokentype	file:
+ACCESS_SPECIFIER	src/yy_syn.tab.c	/^    ACCESS_SPECIFIER = 261,$/;"	e	language:C	enum:yytokentype	file:
 ACCESS_VALUE	include/yy_syn.tab.h	/^    ACCESS_VALUE = 262,$/;"	e	language:C++	enum:yytokentype
-ACCESS_VALUE	src/yy_syn.tab.c	/^     ACCESS_VALUE = 262,$/;"	e	language:C	enum:yytokentype	file:
+ACCESS_VALUE	src/yy_syn.tab.c	/^    ACCESS_VALUE = 262,$/;"	e	language:C	enum:yytokentype	file:
 ARCHITECTURE_ID	CMakeFiles/3.12.0/CompilerIdC/CMakeCCompilerId.c	/^#   define ARCHITECTURE_ID /;"	d	language:C	file:
 ARCHITECTURE_ID	CMakeFiles/3.12.0/CompilerIdC/CMakeCCompilerId.c	/^#  define ARCHITECTURE_ID /;"	d	language:C	file:
 ARCHITECTURE_ID	CMakeFiles/3.12.0/CompilerIdC/CMakeCCompilerId.c	/^#  define ARCHITECTURE_ID$/;"	d	language:C	file:
@@ -60,17 +60,17 @@ ARCHITECTURE_ID	CMakeFiles/3.13.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#   def
 ARCHITECTURE_ID	CMakeFiles/3.13.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define ARCHITECTURE_ID /;"	d	language:C++	file:
 ARCHITECTURE_ID	CMakeFiles/3.13.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#  define ARCHITECTURE_ID$/;"	d	language:C++	file:
 ASSIGNED	include/yy_syn.tab.h	/^    ASSIGNED = 268,$/;"	e	language:C++	enum:yytokentype
-ASSIGNED	src/yy_syn.tab.c	/^     ASSIGNED = 268,$/;"	e	language:C	enum:yytokentype	file:
+ASSIGNED	src/yy_syn.tab.c	/^    ASSIGNED = 268,$/;"	e	language:C	enum:yytokentype	file:
 BEGIN	src/lexer.c	/^#define BEGIN /;"	d	language:C	file:
 BEGIN_	include/yy_syn.tab.h	/^    BEGIN_ = 269,$/;"	e	language:C++	enum:yytokentype
-BEGIN_	src/yy_syn.tab.c	/^     BEGIN_ = 269,$/;"	e	language:C	enum:yytokentype	file:
+BEGIN_	src/yy_syn.tab.c	/^    BEGIN_ = 269,$/;"	e	language:C	enum:yytokentype	file:
 BODY	src/yy_syn.y	/^BODY :$/;"	l	language:YACC
 CMAKE_BINARY_DIR	Makefile	/^CMAKE_BINARY_DIR = \/home\/aydenlin\/Projects\/MIB2DOC$/;"	m	language:Make
 CMAKE_COMMAND	Makefile	/^CMAKE_COMMAND = \/usr\/bin\/cmake$/;"	m	language:Make
 CMAKE_SOURCE_DIR	Makefile	/^CMAKE_SOURCE_DIR = \/home\/aydenlin\/Projects\/MIB2DOC$/;"	m	language:Make
 COLLECTING	src/docGenerate.c	/^    COLLECTING,$/;"	e	language:C	enum:__anonb9c30cee0103	file:
 COMMA	include/yy_syn.tab.h	/^    COMMA = 273,$/;"	e	language:C++	enum:yytokentype
-COMMA	src/yy_syn.tab.c	/^     COMMA = 273,$/;"	e	language:C	enum:yytokentype	file:
+COMMA	src/yy_syn.tab.c	/^    COMMA = 273,$/;"	e	language:C	enum:yytokentype	file:
 COMPILER_ID	CMakeFiles/3.12.0/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_ID /;"	d	language:C	file:
 COMPILER_ID	CMakeFiles/3.12.0/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^# define COMPILER_ID /;"	d	language:C++	file:
 COMPILER_ID	CMakeFiles/3.13.0/CompilerIdC/CMakeCCompilerId.c	/^# define COMPILER_ID /;"	d	language:C	file:
@@ -175,13 +175,13 @@ DEC	CMakeFiles/3.13.0/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define DEC(/;"	d	l
 DEC	CMakeFiles/3.13.4/CompilerIdC/CMakeCCompilerId.c	/^#define DEC(/;"	d	language:C	file:
 DEC	CMakeFiles/3.13.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define DEC(/;"	d	language:C++	file:
 DEF	include/yy_syn.tab.h	/^    DEF = 271,$/;"	e	language:C++	enum:yytokentype
-DEF	src/yy_syn.tab.c	/^     DEF = 271,$/;"	e	language:C	enum:yytokentype	file:
+DEF	src/yy_syn.tab.c	/^    DEF = 271,$/;"	e	language:C	enum:yytokentype	file:
 DEFINITION	src/yy_syn.y	/^DEFINITION :$/;"	l	language:YACC
 DESCRIPTION	src/yy_syn.y	/^DESCRIPTION :$/;"	l	language:YACC
 DESC_SPECIFIER	include/yy_syn.tab.h	/^    DESC_SPECIFIER = 265,$/;"	e	language:C++	enum:yytokentype
-DESC_SPECIFIER	src/yy_syn.tab.c	/^     DESC_SPECIFIER = 265,$/;"	e	language:C	enum:yytokentype	file:
+DESC_SPECIFIER	src/yy_syn.tab.c	/^    DESC_SPECIFIER = 265,$/;"	e	language:C	enum:yytokentype	file:
 DESC_VALUE	include/yy_syn.tab.h	/^    DESC_VALUE = 266,$/;"	e	language:C++	enum:yytokentype
-DESC_VALUE	src/yy_syn.tab.c	/^     DESC_VALUE = 266,$/;"	e	language:C	enum:yytokentype	file:
+DESC_VALUE	src/yy_syn.tab.c	/^    DESC_VALUE = 266,$/;"	e	language:C	enum:yytokentype	file:
 DISPATCH_MODE_DEBUG	include/dispatcher.h	/^    DISPATCH_MODE_DEBUG = 2$/;"	e	language:C++	enum:dispatch_mode
 DISPATCH_MODE_DOC_GENERATING	include/dispatcher.h	/^    DISPATCH_MODE_DOC_GENERATING = 1,$/;"	e	language:C++	enum:dispatch_mode
 DISPATCH_MODE_SYMBOL_COLLECTING	include/dispatcher.h	/^    DISPATCH_MODE_SYMBOL_COLLECTING = 0,$/;"	e	language:C++	enum:dispatch_mode
@@ -189,7 +189,7 @@ DISPATCH_PARAM_STAGE	include/dispatcher.h	/^    DISPATCH_PARAM_STAGE = 0,$/;"	e	
 ECHO	src/lexer.c	/^#define ECHO /;"	d	language:C	file:
 ECHO	src/lexer.c	/^ECHO;$/;"	v	language:C	typeref:typename:YY_RULE_SETUP
 END_	include/yy_syn.tab.h	/^    END_ = 270,$/;"	e	language:C++	enum:yytokentype
-END_	src/yy_syn.tab.c	/^     END_ = 270,$/;"	e	language:C	enum:yytokentype	file:
+END_	src/yy_syn.tab.c	/^    END_ = 270,$/;"	e	language:C	enum:yytokentype	file:
 EOB_ACT_CONTINUE_SCAN	src/lexer.c	/^#define EOB_ACT_CONTINUE_SCAN /;"	d	language:C	file:
 EOB_ACT_END_OF_FILE	src/lexer.c	/^#define EOB_ACT_END_OF_FILE /;"	d	language:C	file:
 EOB_ACT_LAST_MATCH	src/lexer.c	/^#define EOB_ACT_LAST_MATCH /;"	d	language:C	file:
@@ -211,7 +211,7 @@ FLEX_BETA	src/lexer.c	/^#define FLEX_BETA$/;"	d	language:C	file:
 FLEX_SCANNER	include/lexer.h	/^#define FLEX_SCANNER$/;"	d	language:C++
 FLEX_SCANNER	src/lexer.c	/^#define FLEX_SCANNER$/;"	d	language:C	file:
 FROM_	include/yy_syn.tab.h	/^    FROM_ = 283,$/;"	e	language:C++	enum:yytokentype
-FROM_	src/yy_syn.tab.c	/^     FROM_ = 283,$/;"	e	language:C	enum:yytokentype	file:
+FROM_	src/yy_syn.tab.c	/^    FROM_ = 283,$/;"	e	language:C	enum:yytokentype	file:
 GL5610_MIB_DOC_GEN_QUEUE_H	include/queue.h	/^#define GL5610_MIB_DOC_GEN_QUEUE_H$/;"	d	language:C++
 GL5610_MIB_DOC_GEN_STACK_H	include/stack.h	/^#define GL5610_MIB_DOC_GEN_STACK_H$/;"	d	language:C++
 GL5610_MIB_DOC_GEN_TOKENOP_H	include/mibTreeGen.h	/^#define GL5610_MIB_DOC_GEN_TOKENOP_H$/;"	d	language:C++
@@ -238,7 +238,7 @@ HEX	CMakeFiles/3.13.0/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define HEX(/;"	d	l
 HEX	CMakeFiles/3.13.4/CompilerIdC/CMakeCCompilerId.c	/^#define HEX(/;"	d	language:C	file:
 HEX	CMakeFiles/3.13.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define HEX(/;"	d	language:C++	file:
 IDENTIFIER	include/yy_syn.tab.h	/^    IDENTIFIER = 258,$/;"	e	language:C++	enum:yytokentype
-IDENTIFIER	src/yy_syn.tab.c	/^     IDENTIFIER = 258,$/;"	e	language:C	enum:yytokentype	file:
+IDENTIFIER	src/yy_syn.tab.c	/^    IDENTIFIER = 258,$/;"	e	language:C	enum:yytokentype	file:
 IDENT_FOUND	include/dispatcher.h	/^#define IDENT_FOUND /;"	d	language:C++
 IDENT_NOT_FOUND	include/dispatcher.h	/^#define IDENT_NOT_FOUND /;"	d	language:C++
 ID_VOID_MAIN	CMakeFiles/3.12.0/CompilerIdC/CMakeCCompilerId.c	/^# define ID_VOID_MAIN$/;"	d	language:C	file:
@@ -247,10 +247,10 @@ ID_VOID_MAIN	CMakeFiles/3.13.4/CompilerIdC/CMakeCCompilerId.c	/^# define ID_VOID
 IGNORE	include/dispatcher.h	/^    IGNORE,$/;"	e	language:C++	enum:dispatch_type
 IMPORT	src/yy_syn.y	/^IMPORT :$/;"	l	language:YACC
 IMPORTS_	include/yy_syn.tab.h	/^    IMPORTS_ = 284$/;"	e	language:C++	enum:yytokentype
-IMPORTS_	src/yy_syn.tab.c	/^     IMPORTS_ = 284$/;"	e	language:C	enum:yytokentype	file:
+IMPORTS_	src/yy_syn.tab.c	/^    IMPORTS_ = 284$/;"	e	language:C	enum:yytokentype	file:
 INDEX	src/yy_syn.y	/^INDEX : INDEX_ L_BRACE INDEX_ITEM R_BRACE;$/;"	l	language:YACC
 INDEX_	include/yy_syn.tab.h	/^    INDEX_ = 275,$/;"	e	language:C++	enum:yytokentype
-INDEX_	src/yy_syn.tab.c	/^     INDEX_ = 275,$/;"	e	language:C	enum:yytokentype	file:
+INDEX_	src/yy_syn.tab.c	/^    INDEX_ = 275,$/;"	e	language:C	enum:yytokentype	file:
 INDEX_ITEM	src/yy_syn.y	/^INDEX_ITEM :$/;"	l	language:YACC
 INITIAL	include/lexer.h	/^#define INITIAL /;"	d	language:C++
 INITIAL	src/lexer.c	/^#define INITIAL /;"	d	language:C	file:
@@ -275,7 +275,7 @@ ITEMS	src/yy_syn.y	/^ITEMS :$/;"	l	language:YACC
 IncludePath	src/options.c	/^    IncludePath,$/;"	e	language:C	enum:optionNumber	file:
 LOWER_CASE	src/mibTreeObjTree.c	/^#define LOWER_CASE(/;"	d	language:C	file:
 L_BRACE	include/yy_syn.tab.h	/^    L_BRACE = 278,$/;"	e	language:C++	enum:yytokentype
-L_BRACE	src/yy_syn.tab.c	/^     L_BRACE = 278,$/;"	e	language:C	enum:yytokentype	file:
+L_BRACE	src/yy_syn.tab.c	/^    L_BRACE = 278,$/;"	e	language:C	enum:yytokentype	file:
 MAIN_PART	src/yy_syn.y	/^MAIN_PART :$/;"	l	language:YACC
 MAX_CHAR_OF_MOD_IDENT	include/symbolTbl.h	/^#define MAX_CHAR_OF_MOD_IDENT /;"	d	language:C++
 MAX_INCLUDE_DEPTH	include/dispatcher.h	/^#define MAX_INCLUDE_DEPTH /;"	d	language:C++
@@ -288,27 +288,27 @@ MODULES	src/yy_syn.y	/^MODULES :$/;"	l	language:YACC
 MODULES_CONTENT	src/yy_syn.y	/^MODULES_CONTENT :$/;"	l	language:YACC
 MOUNT	src/yy_syn.y	/^MOUNT :$/;"	l	language:YACC
 MOUNT_POINT	include/yy_syn.tab.h	/^    MOUNT_POINT = 267,$/;"	e	language:C++	enum:yytokentype
-MOUNT_POINT	src/yy_syn.tab.c	/^     MOUNT_POINT = 267,$/;"	e	language:C	enum:yytokentype	file:
+MOUNT_POINT	src/yy_syn.tab.c	/^    MOUNT_POINT = 267,$/;"	e	language:C	enum:yytokentype	file:
 Mib2Doc	Makefile	/^Mib2Doc: cmake_check_build_system$/;"	t	language:Make
 Mib2Doc/fast	Makefile	/^Mib2Doc\/fast:$/;"	t	language:Make
 Modules	doc/structures.tex	/^	\\section{Modules}$/;"	s	language:Tex
 NOT	include/type.h	/^#define NOT /;"	d	language:C++
 NUM	include/yy_syn.tab.h	/^    NUM = 282,$/;"	e	language:C++	enum:yytokentype
-NUM	src/yy_syn.tab.c	/^     NUM = 282,$/;"	e	language:C	enum:yytokentype	file:
+NUM	src/yy_syn.tab.c	/^    NUM = 282,$/;"	e	language:C	enum:yytokentype	file:
 NumOfOptions	src/options.c	/^    NumOfOptions$/;"	e	language:C	enum:optionNumber	file:
 OBJ	src/yy_syn.y	/^OBJ :$/;"	l	language:YACC
 OBJECT	include/type.h	/^    OBJECT = 1,$/;"	e	language:C++	enum:unitType
 OBJECT	src/yy_syn.y	/^OBJECT :$/;"	l	language:YACC
 OBJECTS_	include/yy_syn.tab.h	/^    OBJECTS_ = 280,$/;"	e	language:C++	enum:yytokentype
-OBJECTS_	src/yy_syn.tab.c	/^     OBJECTS_ = 280,$/;"	e	language:C	enum:yytokentype	file:
+OBJECTS_	src/yy_syn.tab.c	/^    OBJECTS_ = 280,$/;"	e	language:C	enum:yytokentype	file:
 OBJECT_IDENTIFIER	include/type.h	/^    OBJECT_IDENTIFIER,$/;"	e	language:C++	enum:unitType
 OBJECT_ITEM	src/yy_syn.y	/^OBJECT_ITEM :$/;"	l	language:YACC
 OBJ_DEAL	src/yy_syn.y	/^OBJ_DEAL :$/;"	l	language:YACC
 OBJ_IDENTIFIER	src/yy_syn.y	/^OBJ_IDENTIFIER :$/;"	l	language:YACC
 OBJ_IDEN_	include/yy_syn.tab.h	/^    OBJ_IDEN_ = 277,$/;"	e	language:C++	enum:yytokentype
-OBJ_IDEN_	src/yy_syn.tab.c	/^     OBJ_IDEN_ = 277,$/;"	e	language:C	enum:yytokentype	file:
+OBJ_IDEN_	src/yy_syn.tab.c	/^    OBJ_IDEN_ = 277,$/;"	e	language:C	enum:yytokentype	file:
 OBJ_SPECIFIER	include/yy_syn.tab.h	/^    OBJ_SPECIFIER = 259,$/;"	e	language:C++	enum:yytokentype
-OBJ_SPECIFIER	src/yy_syn.tab.c	/^     OBJ_SPECIFIER = 259,$/;"	e	language:C	enum:yytokentype	file:
+OBJ_SPECIFIER	src/yy_syn.tab.c	/^    OBJ_SPECIFIER = 259,$/;"	e	language:C	enum:yytokentype	file:
 OID_LENGTH	src/mibTreeObjTree.c	/^#define OID_LENGTH /;"	d	language:C	file:
 OK	include/type.h	/^#define OK /;"	d	language:C++
 PAIR_KEY	include/hash.h	/^#define PAIR_KEY(/;"	d	language:C++
@@ -348,12 +348,12 @@ REJECT	src/lexer.c	/^#define REJECT /;"	d	language:C	file:
 RELEASE_MEM	include/type.h	/^#define RELEASE_MEM(/;"	d	language:C++
 RM	Makefile	/^RM = \/usr\/bin\/cmake -E remove -f$/;"	m	language:Make
 R_BRACE	include/yy_syn.tab.h	/^    R_BRACE = 279,$/;"	e	language:C++	enum:yytokentype
-R_BRACE	src/yy_syn.tab.c	/^     R_BRACE = 279,$/;"	e	language:C	enum:yytokentype	file:
+R_BRACE	src/yy_syn.tab.c	/^    R_BRACE = 279,$/;"	e	language:C	enum:yytokentype	file:
 SECTION	src/docGenerate.c	/^    SECTION$/;"	e	language:C	enum:__anonb9c30cee0103	file:
 SEMICOLON	include/yy_syn.tab.h	/^    SEMICOLON = 274,$/;"	e	language:C++	enum:yytokentype
-SEMICOLON	src/yy_syn.tab.c	/^     SEMICOLON = 274,$/;"	e	language:C	enum:yytokentype	file:
+SEMICOLON	src/yy_syn.tab.c	/^    SEMICOLON = 274,$/;"	e	language:C	enum:yytokentype	file:
 SEQ	include/yy_syn.tab.h	/^    SEQ = 272,$/;"	e	language:C++	enum:yytokentype
-SEQ	src/yy_syn.tab.c	/^     SEQ = 272,$/;"	e	language:C	enum:yytokentype	file:
+SEQ	src/yy_syn.tab.c	/^    SEQ = 272,$/;"	e	language:C	enum:yytokentype	file:
 SEQUENCE	include/type.h	/^    SEQUENCE,$/;"	e	language:C++	enum:unitType
 SEQUENCE	src/yy_syn.y	/^SEQUENCE :$/;"	l	language:YACC
 SEQ_ITEM	src/yy_syn.y	/^SEQ_ITEM :$/;"	l	language:YACC
@@ -396,9 +396,9 @@ SMI	src/yy_syn.y	/^SMI :$/;"	l	language:YACC
 SMI_DEF	include/type.h	/^    SMI_DEF$/;"	e	language:C++	enum:unitType
 STATUS	src/yy_syn.y	/^STATUS :$/;"	l	language:YACC
 STATUS_SPECIFIER	include/yy_syn.tab.h	/^    STATUS_SPECIFIER = 263,$/;"	e	language:C++	enum:yytokentype
-STATUS_SPECIFIER	src/yy_syn.tab.c	/^     STATUS_SPECIFIER = 263,$/;"	e	language:C	enum:yytokentype	file:
+STATUS_SPECIFIER	src/yy_syn.tab.c	/^    STATUS_SPECIFIER = 263,$/;"	e	language:C	enum:yytokentype	file:
 STATUS_VALUE	include/yy_syn.tab.h	/^    STATUS_VALUE = 264,$/;"	e	language:C++	enum:yytokentype
-STATUS_VALUE	src/yy_syn.tab.c	/^     STATUS_VALUE = 264,$/;"	e	language:C	enum:yytokentype	file:
+STATUS_VALUE	src/yy_syn.tab.c	/^    STATUS_VALUE = 264,$/;"	e	language:C	enum:yytokentype	file:
 STRINGIFY	CMakeFiles/3.12.0/CompilerIdC/CMakeCCompilerId.c	/^#define STRINGIFY(/;"	d	language:C	file:
 STRINGIFY	CMakeFiles/3.12.0/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define STRINGIFY(/;"	d	language:C++	file:
 STRINGIFY	CMakeFiles/3.13.0/CompilerIdC/CMakeCCompilerId.c	/^#define STRINGIFY(/;"	d	language:C	file:
@@ -412,11 +412,16 @@ STRINGIFY_HELPER	CMakeFiles/3.13.0/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#defin
 STRINGIFY_HELPER	CMakeFiles/3.13.4/CompilerIdC/CMakeCCompilerId.c	/^#define STRINGIFY_HELPER(/;"	d	language:C	file:
 STRINGIFY_HELPER	CMakeFiles/3.13.4/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^#define STRINGIFY_HELPER(/;"	d	language:C++	file:
 SUFFIXES	Makefile	/^SUFFIXES =$/;"	m	language:Make
+SWITCHING_GEN_PURPOSE	include/dispatcher.h	/^    SWITCHING_GEN_PURPOSE$/;"	e	language:C++	enum:__anona34b41950103
+SWITCHING_INC_PURPOSE	include/dispatcher.h	/^    SWITCHING_INC_PURPOSE,$/;"	e	language:C++	enum:__anona34b41950103
 SWITCH_TO_INC_BUFFER	include/dispatcher.h	/^    SWITCH_TO_INC_BUFFER,$/;"	e	language:C++	enum:dispatch_type
+SW_COUNTER	include/dispatcher.h	/^#define SW_COUNTER(/;"	d	language:C++
+SW_COUNTER_SET	include/dispatcher.h	/^#define SW_COUNTER_SET(/;"	d	language:C++
 SW_CUR_BUFFER_INFO	include/dispatcher.h	/^#define SW_CUR_BUFFER_INFO(/;"	d	language:C++
 SW_CUR_BUFFER_INFO_REF	include/dispatcher.h	/^#define SW_CUR_BUFFER_INFO_REF(/;"	d	language:C++
 SW_CUR_IMPORT	include/dispatcher.h	/^#define SW_CUR_IMPORT(/;"	d	language:C++
 SW_CUR_IMPORT_REF	include/dispatcher.h	/^#define SW_CUR_IMPORT_REF(/;"	d	language:C++
+SW_CUR_PURPOSE	include/dispatcher.h	/^#define SW_CUR_PURPOSE(/;"	d	language:C++
 SW_CUR_SWITCH_INFO	include/dispatcher.h	/^#define SW_CUR_SWITCH_INFO(/;"	d	language:C++
 SW_CUR_SWITCH_INFO_REF	include/dispatcher.h	/^#define SW_CUR_SWITCH_INFO_REF(/;"	d	language:C++
 SW_STACK	include/dispatcher.h	/^#define SW_STACK(/;"	d	language:C++
@@ -425,6 +430,9 @@ SW_STACK_BUFFER_SIZE	include/dispatcher.h	/^#define SW_STACK_BUFFER_SIZE(/;"	d	l
 SW_STACK_REF	include/dispatcher.h	/^#define SW_STACK_REF(/;"	d	language:C++
 SW_STACK_TOP	include/dispatcher.h	/^#define SW_STACK_TOP(/;"	d	language:C++
 SW_STACK_UNIT_SIZE	include/dispatcher.h	/^#define SW_STACK_UNIT_SIZE(/;"	d	language:C++
+SW_STATE	include/dispatcher.h	/^#define SW_STATE(/;"	d	language:C++
+SW_STATE_REFRESH	include/dispatcher.h	/^#define SW_STATE_REFRESH(/;"	d	language:C++
+SW_STATE_SET	include/dispatcher.h	/^#define SW_STATE_SET(/;"	d	language:C++
 SYMBOL_COLLECTING	include/dispatcher.h	/^    SYMBOL_COLLECTING,$/;"	e	language:C++	enum:dispatch_type
 SYMBOL_FOUND	include/mibTreeGen.h	/^    SYMBOL_FOUND,$/;"	e	language:C++	enum:__anon899435f00103
 SYMBOL_NOT_FOUND	include/mibTreeGen.h	/^    SYMBOL_NOT_FOUND$/;"	e	language:C++	enum:__anon899435f00103
@@ -439,7 +447,7 @@ SYM_TRAVEL_CONTINUE	src/list.c	/^    SYM_TRAVEL_CONTINUE = 10,$/;"	e	language:C	
 SYM_TRAVEL_STOP	src/list.c	/^    SYM_TRAVEL_STOP = 11$/;"	e	language:C	enum:__anon68d812290103	file:
 SYNTAX	src/yy_syn.y	/^SYNTAX :$/;"	l	language:YACC
 SYNTAX_SPECIFIER	include/yy_syn.tab.h	/^    SYNTAX_SPECIFIER = 260,$/;"	e	language:C++	enum:yytokentype
-SYNTAX_SPECIFIER	src/yy_syn.tab.c	/^     SYNTAX_SPECIFIER = 260,$/;"	e	language:C	enum:yytokentype	file:
+SYNTAX_SPECIFIER	src/yy_syn.tab.c	/^    SYNTAX_SPECIFIER = 260,$/;"	e	language:C	enum:yytokentype	file:
 SYNTAX_VALUE	src/yy_syn.y	/^SYNTAX_VALUE :$/;"	l	language:YACC
 SourceMibFile	src/options.c	/^    SourceMibFile = 0,$/;"	e	language:C	enum:optionNumber	file:
 TABLE	src/docGenerate.c	/^    TABLE = 1,$/;"	e	language:C	enum:__anonb9c30cee0103	file:
@@ -447,10 +455,10 @@ TRAP	include/type.h	/^    TRAP,$/;"	e	language:C++	enum:unitType
 TRAP	src/yy_syn.y	/^TRAP :$/;"	l	language:YACC
 TRAP_HEAD	src/yy_syn.y	/^TRAP_HEAD :$/;"	l	language:YACC
 TRAP_SPECIFIER	include/yy_syn.tab.h	/^    TRAP_SPECIFIER = 276,$/;"	e	language:C++	enum:yytokentype
-TRAP_SPECIFIER	src/yy_syn.tab.c	/^     TRAP_SPECIFIER = 276,$/;"	e	language:C	enum:yytokentype	file:
+TRAP_SPECIFIER	src/yy_syn.tab.c	/^    TRAP_SPECIFIER = 276,$/;"	e	language:C	enum:yytokentype	file:
 TRUE	include/type.h	/^#define TRUE /;"	d	language:C++
 TYPE	include/yy_syn.tab.h	/^    TYPE = 281,$/;"	e	language:C++	enum:yytokentype
-TYPE	src/yy_syn.tab.c	/^     TYPE = 281,$/;"	e	language:C	enum:yytokentype	file:
+TYPE	src/yy_syn.tab.c	/^    TYPE = 281,$/;"	e	language:C	enum:yytokentype	file:
 TargetPdfFile	src/options.c	/^    TargetPdfFile,$/;"	e	language:C	enum:optionNumber	file:
 Treeprint	src/mibTreeObjTree.c	/^static int Treeprint(void *arg, mibObjectTreeNode *node) {$/;"	f	language:C	typeref:typename:int	file:
 UINT16_MAX	include/lexer.h	/^#define UINT16_MAX /;"	d	language:C++
@@ -465,8 +473,8 @@ UNIT_TEST/fast	Makefile	/^UNIT_TEST\/fast:$/;"	t	language:Make
 UNIT_TEST_DOCGENERATE_H	include/docGenerate.h	/^#define UNIT_TEST_DOCGENERATE_H$/;"	d	language:C++
 UNIT_TEST_LEXDEAL_H	include/lexDeal.h	/^#define UNIT_TEST_LEXDEAL_H$/;"	d	language:C++
 UNIT_TEST__DESC_CHECK	src/unitTest/basicDataStruct_Test.c	/^static void UNIT_TEST__DESC_CHECK(void ** state) {$/;"	f	language:C	typeref:typename:void	file:
-YYABORT	src/yy_syn.tab.c	/^#define YYABORT	/;"	d	language:C	file:
-YYACCEPT	src/yy_syn.tab.c	/^#define YYACCEPT	/;"	d	language:C	file:
+YYABORT	src/yy_syn.tab.c	/^#define YYABORT /;"	d	language:C	file:
+YYACCEPT	src/yy_syn.tab.c	/^#define YYACCEPT /;"	d	language:C	file:
 YYBACKUP	src/yy_syn.tab.c	/^#define YYBACKUP(/;"	d	language:C	file:
 YYBISON	src/yy_syn.tab.c	/^#define YYBISON /;"	d	language:C	file:
 YYBISON_VERSION	src/yy_syn.tab.c	/^#define YYBISON_VERSION /;"	d	language:C	file:
@@ -476,21 +484,17 @@ YYCOPY_NEEDED	src/yy_syn.tab.c	/^# define YYCOPY_NEEDED /;"	d	language:C	file:
 YYDEBUG	include/yy_syn.tab.h	/^# define YYDEBUG /;"	d	language:C++
 YYDEBUG	src/yy_syn.tab.c	/^# define YYDEBUG /;"	d	language:C	file:
 YYDPRINTF	src/yy_syn.tab.c	/^# define YYDPRINTF(/;"	d	language:C	file:
-YYEMPTY	src/yy_syn.tab.c	/^#define YYEMPTY	/;"	d	language:C	file:
-YYEOF	src/yy_syn.tab.c	/^#define YYEOF	/;"	d	language:C	file:
-YYERRCODE	src/yy_syn.tab.c	/^#define YYERRCODE	/;"	d	language:C	file:
-YYERROR	src/yy_syn.tab.c	/^#define YYERROR	/;"	d	language:C	file:
+YYEMPTY	src/yy_syn.tab.c	/^#define YYEMPTY /;"	d	language:C	file:
+YYEOF	src/yy_syn.tab.c	/^#define YYEOF /;"	d	language:C	file:
+YYERRCODE	src/yy_syn.tab.c	/^#define YYERRCODE /;"	d	language:C	file:
+YYERROR	src/yy_syn.tab.c	/^#define YYERROR /;"	d	language:C	file:
 YYERROR_VERBOSE	src/yy_syn.tab.c	/^# define YYERROR_VERBOSE /;"	d	language:C	file:
 YYERROR_VERBOSE_ARGS_MAXIMUM	src/yy_syn.tab.c	/^  enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };$/;"	e	language:C	enum:yysyntax_error::__anon9dc9d0dd0103	file:
-YYFAIL	src/yy_syn.tab.c	/^#define YYFAIL	/;"	d	language:C	file:
 YYFINAL	src/yy_syn.tab.c	/^#define YYFINAL /;"	d	language:C	file:
 YYFPRINTF	src/yy_syn.tab.c	/^#  define YYFPRINTF /;"	d	language:C	file:
 YYFREE	src/yy_syn.tab.c	/^#   define YYFREE /;"	d	language:C	file:
-YYID	src/yy_syn.tab.c	/^# define YYID(/;"	d	language:C	file:
-YYID	src/yy_syn.tab.c	/^YYID (int yyi)$/;"	f	language:C	typeref:typename:int	file:
 YYINITDEPTH	src/yy_syn.tab.c	/^# define YYINITDEPTH /;"	d	language:C	file:
 YYLAST	src/yy_syn.tab.c	/^#define YYLAST /;"	d	language:C	file:
-YYLEX	src/yy_syn.tab.c	/^# define YYLEX /;"	d	language:C	file:
 YYMALLOC	src/yy_syn.tab.c	/^#   define YYMALLOC /;"	d	language:C	file:
 YYMAXDEPTH	src/yy_syn.tab.c	/^# define YYMAXDEPTH /;"	d	language:C	file:
 YYMAXUTOK	src/yy_syn.tab.c	/^#define YYMAXUTOK /;"	d	language:C	file:
@@ -526,7 +530,7 @@ YYSTYPE_IS_TRIVIAL	src/yy_syn.tab.c	/^# define YYSTYPE_IS_TRIVIAL /;"	d	language
 YYSYNTAX_ERROR	src/yy_syn.tab.c	/^# define YYSYNTAX_ERROR /;"	d	language:C	file:
 YYTABLES_NAME	src/lexer.c	/^#define YYTABLES_NAME /;"	d	language:C	file:
 YYTABLE_NINF	src/yy_syn.tab.c	/^#define YYTABLE_NINF /;"	d	language:C	file:
-YYTERROR	src/yy_syn.tab.c	/^#define YYTERROR	/;"	d	language:C	file:
+YYTERROR	src/yy_syn.tab.c	/^#define YYTERROR /;"	d	language:C	file:
 YYTOKENTYPE	include/yy_syn.tab.h	/^# define YYTOKENTYPE$/;"	d	language:C++
 YYTOKENTYPE	src/yy_syn.tab.c	/^# define YYTOKENTYPE$/;"	d	language:C	file:
 YYTRANSLATE	src/yy_syn.tab.c	/^#define YYTRANSLATE(/;"	d	language:C	file:
@@ -534,6 +538,9 @@ YYUNDEFTOK	src/yy_syn.tab.c	/^#define YYUNDEFTOK /;"	d	language:C	file:
 YYUSE	src/yy_syn.tab.c	/^# define YYUSE(/;"	d	language:C	file:
 YY_	src/yy_syn.tab.c	/^#   define YY_(/;"	d	language:C	file:
 YY_	src/yy_syn.tab.c	/^#  define YY_(/;"	d	language:C	file:
+YY_ATTRIBUTE	src/yy_syn.tab.c	/^#  define YY_ATTRIBUTE(/;"	d	language:C	file:
+YY_ATTRIBUTE_PURE	src/yy_syn.tab.c	/^# define YY_ATTRIBUTE_PURE /;"	d	language:C	file:
+YY_ATTRIBUTE_UNUSED	src/yy_syn.tab.c	/^# define YY_ATTRIBUTE_UNUSED /;"	d	language:C	file:
 YY_AT_BOL	src/lexer.c	/^#define YY_AT_BOL(/;"	d	language:C	file:
 YY_BREAK	src/lexer.c	/^#define YY_BREAK /;"	d	language:C	file:
 YY_BUFFER_EOF_PENDING	src/lexer.c	/^#define YY_BUFFER_EOF_PENDING /;"	d	language:C	file:
@@ -564,7 +571,9 @@ YY_FLEX_MINOR_VERSION	src/lexer.c	/^#define YY_FLEX_MINOR_VERSION /;"	d	language
 YY_FLEX_SUBMINOR_VERSION	include/lexer.h	/^#define YY_FLEX_SUBMINOR_VERSION /;"	d	language:C++
 YY_FLEX_SUBMINOR_VERSION	src/lexer.c	/^#define YY_FLEX_SUBMINOR_VERSION /;"	d	language:C	file:
 YY_FLUSH_BUFFER	src/lexer.c	/^#define YY_FLUSH_BUFFER /;"	d	language:C	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	src/yy_syn.tab.c	/^# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN /;"	d	language:C	file:
 YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN	src/yy_syn.tab.c	/^# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN$/;"	d	language:C	file:
+YY_IGNORE_MAYBE_UNINITIALIZED_END	src/yy_syn.tab.c	/^# define YY_IGNORE_MAYBE_UNINITIALIZED_END /;"	d	language:C	file:
 YY_IGNORE_MAYBE_UNINITIALIZED_END	src/yy_syn.tab.c	/^# define YY_IGNORE_MAYBE_UNINITIALIZED_END$/;"	d	language:C	file:
 YY_INITIAL_VALUE	src/yy_syn.tab.c	/^# define YY_INITIAL_VALUE(/;"	d	language:C	file:
 YY_INPUT	src/lexer.c	/^#define YY_INPUT(/;"	d	language:C	file:
@@ -576,7 +585,8 @@ YY_LOCATION_PRINT	src/yy_syn.tab.c	/^# define YY_LOCATION_PRINT(/;"	d	language:C
 YY_MORE_ADJ	src/lexer.c	/^#define YY_MORE_ADJ /;"	d	language:C	file:
 YY_NEW_FILE	src/lexer.c	/^#define YY_NEW_FILE /;"	d	language:C	file:
 YY_NULL	src/lexer.c	/^#define YY_NULL /;"	d	language:C	file:
-YY_NULL	src/yy_syn.tab.c	/^#   define YY_NULL /;"	d	language:C	file:
+YY_NULLPTR	src/yy_syn.tab.c	/^#    define YY_NULLPTR /;"	d	language:C	file:
+YY_NULLPTR	src/yy_syn.tab.c	/^#   define YY_NULLPTR /;"	d	language:C	file:
 YY_NUM_RULES	src/lexer.c	/^#define YY_NUM_RULES /;"	d	language:C	file:
 YY_READ_BUF_SIZE	include/lexer.h	/^#define YY_READ_BUF_SIZE /;"	d	language:C++
 YY_READ_BUF_SIZE	src/lexer.c	/^#define YY_READ_BUF_SIZE /;"	d	language:C	file:
@@ -625,6 +635,7 @@ __anon68d812290208	src/list.c	/^typedef struct {$/;"	s	language:C	file:
 __anon7e97ef8b0103	src/util.c	/^    enum { identRecognize, identTracking };$/;"	g	language:C	function:stringToIdentList	file:
 __anon899435f00103	include/mibTreeGen.h	/^enum {$/;"	g	language:C++
 __anon9dc9d0dd0103	src/yy_syn.tab.c	/^  enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };$/;"	g	language:C	function:yysyntax_error	file:
+__anona34b41950103	include/dispatcher.h	/^typedef enum {$/;"	g	language:C++
 __anonb9c30cee0103	src/docGenerate.c	/^enum {$/;"	g	language:C	file:
 __anonb9c30cee0203	src/docGenerate.c	/^    enum {$/;"	g	language:C	function:sectionGen_Latex	file:
 all	Makefile	/^all: cmake_check_build_system$/;"	t	language:Make
@@ -747,7 +758,6 @@ disParamStore	src/list.c	/^dispatchParam * disParamStore(dispatchParam *head, di
 dispatch	src/dispatcher.c	/^int dispatch(dispatch_type disType, dispatchParam* param)$/;"	f	language:C	typeref:typename:int
 dispatchInit	src/dispatcher.c	/^int dispatchInit()$/;"	f	language:C	typeref:typename:int
 dispatchMakeChoice	src/dispatcher.c	/^static int dispatchMakeChoice(dispatch_type dType)$/;"	f	language:C	typeref:typename:int	file:
-dispatchMode	src/dispatcher.c	/^dispatch_mode dispatchMode;$/;"	v	language:C	typeref:typename:dispatch_mode
 dispatchParam	include/dispatcher.h	/^typedef struct dispatchParam {$/;"	s	language:C++
 dispatchParam	include/dispatcher.h	/^} dispatchParam;$/;"	t	language:C++	typeref:struct:dispatchParam
 dispatchParamNext	src/list.c	/^dispatchParam * dispatchParamNext(dispatchParam *disparam) {$/;"	f	language:C	typeref:typename:dispatchParam *
@@ -1093,6 +1103,7 @@ pop_wrapper	src/stack.c	/^int pop_wrapper(genericStack *stack, int range) {$/;"	
 preinstall	Makefile	/^preinstall: all$/;"	t	language:Make
 preinstall/fast	Makefile	/^preinstall\/fast:$/;"	t	language:Make
 prev	include/list.h	/^    struct listNode *prev;$/;"	m	language:C++	struct:listNode	typeref:struct:listNode *
+purpose	include/dispatcher.h	/^    int purpose;$/;"	m	language:C++	struct:switchInfo	typeref:typename:int
 push	src/stack.c	/^int push(genericStack *gStack, void *unit) {$/;"	f	language:C	typeref:typename:int
 pushByIndex	include/stack.h	/^#define pushByIndex(/;"	d	language:C++
 push_wrapper	src/stack.c	/^int push_wrapper(genericStack *stack, int range) {$/;"	f	language:C	typeref:typename:int
@@ -1118,7 +1129,7 @@ sectionGen_Latex	src/docGenerate.c	/^static int sectionGen_Latex(char *secName, 
 sectionRecord	src/main.c	/^char *sectionRecord[SIZE_OF_SECTION_RECORD];$/;"	v	language:C	typeref:typename:char * []
 sectionRecord	src/unitTest/basicDataStruct_Test.c	/^char *sectionRecord[SIZE_OF_SECTION_RECORD];$/;"	v	language:C	typeref:typename:char * []
 setAsChild_MibTree	src/mibTreeObjTree.c	/^int setAsChild_MibTree(mibObjectTreeNode *parent, mibObjectTreeNode *child) {$/;"	f	language:C	typeref:typename:int
-showTree	src/mibTreeObjTree.c	/^void showTree(mibObjectTreeNode *root) {$/;"	f	language:C	typeref:typename:void
+showTree	src/mibTreeObjTree.c	/^int showTree(mibTreeHead *treeHead) {$/;"	f	language:C	typeref:typename:int
 sibling	include/mibTreeObjTree.h	/^    struct mibObjectTreeNode *sibling;$/;"	m	language:C++	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode *
 simpleHashing	src/hash.c	/^int simpleHashing(pair_key_base *key) {$/;"	f	language:C	typeref:typename:int
 size	include/hash.h	/^    int size;$/;"	m	language:C++	struct:__anon50dc7d720308	typeref:typename:int
@@ -1138,6 +1149,8 @@ slicePrev	src/list.c	/^slice * slicePrev(slice *sli) {$/;"	f	language:C	typeref:
 sliceRelease	src/list.c	/^bool sliceRelease(slice *sli) {$/;"	f	language:C	typeref:typename:bool
 sliceRelease_STATIC	src/list.c	/^bool sliceRelease_STATIC(slice *sli) {$/;"	f	language:C	typeref:typename:bool
 sliceReset	src/list.c	/^bool sliceReset(slice *sli) {$/;"	f	language:C	typeref:typename:bool
+sliceReset_STATIC	src/list.c	/^bool sliceReset_STATIC(slice *sli) {$/;"	f	language:C	typeref:typename:bool
+sliceRetriVal	src/list.c	/^char *sliceRetriVal(slice *sliHead, int sliKey) {$/;"	f	language:C	typeref:typename:char *
 sliceStore	src/list.c	/^int sliceStore(slice *sliHead, slice *newSli) {$/;"	f	language:C	typeref:typename:int
 sliceType	include/list.h	/^} sliceType;$/;"	v	language:C++	typeref:enum:elementType
 sourceMibFilePath	include/options.h	/^    char *sourceMibFilePath;$/;"	m	language:C++	struct:options	typeref:typename:char *
@@ -1265,6 +1278,7 @@ symIdent	include/symbolTbl.h	/^    char *symIdent;$/;"	m	language:C++	struct:sym
 symInfo	include/symbolTbl.h	/^    } symInfo;$/;"	m	language:C++	struct:symbol_t	typeref:union:symbol_t::__anon4ba81f06010a
 symName	include/dispatcher.h	/^    char *symName;$/;"	m	language:C++	struct:identList	typeref:typename:char *
 symTable	src/mibTreeGen.c	/^symbolTable symTable;$/;"	v	language:C	typeref:typename:symbolTable
+symTableInit	src/list.c	/^int symTableInit() {$/;"	f	language:C	typeref:typename:int
 symTblError	src/list.c	/^symErrorCode symTblError;$/;"	v	language:C	typeref:typename:symErrorCode
 symType	include/symbolTbl.h	/^    symbolType symType;$/;"	m	language:C++	struct:symbol_t	typeref:typename:symbolType
 symbol	src/dispatcher.c	/^    char* symbol;$/;"	m	language:C	struct:__anon59e207b40208	typeref:typename:char *	file:
@@ -1442,7 +1456,7 @@ yy_new_buffer	src/lexer.c	/^#define yy_new_buffer /;"	d	language:C	file:
 yy_next_state	src/lexer.c	/^			yy_state_type yy_next_state;$/;"	v	language:C	typeref:typename:yy_state_type
 yy_nxt	src/lexer.c	/^	flex_int32_t yy_nxt;$/;"	m	language:C	struct:yy_trans_info	typeref:typename:flex_int32_t	file:
 yy_nxt	src/lexer.c	/^static const flex_int16_t yy_nxt[498] =$/;"	v	language:C	typeref:typename:const flex_int16_t[498]	file:
-yy_reduce_print	src/yy_syn.tab.c	/^yy_reduce_print (YYSTYPE *yyvsp, int yyrule)$/;"	f	language:C	typeref:typename:void	file:
+yy_reduce_print	src/yy_syn.tab.c	/^yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule)$/;"	f	language:C	typeref:typename:void	file:
 yy_scan_buffer	src/lexer.c	/^YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )$/;"	f	language:C	typeref:typename:YY_BUFFER_STATE
 yy_scan_bytes	src/lexer.c	/^YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len )$/;"	f	language:C	typeref:typename:YY_BUFFER_STATE
 yy_scan_string	src/lexer.c	/^YY_BUFFER_STATE yy_scan_string (const char * yystr )$/;"	f	language:C	typeref:typename:YY_BUFFER_STATE
@@ -1454,8 +1468,8 @@ yy_stack_print	src/yy_syn.tab.c	/^yy_stack_print (yytype_int16 *yybottom, yytype
 yy_start	src/lexer.c	/^static int yy_start = 0;	\/* start state number *\/$/;"	v	language:C	typeref:typename:int	file:
 yy_state_type	src/lexer.c	/^typedef int yy_state_type;$/;"	t	language:C	typeref:typename:int	file:
 yy_switch_to_buffer	src/lexer.c	/^    void yy_switch_to_buffer  (YY_BUFFER_STATE  new_buffer )$/;"	f	language:C	typeref:typename:void
-yy_symbol_print	src/yy_syn.tab.c	/^yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)$/;"	f	language:C	typeref:typename:void	file:
-yy_symbol_value_print	src/yy_syn.tab.c	/^yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)$/;"	f	language:C	typeref:typename:void	file:
+yy_symbol_print	src/yy_syn.tab.c	/^yy_symbol_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep)$/;"	f	language:C	typeref:typename:void	file:
+yy_symbol_value_print	src/yy_syn.tab.c	/^yy_symbol_value_print (FILE *yyo, int yytype, YYSTYPE const * const yyvaluep)$/;"	f	language:C	typeref:typename:void	file:
 yy_trans_info	src/lexer.c	/^struct yy_trans_info$/;"	s	language:C	file:
 yy_try_NUL_trans	src/lexer.c	/^    static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state )$/;"	f	language:C	typeref:typename:yy_state_type	file:
 yy_verify	src/lexer.c	/^	flex_int32_t yy_verify;$/;"	m	language:C	struct:yy_trans_info	typeref:typename:flex_int32_t	file:
@@ -1463,7 +1477,7 @@ yyalloc	src/lexer.c	/^void *yyalloc (yy_size_t  size )$/;"	f	language:C	typeref:
 yyalloc	src/yy_syn.tab.c	/^union yyalloc$/;"	u	language:C	file:
 yychar	src/yy_syn.tab.c	/^int yychar;$/;"	v	language:C	typeref:typename:int
 yycheck	src/yy_syn.tab.c	/^static const yytype_int8 yycheck[] =$/;"	v	language:C	typeref:typename:const yytype_int8[]	file:
-yyclearin	src/yy_syn.tab.c	/^#define yyclearin	/;"	d	language:C	file:
+yyclearin	src/yy_syn.tab.c	/^#define yyclearin /;"	d	language:C	file:
 yyconst	include/lexer.h	/^#define yyconst /;"	d	language:C++
 yyconst	src/lexer.c	/^#define yyconst /;"	d	language:C	file:
 yydebug	src/yy_syn.tab.c	/^int yydebug;$/;"	v	language:C	typeref:typename:int
@@ -1471,7 +1485,7 @@ yydefact	src/yy_syn.tab.c	/^static const yytype_uint8 yydefact[] =$/;"	v	languag
 yydefgoto	src/yy_syn.tab.c	/^static const yytype_int8 yydefgoto[] =$/;"	v	language:C	typeref:typename:const yytype_int8[]	file:
 yydestruct	src/yy_syn.tab.c	/^yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep)$/;"	f	language:C	typeref:typename:void	file:
 yyensure_buffer_stack	src/lexer.c	/^static void yyensure_buffer_stack (void)$/;"	f	language:C	typeref:typename:void	file:
-yyerrok	src/yy_syn.tab.c	/^#define yyerrok	/;"	d	language:C	file:
+yyerrok	src/yy_syn.tab.c	/^#define yyerrok /;"	d	language:C	file:
 yyerror	src/yy_syn.tab.c	/^    void yyerror(char const *s) {$/;"	f	language:C	typeref:typename:void
 yyfree	src/lexer.c	/^void yyfree (void * ptr )$/;"	f	language:C	typeref:typename:void
 yyget_debug	src/lexer.c	/^int yyget_debug  (void)$/;"	f	language:C	typeref:typename:int
@@ -1486,6 +1500,7 @@ yyleng	src/lexer.c	/^int yyleng;$/;"	v	language:C	typeref:typename:int
 yyless	src/lexer.c	/^#define yyless(/;"	d	language:C	file:
 yylex_destroy	src/lexer.c	/^int yylex_destroy  (void)$/;"	f	language:C	typeref:typename:int
 yylineno	src/lexer.c	/^int yylineno = 1;$/;"	v	language:C	typeref:typename:int
+yylval	src/yy_syn.tab.c	/^YYSTYPE yylval;$/;"	v	language:C	typeref:typename:YYSTYPE
 yymore	src/lexer.c	/^#define yymore(/;"	d	language:C	file:
 yynerrs	src/yy_syn.tab.c	/^int yynerrs;$/;"	v	language:C	typeref:typename:int
 yynoreturn	include/lexer.h	/^#define yynoreturn /;"	d	language:C++
@@ -1495,16 +1510,14 @@ yynoreturn	src/lexer.c	/^#define yynoreturn$/;"	d	language:C	file:
 yyout	src/lexer.c	/^FILE *yyin = NULL, *yyout = NULL;$/;"	v	language:C	typeref:typename:FILE **
 yypact	src/yy_syn.tab.c	/^static const yytype_int8 yypact[] =$/;"	v	language:C	typeref:typename:const yytype_int8[]	file:
 yypact_value_is_default	src/yy_syn.tab.c	/^#define yypact_value_is_default(/;"	d	language:C	file:
-yyparse	src/yy_syn.tab.c	/^yyparse (void *YYPARSE_PARAM)$/;"	f	language:C	typeref:typename:int
+yyparse	src/yy_syn.tab.c	/^yyparse (void)$/;"	f	language:C	typeref:typename:int
 yypgoto	src/yy_syn.tab.c	/^static const yytype_int8 yypgoto[] =$/;"	v	language:C	typeref:typename:const yytype_int8[]	file:
 yypop_buffer_state	src/lexer.c	/^void yypop_buffer_state (void)$/;"	f	language:C	typeref:typename:void
-yyprhs	src/yy_syn.tab.c	/^static const yytype_uint8 yyprhs[] =$/;"	v	language:C	typeref:typename:const yytype_uint8[]	file:
 yypush_buffer_state	src/lexer.c	/^void yypush_buffer_state (YY_BUFFER_STATE new_buffer )$/;"	f	language:C	typeref:typename:void
 yyr1	src/yy_syn.tab.c	/^static const yytype_uint8 yyr1[] =$/;"	v	language:C	typeref:typename:const yytype_uint8[]	file:
 yyr2	src/yy_syn.tab.c	/^static const yytype_uint8 yyr2[] =$/;"	v	language:C	typeref:typename:const yytype_uint8[]	file:
 yyrealloc	src/lexer.c	/^void *yyrealloc  (void * ptr, yy_size_t  size )$/;"	f	language:C	typeref:typename:void *
 yyrestart	src/lexer.c	/^    void yyrestart  (FILE * input_file )$/;"	f	language:C	typeref:typename:void
-yyrhs	src/yy_syn.tab.c	/^static const yytype_int8 yyrhs[] =$/;"	v	language:C	typeref:typename:const yytype_int8[]	file:
 yyrline	src/yy_syn.tab.c	/^static const yytype_uint8 yyrline[] =$/;"	v	language:C	typeref:typename:const yytype_uint8[]	file:
 yyset_debug	src/lexer.c	/^void yyset_debug (int  _bdebug )$/;"	f	language:C	typeref:typename:void
 yyset_in	src/lexer.c	/^void yyset_in (FILE *  _in_str )$/;"	f	language:C	typeref:typename:void
@@ -1516,7 +1529,6 @@ yystpcpy	src/yy_syn.tab.c	/^#   define yystpcpy /;"	d	language:C	file:
 yystpcpy	src/yy_syn.tab.c	/^yystpcpy (char *yydest, const char *yysrc)$/;"	f	language:C	typeref:typename:char *	file:
 yystrlen	src/yy_syn.tab.c	/^#   define yystrlen /;"	d	language:C	file:
 yystrlen	src/yy_syn.tab.c	/^yystrlen (const char *yystr)$/;"	f	language:C	typeref:typename:YYSIZE_T	file:
-yystype	src/yy_syn.tab.c	/^# define yystype /;"	d	language:C	file:
 yysyntax_error	src/yy_syn.tab.c	/^yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,$/;"	f	language:C	typeref:typename:int	file:
 yytable	src/yy_syn.tab.c	/^static const yytype_int8 yytable[] =$/;"	v	language:C	typeref:typename:const yytype_int8[]	file:
 yytable_value_is_error	src/yy_syn.tab.c	/^#define yytable_value_is_error(/;"	d	language:C	file:
@@ -1527,16 +1539,15 @@ yytext_ptr	src/lexer.c	/^#define yytext_ptr /;"	d	language:C	file:
 yytname	src/yy_syn.tab.c	/^static const char *const yytname[] =$/;"	v	language:C	typeref:typename:const char * const[]	file:
 yytnamerr	src/yy_syn.tab.c	/^yytnamerr (char *yyres, const char *yystr)$/;"	f	language:C	typeref:typename:YYSIZE_T	file:
 yytokentype	include/yy_syn.tab.h	/^  enum yytokentype$/;"	g	language:C++
-yytokentype	src/yy_syn.tab.c	/^   enum yytokentype {$/;"	g	language:C	file:
+yytokentype	src/yy_syn.tab.c	/^  enum yytokentype$/;"	g	language:C	file:
 yytoknum	src/yy_syn.tab.c	/^static const yytype_uint16 yytoknum[] =$/;"	v	language:C	typeref:typename:const yytype_uint16[]	file:
 yytranslate	src/yy_syn.tab.c	/^static const yytype_uint8 yytranslate[] =$/;"	v	language:C	typeref:typename:const yytype_uint8[]	file:
 yytype_int16	src/yy_syn.tab.c	/^typedef YYTYPE_INT16 yytype_int16;$/;"	t	language:C	typeref:typename:YYTYPE_INT16	file:
-yytype_int16	src/yy_syn.tab.c	/^typedef short int yytype_int16;$/;"	t	language:C	typeref:typename:short int	file:
+yytype_int16	src/yy_syn.tab.c	/^typedef short yytype_int16;$/;"	t	language:C	typeref:typename:short	file:
 yytype_int8	src/yy_syn.tab.c	/^typedef YYTYPE_INT8 yytype_int8;$/;"	t	language:C	typeref:typename:YYTYPE_INT8	file:
-yytype_int8	src/yy_syn.tab.c	/^typedef short int yytype_int8;$/;"	t	language:C	typeref:typename:short int	file:
 yytype_int8	src/yy_syn.tab.c	/^typedef signed char yytype_int8;$/;"	t	language:C	typeref:typename:signed char	file:
 yytype_uint16	src/yy_syn.tab.c	/^typedef YYTYPE_UINT16 yytype_uint16;$/;"	t	language:C	typeref:typename:YYTYPE_UINT16	file:
-yytype_uint16	src/yy_syn.tab.c	/^typedef unsigned short int yytype_uint16;$/;"	t	language:C	typeref:typename:unsigned short int	file:
+yytype_uint16	src/yy_syn.tab.c	/^typedef unsigned short yytype_uint16;$/;"	t	language:C	typeref:typename:unsigned short	file:
 yytype_uint8	src/yy_syn.tab.c	/^typedef YYTYPE_UINT8 yytype_uint8;$/;"	t	language:C	typeref:typename:YYTYPE_UINT8	file:
 yytype_uint8	src/yy_syn.tab.c	/^typedef unsigned char yytype_uint8;$/;"	t	language:C	typeref:typename:unsigned char	file:
 yyunput	src/lexer.c	/^    static void yyunput (int c, char * yy_bp )$/;"	f	language:C	typeref:typename:void	file:

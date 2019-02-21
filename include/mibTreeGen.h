@@ -31,6 +31,7 @@ int mibObjGen_Leave();
 int mibObjGen_InnerNode();
 int mibObjGen_trap();
 int symbolCollecting(int type, dispatchParam *param);
+int symbolCollectingInit();
 
 /* Note: this macro is only use for symbolCollect_XXXX series function */
 #define PARAM_STORE_TO_SYM_LIST(type, param) ({\

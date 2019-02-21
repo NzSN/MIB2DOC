@@ -40,10 +40,6 @@ int mibObjectTreeInit() {
     mibObjectTreeNode *obj;
     
     mibTreeHeadInit(&trees);
-    // Build a tree with only a 'iso' node.
-    // cause iso is not define by SNMPv2-SMI.
-    mibTreeHeadAppend(&trees, mibNodeBuild("iso", "1", NULL));
-    
     return OK;
 }
 
@@ -62,7 +58,7 @@ mibObjectTreeNode * mibNodeBuild(char *ident, char *oid, char *parent) {
 
     obj = (mibObjectTreeNode *)malloc(sizeof(mibObjectTreeNode));
     memset(obj, 0, sizeof(mibObjectTreeNode));
-
+    
     obj->identifier = ident;
     obj->isNode = 1;
     obj->info = (void *)info;
@@ -206,8 +202,20 @@ mibObjectTreeNode * search_MibTree(mibObjectTreeNode *root, char *const ident) {
     return target;
 }
 
-void showTree(mibObjectTreeNode *root) {
-    travel_MibTree(root, Treeprint, NULL);
+int showTree(mibTreeHead *treeHead) {
+    mibTree *currentTree;
+
+    if (isNullPtr(treeHead))
+        return ERROR;
+    
+    for (currentTree = &treeHead->trees; !isNullPtr(currentTree); currentTree = mibTreeNext(currentTree)) {
+        if (isNullPtr(currentTree->root))
+            continue;
+        printf("Tree:\n");
+        travel_MibTree(currentTree->root, Treeprint, NULL);
+    }
+
+    return OK;
 }
 
 static int Treeprint(void *arg, mibObjectTreeNode *node) {
@@ -545,8 +553,7 @@ ITERATE_OVER_ALL:
 
 NEW_TREE:
     // Build a new tree. 
-    treeIter = (mibTree *)malloc(sizeof(mibTree));
-    mibTreeConstruction(treeIter); 
+    treeIter = mibTreeConstruction();
     mibTreeSetRoot(treeIter, newNode);
     
     mibTreeAppend(&treeHead->trees, treeIter);

@@ -50,7 +50,9 @@ int sliceStore(slice *sli, slice *next);
 bool sliceRelease(slice *sli);
 bool sliceRelease_STATIC(slice *sli);
 bool sliceReset(slice *sli);
+bool sliceReset_STATIC(slice *sli);
 char * sliceGetVal(slice *sliceHead, int sliKey);
+char *sliceRetriVal(slice *sliHead, int sliKey);
 
 #endif /* _MIB2DOC_LIST_H_ */
 
