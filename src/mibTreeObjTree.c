@@ -532,7 +532,10 @@ ITERATE_OVER_ALL:
     // Iterate over all another trees.
     last = treeHead->last;    
     treeIter = &treeHead->trees;
-    
+
+    if (isNullPtr(treeIter))
+        goto NEW_TREE;
+
     do {
         if (insert_MibTree(treeIter->root, newNode, parent) != -1) {
             treeHead->last = treeIter;
@@ -547,6 +550,7 @@ NEW_TREE:
     mibTreeSetRoot(treeIter, newNode);
     
     mibTreeAppend(&treeHead->trees, treeIter);
+    treeHead->last = treeIter;
     treeHead->numOfTree++;
 
     return TRUE;
