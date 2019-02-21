@@ -153,7 +153,6 @@ TRAP_HEAD :
 
 HEAD :
 	IDENTIFIER OBJ_SPECIFIER {
-        printf("IDENTIFIER: %s\n", $IDENTIFIER);
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct($IDENTIFIER));
 		dispatch(DISPATCH_PARAM_STAGE, param);

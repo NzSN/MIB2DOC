@@ -40,10 +40,6 @@ int mibObjectTreeInit() {
     mibObjectTreeNode *obj;
     
     mibTreeHeadInit(&trees);
-    // Build a tree with only a 'iso' node.
-    // cause iso is not define by SNMPv2-SMI.
-    mibTreeHeadAppend(&trees, mibNodeBuild("iso", "1", NULL));
-    
     return OK;
 }
 
@@ -62,7 +58,7 @@ mibObjectTreeNode * mibNodeBuild(char *ident, char *oid, char *parent) {
 
     obj = (mibObjectTreeNode *)malloc(sizeof(mibObjectTreeNode));
     memset(obj, 0, sizeof(mibObjectTreeNode));
-
+    
     obj->identifier = ident;
     obj->isNode = 1;
     obj->info = (void *)info;

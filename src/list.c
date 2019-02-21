@@ -453,12 +453,19 @@ static int symbolTblHash(symbol_k *key) {
     return hashVal;
 }
 
+int symTableInit() {
+    symbolTableInit(&symTable);
+    symbolTableAdd(&symTable, symbolNodeConst("iso", "N/A", "1"));
+    return OK;
+}
+
 symbolTable * symbolTableInit(symbolTable *tbl) {
     if (isNullPtr(tbl))
         return NULL;
     
     tbl->numOfSymbols = 0;
     tbl->symbolMap = hashMapConstruct(SIZE_OF_SYMBOL_TBL, (hashFunction)symbolTblHash);
+
     return tbl;
 }
 

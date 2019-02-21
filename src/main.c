@@ -6,6 +6,7 @@
 #include "dispatcher.h"
 #include "yy_syn.tab.h"
 #include "mibTreeGen.h"
+#include "symbolTbl.h"
 
 extern int yylex(void);
 extern FILE *yyin;
@@ -26,11 +27,12 @@ int main(int argc, char *argv[]) {
 
     beginFrom = "sys";
     
-
+    // Init
     syntaxParserInit();
     dispatchInit();
     mibObjectTreeInit();
     symbolCollectingInit();
+    symTableInit();
     
     node = &mibObjectTreeRoot;
     optionsInit(argc, argv);

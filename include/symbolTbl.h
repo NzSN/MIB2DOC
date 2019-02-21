@@ -49,6 +49,8 @@ typedef struct symbolTable {
     hashMap *symbolMap; 
 } symbolTable;
 
+extern symbolTable symTable;
+
 /* symbolTable functions */
 symbolTable * symbolTableInit();
 symbolTable * symbolTableConstruct();
