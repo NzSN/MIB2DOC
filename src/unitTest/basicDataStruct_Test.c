@@ -45,7 +45,7 @@ static void list__LISTNODE_SLICE(void **state) {
 
     sliceRelease_STATIC(&sliceContainer);
     memset(&sliceContainer, 0, sizeof(slice));
-
+    /*
     typedef struct {
         int idx;
         listNode node;
@@ -72,7 +72,7 @@ static void list__LISTNODE_SLICE(void **state) {
     } while (current != NULL); 
 
     // list delete testing 
-     
+    */ 
 }
 
 
@@ -239,7 +239,8 @@ int main(void) {
             cmocka_unit_test(dispatcher__COLLECT_INFO),
             cmocka_unit_test(hash__HASH_BASIC),
             cmocka_unit_test(mibTreeObjTree__MIBTREE_MERGE),
-            cmocka_unit_test(list_symbolTable)
+            cmocka_unit_test(list_symbolTable),
+            cmocka_unit_test(mibTreeGen__SYMBOL_COLLECT)
             #endif
     };
 

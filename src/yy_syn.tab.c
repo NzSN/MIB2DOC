@@ -496,12 +496,12 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    42,    42,    45,    46,    47,    48,    49,    50,    51,
-      52,    53,    56,    59,    65,    66,    69,    90,    95,   100,
-     103,   106,   107,   110,   120,   126,   141,   144,   147,   155,
-     163,   166,   167,   168,   169,   170,   171,   172,   173,   176,
-     179,   180,   183,   186,   191,   198,   205,   208,   214,   217,
-     218,   221
+       0,    42,    42,    45,    46,    47,    48,    49,    50,    59,
+      60,    61,    64,    67,    73,    74,    77,    98,   103,   108,
+     111,   114,   115,   118,   128,   134,   149,   152,   155,   163,
+     170,   173,   174,   175,   176,   177,   178,   179,   180,   183,
+     186,   187,   190,   193,   198,   205,   212,   215,   221,   224,
+     225,   228
 };
 #endif
 
@@ -1458,9 +1458,23 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 13:
+        case 8:
 /* Line 1792 of yacc.c  */
-#line 59 "./src/yy_syn.y"
+#line 50 "./src/yy_syn.y"
+    {
+        switchingState *pState = getCurSwInfo();
+        if (SW_STATE((*pState)) == DISPATCH_MODE_SYMBOL_COLLECTING) {
+            // In include context mark the module scan is already done.
+        } else if (SW_STATE((*pState)) == DISPATCH_MODE_DOC_GENERATING) {
+            // In mibTreeGen context we should merge seperate trees into one.
+            mibTreeHeadMerge(MIB_TREE_R);  
+        }
+    }
+    break;
+
+  case 13:
+/* Line 1792 of yacc.c  */
+#line 67 "./src/yy_syn.y"
     {
         // Begining to import symbol from another mib files.
         importWorks(&importInfoStack); 
@@ -1469,7 +1483,7 @@ yyreduce:
 
   case 16:
 /* Line 1792 of yacc.c  */
-#line 69 "./src/yy_syn.y"
+#line 77 "./src/yy_syn.y"
     {
         dispatchParam *current;    
         current = &importParam;
@@ -1493,7 +1507,7 @@ yyreduce:
 
   case 17:
 /* Line 1792 of yacc.c  */
-#line 90 "./src/yy_syn.y"
+#line 98 "./src/yy_syn.y"
     { 
         if (disParamStore(&importParam, disParamConstruct((yyvsp[(1) - (1)]))) == NULL) {
             exit(1); 
@@ -1503,7 +1517,7 @@ yyreduce:
 
   case 18:
 /* Line 1792 of yacc.c  */
-#line 95 "./src/yy_syn.y"
+#line 103 "./src/yy_syn.y"
     { 
         if (disParamStore(&importParam, disParamConstruct((yyvsp[(1) - (3)]))) == NULL) {
             exit(1); 
@@ -1513,7 +1527,7 @@ yyreduce:
 
   case 23:
 /* Line 1792 of yacc.c  */
-#line 110 "./src/yy_syn.y"
+#line 118 "./src/yy_syn.y"
     {
         dispatchParam *param  = disParamConstruct(SLICE_IDENTIFIER);
         disParamStore(param, disParamConstruct((yyvsp[(2) - (2)])));
@@ -1525,7 +1539,7 @@ yyreduce:
 
   case 24:
 /* Line 1792 of yacc.c  */
-#line 120 "./src/yy_syn.y"
+#line 128 "./src/yy_syn.y"
     { 
         dispatchParam *param = disParamConstruct(OBJECT_IDENTIFIER);
         dispatch(MIBTREE_GENERATION, param);
@@ -1534,7 +1548,7 @@ yyreduce:
 
   case 25:
 /* Line 1792 of yacc.c  */
-#line 126 "./src/yy_syn.y"
+#line 134 "./src/yy_syn.y"
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[(1) - (7)])));
@@ -1552,19 +1566,19 @@ yyreduce:
 
   case 26:
 /* Line 1792 of yacc.c  */
-#line 141 "./src/yy_syn.y"
+#line 149 "./src/yy_syn.y"
     { dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT)); }
     break;
 
   case 27:
 /* Line 1792 of yacc.c  */
-#line 144 "./src/yy_syn.y"
+#line 152 "./src/yy_syn.y"
     { dispatch(MIBTREE_GENERATION, disParamConstruct(TRAP)); }
     break;
 
   case 28:
 /* Line 1792 of yacc.c  */
-#line 147 "./src/yy_syn.y"
+#line 155 "./src/yy_syn.y"
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[(1) - (2)])));
@@ -1575,9 +1589,8 @@ yyreduce:
 
   case 29:
 /* Line 1792 of yacc.c  */
-#line 155 "./src/yy_syn.y"
+#line 163 "./src/yy_syn.y"
     {
-        printf("IDENTIFIER: %s\n", (yyvsp[(1) - (2)]));
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[(1) - (2)])));
 		dispatch(DISPATCH_PARAM_STAGE, param);
@@ -1586,7 +1599,7 @@ yyreduce:
 
   case 43:
 /* Line 1792 of yacc.c  */
-#line 186 "./src/yy_syn.y"
+#line 193 "./src/yy_syn.y"
     {
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct((yyvsp[(1) - (1)])));
@@ -1596,7 +1609,7 @@ yyreduce:
 
   case 44:
 /* Line 1792 of yacc.c  */
-#line 191 "./src/yy_syn.y"
+#line 198 "./src/yy_syn.y"
     {
  		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct((yyvsp[(1) - (1)])));
@@ -1606,7 +1619,7 @@ yyreduce:
 
   case 45:
 /* Line 1792 of yacc.c  */
-#line 198 "./src/yy_syn.y"
+#line 205 "./src/yy_syn.y"
     {
 		dispatchParam *param = disParamConstruct(SLICE_PERMISSION);
 		disParamStore(param, disParamConstruct((yyvsp[(2) - (2)])));
@@ -1616,7 +1629,7 @@ yyreduce:
 
   case 47:
 /* Line 1792 of yacc.c  */
-#line 208 "./src/yy_syn.y"
+#line 215 "./src/yy_syn.y"
     {
 		dispatchParam *param = disParamConstruct(SLICE_DESCRIPTION);
 		disParamStore(param, disParamConstruct((yyvsp[(2) - (2)])));
@@ -1626,7 +1639,7 @@ yyreduce:
 
   case 51:
 /* Line 1792 of yacc.c  */
-#line 221 "./src/yy_syn.y"
+#line 228 "./src/yy_syn.y"
     {
 		dispatchParam *param = disParamConstruct(SLICE_PARENT);
 		disParamStore(param, disParamConstruct((yyvsp[(3) - (5)])));
@@ -1640,7 +1653,7 @@ yyreduce:
 
 
 /* Line 1792 of yacc.c  */
-#line 1644 "./src/yy_syn.tab.c"
+#line 1657 "./src/yy_syn.tab.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1872,7 +1885,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 231 "./src/yy_syn.y"
+#line 238 "./src/yy_syn.y"
 
 
 // Epilogue

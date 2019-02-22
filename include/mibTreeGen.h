@@ -12,6 +12,8 @@
 
 extern mibTreeHead trees;
 
+#define MIB_TREE_R (&trees)
+
 enum {
     SYMBOL_FOUND,
     SYMBOL_NOT_FOUND
@@ -39,5 +41,11 @@ int symbolCollectingInit();
     string = (char *)disParamRetrive(&param)->param; \
     sliceStore(&symCollectSlice, sliceConstruct(type, string)); \
 })
+
+#ifdef MIB2DOC_UNIT_TESTING
+
+void mibTreeGen__SYMBOL_COLLECT(void **state);
+
+#endif 
 
 #endif //GL5610_MIB_DOC_GEN_TOKENOP_H
