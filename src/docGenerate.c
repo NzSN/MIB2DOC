@@ -66,8 +66,7 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
     mibObjectTreeNode *pNode;
     mibNodeInfoQueue *pQueue = &infoQueue;
     
-    if (isNullPtr(beginFrom)) {
-         
+    if (isNullPtr(beginFrom)) {      
         return 0;
     }
 
