@@ -47,7 +47,7 @@ typedef int (*hashFunction)(void *);
 struct pair_key_base;
 
 typedef int (*pairKeyRelease)(struct pair_key_base *);
-typedef int (*pairKeyValue)(struct pair_key_base *);
+typedef void * (*pairKeyValue)(struct pair_key_base *);
 typedef int (*pairKeyIsEqual)(struct pair_key_base *, struct pair_key_base *);
 typedef struct pair_key_base * (*pairKeyCopy)(struct pair_key_base *);
 
@@ -61,7 +61,7 @@ typedef struct pair_key_base {
 struct pair_val_base;
 
 typedef int (*pairValRelease)(struct pair_val_base *);
-typedef int (*pairValValue)(struct pair_val_base *);
+typedef void * (*pairValValue)(struct pair_val_base *);
 typedef int (*pairValIsEqual)(struct pair_val_base *, struct pair_val_base *);
 typedef struct pair_val_base * (*pairValCopy)(struct pair_val_base *);
 

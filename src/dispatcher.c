@@ -456,7 +456,7 @@ char* collectInfo_retrive(collectInfo* cInfo, char* symbol)
     symbolKeyInit(&key, symbol); 
 
     val = (pair_val_base*)hashMapGet(cInfo->symbols, (pair_key_base *)&key);
-    return (char*)val->value(val);
+    return (char *)val->value(val);
 }
 
 int collectInfo_exists(collectInfo *cInfo, char *symbol) {
