@@ -35,6 +35,8 @@ int mibObjGen_trap();
 int symbolCollecting(int type, dispatchParam *param);
 int symbolCollectingInit();
 
+int documentGen(mibTreeHead *treeHead, FILE *writeTo);
+
 /* Note: this macro is only use for symbolCollect_XXXX series function */
 #define PARAM_STORE_TO_SYM_LIST(type, param) ({\
     char *string; \

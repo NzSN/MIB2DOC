@@ -84,6 +84,7 @@ int mibTreeHeadInit(mibTreeHead *treeHead);
 int mibTreeHeadMerge_LAST(mibTreeHead *treeHead);
 int mibTreeHeadMerge(mibTreeHead *treeHead);
 int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode);
+mibTree * mibTreeHeadFirstTree(mibTreeHead *treeHead);
 
 #ifdef MIB2DOC_UNIT_TESTING
 #include "test.h"

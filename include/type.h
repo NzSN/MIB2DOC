@@ -10,6 +10,8 @@
 #include "mibTreeObjTree.h"
 #include "lexer.h"
 
+#include <assert.h>
+
 /* define */
 #ifndef FALSE
 #define FALSE false 

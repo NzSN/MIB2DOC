@@ -47,27 +47,32 @@ MAIN_PART :
 	| TRAP MAIN_PART
 	| SEQUENCE MAIN_PART
     | SMI MAIN_PART
-	| END_ MAIN_PART {
-        switchingState *pState = getCurSwInfo();
-        if (SW_STATE((*pState)) == DISPATCH_MODE_SYMBOL_COLLECTING) {
-            // In include context mark the module scan is already done.
-        } else if (SW_STATE((*pState)) == DISPATCH_MODE_DOC_GENERATING) {
-            // In mibTreeGen context we should merge seperate trees into one.
-            mibTreeHeadMerge(MIB_TREE_R);  
-        }
-    }
+	| END MAIN_PART     
     | DEFINITION MAIN_PART
     | IMPORT MAIN_PART
     | /* empty */ ;
 
 DEFINITION :
-	IDENTIFIER DEF ASSIGNED BEGIN_;
+	IDENTIFIER DEF ASSIGNED BEGIN_ { printf("%s\n", $IDENTIFIER);  };
 
 IMPORT :
 	IMPORTS_ MODULES SEMICOLON    {
         // Begining to import symbol from another mib files.
+        printf("IMPORT\n");
         importWorks(&importInfoStack); 
     };
+
+END :
+    END_ {
+        switchingState *pState = getCurSwInfo();
+        if (SW_STATE((*pState)) == DISPATCH_MODE_SYMBOL_COLLECTING) {
+            // In include context mark the module scan is already done.
+        } else if (SW_STATE((*pState)) == DISPATCH_MODE_DOC_GENERATING) {
+            // In mibTreeGen context we should merge seperate trees into one.
+            mibTreeHeadMerge(MIB_TREE_R); 
+            mibTreeHeadOidComplete(MIB_TREE_R);
+        }
+    }
 
 MODULES :
 	MODULES_CONTENT MODULES 
@@ -132,6 +137,7 @@ OBJ_DEAL :
 
 OBJ_IDENTIFIER :
 	IDENTIFIER[chil] OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER[parent] NUM R_BRACE {
+        printf("%s\n", $chil);
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct($chil));
 		dispatch(DISPATCH_PARAM_STAGE, param);

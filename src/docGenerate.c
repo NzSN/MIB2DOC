@@ -9,6 +9,7 @@
 #include "docGenerate.h"
 #include "queue.h"
 #include "util.h"
+#include "type.h"
 
 /* Defines */
 #define SIZE_OF_LATEX_BUFFER 256
@@ -36,12 +37,23 @@ static int infoPacket(tableInfo *info, mibObjectTreeNode *node);
 char *long2Short(char *str);
 static int latexHeaderGen();
 static int latexTailGen();
-int documentGen(mibObjectTreeNode *root, FILE *writeTo);
 static int docGenerate(void *arg, mibObjectTreeNode *root);
 
-int documentGen(mibObjectTreeNode *root, FILE *writeTo) {
-    latexHeaderGen();
-    travel_MibTree(root, docGenerate, writeTo);
+int documentGen(mibTreeHead *treeHead, FILE *writeTo) {
+    
+    mibTree *tree; 
+    
+    if (isNullPtr(treeHead) || isNullPtr(writeTo))
+        return ERROR;
+
+    // Check that is only one tree here
+    assert(treeHead->numOfTree == 1);
+    tree = mibTreeHeadFirstTree(treeHead); 
+
+    latexHeaderGen(); 
+
+    travel_MibTree(tree->root, docGenerate, writeTo);
+
     latexTailGen();
 
     return 0;
@@ -53,9 +65,11 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
     tableInfo *info;
     mibObjectTreeNode *pNode;
     mibNodeInfoQueue *pQueue = &infoQueue;
-
-    if (!beginFrom)
+    
+    if (isNullPtr(beginFrom)) {
+         
         return 0;
+    }
 
     writeTo = (FILE *) arg;
     pNode = search_MibTree(&mibObjectTreeRoot, beginFrom);

@@ -16,7 +16,6 @@
 /* Declaration */
 static int mibTreeLeaveAdd(mibObjectTreeNode *trap, char *parent);
 static int mibTreeNodeAdd(mibObjectTreeNode *node, char *parent);
-static char * oidComplement(char *parent, char *suffix);
 
 char currentTable[64];
 extern mibObjectTreeNode root;
@@ -83,6 +82,34 @@ int mibObjGen(int nodeType) {
     sliceRelease_STATIC(&sliceContainer);
 
     return 0;
+}
+
+
+static char * oidComplement(char *parent, char *suffix) {
+    char *oid, *parentOid;
+    int oidLength = SIZE_OF_OID_STRING;
+    mibObjectTreeNode *parentNode;
+
+    parentNode = search_MibTree(&mibObjectTreeRoot, parent);
+
+    if (parentNode == NULL)
+        return NULL;
+    
+    parentOid = getOidFromInfo(parentNode);
+
+    // Overflow checking.
+    if (strlen(parentOid) >= SIZE_OF_OID_STRING) {
+        oidLength += EXTRA_OF_OID_LEN; 
+    }
+
+    oid = (char *)malloc(oidLength);
+    memset(oid, 0, oidLength);
+
+    strncpy(oid, parentOid, oidLength);
+    strncat(oid, ".", 1);
+    strncat(oid, suffix, strlen(suffix));
+
+    return oid;
 }
 
 int mibObjGen_Leave() {
@@ -172,33 +199,6 @@ static int mibTreeNodeAdd(mibObjectTreeNode *obj, char *parent) {
     if (isNullPtr(obj))
         return -1;
     return insert_MibTree(&mibObjectTreeRoot, obj, parent);
-}
-
-static char * oidComplement(char *parent, char *suffix) {
-    char *oid, *parentOid;
-    int oidLength = SIZE_OF_OID_STRING;
-    mibObjectTreeNode *parentNode;
-
-    parentNode = search_MibTree(&mibObjectTreeRoot, parent);
-
-    if (parentNode == NULL)
-        return NULL;
-    
-    parentOid = getOidFromInfo(parentNode);
-
-    // Overflow checking.
-    if (strlen(parentOid) >= SIZE_OF_OID_STRING) {
-        oidLength += EXTRA_OF_OID_LEN; 
-    }
-
-    oid = (char *)malloc(oidLength);
-    memset(oid, 0, oidLength);
-
-    strncpy(oid, parentOid, oidLength);
-    strncat(oid, ".", 1);
-    strncat(oid, suffix, strlen(suffix));
-
-    return oid;
 }
 
 extern mibObjectTreeNode mibObjectTreeRoot;

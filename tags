@@ -5,6 +5,7 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
 $	.\CMakeFiles\3.12.0-rc3\CompilerIdCXX\a.exe	/^/;"	v
+A	.\UNIT_TEST.exe	/^/;"	v
 ABORT	.\include\type.h	/^    ABORT$/;"	e	enum:errorType
 ACCESS_SPECIFIER	.\include\yy_syn.tab.h	/^    ACCESS_SPECIFIER = 261,$/;"	e	enum:yytokentype
 ACCESS_SPECIFIER	.\src\yy_syn.tab.c	/^     ACCESS_SPECIFIER = 261,$/;"	e	enum:yytokentype	file:
@@ -336,7 +337,7 @@ END_	.\src\yy_syn.tab.c	/^     END_ = 270,$/;"	e	enum:yytokentype	file:
 EOB_ACT_CONTINUE_SCAN	.\src\lexer.c	162;"	d	file:
 EOB_ACT_END_OF_FILE	.\src\lexer.c	163;"	d	file:
 EOB_ACT_LAST_MATCH	.\src\lexer.c	164;"	d	file:
-ERROR	.\include\type.h	31;"	d
+ERROR	.\include\type.h	33;"	d
 ERROR_GENERIC	.\include\type.h	/^    ERROR_GENERIC,$/;"	e	enum:errorType
 ERROR_NONE	.\include\type.h	/^    ERROR_NONE,$/;"	e	enum:errorType
 ERROR_NULL_REF	.\include\type.h	/^    ERROR_NULL_REF,$/;"	e	enum:errorType
@@ -344,8 +345,8 @@ ERROR_OPEN_FAILED	.\include\type.h	/^    ERROR_OPEN_FAILED,$/;"	e	enum:errorType
 ERROR_WRONG_IDX	.\include\type.h	/^    ERROR_WRONG_IDX,$/;"	e	enum:errorType
 EXIT_SUCCESS	.\src\yy_syn.tab.c	297;"	d	file:
 EXIT_SUCCESS	.\src\yy_syn.tab.c	325;"	d	file:
-EXTRA_OF_OID_LEN	.\include\type.h	39;"	d
-FALSE	.\include\type.h	15;"	d
+EXTRA_OF_OID_LEN	.\include\type.h	41;"	d
+FALSE	.\include\type.h	17;"	d
 FLEXINT_H	.\include\lexer.h	34;"	d
 FLEXINT_H	.\src\lexer.c	30;"	d	file:
 FLEX_BETA	.\include\lexer.h	18;"	d
@@ -424,7 +425,7 @@ MIB_TREE_R	.\include\mibTreeGen.h	15;"	d
 MODULES	.\src\yy_syn.y	/^	MODULES_CONTENT MODULES $/;"	v
 MOUNT_POINT	.\include\yy_syn.tab.h	/^    MOUNT_POINT = 267,$/;"	e	enum:yytokentype
 MOUNT_POINT	.\src\yy_syn.tab.c	/^     MOUNT_POINT = 267,$/;"	e	enum:yytokentype	file:
-NOT	.\include\type.h	23;"	d
+NOT	.\include\type.h	25;"	d
 NUM	.\include\yy_syn.tab.h	/^    NUM = 282,$/;"	e	enum:yytokentype
 NUM	.\src\yy_syn.tab.c	/^     NUM = 282,$/;"	e	enum:yytokentype	file:
 NumOfOptions	.\src\options.c	/^    NumOfOptions$/;"	e	enum:optionNumber	file:
@@ -437,14 +438,14 @@ OBJ_IDEN_	.\src\yy_syn.tab.c	/^     OBJ_IDEN_ = 277,$/;"	e	enum:yytokentype	file
 OBJ_SPECIFIER	.\include\yy_syn.tab.h	/^    OBJ_SPECIFIER = 259,$/;"	e	enum:yytokentype
 OBJ_SPECIFIER	.\src\yy_syn.tab.c	/^     OBJ_SPECIFIER = 259,$/;"	e	enum:yytokentype	file:
 OID_LENGTH	.\src\mibTreeObjTree.c	23;"	d	file:
-OK	.\include\type.h	27;"	d
+OK	.\include\type.h	29;"	d
 PAIR_KEY	.\include\hash.h	29;"	d
 PAIR_KEY_R	.\include\hash.h	26;"	d
 PAIR_KEY_SET	.\include\hash.h	32;"	d
 PAIR_VAL	.\include\hash.h	30;"	d
 PAIR_VAL_R	.\include\hash.h	27;"	d
 PAIR_VAL_SET	.\include\hash.h	33;"	d
-PARAM_STORE_TO_SYM_LIST	.\include\mibTreeGen.h	39;"	d
+PARAM_STORE_TO_SYM_LIST	.\include\mibTreeGen.h	41;"	d
 PLATFORM_ID	.\CMakeFiles\3.12.0-rc3\CompilerIdCXX\CMakeCXXCompilerId.cpp	322;"	d	file:
 PLATFORM_ID	.\CMakeFiles\3.12.0-rc3\CompilerIdCXX\CMakeCXXCompilerId.cpp	325;"	d	file:
 PLATFORM_ID	.\CMakeFiles\3.12.0-rc3\CompilerIdCXX\CMakeCXXCompilerId.cpp	328;"	d	file:
@@ -511,7 +512,7 @@ PROPERTY	.\src\yy_syn.y	/^	PROPERTY;$/;"	v
 PROPERTY	.\src\yy_syn.y	/^ 	| OBJECT PROPERTY$/;"	v
 Qnext	.\src\queue.c	6;"	d	file:
 REJECT	.\src\lexer.c	631;"	d	file:
-RELEASE_MEM	.\include\type.h	41;"	d
+RELEASE_MEM	.\include\type.h	43;"	d
 R_BRACE	.\include\yy_syn.tab.h	/^    R_BRACE = 279,$/;"	e	enum:yytokentype
 R_BRACE	.\src\yy_syn.tab.c	/^     R_BRACE = 279,$/;"	e	enum:yytokentype	file:
 R_BRACE	.\src\yy_syn.y	/^	IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE;$/;"	v
@@ -543,11 +544,11 @@ SIMULATE_VERSION_MINOR	.\CMakeFiles\3.12.0-rc3\CompilerIdC\CMakeCCompilerId.c	21
 SIMULATE_VERSION_MINOR	.\CMakeFiles\3.12.0-rc3\CompilerIdC\CMakeCCompilerId.c	38;"	d	file:
 SIZE_MAX	.\include\lexer.h	92;"	d
 SIZE_MAX	.\src\lexer.c	88;"	d	file:
-SIZE_OF_CURRENT_TABLE	.\include\type.h	36;"	d
-SIZE_OF_LATEX_BUFFER	.\src\docGenerate.c	14;"	d	file:
-SIZE_OF_OID_STRING	.\include\type.h	38;"	d
+SIZE_OF_CURRENT_TABLE	.\include\type.h	38;"	d
+SIZE_OF_LATEX_BUFFER	.\src\docGenerate.c	15;"	d	file:
+SIZE_OF_OID_STRING	.\include\type.h	40;"	d
 SIZE_OF_QUEUE	.\include\queue.h	10;"	d
-SIZE_OF_SECTION_RECORD	.\include\type.h	37;"	d
+SIZE_OF_SECTION_RECORD	.\include\type.h	39;"	d
 SIZE_OF_SYMBOL_TBL	.\include\symbolTbl.h	8;"	d
 SLICE_DESCRIPTION	.\include\list.h	/^    SLICE_DESCRIPTION,$/;"	e	enum:elementType
 SLICE_IDENTIFIER	.\include\list.h	/^    SLICE_IDENTIFIER,$/;"	e	enum:elementType
@@ -608,7 +609,7 @@ TABLE	.\src\docGenerate.c	/^    TABLE = 1,$/;"	e	enum:__anon10	file:
 TRAP	.\include\type.h	/^    TRAP,$/;"	e	enum:unitType
 TRAP_SPECIFIER	.\include\yy_syn.tab.h	/^    TRAP_SPECIFIER = 276,$/;"	e	enum:yytokentype
 TRAP_SPECIFIER	.\src\yy_syn.tab.c	/^     TRAP_SPECIFIER = 276,$/;"	e	enum:yytokentype	file:
-TRUE	.\include\type.h	19;"	d
+TRUE	.\include\type.h	21;"	d
 TYPE	.\include\yy_syn.tab.h	/^    TYPE = 281,$/;"	e	enum:yytokentype
 TYPE	.\src\yy_syn.tab.c	/^     TYPE = 281,$/;"	e	enum:yytokentype	file:
 TYPE	.\src\yy_syn.y	/^	| IDENTIFIER TYPE;$/;"	v
@@ -810,7 +811,7 @@ buffer	.\include\stack.h	/^    unsigned char *buffer;$/;"	m	struct:identStack
 bufferInfo	.\include\dispatcher.h	/^    YY_BUFFER_STATE bufferInfo;$/;"	m	struct:switchInfo
 bufferSize	.\include\stack.h	/^    int bufferSize;$/;"	m	struct:identStack
 c	.\CMakeFiles\CMakeOutput.log	/^Configured with: ..\/src\/gcc-8.2.0\/configure --build=x86_64-pc-linux-gnu --host=mingw32 --target=mingw32 --prefix=\/mingw --disable-win32-registry --with-arch=i586 --with-tune=generic --enable-languages=c,c++,objc,obj-c++,fortran,ada --with-pkgversion='MinGW.org GCC-8.2.0-3' --with-gmp=\/mingw --with-mpfr=\/mingw --with-mpc=\/mingw --enable-static --enable-shared --enable-threads --with-dwarf2 --disable-sjlj-exceptions --enable-version-specific-runtime-libs --with-libiconv-prefix=\/mingw --with-libintl-prefix=\/mingw --enable-libstdcxx-debug --with-isl=\/mingw --enable-libgomp --disable-libvtv --enable-nls --disable-build-format-warnings$/;"	v
-cSpace	.\include\type.h	34;"	d
+cSpace	.\include\type.h	36;"	d
 chain	.\include\hash.h	/^    hashChain chain;$/;"	m	struct:__anon3
 child	.\include\mibTreeObjTree.h	/^    struct mibObjectTreeNode *child;$/;"	m	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode::mibObjectTreeNode
 collectInfo	.\include\dispatcher.h	/^typedef struct collectInfo {$/;"	s
@@ -824,7 +825,7 @@ collectInfo_release	.\src\dispatcher.c	/^int collectInfo_release(collectInfo *cI
 collectInfo_retrive	.\src\dispatcher.c	/^char* collectInfo_retrive(collectInfo* cInfo, char* symbol)$/;"	f
 collide	.\include\hash.h	/^    int collide;$/;"	m	struct:__anon3
 const	.\CMakeFiles\3.12.0-rc3\CompilerIdC\CMakeCCompilerId.c	10;"	d	file:
-containerOf	.\include\type.h	42;"	d
+containerOf	.\include\type.h	44;"	d
 copy	.\include\hash.h	/^    pairKeyCopy copy;$/;"	m	struct:pair_key_base
 copy	.\include\hash.h	/^    pairValCopy copy;$/;"	m	struct:pair_val_base
 count	.\include\queue.h	/^    int count;$/;"	m	struct:mibNodeInfoQueue
@@ -859,12 +860,12 @@ dispatch_type	.\include\dispatcher.h	/^} dispatch_type;$/;"	t	typeref:enum:dispa
 dispatcher__COLLECT_INFO	.\src\dispatcher.c	/^void dispatcher__COLLECT_INFO(void** state) {$/;"	f
 dispatcher__SYMBOLTABLE	.\src\dispatcher.c	/^void dispatcher__SYMBOLTABLE(void **state) {$/;"	f
 docGenerate	.\src\docGenerate.c	/^static int docGenerate(void *arg, mibObjectTreeNode *node) {$/;"	f	file:
-documentGen	.\src\docGenerate.c	/^int documentGen(mibObjectTreeNode *root, FILE *writeTo) {$/;"	f
+documentGen	.\src\docGenerate.c	/^int documentGen(mibTreeHead *treeHead, FILE *writeTo) {$/;"	f
 elementType	.\include\list.h	/^enum elementType {$/;"	g
 entryRecognize	.\src\util.c	/^int entryRecognize(char *buffer, int size) {$/;"	f
 errorType	.\include\type.h	/^typedef enum errorType {$/;"	g
 errorType	.\include\type.h	/^} errorType;$/;"	t	typeref:enum:errorType
-f	.\CMakeFiles\Mib2Doc.dir\src\lexer.c.obj	/^>" <K¼+ )f?ó 5000i,500n,10000p,200000b,80000s$/;"	v
+f	.\CMakeFiles\Mib2Doc.dir\src\lexer.c.obj	/^>" <K¼+ )f?ótack positions out of 5000i,500n,10000p,200000b,80000s$/;"	v
 f	.\CMakeFiles\feature_tests.bin	/^$/;"	v
 features	.\CMakeFiles\feature_tests.c	/^  const char features[] = {"\\n"$/;"	v
 features	.\CMakeFiles\feature_tests.cxx	/^  const char features[] = {"\\n"$/;"	v
@@ -897,7 +898,7 @@ fortran	.\CMakeFiles\CMakeOutput.log	/^Configured with: ..\/src\/gcc-8.2.0\/conf
 found	.\include\dispatcher.h	/^    int found;$/;"	m	struct:identList
 genericStack	.\include\stack.h	/^} genericStack;$/;"	t	typeref:struct:identStack
 genericStackConstruct	.\src\stack.c	/^int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize) {$/;"	f
-getCurSwInfo	.\src\dispatcher.c	/^void * getCurSwInfo() {$/;"	f
+getCurSwInfo	.\src\dispatcher.c	/^switchingState * getCurSwInfo() {$/;"	f
 getCurrentBufferState	.\src\lexer.c	/^YY_BUFFER_STATE getCurrentBufferState() {$/;"	f
 getIdentFromInfo	.\src\mibTreeObjTree.c	/^char * getIdentFromInfo(mibObjectTreeNode *node) {$/;"	f
 getOidFromInfo	.\src\mibTreeObjTree.c	/^char *getOidFromInfo(mibObjectTreeNode *node) {$/;"	f
@@ -935,6 +936,7 @@ head	.\include\queue.h	/^    int head;$/;"	m	struct:mibNodeInfoQueue
 helpInfoPrint	.\src\options.c	/^static void helpInfoPrint() {}$/;"	f	file:
 i	.\doc\structures.log	/^ 41i,6n,25p,277b,220s stack positions out of 5000i,500n,10000p,200000b,80000s$/;"	v
 ident	.\include\mibTreeObjTree.h	/^    char *ident;$/;"	m	struct:mibNodeInfo
+ident	.\src\.mibTreeGen.c.swp	/^/;"	v
 ident	.\src\list.c	/^    char *ident;$/;"	m	struct:__anon14	file:
 identList	.\include\dispatcher.h	/^typedef struct identList {$/;"	s
 identList	.\include\dispatcher.h	/^} identList;$/;"	t	typeref:struct:identList
@@ -976,7 +978,7 @@ isEqual	.\include\hash.h	/^    pairValIsEqual isEqual;$/;"	m	struct:pair_val_bas
 isInitilized	.\src\docGenerate.c	/^int isInitilized;$/;"	v
 isNeedSwitchInit	.\src\dispatcher.c	/^static unsigned char isNeedSwitchInit = TRUE;$/;"	v	file:
 isNode	.\include\mibTreeObjTree.h	/^    int isNode;$/;"	m	struct:mibObjectTreeNode
-isNullPtr	.\include\type.h	40;"	d
+isNullPtr	.\include\type.h	42;"	d
 isQueueEmpty	.\src\queue.c	/^static int isQueueEmpty(mibNodeInfoQueue *q) {$/;"	f	file:
 isQueueFull	.\src\queue.c	/^static int isQueueFull(mibNodeInfoQueue *q) {$/;"	f	file:
 key	.\include\hash.h	/^    pair_key_base *key;$/;"	m	struct:__anon2
@@ -1027,6 +1029,7 @@ mibNodeInfo	.\include\mibTreeObjTree.h	/^} mibNodeInfo;$/;"	t	typeref:struct:mib
 mibNodeInfoQueue	.\include\queue.h	/^typedef struct mibNodeInfoQueue {$/;"	s
 mibNodeInfoQueue	.\include\queue.h	/^} mibNodeInfoQueue;$/;"	t	typeref:struct:mibNodeInfoQueue
 mibObjGen	.\src\mibTreeGen.c	/^int mibObjGen(int nodeType) {$/;"	f
+mibObjGen_InnerNode	.\src\.mibTreeGen.c.swp	/^/;"	f
 mibObjGen_InnerNode	.\src\mibTreeGen.c	/^int mibObjGen_InnerNode() {$/;"	f
 mibObjGen_Leave	.\src\mibTreeGen.c	/^int mibObjGen_Leave() {$/;"	f
 mibObjGen_trap	.\src\mibTreeGen.c	/^int mibObjGen_trap() {$/;"	f
@@ -1046,9 +1049,11 @@ mibTreeGen__SYMBOL_COLLECT	.\src\mibTreeGen.c	/^void mibTreeGen__SYMBOL_COLLECT(
 mibTreeHead	.\include\mibTreeObjTree.h	/^typedef struct mibTreeHead {$/;"	s
 mibTreeHead	.\include\mibTreeObjTree.h	/^} mibTreeHead;$/;"	t	typeref:struct:mibTreeHead
 mibTreeHeadAppend	.\src\mibTreeObjTree.c	/^int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode) {$/;"	f
+mibTreeHeadFirstTree	.\src\mibTreeObjTree.c	/^mibTree * mibTreeHeadFirstTree(mibTreeHead *treeHead) {$/;"	f
 mibTreeHeadInit	.\src\mibTreeObjTree.c	/^int mibTreeHeadInit(mibTreeHead *treeHead) {$/;"	f
 mibTreeHeadMerge	.\src\mibTreeObjTree.c	/^int mibTreeHeadMerge(mibTreeHead *treeHead) {$/;"	f
 mibTreeHeadMerge_LAST	.\src\mibTreeObjTree.c	/^int mibTreeHeadMerge_LAST(mibTreeHead *treeHead) {$/;"	f
+mibTreeHeadOidComplete	.\src\mibTreeObjTree.c	/^int mibTreeHeadOidComplete(mibTreeHead *treeHead) {$/;"	f
 mibTreeLeaveAdd	.\src\mibTreeGen.c	/^static int mibTreeLeaveAdd(mibObjectTreeNode *obj, char *parent) {$/;"	f	file:
 mibTreeMerge	.\src\mibTreeObjTree.c	/^mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree) {$/;"	f
 mibTreeMergeAssert	.\src\mibTreeObjTree.c	/^static int mibTreeMergeAssert(void *arg, mibObjectTreeNode *node) {$/;"	f	file:
@@ -1069,19 +1074,24 @@ node	.\include\hash.h	/^    listNode node;$/;"	m	struct:__anon2
 node	.\include\mibTreeGen.h	/^    listNode node;$/;"	m	struct:targetSymbolList
 node	.\include\mibTreeObjTree.h	/^    listNode node;$/;"	m	struct:mibTree
 node	.\include\options.h	/^    listNode node;$/;"	m	struct:incPathList
+node	.\src\.mibTreeGen.c.swp	/^/;"	v
 nodeCmp	.\src\mibTreeObjTree.c	/^int nodeCmp(void *arg, mibObjectTreeNode *node) {$/;"	f
 nodeInfo	.\include\mibTreeObjTree.h	/^    mibNodeInfo *nodeInfo;$/;"	m	struct:mibInfo
 nodeMeta	.\include\symbolTbl.h	/^       nodeMeta_t nodeMeta;$/;"	m	union:symbol_t::__anon7
 nodeMetaRelease	.\src\list.c	/^inline static int nodeMetaRelease(nodeMeta_t *nm) {$/;"	f	file:
 nodeMeta_t	.\include\symbolTbl.h	/^typedef struct nodeMeta_t {$/;"	s
 nodeMeta_t	.\include\symbolTbl.h	/^} nodeMeta_t;$/;"	t	typeref:struct:nodeMeta_t
-null	.\include\type.h	35;"	d
+null	.\include\type.h	37;"	d
 numOfSymbols	.\include\symbolTbl.h	/^    int numOfSymbols;$/;"	m	struct:symbolTable
 numOfTree	.\include\mibTreeObjTree.h	/^    int numOfTree;$/;"	m	struct:mibTreeHead
 objc	.\CMakeFiles\CMakeOutput.log	/^Configured with: ..\/src\/gcc-8.2.0\/configure --build=x86_64-pc-linux-gnu --host=mingw32 --target=mingw32 --prefix=\/mingw --disable-win32-registry --with-arch=i586 --with-tune=generic --enable-languages=c,c++,objc,obj-c++,fortran,ada --with-pkgversion='MinGW.org GCC-8.2.0-3' --with-gmp=\/mingw --with-mpfr=\/mingw --with-mpc=\/mingw --enable-static --enable-shared --enable-threads --with-dwarf2 --disable-sjlj-exceptions --enable-version-specific-runtime-libs --with-libiconv-prefix=\/mingw --with-libintl-prefix=\/mingw --enable-libstdcxx-debug --with-isl=\/mingw --enable-libgomp --disable-libvtv --enable-nls --disable-build-format-warnings$/;"	v
 oid	.\include\docGenerate.h	/^    char *oid;$/;"	m	struct:tableInfo
 oid	.\include\mibTreeObjTree.h	/^    char *oid;$/;"	m	struct:mibNodeInfo
+oid	.\src\.mibTreeGen.c.swp	/^/;"	v
+oid	.\src\mibTreeObjTree.c	/^    char *oid[];$/;"	m	struct:__anon15	file:
 oidComplement	.\src\mibTreeGen.c	/^static char * oidComplement(char *parent, char *suffix) {$/;"	f	file:
+oidComplement	.\src\mibTreeObjTree.c	/^static char * oidComplement(char *parentOid, char *suffix) {$/;"	f	file:
+oidComplete	.\src\mibTreeObjTree.c	/^static int oidComplete(void *arg, mibObjectTreeNode *node) {$/;"	f	file:
 optionNumber	.\src\options.c	/^typedef enum optionNumber {$/;"	g	file:
 optionNumber	.\src\options.c	/^} optionNumber;$/;"	t	typeref:enum:optionNumber	file:
 options	.\include\options.h	/^typedef struct options {$/;"	s
@@ -1108,6 +1118,7 @@ paramMapping	.\src\options.c	/^static int paramMapping(char *param) {$/;"	f	file
 parent	.\include\mibTreeObjTree.h	/^        char *parent; $/;"	m	struct:mibObjectTreeNode::__anon6
 parent	.\include\mibTreeObjTree.h	/^    struct mibObjectTreeNode *parent;$/;"	m	struct:mibObjectTreeNode	typeref:struct:mibObjectTreeNode::mibObjectTreeNode
 parent	.\include\symbolTbl.h	/^    char *parent;$/;"	m	struct:leaveMeta_t
+parent	.\src\.mibTreeGen.c.swp	/^/;"	v
 parentIdent	.\include\symbolTbl.h	/^    char *parentIdent;$/;"	m	struct:nodeMeta_t
 parent_MibTree	.\src\mibTreeObjTree.c	/^mibObjectTreeNode *parent_MibTree(mibObjectTreeNode *root, char *ident) {$/;"	f
 path	.\include\options.h	/^    char *path;$/;"	m	struct:incPathList
@@ -1151,6 +1162,7 @@ sliceContainer	.\src\unitTest\basicDataStruct_Test.c	/^slice sliceContainer;$/;"
 sliceDestruct	.\src\list.c	/^bool sliceDestruct(slice *sli) {$/;"	f
 sliceGet	.\src\list.c	/^slice * sliceGet(slice *sliHead, int sliKey) {$/;"	f
 sliceGetVal	.\src\list.c	/^char * sliceGetVal(slice *sliHead, int sliKey) {$/;"	f
+sliceNext	.\src\.mibTreeGen.c.swp	/^/;"	v
 sliceNext	.\src\list.c	/^slice * sliceNext(slice *sli) {$/;"	f
 slicePrev	.\src\list.c	/^slice * slicePrev(slice *sli) {$/;"	f
 sliceRelease	.\src\list.c	/^bool sliceRelease(slice *sli) {$/;"	f
@@ -1169,6 +1181,7 @@ strDuplicate	.\src\lexDeal.c	/^char * strDuplicate(char *src) {$/;"	f
 stringToIdentList	.\src\util.c	/^int stringToIdentList(char *str, hashMap *symbolMap, char seperator) {$/;"	f
 suffix	.\include\symbolTbl.h	/^    char *suffix;$/;"	m	struct:leaveMeta_t
 suffix	.\include\symbolTbl.h	/^    char *suffix;$/;"	m	struct:nodeMeta_t
+suffix	.\src\.mibTreeGen.c.swp	/^/;"	v
 swStack	.\include\dispatcher.h	/^    genericStack swStack;$/;"	m	struct:switchingState
 swState	.\src\dispatcher.c	/^switchingState swState;$/;"	v
 switchInfo	.\include\dispatcher.h	/^typedef struct switchInfo {$/;"	s

@@ -489,7 +489,7 @@ int mibTreeHeadMerge(mibTreeHead *treeHead) {
                 current = currentUpdate(current, current_merge, iterMerge);  
                 iterMerge_tmp = mibTreeNext(iterMerge);
                 
-                if (current_merge->node.prev != NULL || current_merge->node.next != NULL)
+                if (current_merge->node.prev != NULL && current_merge->node.next != NULL)
                     numOfTree -= 1; 
 
                 mibTreeDelete(current_merge);
@@ -561,6 +561,82 @@ NEW_TREE:
     return TRUE;
 }
 
+static char * oidComplement(char *parentOid, char *suffix) {
+    char *oid;
+    int oidLength = SIZE_OF_OID_STRING;
+    
+    if (isNullPtr(parentOid) || isNullPtr(suffix))
+        return NULL;
+
+    // Overflow checking.
+    if (strlen(parentOid) >= SIZE_OF_OID_STRING) {
+        oidLength += EXTRA_OF_OID_LEN; 
+    }
+
+    oid = (char *)malloc(oidLength);
+    memset(oid, 0, oidLength);
+
+    strncpy(oid, parentOid, oidLength);
+    strncat(oid, ".", 1);
+    strncat(oid, suffix, strlen(suffix));
+
+    return oid;
+}
+
+static int oidComplete(void *arg, mibObjectTreeNode *node) {
+    char *newOid;
+    mibObjectTreeNode *parent;
+    mibNodeInfo *nInfo_P, *nInfo_C;
+    mibLeaveInfo *lInfo_C;
+
+    if (isNullPtr(node))
+        return ERROR;
+
+    if (isNullPtr(node->parent))
+        return OK;
+    
+    parent = node->parent; 
+    nInfo_P = parent->info;
+
+    if (node->isNode) {
+        nInfo_C = node->info; 
+        newOid = oidComplement(nInfo_P->oid, nInfo_C->oid); 
+        RELEASE_MEM(nInfo_C->oid);
+        nInfo_C->oid = newOid;
+    } else {
+        lInfo_C = node->info;
+        newOid = oidComplement(nInfo_P->oid, lInfo_C->nodeInfo->oid); 
+        RELEASE_MEM(lInfo_C->nodeInfo->oid);
+        lInfo_C->nodeInfo->oid = newOid;
+    }
+     
+    return OK; 
+}
+
+int mibTreeHeadOidComplete(mibTreeHead *treeHead) {
+    mibTree *tree;
+
+    if (isNullPtr(treeHead))
+        return ERROR;
+    
+    // Oid completment should be run after mibTree merge
+    // there should only one mibTree exists in the tree list.
+    assert(treeHead->numOfTree == 1); 
+    
+    tree = mibTreeHeadFirstTree(treeHead);
+
+    travel_MibTree(tree->root, oidComplete, NULL);
+
+    return OK;
+}
+
+mibTree * mibTreeHeadFirstTree(mibTreeHead *treeHead) {
+    if (isNullPtr(treeHead))
+        return NULL;
+
+    return mibTreeNext(&treeHead->trees);
+}
+
 #ifdef MIB2DOC_UNIT_TESTING
 
 #include "test.h"
@@ -568,15 +644,21 @@ NEW_TREE:
 typedef struct {
     int idx;
     char *order;
+    char *oid[];
 } order;
 
 static int mibTreeMergeAssert(void *arg, mibObjectTreeNode *node) {
     int idx;
     order *pOrder = arg;
+    mibNodeInfo *info; 
     
+    info = node->info;
+
     idx = pOrder->idx; 
     if (pOrder->order[idx] != node->identifier[0])
         fail();
+    if (strncmp(pOrder->oid[idx], info->oid, strlen(info->oid)) != 0)
+       fail(); 
 
     ++idx;
     pOrder->idx = idx;
@@ -614,10 +696,12 @@ void mibTreeObjTree__MIBTREE_MERGE(void **state) {
     assert_int_equal(treeHead.numOfTree, 3);
 
     mibTreeHeadMerge(&treeHead);
+    mibTreeHeadOidComplete(&treeHead);
 
     assert_int_equal(treeHead.numOfTree, 1);
     
     char nodeOrder[7] = {'A', 'B', 'G', 'D', 'C', 'F', 'E'};
+    char *oid[7] = {"1", "1.2", "1.2.2", "1.2.1", "1.3", "1.3.1", "1.3.2"};
     order orderDeck;
 
     orderDeck.idx = 0;
