@@ -53,12 +53,11 @@ MAIN_PART :
     | /* empty */ ;
 
 DEFINITION :
-	IDENTIFIER DEF ASSIGNED BEGIN_ { printf("%s\n", $IDENTIFIER);  };
+	IDENTIFIER DEF ASSIGNED BEGIN_ { };
 
 IMPORT :
 	IMPORTS_ MODULES SEMICOLON    {
         // Begining to import symbol from another mib files.
-        printf("IMPORT\n");
         importWorks(&importInfoStack); 
     };
 
@@ -137,7 +136,6 @@ OBJ_DEAL :
 
 OBJ_IDENTIFIER :
 	IDENTIFIER[chil] OBJ_IDEN_ ASSIGNED L_BRACE IDENTIFIER[parent] NUM R_BRACE {
-        printf("%s\n", $chil);
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct($chil));
 		dispatch(DISPATCH_PARAM_STAGE, param);
