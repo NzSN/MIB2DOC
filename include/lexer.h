@@ -466,7 +466,7 @@ extern int yylex (void);
 #undef yyTABLES_NAME
 #endif
 
-#line 63 "src\\yy_lex.l"
+#line 63 "./src/yy_lex.l"
 
 
 #line 472 "include/lexer.h"
