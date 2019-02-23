@@ -47,7 +47,15 @@ MAIN_PART :
 	| TRAP MAIN_PART
 	| SEQUENCE MAIN_PART
     | SMI MAIN_PART
-	| END_ MAIN_PART
+	| END_ MAIN_PART {
+        switchingState *pState = getCurSwInfo();
+        if (SW_STATE((*pState)) == DISPATCH_MODE_SYMBOL_COLLECTING) {
+            // In include context mark the module scan is already done.
+        } else if (SW_STATE((*pState)) == DISPATCH_MODE_DOC_GENERATING) {
+            // In mibTreeGen context we should merge seperate trees into one.
+            mibTreeHeadMerge(MIB_TREE_R);  
+        }
+    }
     | DEFINITION MAIN_PART
     | IMPORT MAIN_PART
     | /* empty */ ;

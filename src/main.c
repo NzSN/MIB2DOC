@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     if (writeTo == NULL)
         printf("%s\n", "result open failed");
 
-    //documentGen(&mibObjectTreeRoot, writeTo);
+    documentGen(&mibObjectTreeRoot, writeTo);
     showTree(&trees);
     return 0;
 }

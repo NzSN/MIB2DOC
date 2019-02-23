@@ -1,15 +1,32 @@
 CASE DEFINITIONS ::= BEGIN
 
 IMPORTS
-    aliali FROM ALIALI;
+    org FROM ALIALI;
 
-sys OBJECT-TYPE
+A OBJECT-TYPE
     SYNTAX INTEGER
     MAX-ACCESS read-only
     STATUS current
     DESCRIPTION
         "sys"
-    ::= { iso 1 }
+    ::= { org 1 }
+
+C OBJECT-TYPE
+    SYNTAX INTEGER
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION
+        "sys"
+    ::= { B 1 }
+
+B OBJECT-TYPE
+    SYNTAX INTEGER
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION
+        "sys"
+    ::= { A 2 }
+
 
 END
 

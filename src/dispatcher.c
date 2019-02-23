@@ -501,15 +501,15 @@ int importWorks(genericStack *importInfoStack) {
     while (pop(importInfoStack, &infoCollect) == 0) { 
         modName = infoCollect->modName;
         symbolMap = infoCollect->symbols;
-         
+        
         switchToModule(&swState, modName);         
         
         SW_STATE_SET(swState, DISPATCH_MODE_SYMBOL_COLLECTING); 
         SW_CUR_SWITCH_INFO(swState).purpose = SWITCHING_INC_PURPOSE;
 
         SW_CUR_IMPORT(swState).modName = strdup(modName); 
-        SW_CUR_IMPORT(swState).symbols = hashMapDup(infoCollect->symbols);
-
+        SW_CUR_IMPORT(swState).symbols = hashMapDup(symbolMap);
+        
         // Clean
         collectInfo_release(infoCollect);    
         RELEASE_MEM(infoCollect);
@@ -518,8 +518,8 @@ int importWorks(genericStack *importInfoStack) {
     return TRUE;
 }
 
-void * getCurSwInfo() {
-    return (void *)&swState;
+switchingState * getCurSwInfo() {
+    return &swState;
 }
 
 #ifdef MIB2DOC_UNIT_TESTING

@@ -224,9 +224,7 @@ bool sliceRelease_STATIC(slice *sli) {
     if (isNullPtr(sli)) 
         return FALSE;
 
-    sli = sliceNext(sli);
-
-    sliceRelease(sli);
+    sliceRelease(sliceNext(sli));
 
     sli->sliNode.next = NULL;
     sli->sliNode.prev = NULL;

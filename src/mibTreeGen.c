@@ -271,9 +271,9 @@ int (*symbolCollectRoutine[SLICE_TYPE_MAXIMUM])(dispatchParam *);
 /* Initialize symbolCollectRoutine array */
 int symbolCollectingInit() {
     /* Symbol Table building function */
-    symbolCollectRoutine[OBJECT] = symbolCollect_BUILD_INNER_NODE;
+    symbolCollectRoutine[OBJECT_IDENTIFIER] = symbolCollect_BUILD_INNER_NODE;
     symbolCollectRoutine[TRAP] = symbolCollect_BUILD_TRAP;
-    symbolCollectRoutine[OBJECT_IDENTIFIER] = symbolCollect_BUILD_LEAVE_NODE;
+    symbolCollectRoutine[OBJECT] = symbolCollect_BUILD_LEAVE_NODE;
     symbolCollectRoutine[SEQUENCE] = symbolCollect_BUILD_SEQUENCE;
     symbolCollectRoutine[SMI_DEF] = symbolCollect_BUILD_SMI_DEF;
 
@@ -293,9 +293,11 @@ int symbolCollecting(int type, dispatchParam *param) {
 
     if (type >= OBJECT && type <= SMI_DEF) {
         ident = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-        if (!collectInfo_exists(SW_CUR_IMPORT_REF(swState), ident))
+        if (!collectInfo_exists(SW_CUR_IMPORT_REF(swState), ident)) {
+            printf("123\n");
             sliceRelease_STATIC(&symCollectSlice);
             return TRUE;
+        }
     }   
     return symbolCollectRoutine[type](param);
 }
@@ -315,16 +317,19 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
 
     // Is the symbol exists in symbol table ?
     if (symbolTableSearch(&symTable, symbolIdent)) {
-        /* Already exist only need to remove it from modStack */
-        goto MOD_STACK_OP_REMOVE;
+        // Already exist only need to remove it from modStack
+        RELEASE_MEM(parentIdent);
+        RELEASE_MEM(symbolIdent);
+        RELEASE_MEM(suffix);
+        goto POST_CLEANING;
     }
     
     // Install the symbol into symbol table.
     newSymbol = symbolNodeConst(symbolIdent, parentIdent, suffix);
     symbolTableAdd(&symTable, newSymbol); 
 
-MOD_STACK_OP_REMOVE:
-    /* Need to remove the symbol found from list in the modStack */
+POST_CLEANING:
+    // Need to remove the symbol found from list in the modStack
     retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
     sliceRelease_STATIC(&symCollectSlice);
     return retVal;
@@ -335,7 +340,7 @@ static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
 
     retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
-    sliceRelease(&symCollectSlice);
+    sliceRelease_STATIC(&symCollectSlice);
 
     return retVal;
 }
@@ -343,9 +348,9 @@ static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
 static int symbolCollect_BUILD_LEAVE_NODE(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-
+     
     retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
-    sliceRelease(&symCollectSlice);
+    sliceRelease_STATIC(&symCollectSlice);
 
     return retVal;
 }
@@ -355,7 +360,7 @@ static int symbolCollect_BUILD_SEQUENCE(dispatchParam *param) {
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
 
     retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
-    sliceRelease(&symCollectSlice);
+    sliceRelease_STATIC(&symCollectSlice);
 
     return retVal;
 }
@@ -365,7 +370,7 @@ static int symbolCollect_BUILD_SMI_DEF(dispatchParam *param) {
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
 
     retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
-    sliceRelease(&symCollectSlice);
+    sliceRelease_STATIC(&symCollectSlice);
 
     return retVal;
 }
@@ -425,6 +430,26 @@ static int symbolCollect_PARAM_SUFFIX(dispatchParam *param) {
 }
 
 #ifdef MIB2DOC_UNIT_TESTING
+
+#include "test.h"
+
+void mibTreeGen__SYMBOL_COLLECT(void **state) {
+    symbol_t *symbol; 
+    
+    symTableInit(); 
+
+    symbolCollect_PARAM_IDENT(disParamConstruct("IDENT"));
+    symbolCollect_PARAM_TYPE(disParamConstruct("TYPE")); 
+    symbolCollect_PARAM_PARENT(disParamConstruct("PARENT"));
+    symbolCollect_PARAM_SUFFIX(disParamConstruct("SUFFIX"));
+    symbolCollect_PARAM_DESC(disParamConstruct("DESC"));
+    symbolCollect_PARAM_PERM(disParamConstruct("PERM"));
+
+    symbolCollect_BUILD_INNER_NODE(NULL);
+    
+    symbol = symbolTableSearch(&symTable, "IDENT");
+    assert_non_null(symbol); 
+}
 
 void mibTreeGenTesting(void **state) {
                    
