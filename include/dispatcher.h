@@ -39,7 +39,7 @@ typedef struct collectInfo {
     hashMap *symbols;
 } collectInfo;
 
-typedef enum {
+enum {
     SWITCHING_INC_PURPOSE,
     SWITCHING_GEN_PURPOSE
 };
@@ -124,6 +124,7 @@ int collectInfo_exists(collectInfo *cInfo, char *symbol);
 int collectInfo_release(collectInfo *cInfo);
 
 int importWorks(genericStack *importInfoStack);
+switchingState * getCurSwInfo();
 
 #ifdef MIB2DOC_UNIT_TESTING
 

@@ -294,7 +294,6 @@ int symbolCollecting(int type, dispatchParam *param) {
     if (type >= OBJECT && type <= SMI_DEF) {
         ident = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
         if (!collectInfo_exists(SW_CUR_IMPORT_REF(swState), ident)) {
-            printf("123\n");
             sliceRelease_STATIC(&symCollectSlice);
             return TRUE;
         }
@@ -438,12 +437,12 @@ void mibTreeGen__SYMBOL_COLLECT(void **state) {
     
     symTableInit(); 
 
-    symbolCollect_PARAM_IDENT(disParamConstruct("IDENT"));
-    symbolCollect_PARAM_TYPE(disParamConstruct("TYPE")); 
-    symbolCollect_PARAM_PARENT(disParamConstruct("PARENT"));
-    symbolCollect_PARAM_SUFFIX(disParamConstruct("SUFFIX"));
-    symbolCollect_PARAM_DESC(disParamConstruct("DESC"));
-    symbolCollect_PARAM_PERM(disParamConstruct("PERM"));
+    symbolCollect_PARAM_IDENT(disParamConstruct(strdup("IDENT")));
+    symbolCollect_PARAM_TYPE(disParamConstruct(strdup("TYPE"))); 
+    symbolCollect_PARAM_PARENT(disParamConstruct(strdup("PARENT")));
+    symbolCollect_PARAM_SUFFIX(disParamConstruct(strdup("SUFFIX")));
+    symbolCollect_PARAM_DESC(disParamConstruct(strdup("DESC")));
+    symbolCollect_PARAM_PERM(disParamConstruct(strdup("PERM")));
 
     symbolCollect_BUILD_INNER_NODE(NULL);
     

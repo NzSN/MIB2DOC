@@ -4,6 +4,8 @@
 %{
     #include "yy_syn.tab.h"
     #include "lexDeal.h"
+
+    void * getCurSwInfo();
 %}
 
 %%

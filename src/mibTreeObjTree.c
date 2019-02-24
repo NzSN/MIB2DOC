@@ -674,25 +674,25 @@ void mibTreeObjTree__MIBTREE_MERGE(void **state) {
 
     memset(&treeHead, 0, sizeof(mibTreeHead));
     
-    node = mibNodeBuild("A", "1", NULL); 
+    node = mibNodeBuild("A", strdup("1"), NULL); 
     mibTreeHeadAppend(&treeHead, node);
     
-    node = mibNodeBuild("B", "2", "A");
+    node = mibNodeBuild("B", strdup("2"), "A");
     mibTreeHeadAppend(&treeHead, node); 
     
-    node = mibNodeBuild("F", "1", "C");
+    node = mibNodeBuild("F", strdup("1"), "C");
     mibTreeHeadAppend(&treeHead, node);
     
-    node = mibNodeBuild("E", "2", "C"); 
+    node = mibNodeBuild("E", strdup("2"), "C"); 
     mibTreeHeadAppend(&treeHead, node);
 
-    node = mibNodeBuild("C", "3", "A");
+    node = mibNodeBuild("C", strdup("3"), "A");
     mibTreeHeadAppend(&treeHead, node);
      
-    node = mibNodeBuild("G", "2", "B");
+    node = mibNodeBuild("G", strdup("2"), "B");
     mibTreeHeadAppend(&treeHead, node);
     
-    node = mibNodeBuild("D", "1", "B");
+    node = mibNodeBuild("D", strdup("1"), "B");
     mibTreeHeadAppend(&treeHead, node);
 
     assert_int_equal(treeHead.numOfTree, 3);

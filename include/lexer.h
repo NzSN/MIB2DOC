@@ -223,7 +223,7 @@ extern char *yytext;
  */
 #include <unistd.h>
 #endif
-    
+
 #ifndef YY_EXTRA_TYPE
 #define YY_EXTRA_TYPE void *
 #endif
@@ -466,7 +466,7 @@ extern int yylex (void);
 #undef yyTABLES_NAME
 #endif
 
-#line 63 "src\\yy_lex.l"
+#line 65 "./src/yy_lex.l"
 
 
 #line 472 "include/lexer.h"
