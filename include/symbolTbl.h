@@ -59,6 +59,7 @@ int symbolTableAdd(symbolTable *tbl, symbol_t *sym);
 int symbolTableDelete(symbolTable *tbl, char *symIdent);
 int symbolTableRelease(symbolTable *tbl);
 int symbolTableRelease_static(symbolTable *tbl);
+int symTableInit();
 
 /* symbol_t functions */
 symbol_t * symbolNodeConst(char *ident, char *parent, char *suffix);
