@@ -84,7 +84,6 @@ int mibObjGen(int nodeType) {
     return 0;
 }
 
-
 static char * oidComplement(char *parent, char *suffix) {
     char *oid, *parentOid;
     int oidLength = SIZE_OF_OID_STRING;

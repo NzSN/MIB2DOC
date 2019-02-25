@@ -349,10 +349,10 @@ static symbolKey * symbolKeyInit(symbolKey *key, char *symbols) {
     base = &key->base; 
     
     // base init
-    base->isEqual = symbolKeyEqual;
-    base->release = symbolKeyRelease;
-    base->value = symbolKeyValue; 
-    base->copy = symbolKeyCopy; 
+    base->isEqual = (pairKeyIsEqual)symbolKeyEqual;
+    base->release = (pairKeyRelease)symbolKeyRelease;
+    base->value = (pairKeyValue)symbolKeyValue; 
+    base->copy = (pairKeyCopy)symbolKeyCopy; 
 
     key->symbolIndex = symbols;
 
@@ -376,12 +376,12 @@ static symbolVal * symbolValInit(symbolVal *val, char *symbol) {
         return NULL;
     
     base = &val->base;
-
+     
     // base init
-    base->isEqual = symbolValEqual;
-    base->release = symbolValRelease;
-    base->value = symbolValValue;
-    base->copy = symbolValCopy; 
+    base->isEqual = (pairValIsEqual)symbolValEqual;
+    base->release = (pairValRelease)symbolValRelease;
+    base->value = (pairValValue)symbolValValue;
+    base->copy = (pairValCopy)symbolValCopy; 
 
     val->symbol = symbol;
     return val;
