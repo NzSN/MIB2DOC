@@ -1,7 +1,5 @@
 CASE DEFINITIONS ::= BEGIN
 
-IMPORTS
-    org FROM ALIALI;
 
 A OBJECT IDENTIFIER ::= { org 1 }
 B OBJECT IDENTIFIER ::= { A 2 }
@@ -13,6 +11,14 @@ C OBJECT-TYPE
     DESCRIPTION
         "C"
     ::= { B 1 }
+
+D OBJECT-TYPE
+    SYNTAX INTEGER
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION
+        "D"
+    ::= { F 1 }  
 
 END
 

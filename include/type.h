@@ -41,6 +41,7 @@
 #define EXTRA_OF_OID_LEN 10
 #define isNullPtr(PTR) (PTR ? false : true)
 #define RELEASE_MEM(PTR) ({free(PTR); PTR=NULL;})
+#define errorMsg(msg, args...) fprintf(stderr, msg, ##args)
 #define containerOf(ptr, ConType, member) ({\
         const typeof( ((ConType *)(0))->member) *__mptr = ptr;\
         (ConType *)((char *)__mptr - offsetof(ConType, member));\

@@ -68,7 +68,7 @@ int dispatch(dispatch_type disType, dispatchParam* param)
         mibObjGen((unsigned long)disParamGet(disParamRetrive(&param)));
         break;
     case SYMBOL_COLLECTING:
-        symCollectType = (int)disParamGet(disParamRetrive(&param)); 
+        symCollectType = (unsigned long)disParamGet(disParamRetrive(&param)); 
         symbolCollecting(symCollectType, param);
         break;
     case IGNORE:
@@ -502,7 +502,10 @@ int importWorks(genericStack *importInfoStack) {
         modName = infoCollect->modName;
         symbolMap = infoCollect->symbols;
         
-        switchToModule(&swState, modName);         
+        if (switchToModule(&swState, modName) == ABORT) {
+            errorMsg("%s: No such Mib file.\n", modName); 
+            exit(1);   
+        }
         
         SW_STATE_SET(swState, DISPATCH_MODE_SYMBOL_COLLECTING); 
         SW_CUR_SWITCH_INFO(swState).purpose = SWITCHING_INC_PURPOSE;

@@ -478,6 +478,8 @@ int mibTreeHeadMerge(mibTreeHead *treeHead) {
         
         skip = isNullPtr(current_merge->root) || MIBTREE_IS_LAST_TREE(current_merge);
         if (skip) continue;
+        
+        iterMerge_tmp = NULL;
 
         do { 
             newTree = mibTreeMerge(current_merge, iterMerge);   
