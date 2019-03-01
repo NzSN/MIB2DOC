@@ -240,7 +240,8 @@ int main(void) {
             cmocka_unit_test(hash__HASH_BASIC),
             cmocka_unit_test(mibTreeObjTree__MIBTREE_MERGE),
             cmocka_unit_test(list_symbolTable),
-            cmocka_unit_test(mibTreeGen__SYMBOL_COLLECT)
+            cmocka_unit_test(mibTreeGen__SYMBOL_COLLECT),
+            cmocka_unit_test(yy_syn_def__SEQUENCE)
             #endif
     };
 

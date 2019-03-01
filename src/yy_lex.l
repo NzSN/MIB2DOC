@@ -23,7 +23,7 @@ IpAddress                   |
 MacAddress                  | 
 OCTET[ \n\t\r]+STRING([ \n\t\r]*\(.*\))*    | 
 SEQUENCE[ \n\t\r]+OF[ \n\t\r]*[a-zA-Z]*     | 
-RowStatus                           { yylval = strDuplicate(yytext); return TYPE; }
+RowStatus                           { yylval.str = strdup(yytext); return TYPE; }
 
 SEQUENCE                            { return SEQ; }
 
@@ -41,20 +41,20 @@ read-only               |
 write                   |
 read-write              |
 accessible-for-notify   |
-not-accessible                      { yylval = strDuplicate(yytext); return ACCESS_VALUE; }
+not-accessible                      { yylval.str = strdup(yytext); return ACCESS_VALUE; }
 
 STATUS                              { return STATUS_SPECIFIER; }
 current                             { return STATUS_VALUE; }
 DESCRIPTION                         { return DESC_SPECIFIER; }
-\"[^\"]*\"{1}                       { yylval = strDuplicate(yytext); return DESC_VALUE; }
+\"[^\"]*\"{1}                       { yylval.str = strdup(yytext); return DESC_VALUE; }
 ::=                                 { return ASSIGNED; }
 
 \{                                  { return L_BRACE; }
 \}                                  { return R_BRACE; }
 
-[0-9]+                              { yylval = strDuplicate(yytext); return NUM; }
+[0-9]+                              { yylval.str = strdup(yytext); return NUM; }
 
-([a-zA-Z0-9]|"-")+                  { yylval = strDuplicate(yytext); return IDENTIFIER; }
+([a-zA-Z0-9]|"-")+                  { yylval.str = strdup(yytext); return IDENTIFIER; }
 
 <<EOF>>                             {
                                         if (switchToPrevModule(getCurSwInfo()) == -1) {

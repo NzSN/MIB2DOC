@@ -986,7 +986,7 @@ case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
 #line 26 "./src/yy_lex.l"
-{ yylval = strDuplicate(yytext); return TYPE; }
+{ yylval.str = strdup(yytext); return TYPE; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
@@ -1049,7 +1049,7 @@ case 28:
 case 29:
 YY_RULE_SETUP
 #line 44 "./src/yy_lex.l"
-{ yylval = strDuplicate(yytext); return ACCESS_VALUE; }
+{ yylval.str = strdup(yytext); return ACCESS_VALUE; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
@@ -1070,7 +1070,7 @@ case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
 #line 49 "./src/yy_lex.l"
-{ yylval = strDuplicate(yytext); return DESC_VALUE; }
+{ yylval.str = strdup(yytext); return DESC_VALUE; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
@@ -1090,12 +1090,12 @@ YY_RULE_SETUP
 case 37:
 YY_RULE_SETUP
 #line 55 "./src/yy_lex.l"
-{ yylval = strDuplicate(yytext); return NUM; }
+{ yylval.str = strdup(yytext); return NUM; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 57 "./src/yy_lex.l"
-{ yylval = strDuplicate(yytext); return IDENTIFIER; }
+{ yylval.str = strdup(yytext); return IDENTIFIER; }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 #line 59 "./src/yy_lex.l"

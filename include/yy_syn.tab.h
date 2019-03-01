@@ -1,9 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.3.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2019 Free Software Foundation,
-   Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -31,9 +30,6 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
-
 #ifndef YY_YY_SRC_YY_SYN_TAB_H_INCLUDED
 # define YY_YY_SRC_YY_SYN_TAB_H_INCLUDED
 /* Debug traces.  */
@@ -49,39 +45,49 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    IDENTIFIER = 258,
-    OBJ_SPECIFIER = 259,
-    SYNTAX_SPECIFIER = 260,
-    ACCESS_SPECIFIER = 261,
-    ACCESS_VALUE = 262,
-    STATUS_SPECIFIER = 263,
-    STATUS_VALUE = 264,
-    DESC_SPECIFIER = 265,
-    DESC_VALUE = 266,
-    MOUNT_POINT = 267,
-    ASSIGNED = 268,
-    BEGIN_ = 269,
-    END_ = 270,
-    DEF = 271,
-    SEQ = 272,
-    COMMA = 273,
-    SEMICOLON = 274,
-    INDEX_ = 275,
-    TRAP_SPECIFIER = 276,
-    OBJ_IDEN_ = 277,
-    L_BRACE = 278,
-    R_BRACE = 279,
-    OBJECTS_ = 280,
-    TYPE = 281,
-    NUM = 282,
-    FROM_ = 283,
-    IMPORTS_ = 284
+    OBJ_SPECIFIER = 258,
+    SYNTAX_SPECIFIER = 259,
+    ACCESS_SPECIFIER = 260,
+    STATUS_SPECIFIER = 261,
+    STATUS_VALUE = 262,
+    DESC_SPECIFIER = 263,
+    MOUNT_POINT = 264,
+    ASSIGNED = 265,
+    BEGIN_ = 266,
+    END_ = 267,
+    DEF = 268,
+    SEQ = 269,
+    COMMA = 270,
+    SEMICOLON = 271,
+    INDEX_ = 272,
+    TRAP_SPECIFIER = 273,
+    OBJ_IDEN_ = 274,
+    L_BRACE = 275,
+    R_BRACE = 276,
+    OBJECTS_ = 277,
+    FROM_ = 278,
+    IMPORTS_ = 279,
+    IDENTIFIER = 280,
+    NUM = 281,
+    TYPE = 282,
+    ACCESS_VALUE = 283,
+    DESC_VALUE = 284
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef char * YYSTYPE;
+
+union YYSTYPE
+{
+#line 12 "./src/yy_syn.y" /* yacc.c:1909  */
+
+    char *str;
+
+#line 88 "./src/yy_syn.tab.h" /* yacc.c:1909  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -90,6 +96,5 @@ typedef char * YYSTYPE;
 extern YYSTYPE yylval;
 
 int yyparse (void);
-int syntaxParserInit(void);
 
 #endif /* !YY_YY_SRC_YY_SYN_TAB_H_INCLUDED  */

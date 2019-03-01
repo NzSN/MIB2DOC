@@ -1,13 +1,25 @@
-%token IDENTIFIER OBJ_SPECIFIER
+%token OBJ_SPECIFIER
 %token SYNTAX_SPECIFIER
-%token ACCESS_SPECIFIER ACCESS_VALUE
+%token ACCESS_SPECIFIER
 %token STATUS_SPECIFIER STATUS_VALUE
-%token DESC_SPECIFIER DESC_VALUE
+%token DESC_SPECIFIER 
 %token MOUNT_POINT ASSIGNED
 %token BEGIN_ END_ DEF SEQ
 %token COMMA SEMICOLON INDEX_ TRAP_SPECIFIER
 %token OBJ_IDEN_ L_BRACE R_BRACE OBJECTS_
-%token TYPE NUM FROM_ IMPORTS_
+%token FROM_ IMPORTS_
+
+%union {
+    char *str;
+}
+
+%token <str> IDENTIFIER
+%token <str> NUM
+%token <str> TYPE
+%token <str> ACCESS_VALUE
+%token <str> DESC_VALUE
+
+
 
 // Prologue
 %code top {
@@ -19,13 +31,7 @@
     #include "symbolTbl.h"
     #include "string.h"
 
-    #define YYSTYPE char *
-    extern symbolTable symTable; 
-    extern YYSTYPE yylval;
-    void yyerror(char const *s) {
-        fprintf(stderr, "%s: %s\n", s, yylval);
-    }    
-    
+    extern symbolTable symTable;     
     dispatchParam importParam;
     genericStack importInfoStack; 
      
@@ -112,7 +118,9 @@ ITEMS :
 	| /* empty */ ;
 
 SEQUENCE :
-	IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE;
+	IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE {
+
+    };
 
 SEQ_ITEM :
 	IDENTIFIER TYPE COMMA SEQ_ITEM
@@ -242,4 +250,8 @@ MOUNT :
 %%
 
 // Epilogue
+extern YYSTYPE yylval;
+void yyerror(char const *s) {
+    fprintf(stderr, "%s", s);
+}    
 
