@@ -293,9 +293,6 @@ mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
 mibTree * mibTreeConstruction() {
     mibTree *tree;
 
-    if (isNullPtr(tree))
-        return NULL;
-    
     tree = (mibTree *)malloc(sizeof(mibTree));
     memset(tree, 0, sizeof(mibTree));
 
@@ -694,6 +691,8 @@ void mibTreeObjTree__MIBTREE_MERGE(void **state) {
     
     node = mibNodeBuild("D", strdup("1"), "B");
     mibTreeHeadAppend(&treeHead, node);
+
+    showTree(&treeHead);
 
     assert_int_equal(treeHead.numOfTree, 3);
 
