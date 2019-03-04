@@ -15,7 +15,11 @@ typedef struct {
     sequence_item items; 
 } sequence;
 
+#ifdef MIB2DOC_UNIT_TESTING
 
+void yy_syn_def__SEQUENCE(void **state);
+
+#endif
 
 #endif /* __YY_SYN_DEF_H__ */
 

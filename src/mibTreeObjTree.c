@@ -694,8 +694,6 @@ void mibTreeObjTree__MIBTREE_MERGE(void **state) {
     node = mibNodeBuild("D", strdup("1"), "B");
     mibTreeHeadAppend(&treeHead, node);
 
-    showTree(&treeHead);
-
     assert_int_equal(treeHead.numOfTree, 3);
 
     mibTreeHeadMerge(&treeHead);

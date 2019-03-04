@@ -12,7 +12,8 @@ set(SOURCE_FILES
     ${SRC_DIR}/queue.c ${SRC_DIR}/mibTreeObjTree.c 
     ${SRC_DIR}/stack.c ${SRC_DIR}/list.c ${SRC_DIR}/lexDeal.c
     ${SRC_DIR}/options.c ${SRC_DIR}/util.c ${SRC_DIR}/dispatcher.c
-    ${SRC_DIR}/docGenerate.c ${SRC_DIR}/misc.c ${SRC_DIR}/hash.c)
+    ${SRC_DIR}/docGenerate.c ${SRC_DIR}/misc.c ${SRC_DIR}/hash.c
+    ${SRC_DIR}/yy_syn.def.c)
 add_executable(Mib2Doc ${SOURCE_FILES})
 
 project(UNIT_TEST)
@@ -24,7 +25,7 @@ set(UNIT_TEST_SRC ${UTEST_DIR}/basicDataStruct_Test.c
     ${SRC_DIR}/list.c ${SRC_DIR}/dispatcher.c
     ${SRC_DIR}/lexDeal.c ${SRC_DIR}/misc.c
     ${SRC_DIR}/util.c ${SRC_DIR}/options.c
-    ${SRC_DIR}/hash.c)
+    ${SRC_DIR}/hash.c ${SRC_DIR}/yy_syn.def.c)
 link_libraries(cmocka)
 add_executable(UNIT_TEST ${UNIT_TEST_SRC})
 target_compile_definitions(UNIT_TEST PUBLIC MIB2DOC_UNIT_TESTING)

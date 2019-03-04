@@ -15,6 +15,7 @@
 #include "hash.h"
 #include <stdio.h>
 #include "test.h"
+#include "yy_syn.def.h"
 
 mibObjectTreeNode mibObjectTreeRoot;
 slice sliceContainer;
