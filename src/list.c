@@ -18,13 +18,13 @@ enum {
 /************
  * ListNode *
  ************/
-listNode *listNodeNext(listNode *sliNode) {
+listNode *listNodeNext(const listNode *sliNode) {
     if (isNullPtr(sliNode) || isNullPtr(sliNode->next))
         return NULL;  
     return sliNode->next;
 }
 
-listNode * listNodePrev(listNode *sliNode) {
+listNode * listNodePrev(const listNode *sliNode) {
     if (isNullPtr(sliNode) || isNullPtr(sliNode->prev))
         return NULL;
     return sliNode->prev;
@@ -72,14 +72,14 @@ listNode * listNodeDelete(listNode *sliNode) {
     return sliNode;
 }
 
-listNode * listNodeTail(listNode *head) {
+listNode * listNodeTail(const listNode *head) {
     if (isNullPtr(head)) {
         return NULL;
     }
     while (head->next) {
         head = head->next;
     }
-    return head;
+    return (listNode *)head;
 }
 
 listNode * listNodeAppend(listNode *listH, listNode *listN) {

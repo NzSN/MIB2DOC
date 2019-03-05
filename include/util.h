@@ -7,5 +7,6 @@
 int stringToIdentList(char *str, hashMap *map, char seperator);
 int tableRecognize(char *buffer, int size);
 int entryRecognize(char *buffer, int size);
+char * randStr(int length);
 
 #endif /* _UTIL_H_ */

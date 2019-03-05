@@ -33,12 +33,12 @@ typedef struct slice {
 
 /* ListNode */
 typedef void (*listNodeTask)(listNode *head, void *arg);
-listNode *listNodePrev(listNode *node);
-listNode *listNodeNext(listNode *node);
+listNode *listNodePrev(const listNode *node);
+listNode *listNodeNext(const listNode *node);
 listNode *listNodeInsert(listNode *head, listNode *node);
 listNode *listNodeDelete(listNode *node);
 listNode *listNodeAppend(listNode *listH, listNode *listN);
-listNode * listNodeTail(listNode *head);
+listNode * listNodeTail(const listNode *head);
 bool listNodeIsEmpty(listNode *node);
 int listNodeTravel(listNode *head, listNodeTask func, void *arg);
 

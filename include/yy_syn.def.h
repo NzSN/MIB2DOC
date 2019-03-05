@@ -12,8 +12,12 @@ typedef struct {
 } sequence_item;
 
 typedef struct {
+    int length;
     sequence_item items; 
 } sequence;
+
+// sequence_item's procedures
+sequence_item * seqItemNext(const sequence_item *item);
 
 #ifdef MIB2DOC_UNIT_TESTING
 

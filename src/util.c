@@ -1,5 +1,6 @@
 /* util.c */
 
+#include <stdlib.h>
 #include "util.h"
 
 int stringToIdentList(char *str, hashMap *symbolMap, char seperator) {
@@ -214,6 +215,23 @@ int entryRecognize(char *buffer, int size) {
 
     S_finished:
     return ret;
+}
+
+char * randStr(int length) {
+    if (length <= 0)
+        return NULL;
+    
+    char *str = (char *)malloc(length);
+    int begin = 'a', end = 'z', idx = 0;
+    int randNum, distance = end - begin;
+
+    while (idx < length) {
+        randNum = rand() % distance;
+        randNum += begin;
+        str[idx] = randNum;
+        idx++;
+    }
+    return str;
 }
 
 /* util.c */
