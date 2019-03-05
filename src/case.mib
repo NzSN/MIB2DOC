@@ -20,5 +20,10 @@ D OBJECT-TYPE
         "D"
     ::= { B 1 }  
 
+ll ::= SEQUENCE {
+    index   INTEGER,
+    index1  INTEGER
+}
+
 END
 

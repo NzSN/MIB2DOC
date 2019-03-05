@@ -19,7 +19,13 @@
 %token <str> ACCESS_VALUE
 %token <str> DESC_VALUE
 
+%union {
+    struct sequence_item *si;
+    struct sequence *sq;    
+}
 
+%type <si> SEQ_ITEM
+%type <sq> SEQUENCE
 
 // Prologue
 %code top {
@@ -119,12 +125,16 @@ ITEMS :
 
 SEQUENCE :
 	IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE {
-
+         
     };
 
 SEQ_ITEM :
-	IDENTIFIER TYPE COMMA SEQ_ITEM
-	| IDENTIFIER TYPE;
+	IDENTIFIER TYPE COMMA SEQ_ITEM {
+     
+    }
+	| IDENTIFIER TYPE {
+
+    };
 
 SMI :
     "SMI" IDENTIFIER {

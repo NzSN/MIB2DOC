@@ -83,8 +83,12 @@ union YYSTYPE
 #line 12 "./src/yy_syn.y" /* yacc.c:1909  */
 
     char *str;
+#line 22 "./src/yy_syn.y" /* yacc.c:1909  */
 
-#line 88 "./src/yy_syn.tab.h" /* yacc.c:1909  */
+    struct sequence_item *si;
+    struct sequence *sq;    
+
+#line 92 "./src/yy_syn.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

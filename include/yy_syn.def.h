@@ -5,13 +5,13 @@
 
 #include "list.h"
 
-typedef struct {
+typedef struct sequence_item {
     char *ident;
     char *type;    
     listNode node;
 } sequence_item;
 
-typedef struct {
+typedef struct sequence {
     int length;
     sequence_item items; 
 } sequence;
