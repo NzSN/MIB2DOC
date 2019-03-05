@@ -39,7 +39,8 @@
 #define SIZE_OF_SECTION_RECORD 1024
 #define SIZE_OF_OID_STRING 256
 #define EXTRA_OF_OID_LEN 10
-#define isNullPtr(PTR) (PTR ? false : true)
+#define isNullPtr(PTR) (PTR == NULL)
+#define isNonNullPtr(PTR) (PTR != NULL)
 #define RELEASE_MEM(PTR) ({free(PTR); PTR=NULL;})
 #define errorMsg(msg, args...) fprintf(stderr, msg, ##args)
 #define containerOf(ptr, ConType, member) ({\

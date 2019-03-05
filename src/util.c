@@ -234,5 +234,13 @@ char * randStr(int length) {
     return str;
 }
 
+char * numberToStr(int num) {
+    char *str = (char *)malloc(20);
+    memset(str, 0, 20);
+
+    sprintf(str, "%d", num);
+    return str;
+}
+
 /* util.c */
 
