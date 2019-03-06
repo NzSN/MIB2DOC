@@ -17,6 +17,9 @@
 #include "test.h"
 #include "yy_syn.def.h"
 
+#include "typeTable.h"
+
+
 mibObjectTreeNode mibObjectTreeRoot;
 slice sliceContainer;
 char *sectionRecord[SIZE_OF_SECTION_RECORD];
@@ -242,7 +245,8 @@ int main(void) {
             cmocka_unit_test(mibTreeObjTree__MIBTREE_MERGE),
             cmocka_unit_test(list_symbolTable),
             cmocka_unit_test(mibTreeGen__SYMBOL_COLLECT),
-            cmocka_unit_test(yy_syn_def__SEQUENCE)
+            cmocka_unit_test(yy_syn_def__SEQUENCE),
+            cmocka_unit_test(list__TYPE_TABLE) 
             #endif
     };
 

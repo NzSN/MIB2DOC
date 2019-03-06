@@ -8,6 +8,8 @@
     void * getCurSwInfo();
 %}
 
+%x SMI_FIELD
+
 %%
 [\n ]+
 [\t ]+
@@ -37,6 +39,13 @@ FROM                                { return FROM_; }
 \;                                  { return SEMICOLON; }
 END                                 { return END_; }
 
+MODULE-IDENTITY                     { return MOD_SPECIFIER; }
+LAST-UPDATED                        { return LAST_UPDATED; }
+\"[0-9a-zA-Z]*\"[ \t]*--[ \t]*[0-9a-zA-Z\t ,]* { return REVISION_DATE; }
+ORGANIZATION                        { return ORGANIZATION; }
+REVISION                            { return REVISION; }
+CONTACT-INFO                        { return CONTACT_INFO; }
+
 read-only               |
 write                   |
 read-write              |
@@ -54,7 +63,11 @@ DESCRIPTION                         { return DESC_SPECIFIER; }
 
 [0-9]+                              { yylval.str = strdup(yytext); return NUM; }
 
+SMI                                 { BEGIN(SMI_FIELD); return SMI_SPECIFIER; }
+
 ([a-zA-Z0-9]|"-")+                  { yylval.str = strdup(yytext); return IDENTIFIER; }
+
+<SMI_FIELD>([0-9a-zA-Z]|"-")+       { BEGIN(INITIAL); yylval.str = strdup(yytext); return SMI_VAL; }
 
 <<EOF>>                             {
                                         if (switchToPrevModule(getCurSwInfo()) == -1) {

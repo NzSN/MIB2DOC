@@ -25,5 +25,18 @@ ll ::= SEQUENCE {
     index1  INTEGER
 }
 
+SMI OBJECT-TYPE
+
+gbnPlatformChassis MODULE-IDENTITY
+    LAST-UPDATED    "1105040000Z"  -- May 4, 2011
+    ORGANIZATION    "GreenNet Systems, Inc."
+    CONTACT-INFO    "GreenNet Systems, Inc.
+                        E-mail: support@green-net.com.cn"
+    DESCRIPTION     "GBN Chassis Management Enterprise MIB definition."
+    REVISION        "1105040000Z"  -- May 4, 2011 
+    DESCRIPTION     
+        "Initial MIB creation." 
+    ::= { gbnPlatform 3 } 
+
 END
 

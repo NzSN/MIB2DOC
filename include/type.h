@@ -30,7 +30,7 @@
 #endif
 
 #ifndef ERROR
-#define ERROR 1
+#define ERROR (-1)
 #endif
 
 #define cSpace ' '
@@ -41,7 +41,8 @@
 #define EXTRA_OF_OID_LEN 10
 #define isNullPtr(PTR) (PTR == NULL)
 #define isNonNullPtr(PTR) (PTR != NULL)
-#define RELEASE_MEM(PTR) ({free(PTR); PTR=NULL;})
+#define RELEASE_MEM(PTR) ({ free(PTR); PTR=NULL; })
+#define RELEASE_IF_NON_NULL(PTR) ({ if (PTR) RELEASE_MEM(PTR); })
 #define errorMsg(msg, args...) fprintf(stderr, msg, ##args)
 #define containerOf(ptr, ConType, member) ({\
         const typeof( ((ConType *)(0))->member) *__mptr = ptr;\

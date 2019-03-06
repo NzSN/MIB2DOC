@@ -5,10 +5,12 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+#include "util.h"
 #include "list.h"
 #include "type.h"
 #include "dispatcher.h"
 #include "symbolTbl.h"
+#include "typeTable.h"
 
 enum {
     SYM_TRAVEL_CONTINUE = 10,
@@ -119,7 +121,7 @@ int listNodeTravel(listNode *head, listNodeTask func, void *arg) {
  *  Element list Operation function define *
  *******************************************/
 slice * sliceConstruct(int sliKey, char *sliVal) {
-    slice *sli = (slice *)malloc(sizeof(slice));
+    slice *sli = (slice *)Malloc(sizeof(slice));
 
     sli->sliKey = sliKey;
     sli->sliVal = sliVal;
@@ -272,7 +274,7 @@ dispatchParam * disParamConstruct(void *param) {
         return NULL;
     }
      
-    ret  = (dispatchParam *)malloc(sizeof(dispatchParam));
+    ret  = (dispatchParam *)Malloc(sizeof(dispatchParam));
     memset(ret, 0, sizeof(dispatchParam));
     ret->param = param;
     
@@ -379,7 +381,7 @@ static symbol_k * symbolKCopy(symbol_k *key) {
     if (isNullPtr(key))
         return NULL;
 
-    copy = (symbol_k *)malloc(sizeof(symbol_k));
+    copy = (symbol_k *)Malloc(sizeof(symbol_k));
     return symbolKInit(copy, strdup(key->ident));
 }
 
@@ -427,7 +429,7 @@ static symbol_k * symbolKConst(char *name) {
     if (isNullPtr(name))
         return NULL;
 
-    pKey = (symbol_k *)malloc(sizeof(symbol_k));
+    pKey = (symbol_k *)Malloc(sizeof(symbol_k));
 
     return symbolKInit(pKey, name);
 }
@@ -470,7 +472,7 @@ symbolTable * symbolTableInit(symbolTable *tbl) {
 symbolTable * symbolTableConstruct() {
     symbolTable *newTable;
      
-    newTable = (symbolTable *)malloc(sizeof(symbolTable));
+    newTable = (symbolTable *)Malloc(sizeof(symbolTable));
     return symbolTableInit(newTable);
 }
 
@@ -600,7 +602,7 @@ symbol_t * symbolNodeConst(char *ident, char *parent, char *suffix) {
     if (isNullPtr(ident) || isNullPtr(parent) || isNullPtr(suffix))
        return NULL; 
 
-    pSym = (symbol_t *)malloc(sizeof(symbol_t));
+    pSym = (symbol_t *)Malloc(sizeof(symbol_t));
     pSym->symType = SYMBOL_TYPE_NODE;
     pSym->symIdent = ident;
     pSym->symInfo.nodeMeta.parentIdent = parent;
@@ -621,7 +623,7 @@ symbol_t * symbolLeaveConst(char *ident, char *parent, char *suffix, char *type,
         isNullPtr(type) || isNullPtr(perm))
         return NULL;
 
-    pSym = (symbol_t *)malloc(sizeof(symbol_t));
+    pSym = (symbol_t *)Malloc(sizeof(symbol_t));
     pSym->symType = SYMBOL_TYPE_LEAVE;
     pSym->symIdent = ident;
     
@@ -636,6 +638,218 @@ symbol_t * symbolLeaveConst(char *ident, char *parent, char *suffix, char *type,
     pSym->base.copy = (pairValCopy)symbolCopy;
 
     return pSym;
+}
+
+// typeItem
+typeItem * typeItemConst();
+typeItem * typeItemCopy(typeItem *item);
+int typeItemDestruct(typeItem *item);
+int typeItemAssignment(typeItem *lval, const typeItem *rval);
+int typeItemIsEqual(const typeItem *first, const typeItem *sec);
+
+typeItem * typeItemSearch(const typeItem *items, const char *typeName);
+int typeItemAppend(typeItem *items, char *typeName);
+int typeItemDel(typeItem *items, char *typeName);
+
+typeItem * typeItemPrev(const typeItem *item);
+typeItem * typeItemNext(const typeItem *item);
+typeItem * typeItemTail(const typeItem *item);
+
+typeItem * typeItemConst() {
+    typeItem *item = (typeItem *)Malloc(sizeof(typeItem));
+
+    memset(item, 0, sizeof(typeItem));
+
+    return item;
+}
+
+typeItem * typeItemCopy(typeItem *item) {
+    if (isNullPtr(item)) return NULL;
+    
+    typeItem *item_copy = typeItemConst();
+    item_copy->type = strdup(item->type);  
+
+    return item_copy;
+}
+
+int typeItemDestruct(typeItem *item) {
+    if (isNullPtr(item)) return ERROR;
+    
+    RELEASE_IF_NON_NULL(item->type);
+    RELEASE_MEM(item);
+    
+    return OK;
+}
+
+int typeItemAssignment(typeItem *lval, const typeItem *rval) {
+    if (isNullPtr(lval) || isNullPtr(rval))
+       return ERROR; 
+    
+    RELEASE_IF_NON_NULL(lval->type);
+
+    lval->type = strdup(rval->type);
+
+    return OK;
+}
+
+typeItem * typeItemSearch(const typeItem *items, const char *typeName) {
+    if (isNullPtr(items) || isNullPtr(typeName))
+        return NULL; 
+
+    for (; isNonNullPtr(items); items = typeItemNext(items))
+        if (isStringEqual(items->type, typeName)) break;
+
+    return (typeItem *)items;
+}
+
+int typeItemIsEqual(const typeItem *first, const typeItem *sec) {
+    if (isNullPtr(first) || isNullPtr(sec))
+        return ERROR;
+    
+    return isStringEqual(first->type, sec->type);
+}
+
+int typeItemAppend(typeItem *items, char *typeName) {
+    if (isNullPtr(items) || isNullPtr(typeName))
+        return ERROR;
+
+    typeItem *lastItem = typeItemTail(items);
+    typeItem *newItem = typeItemConst();
+
+    newItem->type = typeName;     
+
+    if (listNodeInsert(&lastItem->node, &newItem->node) == NULL)
+        return ERROR;
+
+    return OK;
+}
+
+int typeItemDel(typeItem *items, char *typeName) {
+    if (isNullPtr(items) || isNullPtr(typeName))
+        return ERROR;
+
+    typeItem *found;
+
+    found = typeItemSearch(items, typeName);
+    if (found) {
+        listNodeDelete(&found->node); 
+        typeItemDestruct(found);
+    } 
+
+    return OK;
+}
+
+typeItem * typeItemTail(const typeItem *item) {
+    if (isNullPtr(item)) 
+        return NULL;
+    
+    return containerOf(listNodeTail(&item->node), typeItem, node);
+}
+
+typeItem * typeItemPrev(const typeItem *item) {
+    if (isNullPtr(item) || isNullPtr(item->node.prev)) 
+        return NULL;
+
+    return containerOf(listNodePrev(&item->node), typeItem, node);
+}
+
+typeItem * typeItemNext(const typeItem *item) {
+    if (isNullPtr(item) || isNullPtr(item->node.next))
+        return NULL;
+
+    return containerOf(listNodeNext(&item->node), typeItem, node);
+}
+
+
+// typeTable
+typeTable * typeTableConst() {
+    typeTable *tbl = (typeTable *)Malloc(sizeof(typeTable));
+    
+    memset(tbl, 0, sizeof(typeTable));
+
+    return tbl;    
+}
+
+typeTable * typeTableCopy(const typeTable *tbl) {}
+
+int typeTableDestruct(typeTable *tbl) {
+    if (isNullPtr(tbl)) return ERROR;
+    
+    typeItem *itemCurrent = typeItemNext(&tbl->items); 
+    typeItem *itemNext = typeItemNext(itemCurrent);
+
+    while (isNonNullPtr(itemCurrent)) {
+        typeItemDestruct(itemCurrent);        
+
+        itemCurrent = itemNext;
+        itemNext = typeItemNext(itemNext); 
+    }
+
+    return OK;
+}
+
+int typeTableAssignment(typeTable *lval, const typeTable *rval) {}
+
+int typeTableIsEqual(const typeTable *firstTbl, const typeTable *secTbl) {
+    if (isNullPtr(firstTbl) || isNullPtr(secTbl))
+        return ERROR;
+
+    if (firstTbl->numOfTypes != secTbl->numOfTypes)  
+        return FALSE;
+    
+    _Bool isEqual; 
+    const typeItem *current_first = &firstTbl->items;
+    const typeItem *current_sec   = &secTbl->items; 
+    
+    while (isNonNullPtr(current_first)) {
+        isEqual = isStringEqual(current_first->type, current_sec->type);
+
+        if (! isEqual) return FALSE; 
+
+        current_first = typeItemNext(current_first);
+        current_sec   = typeItemNext(current_sec); 
+    }
+    return OK;
+}
+
+int typeTableIsTypeExists(const typeTable *tbl, const char *type) {
+    if (isNullPtr(tbl) || isNullPtr(type))
+        return ERROR;
+    
+    _Bool isExists;
+    typeItem *found = typeItemSearch(&tbl->items, type);
+    if (isNonNullPtr(found)) {
+        isExists = TRUE; 
+    } else {
+        isExists = FALSE; 
+    }
+
+    return isExists;
+} 
+
+int typeTableAdd(typeTable *tbl, char *type) {
+    if (isNullPtr(tbl) || isNullPtr(type)) 
+        return ERROR;
+
+    if (typeItemAppend(&tbl->items, type) == ERROR)
+        return ERROR;
+
+    assert(++tbl->numOfTypes >= 0);
+
+    return OK;
+}
+
+int typeTableDel(typeTable *tbl, char *type) {
+    if (isNullPtr(tbl) || isNullPtr(type))
+        return ERROR;
+
+    if (typeItemDel(&tbl->items, type) == ERROR)
+        return ERROR;
+    
+    
+    assert(tbl->numOfTypes-- >= 0);    
+
+    return OK;
 }
 
 #ifdef MIB2DOC_UNIT_TESTING
@@ -653,6 +867,20 @@ void list_symbolTable(void **state) {
     assert_non_null(found);
 
     assert_string_equal(found->symIdent, "B");
+}
+
+void list__TYPE_TABLE(void **state) {
+    _Bool isExists;
+    typeTable *tbl = typeTableConst();         
+
+    typeTableAdd(tbl, strdup("INTEGER"));
+    isExists = typeTableIsTypeExists(tbl, "INTEGER");
+
+    assert_int_equal(isExists, TRUE);
+
+    typeTableDel(tbl, "INTEGER");
+    isExists = typeTableIsTypeExists(tbl, "INTEGER");
+    assert_int_equal(isExists, FALSE);
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

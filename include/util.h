@@ -10,4 +10,7 @@ int entryRecognize(char *buffer, int size);
 char * randStr(int length);
 char * numberToStr(int num);
 
+void * Malloc(size_t size);
+_Bool isStringEqual(const char *strLeft, const char *strRight);
+
 #endif /* _UTIL_H_ */

@@ -242,5 +242,25 @@ char * numberToStr(int num) {
     return str;
 }
 
+void * Malloc(size_t size) {
+    void *mem = malloc(size);
+    if (isNullPtr(mem)) abort();
+
+    return mem;
+}
+
+_Bool isStringEqual(const char *strLeft, const char *strRight) {
+    if (isNullPtr(strLeft) || isNullPtr(strRight))
+        return FALSE;
+    
+    size_t len = strlen(strLeft);
+    _Bool isEqual; 
+    
+    
+    isEqual = len == strlen(strRight) && ! strncmp(strLeft, strRight, len);
+
+    return isEqual;
+}
+
 /* util.c */
 

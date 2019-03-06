@@ -13,6 +13,13 @@
     char *str;
 }
 
+%token SMI_SPECIFIER
+%token <str> SMI_VAL
+
+%token MOD_SPECIFIER LAST_UPDATED
+%token ORGANIZATION REVISION CONTACT_INFO
+%token <str> REVISION_DATE
+
 %token <str> IDENTIFIER
 %token <str> NUM
 %token <str> TYPE
@@ -62,6 +69,7 @@ MAIN_PART :
 	| END MAIN_PART     
     | DEFINITION MAIN_PART
     | IMPORT MAIN_PART
+    | MODULE_DEF MAIN_PART
     | /* empty */ ;
 
 DEFINITION :
@@ -130,21 +138,29 @@ SEQUENCE :
 
 SEQ_ITEM :
 	IDENTIFIER TYPE COMMA SEQ_ITEM {
-     
+          
     }
 	| IDENTIFIER TYPE {
 
     };
 
 SMI :
-    "SMI" IDENTIFIER {
-        dispatchParam *param  = disParamConstruct(SLICE_IDENTIFIER);
-        disParamStore(param, disParamConstruct($IDENTIFIER));
+    SMI_SPECIFIER SMI_VAL {};
 
-        dispatch(DISPATCH_PARAM_STAGE, param);
-        dispatch(MIBTREE_GENERATION, disParamConstruct(SMI_DEF));
+
+MODULE_DEF :
+    IDENTIFIER MOD_SPECIFIER MODULE_BODY;
+
+MODULE_BODY : 
+    LAST_UPDATED REVISION_DATE ORGANIZATION DESC_VALUE CONTACT_INFO DESC_VALUE DESC_SPECIFIER DESC_VALUE REVISIONS MOUNT {
+
     };
 
+REVISIONS : 
+    REVISION REVISION_DATE DESC_SPECIFIER DESC_VALUE REVISIONS {
+         
+    }
+    | /* empty */;
 
 OBJ_DEAL :
 	OBJ_IDENTIFIER { 

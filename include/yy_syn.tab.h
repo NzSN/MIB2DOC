@@ -67,11 +67,19 @@ extern int yydebug;
     OBJECTS_ = 277,
     FROM_ = 278,
     IMPORTS_ = 279,
-    IDENTIFIER = 280,
-    NUM = 281,
-    TYPE = 282,
-    ACCESS_VALUE = 283,
-    DESC_VALUE = 284
+    SMI_SPECIFIER = 280,
+    SMI_VAL = 281,
+    MOD_SPECIFIER = 282,
+    LAST_UPDATED = 283,
+    ORGANIZATION = 284,
+    REVISION = 285,
+    CONTACT_INFO = 286,
+    REVISION_DATE = 287,
+    IDENTIFIER = 288,
+    NUM = 289,
+    TYPE = 290,
+    ACCESS_VALUE = 291,
+    DESC_VALUE = 292
   };
 #endif
 
@@ -83,12 +91,12 @@ union YYSTYPE
 #line 12 "./src/yy_syn.y" /* yacc.c:1909  */
 
     char *str;
-#line 22 "./src/yy_syn.y" /* yacc.c:1909  */
+#line 29 "./src/yy_syn.y" /* yacc.c:1909  */
 
     struct sequence_item *si;
     struct sequence *sq;    
 
-#line 92 "./src/yy_syn.tab.h" /* yacc.c:1909  */
+#line 100 "./src/yy_syn.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
