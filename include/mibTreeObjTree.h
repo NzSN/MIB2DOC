@@ -6,6 +6,7 @@
 #define GL5610_MIB_DOC_GEN_TREE_H
 
 #include "list.h"
+#include "symbolTbl.h"
 
 typedef struct mibNodeInfo {
     char *ident;
@@ -83,6 +84,7 @@ mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree);
 int mibTreeHeadInit(mibTreeHead *treeHead);
 int mibTreeHeadMerge_LAST(mibTreeHead *treeHead);
 int mibTreeHeadMerge(mibTreeHead *treeHead);
+int mibTreeHeadComplete(mibTreeHead *treeHead, symbolTable *symTbl);
 int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode);
 mibTree * mibTreeHeadFirstTree(mibTreeHead *treeHead);
 

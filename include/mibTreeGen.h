@@ -13,7 +13,10 @@
 
 extern mibTreeHead trees;
 extern typeTable mibTypeTbl;
+extern symbolTable symTable;
 
+#define SYMBOL_TBL_R (&symTable)
+#define MIT_TYPE_TBL_R (&mibTypeTbl)
 #define MIB_TREE_R (&trees)
 
 enum {

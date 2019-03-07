@@ -549,6 +549,7 @@ int symbolTableAdd(symbolTable *tbl, symbol_t *sym) {
         return FALSE; 
      
     key = symbolKConst(strdup(sym->symIdent));
+    ++tbl->numOfSymbols;
 
     return hashMapPut(tbl->symbolMap, (pair_key_base *)key, (pair_val_base *)sym);
 }
@@ -559,7 +560,7 @@ int symbolTableDelete(symbolTable *tbl, char *symIdent) {
     if (isNullPtr(tbl) || isNullPtr(symIdent))
         return FALSE; 
     symbolKInit(&key, symIdent);
-    
+    --tbl->numOfSymbols; 
     return hashMapDelete(tbl->symbolMap, (pair_key_base *)&key);
 }
 

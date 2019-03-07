@@ -312,13 +312,19 @@ mibTree * mibTreeConstruction() {
 int mibTreeSetRoot(mibTree *tree, mibObjectTreeNode *rootNode) {
     if (isNullPtr(tree) || isNullPtr(rootNode))
         return ERROR;
+    
+    if (isNullPtr(tree->root)) {
+        tree->root = rootNode;
+        tree->rootName = strdup(rootNode->identifier);
+        return OK;
+    }
+
 
     setAsParent_MibTree(tree->root, rootNode);
     if (setAsChild_MibTree(rootNode, tree->root) == FALSE) {
         return ERROR; 
     }
-    tree->root = rootNode;
-    
+
     return OK;
 }
 
@@ -629,22 +635,6 @@ static int oidComplete(void *arg, mibObjectTreeNode *node) {
     return OK; 
 }
 
-static _Bool continueComplete(symbol_t *symbol) {
-    const char *parent;
-
-    if (symbol->symType == SYMBOL_TYPE_NODE) {
-        parent = symbol->symInfo.nodeMeta.parentIdent;     
-    } else {
-        return FALSE;
-    }
-    
-    if (isStringEqual(parent, "N/A")) {
-        return FALSE; 
-    }
-
-    return TRUE; 
-}
-
 int mibTreeHeadComplete(mibTreeHead *treeHead, symbolTable *symTbl) {
     if (isNullPtr(treeHead)) return ERROR;
     
@@ -655,13 +645,15 @@ int mibTreeHeadComplete(mibTreeHead *treeHead, symbolTable *symTbl) {
        return OK; 
     
     mibTree *tree = mibTreeHeadFirstTree(treeHead);   
-    char *rootName = tree->rootName;
     
     char *ident, *oid, *parent; 
-    symbol_t *symbol = symbolTableSearch(symTbl, rootName);
+
+    parent = tree->root->mergeInfo.parent;
+    symbol_t *symbol = symbolTableSearch(symTbl, parent);
+
     mibObjectTreeNode *node;
     
-    while (continueComplete(symbol)) {
+    while (isNonNullPtr(symbol)) {
         ident = symbol->symIdent;
         oid = symbol->symInfo.nodeMeta.suffix;
         parent = symbol->symInfo.nodeMeta.parentIdent;
@@ -794,10 +786,10 @@ void mibTreeObjTree__MIBTREE_MERGE(void **state) {
     mibTreeHeadAppend(&treeHead, node);
 
     assert_int_equal(treeHead.numOfTree, 3);
-
+    
     mibTreeHeadMerge(&treeHead);
     mibTreeHeadOidComplete(&treeHead);
-
+    
     assert_int_equal(treeHead.numOfTree, 1);
     
     char nodeOrder[7] = {'A', 'B', 'G', 'D', 'C', 'F', 'E'};
@@ -809,6 +801,7 @@ void mibTreeObjTree__MIBTREE_MERGE(void **state) {
     
     currentTree = mibTreeNext(&treeHead.trees);
     travel_MibTree(currentTree->root, mibTreeMergeAssert, &orderDeck);
+    
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

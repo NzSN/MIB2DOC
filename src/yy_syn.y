@@ -92,6 +92,7 @@ END :
         } else if (SW_STATE((*pState)) == DISPATCH_MODE_DOC_GENERATING) {
             // In mibTreeGen context we should merge seperate trees into one.
             mibTreeHeadMerge(MIB_TREE_R);  
+            mibTreeHeadComplete(MIB_TREE_R, SYMBOL_TBL_R);
             mibTreeHeadOidComplete(MIB_TREE_R);
         }
     }
