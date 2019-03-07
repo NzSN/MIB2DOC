@@ -7,8 +7,6 @@
 
 #include <stddef.h>
 #include <stdbool.h>
-#include "mibTreeObjTree.h"
-#include "lexer.h"
 
 #include <assert.h>
 
@@ -49,6 +47,7 @@
         (ConType *)((char *)__mptr - offsetof(ConType, member));\
 })
 
+typedef int _Status;
 typedef void * anything;
 
 typedef enum unitType {

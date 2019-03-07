@@ -6,6 +6,7 @@
 #define _MIB2DOC_LIST_H_
 
 #include <stdbool.h>
+#include "type.h"
 
 enum elementType {
     SLICE_TYPE_MINIMUM = 5,
@@ -32,7 +33,9 @@ typedef struct slice {
 #define IS_VALID_SLICE_TYPE(Slice) (Slice > SLICE_TYPE_MINIMUM && Slice < SLICE_TYPE_MAXIMUM)
 
 /* ListNode */
-typedef void (*listNodeTask)(listNode *head, void *arg);
+typedef _Bool (*listNodeCmp)(const listNode *node, const void *arg);
+typedef _Status (*listNodeTask)(listNode *head, void *arg);
+typedef _Bool (*listNodeEqualCheck)(const listNode *node, const listNode *node_);
 listNode *listNodePrev(const listNode *node);
 listNode *listNodeNext(const listNode *node);
 listNode *listNodeInsert(listNode *head, listNode *node);
@@ -40,7 +43,7 @@ listNode *listNodeDelete(listNode *node);
 listNode *listNodeAppend(listNode *listH, listNode *listN);
 listNode * listNodeTail(const listNode *head);
 bool listNodeIsEmpty(listNode *node);
-int listNodeTravel(listNode *head, listNodeTask func, void *arg);
+_Status listNodeTravel(listNode *head, listNodeTask func, void *arg);
 
 /* Slice */
 slice * sliceNext(slice *sli);

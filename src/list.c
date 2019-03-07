@@ -106,7 +106,41 @@ bool listNodeIsEmpty(listNode *head) {
     }
 }
 
-int listNodeTravel(listNode *head, listNodeTask func, void *arg) {
+listNode * listNodeSearch(listNode *head, listNodeCmp cmpOp, void *arg) {
+    if (isNullPtr(head) || isNullPtr(cmpOp) || isNullPtr(arg))
+        return NULL;
+    
+    listNode *currentNode = head;
+
+    while (isNonNullPtr(currentNode)) {
+        if (cmpOp(currentNode, arg) == TRUE) 
+            break; 
+        currentNode = listNodeNext(currentNode);
+    }
+    
+    return currentNode;
+}
+
+_Bool listNodeIsEqual(const listNode *first, const listNode *second, listNodeEqualCheck equalCheck) {
+    if (isNullPtr(first) || isNullPtr(second) || isNullPtr(equalCheck))
+        return ERROR;
+
+    _Bool isEqual;
+    const listNode *current_first = first;
+    const listNode *current_second = second;
+
+    while (isNonNullPtr(current_first)) {
+        isEqual = equalCheck(current_first, current_second); 
+        if (!isEqual) return FALSE;
+        
+        current_first = listNodeNext(current_first);
+        current_second = listNodeNext(current_second);
+    }
+
+    return TRUE;
+}
+
+_Status listNodeTravel(listNode *head, listNodeTask func, void *arg) {
     if (isNullPtr(head) || isNullPtr(func) || isNullPtr(arg)) {
         return ERROR_NULL_REF;
     }
@@ -790,6 +824,16 @@ int typeTableDestruct(typeTable *tbl) {
 
 int typeTableAssignment(typeTable *lval, const typeTable *rval) {}
 
+static _Bool typeTableEqualChecke(const listNode *lNode, const listNode *rNode) {
+    typeItem *lItem = containerOf(lNode, typeItem, node); 
+    typeItem *rItem = containerOf(rNode, typeItem, node);
+
+    if (isStringEqual(lItem->type, rItem->type))
+        return TRUE;
+    else 
+        return FALSE;
+}
+
 int typeTableIsEqual(const typeTable *firstTbl, const typeTable *secTbl) {
     if (isNullPtr(firstTbl) || isNullPtr(secTbl))
         return ERROR;
@@ -797,18 +841,8 @@ int typeTableIsEqual(const typeTable *firstTbl, const typeTable *secTbl) {
     if (firstTbl->numOfTypes != secTbl->numOfTypes)  
         return FALSE;
     
-    _Bool isEqual; 
-    const typeItem *current_first = &firstTbl->items;
-    const typeItem *current_sec   = &secTbl->items; 
-    
-    while (isNonNullPtr(current_first)) {
-        isEqual = isStringEqual(current_first->type, current_sec->type);
+    listNodeIsEqual(&firstTbl->items.node, &secTbl->items.node, typeTableEqualChecke);
 
-        if (! isEqual) return FALSE; 
-
-        current_first = typeItemNext(current_first);
-        current_sec   = typeItemNext(current_sec); 
-    }
     return OK;
 }
 
@@ -854,6 +888,8 @@ int typeTableDel(typeTable *tbl, char *type) {
 
 #ifdef MIB2DOC_UNIT_TESTING
 
+#include "test.h"
+
 void list_symbolTable(void **state) {
     symbol_t *symbol, *found;
     symbolTable symTbl; 
@@ -880,7 +916,7 @@ void list__TYPE_TABLE(void **state) {
 
     typeTableDel(tbl, "INTEGER");
     isExists = typeTableIsTypeExists(tbl, "INTEGER");
-    assert_int_equal(isExists, FALSE);
+    assert_int_equal(isExists, FALSE); 
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */
