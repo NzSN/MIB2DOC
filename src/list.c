@@ -490,6 +490,7 @@ static int symbolTblHash(symbol_k *key) {
 int symTableInit() {
     symbolTableInit(&symTable);
     symbolTableAdd(&symTable, symbolNodeConst("iso", "N/A", "1"));
+    symbolTableAdd(&symTable, symbolNodeConst("org", "iso", "3"));
     return OK;
 }
 

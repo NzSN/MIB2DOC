@@ -313,17 +313,15 @@ int mibTreeSetRoot(mibTree *tree, mibObjectTreeNode *rootNode) {
     if (isNullPtr(tree) || isNullPtr(rootNode))
         return ERROR;
     
-    if (isNullPtr(tree->root)) {
-        tree->root = rootNode;
-        tree->rootName = strdup(rootNode->identifier);
-        return OK;
+    if (isNonNullPtr(tree->root)) { 
+        setAsParent_MibTree(tree->root, rootNode);
+        if (setAsChild_MibTree(rootNode, tree->root) == FALSE) {
+            return ERROR; 
+        }
     }
 
-
-    setAsParent_MibTree(tree->root, rootNode);
-    if (setAsChild_MibTree(rootNode, tree->root) == FALSE) {
-        return ERROR; 
-    }
+    tree->root = rootNode;
+    tree->rootName = strdup(rootNode->identifier);
 
     return OK;
 }
