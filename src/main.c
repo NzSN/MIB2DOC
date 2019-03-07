@@ -7,6 +7,7 @@
 #include "yy_syn.tab.h"
 #include "mibTreeGen.h"
 #include "symbolTbl.h"
+#include "typeTable.h"
 
 extern int yylex(void);
 extern FILE *yyin;
@@ -25,7 +26,7 @@ int main(int argc, char *argv[]) {
     mibObjectTreeNode *node;
     mibLeaveInfo *pInfo; 
 
-    beginFrom = "sys";
+    beginFrom = "org";
     
     // Init
     syntaxParserInit();
@@ -33,6 +34,7 @@ int main(int argc, char *argv[]) {
     mibObjectTreeInit();
     symbolCollectingInit();
     symTableInit();
+    typeTableInit();
     
     node = &mibObjectTreeRoot;
     optionsInit(argc, argv);
@@ -49,8 +51,10 @@ int main(int argc, char *argv[]) {
     writeTo = fopen("src/result", "w+");
     if (writeTo == NULL)
         printf("%s\n", "result open failed");
-
+    
     //documentGen(&trees, writeTo);
     showTree(&trees);
     return 0;
 }
+
+

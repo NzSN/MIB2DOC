@@ -86,6 +86,10 @@ int mibTreeHeadMerge(mibTreeHead *treeHead);
 int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode);
 mibTree * mibTreeHeadFirstTree(mibTreeHead *treeHead);
 
+/* mibTree type functions */
+_Bool isMibNodeType_TABLE(mibObjectTreeNode *node);
+_Bool isMibNodeType_ENTRY(mibObjectTreeNode *node);
+
 #ifdef MIB2DOC_UNIT_TESTING
 #include "test.h"
 

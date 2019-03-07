@@ -108,5 +108,6 @@ typedef union YYSTYPE YYSTYPE;
 extern YYSTYPE yylval;
 
 int yyparse (void);
+int syntaxParserInit(void);
 
 #endif /* !YY_YY_SRC_YY_SYN_TAB_H_INCLUDED  */

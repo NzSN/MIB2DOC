@@ -204,6 +204,8 @@ int  seqDestructor(sequence *seq) {
 
     sequence_item *firstItem = seqItemNext(&seq->items);
     if (isNonNullPtr(firstItem)) seqItemDestruct(firstItem);  
+    
+    RELEASE_IF_NON_NULL(seq->identifier);
 
     RELEASE_MEM(seq);
 
@@ -216,10 +218,12 @@ sequence * seqCopy(const sequence *seq) {
         return NULL;
 
     sequence *seq_copy = seqConst();
-    
+   
+    seq_copy->identifier = strdup(seq->identifier);
+
     sequence_item *firstItem = seqItemNext(&seq->items);
     sequence_item *seqItem_copy = seqItemsCopy(firstItem);
-
+     
     if (seqItemAppend(&seq_copy->items, seqItem_copy) == ERROR)
         return NULL;
     
@@ -233,8 +237,11 @@ int seqAssignment(sequence *seq_lval, const sequence *seq_rval) {
     if (isNullPtr(seq_lval) || isNullPtr(seq_lval))
         return ERROR;
     
+    RELEASE_IF_NON_NULL(seq_lval->identifier); 
     seqItemDestruct(seqItemNext(&seq_lval->items));
-    
+   
+    seq_lval->identifier = strdup(seq_rval->identifier);
+
     sequence_item *firstItem = seqItemNext(&seq_rval->items);
     sequence_item *seqItem_copy = seqItemsCopy(firstItem);    
 
@@ -251,6 +258,9 @@ _Bool seqIsEqual(sequence *leftSeq, sequence *rightSeq) {
     if (isNullPtr(leftSeq) || isNullPtr(rightSeq))
         return FALSE;
     
+    if (!isStringEqual(leftSeq->identifier, rightSeq->identifier))   
+        return FALSE;
+
     if (leftSeq->length != rightSeq->length) 
         return FALSE;
     
@@ -402,6 +412,8 @@ void yy_syn_def__SEQUENCE_(void) {
     // Default constructor
     sequence *seq = seqConst(); 
     sequence_item *item;
+    
+    seq->identifier = strdup("Seq"); 
 
     // Copy constructor    
     item = seqItemConst();
@@ -418,6 +430,7 @@ void yy_syn_def__SEQUENCE_(void) {
     found = seqSearch(copy, "Try");
     assert_non_null(found);
     assert_string_equal(found->ident, "Try");
+    assert_string_equal(found->type, "Try");
 
     // Assignment
     sequence *seqAssign = seqConst(); 

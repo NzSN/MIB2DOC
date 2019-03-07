@@ -9,8 +9,10 @@
 #include "list.h"
 #include "dispatcher.h"
 #include "mibTreeObjTree.h"
+#include "typeTable.h"
 
 extern mibTreeHead trees;
+extern typeTable mibTypeTbl;
 
 #define MIB_TREE_R (&trees)
 
@@ -34,6 +36,9 @@ int mibObjGen_InnerNode();
 int mibObjGen_trap();
 int symbolCollecting(int type, dispatchParam *param);
 int symbolCollectingInit();
+
+
+_Bool typeTableInit();
 
 int documentGen(mibTreeHead *treeHead, FILE *writeTo);
 

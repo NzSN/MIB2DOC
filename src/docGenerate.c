@@ -11,6 +11,9 @@
 #include "util.h"
 #include "type.h"
 
+#include "mibTreeGen.h"
+#include "typeTable.h"
+
 /* Defines */
 #define SIZE_OF_LATEX_BUFFER 256
 
@@ -47,7 +50,8 @@ int documentGen(mibTreeHead *treeHead, FILE *writeTo) {
         return ERROR;
 
     // Check that is only one tree here
-    assert(treeHead->numOfTree == 1);
+    assert(treeHead->numOfTree == 1);    
+
     tree = mibTreeHeadFirstTree(treeHead); 
 
     latexHeaderGen(); 
@@ -71,6 +75,7 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
     }
 
     writeTo = (FILE *) arg;
+
     pNode = search_MibTree(&mibObjectTreeRoot, beginFrom);
     if (isNullPtr(pNode)) 
         return -1; 
@@ -81,10 +86,11 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
         case TABLE:
             info = (tableInfo *)malloc(sizeof(tableInfo));
             infoPacket(info, node);
+            
             parent = getIdentFromInfo(node->parent);
             // fixme:Should be recognize a table via type of it
             // but not the name of it.
-            if (entryRecognize(parent, strlen(parent)))
+            if (isMibNodeType_ENTRY(node->parent))
                 parent = getIdentFromInfo(node->parent->parent);
             appendQueue(&infoQueue, info);
             tableGen_Latex(&infoQueue, parent, writeTo);

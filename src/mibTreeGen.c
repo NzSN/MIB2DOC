@@ -29,6 +29,26 @@ symbolTable symTable;
 slice symCollectSlice;
 targetSymbolList tSymListHead;
 
+// Type table
+typeTable mibTypeTbl;
+
+_Bool typeTableInit() {
+    memset(&mibTypeTbl, 0, sizeof(typeTable));
+    
+    // Install SNMPv2 Types into type table.
+    typeTableAdd(&mibTypeTbl, "Counter32", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Counter64", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Gauge32", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Integer32", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "IpAddress", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Opaque", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "TimeTicks", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "BITS", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Unsigned32", CATE_BUILD_IN, NULL);
+
+    return OK;
+}
+
 int mibObjGen(int nodeType) {
     mibObjectTreeNode *newNode;
     char *ident, *type, *rw, *desc, *parent, *suffix;    

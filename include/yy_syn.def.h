@@ -13,6 +13,7 @@ typedef struct sequence_item {
 
 typedef struct sequence {
     int length;
+    char *identifier;
     sequence_item items; 
 } sequence;
 

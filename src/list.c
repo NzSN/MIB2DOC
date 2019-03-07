@@ -682,7 +682,7 @@ int typeItemAssignment(typeItem *lval, const typeItem *rval);
 int typeItemIsEqual(const typeItem *first, const typeItem *sec);
 
 typeItem * typeItemSearch(const typeItem *items, const char *typeName);
-int typeItemAppend(typeItem *items, char *typeName);
+int typeItemAppend(typeItem *items, char *typeName, typeCate cate, const void *ref);
 int typeItemDel(typeItem *items, char *typeName);
 
 typeItem * typeItemPrev(const typeItem *item);
@@ -697,11 +697,15 @@ typeItem * typeItemConst() {
     return item;
 }
 
+// Note: ref will never be released and its
+// not editable so Shallow copy is not a problem.
 typeItem * typeItemCopy(typeItem *item) {
     if (isNullPtr(item)) return NULL;
     
     typeItem *item_copy = typeItemConst();
+    item_copy->cate = item->cate;
     item_copy->type = strdup(item->type);  
+    item_copy->ref = item->ref;
 
     return item_copy;
 }
@@ -710,6 +714,7 @@ int typeItemDestruct(typeItem *item) {
     if (isNullPtr(item)) return ERROR;
     
     RELEASE_IF_NON_NULL(item->type);
+
     RELEASE_MEM(item);
     
     return OK;
@@ -720,20 +725,27 @@ int typeItemAssignment(typeItem *lval, const typeItem *rval) {
        return ERROR; 
     
     RELEASE_IF_NON_NULL(lval->type);
-
+    
+    lval->cate = rval->cate;
     lval->type = strdup(rval->type);
+    lval->ref = rval->ref;
 
     return OK;
+}
+
+static _Bool itemCmp(const listNode *node, const char *typeName) {
+    typeItem *item = containerOf(node, typeItem, node);
+    return isStringEqual(item->type, typeName);
 }
 
 typeItem * typeItemSearch(const typeItem *items, const char *typeName) {
     if (isNullPtr(items) || isNullPtr(typeName))
         return NULL; 
+    
+    listNode *found = listNodeSearch(listNodeNext(&items->node), (listNodeCmp)itemCmp, (void *)typeName);
+    if (isNullPtr(found)) return NULL; 
 
-    for (; isNonNullPtr(items); items = typeItemNext(items))
-        if (isStringEqual(items->type, typeName)) break;
-
-    return (typeItem *)items;
+    return containerOf(found, typeItem, node);
 }
 
 int typeItemIsEqual(const typeItem *first, const typeItem *sec) {
@@ -743,14 +755,16 @@ int typeItemIsEqual(const typeItem *first, const typeItem *sec) {
     return isStringEqual(first->type, sec->type);
 }
 
-int typeItemAppend(typeItem *items, char *typeName) {
+int typeItemAppend(typeItem *items, char *typeName, typeCate cate, const void *ref) {
     if (isNullPtr(items) || isNullPtr(typeName))
         return ERROR;
 
     typeItem *lastItem = typeItemTail(items);
     typeItem *newItem = typeItemConst();
 
-    newItem->type = typeName;     
+    newItem->type = typeName; 
+    newItem->ref = (void *)ref;
+    newItem->cate = cate;
 
     if (listNodeInsert(&lastItem->node, &newItem->node) == NULL)
         return ERROR;
@@ -827,7 +841,7 @@ int typeTableAssignment(typeTable *lval, const typeTable *rval) {}
 static _Bool typeTableEqualChecke(const listNode *lNode, const listNode *rNode) {
     typeItem *lItem = containerOf(lNode, typeItem, node); 
     typeItem *rItem = containerOf(rNode, typeItem, node);
-
+    
     if (isStringEqual(lItem->type, rItem->type))
         return TRUE;
     else 
@@ -841,31 +855,35 @@ int typeTableIsEqual(const typeTable *firstTbl, const typeTable *secTbl) {
     if (firstTbl->numOfTypes != secTbl->numOfTypes)  
         return FALSE;
     
-    listNodeIsEqual(&firstTbl->items.node, &secTbl->items.node, typeTableEqualChecke);
-
-    return OK;
+    return listNodeIsEqual(listNodeNext(&firstTbl->items.node), 
+                           listNodeNext(&secTbl->items.node), 
+                           typeTableEqualChecke);
 }
 
 int typeTableIsTypeExists(const typeTable *tbl, const char *type) {
     if (isNullPtr(tbl) || isNullPtr(type))
         return ERROR;
     
-    _Bool isExists;
     typeItem *found = typeItemSearch(&tbl->items, type);
-    if (isNonNullPtr(found)) {
-        isExists = TRUE; 
-    } else {
-        isExists = FALSE; 
-    }
 
-    return isExists;
+    return isNonNullPtr(found) ? TRUE : FALSE;
 } 
 
-int typeTableAdd(typeTable *tbl, char *type) {
+typeCate typeTableTypeCate(const typeTable *tbl, const char *type) {
+    if (isNullPtr(tbl) || isNullPtr(type))
+       return ERROR; 
+
+    typeItem *found = typeItemSearch(&tbl->items, type); 
+    if (!found) return ERROR;
+
+    return found->cate;
+}
+
+int typeTableAdd(typeTable *tbl, char *type, typeCate cate, const void *ref) {
     if (isNullPtr(tbl) || isNullPtr(type)) 
         return ERROR;
 
-    if (typeItemAppend(&tbl->items, type) == ERROR)
+    if (typeItemAppend(&tbl->items, type, cate, ref) == ERROR)
         return ERROR;
 
     assert(++tbl->numOfTypes >= 0);
@@ -909,7 +927,7 @@ void list__TYPE_TABLE(void **state) {
     _Bool isExists;
     typeTable *tbl = typeTableConst();         
 
-    typeTableAdd(tbl, strdup("INTEGER"));
+    typeTableAdd(tbl, strdup("INTEGER"), CATE_BUILD_IN, NULL);
     isExists = typeTableIsTypeExists(tbl, "INTEGER");
 
     assert_int_equal(isExists, TRUE);
@@ -917,6 +935,27 @@ void list__TYPE_TABLE(void **state) {
     typeTableDel(tbl, "INTEGER");
     isExists = typeTableIsTypeExists(tbl, "INTEGER");
     assert_int_equal(isExists, FALSE); 
+    
+    _Bool isEqual;
+    typeTable *tbl_ = typeTableConst();
+    
+    typeTableAdd(tbl, strdup("INTEGER"), CATE_BUILD_IN, NULL);
+    typeTableAdd(tbl_, strdup("INTEGER"), CATE_BUILD_IN, NULL);
+    isEqual = typeTableIsEqual(tbl, tbl_);
+    assert_int_equal(isEqual, TRUE);
+
+    int idx = 0;
+    while (idx < 100) {
+        typeTableAdd(tbl, numberToStr(idx), CATE_BUILD_IN, NULL);  
+        ++idx; 
+    }
+
+    idx = 0;
+    while (idx < 100) {
+        isExists = typeTableIsTypeExists(tbl, numberToStr(idx));
+        assert_int_equal(isExists, TRUE);
+        ++idx;  
+    }
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

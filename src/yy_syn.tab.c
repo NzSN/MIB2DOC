@@ -68,7 +68,10 @@
     #include "dispatcher.h"
     #include "symbolTbl.h"
     #include "string.h"
+    #include "yy_syn.def.h"
+    #include "typeTable.h"   
 
+    extern typeTable mibTypeTbl;
     extern symbolTable symTable;     
     dispatchParam importParam;
     genericStack importInfoStack; 
@@ -78,13 +81,13 @@
         genericStackConstruct(&importInfoStack, 20, sizeof(collectInfo *)); 
     }
 
-#line 82 "./src/yy_syn.tab.c" /* yacc.c:316  */
+#line 85 "./src/yy_syn.tab.c" /* yacc.c:316  */
 
 
 
 /* Copy the first part of user declarations.  */
 
-#line 88 "./src/yy_syn.tab.c" /* yacc.c:339  */
+#line 91 "./src/yy_syn.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -164,10 +167,10 @@ union YYSTYPE
     char *str;
 #line 29 "./src/yy_syn.y" /* yacc.c:355  */
 
-    struct sequence_item *si;
-    struct sequence *sq;    
+    struct sequence_item si;
+    struct sequence sq;    
 
-#line 171 "./src/yy_syn.tab.c" /* yacc.c:355  */
+#line 174 "./src/yy_syn.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -184,7 +187,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 188 "./src/yy_syn.tab.c" /* yacc.c:358  */
+#line 191 "./src/yy_syn.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -485,12 +488,12 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    61,    61,    64,    65,    66,    67,    68,    69,    70,
-      71,    72,    73,    76,    79,    85,    97,    98,   101,   122,
-     127,   132,   135,   140,   143,   148,   152,   155,   160,   163,
-     166,   172,   187,   190,   193,   201,   208,   211,   212,   213,
-     214,   215,   216,   217,   218,   221,   224,   225,   228,   231,
-     236,   243,   250,   253,   259,   262,   263,   266
+       0,    64,    64,    67,    68,    69,    70,    71,    72,    73,
+      74,    75,    76,    79,    82,    88,   100,   101,   104,   125,
+     130,   135,   138,   149,   156,   164,   168,   171,   176,   179,
+     182,   188,   203,   206,   209,   217,   224,   227,   228,   229,
+     230,   231,   232,   233,   234,   237,   240,   241,   244,   247,
+     252,   259,   266,   269,   275,   278,   279,   282
 };
 #endif
 
@@ -1340,22 +1343,22 @@ yyreduce:
   switch (yyn)
     {
         case 13:
-#line 76 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 79 "./src/yy_syn.y" /* yacc.c:1646  */
     { }
-#line 1346 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1349 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 79 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 82 "./src/yy_syn.y" /* yacc.c:1646  */
     {
         // Begining to import symbol from another mib files.
         importWorks(&importInfoStack); 
     }
-#line 1355 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1358 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 85 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 88 "./src/yy_syn.y" /* yacc.c:1646  */
     {
         switchingState *pState = getCurSwInfo();
         if (SW_STATE((*pState)) == DISPATCH_MODE_SYMBOL_COLLECTING) {
@@ -1366,11 +1369,11 @@ yyreduce:
             mibTreeHeadOidComplete(MIB_TREE_R);
         }
     }
-#line 1370 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1373 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 101 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 104 "./src/yy_syn.y" /* yacc.c:1646  */
     {
         dispatchParam *current;    
         current = &importParam;
@@ -1390,86 +1393,99 @@ yyreduce:
 
         push(&importInfoStack, &importInfo); 
     }
-#line 1394 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1397 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 122 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 125 "./src/yy_syn.y" /* yacc.c:1646  */
     { 
         if (disParamStore(&importParam, disParamConstruct((yyvsp[0].str))) == NULL) {
             exit(1); 
         }
     }
-#line 1404 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1407 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 127 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 130 "./src/yy_syn.y" /* yacc.c:1646  */
     { 
         if (disParamStore(&importParam, disParamConstruct((yyvsp[-2].str))) == NULL) {
             exit(1); 
         }
     }
-#line 1414 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1417 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 135 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 138 "./src/yy_syn.y" /* yacc.c:1646  */
     {
-         
+        // Todo: fix the length value to be correctly.
+        (yyval.sq).identifier = (yyvsp[-5].str); 
+        (yyval.sq).length = -1;
+        sequence_item *head = seqItemNext(&(yyvsp[-1].si));
+        seqItemAppend(&(yyval.sq).items, head);
+
+        typeTableAdd(&mibTypeTbl, strdup((yyvsp[-5].str)), CATE_SEQUENCE, &(yyval.sq)); 
     }
-#line 1422 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1431 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 140 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 149 "./src/yy_syn.y" /* yacc.c:1646  */
     {
-     
+        sequence_item *newItem = seqItemConst();
+        newItem->ident = (yyvsp[-3].str);
+        newItem->type = (yyvsp[-2].str);
+        seqItemAppend(&(yyval.si), newItem); 
+
     }
-#line 1430 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1443 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 143 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 156 "./src/yy_syn.y" /* yacc.c:1646  */
     {
-
+        sequence_item *newItem = seqItemConst();
+        newItem->ident = (yyvsp[-1].str);
+        newItem->type = (yyvsp[0].str); 
+        seqItemAppend(&(yyval.si), newItem); 
     }
-#line 1438 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1454 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 148 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 164 "./src/yy_syn.y" /* yacc.c:1646  */
     {}
-#line 1444 "./src/yy_syn.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 27:
-#line 155 "./src/yy_syn.y" /* yacc.c:1646  */
-    {
-
-    }
-#line 1452 "./src/yy_syn.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 28:
-#line 160 "./src/yy_syn.y" /* yacc.c:1646  */
-    {
-         
-    }
 #line 1460 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
+  case 27:
+#line 171 "./src/yy_syn.y" /* yacc.c:1646  */
+    {
+
+    }
+#line 1468 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 28:
+#line 176 "./src/yy_syn.y" /* yacc.c:1646  */
+    {
+         
+    }
+#line 1476 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+    break;
+
   case 30:
-#line 166 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 182 "./src/yy_syn.y" /* yacc.c:1646  */
     { 
         dispatchParam *param = disParamConstruct(OBJECT_IDENTIFIER);
         dispatch(MIBTREE_GENERATION, param);
     }
-#line 1469 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1485 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 172 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 188 "./src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[-6].str)));
@@ -1483,84 +1499,84 @@ yyreduce:
 		disParamStore(param, disParamConstruct((yyvsp[-1].str)));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 }
-#line 1487 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1503 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 187 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 203 "./src/yy_syn.y" /* yacc.c:1646  */
     { dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT)); }
-#line 1493 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1509 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 190 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 206 "./src/yy_syn.y" /* yacc.c:1646  */
     { dispatch(MIBTREE_GENERATION, disParamConstruct(TRAP)); }
-#line 1499 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1515 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 193 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 209 "./src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[-1].str)));
 
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1510 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1526 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 201 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 217 "./src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
 		disParamStore(param, disParamConstruct((yyvsp[-1].str)));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1520 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1536 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 231 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 247 "./src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct((yyvsp[0].str)));
 		dispatch(DISPATCH_PARAM_STAGE, param);
     }
-#line 1530 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1546 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 236 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 252 "./src/yy_syn.y" /* yacc.c:1646  */
     {
  		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct((yyvsp[0].str)));
 		dispatch(DISPATCH_PARAM_STAGE, param);
  	}
-#line 1540 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1556 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 243 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 259 "./src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_PERMISSION);
 		disParamStore(param, disParamConstruct((yyvsp[0].str)));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1550 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1566 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 253 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 269 "./src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_DESCRIPTION);
 		disParamStore(param, disParamConstruct((yyvsp[0].str)));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1560 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1576 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 266 "./src/yy_syn.y" /* yacc.c:1646  */
+#line 282 "./src/yy_syn.y" /* yacc.c:1646  */
     {
 		dispatchParam *param = disParamConstruct(SLICE_PARENT);
 		disParamStore(param, disParamConstruct((yyvsp[-2].str)));
@@ -1570,11 +1586,11 @@ yyreduce:
 	    disParamStore(param, disParamConstruct((yyvsp[-1].str)));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	}
-#line 1574 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1590 "./src/yy_syn.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1578 "./src/yy_syn.tab.c" /* yacc.c:1646  */
+#line 1594 "./src/yy_syn.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1802,7 +1818,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 276 "./src/yy_syn.y" /* yacc.c:1906  */
+#line 292 "./src/yy_syn.y" /* yacc.c:1906  */
 
 
 // Epilogue

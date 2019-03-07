@@ -27,8 +27,8 @@
 %token <str> DESC_VALUE
 
 %union {
-    struct sequence_item *si;
-    struct sequence *sq;    
+    struct sequence_item si;
+    struct sequence sq;    
 }
 
 %type <si> SEQ_ITEM
@@ -43,7 +43,10 @@
     #include "dispatcher.h"
     #include "symbolTbl.h"
     #include "string.h"
+    #include "yy_syn.def.h"
+    #include "typeTable.h"   
 
+    extern typeTable mibTypeTbl;
     extern symbolTable symTable;     
     dispatchParam importParam;
     genericStack importInfoStack; 
@@ -88,7 +91,7 @@ END :
             // In include context mark the module scan is already done.
         } else if (SW_STATE((*pState)) == DISPATCH_MODE_DOC_GENERATING) {
             // In mibTreeGen context we should merge seperate trees into one.
-            mibTreeHeadMerge(MIB_TREE_R); 
+            mibTreeHeadMerge(MIB_TREE_R);  
             mibTreeHeadOidComplete(MIB_TREE_R);
         }
     }
@@ -133,15 +136,28 @@ ITEMS :
 
 SEQUENCE :
 	IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE {
-         
+        // Todo: fix the length value to be correctly.
+        $SEQUENCE.identifier = $IDENTIFIER; 
+        $SEQUENCE.length = -1;
+        sequence_item *head = seqItemNext(&$SEQ_ITEM);
+        seqItemAppend(&$SEQUENCE.items, head);
+
+        typeTableAdd(&mibTypeTbl, strdup($IDENTIFIER), CATE_SEQUENCE, &$SEQUENCE); 
     };
 
 SEQ_ITEM :
 	IDENTIFIER TYPE COMMA SEQ_ITEM {
-          
+        sequence_item *newItem = seqItemConst();
+        newItem->ident = $IDENTIFIER;
+        newItem->type = $TYPE;
+        seqItemAppend(&$$, newItem); 
+
     }
 	| IDENTIFIER TYPE {
-
+        sequence_item *newItem = seqItemConst();
+        newItem->ident = $IDENTIFIER;
+        newItem->type = $TYPE; 
+        seqItemAppend(&$$, newItem); 
     };
 
 SMI :

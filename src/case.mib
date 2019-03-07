@@ -1,7 +1,7 @@
 CASE DEFINITIONS ::= BEGIN
 
 
-A OBJECT IDENTIFIER ::= { org 1 }
+A OBJECT IDENTIFIER ::= { iso 1 }
 B OBJECT IDENTIFIER ::= { A 2 }
 
 C OBJECT-TYPE
@@ -21,7 +21,6 @@ D OBJECT-TYPE
     ::= { B 1 }  
 
 ll ::= SEQUENCE {
-    index   INTEGER,
     index1  INTEGER
 }
 

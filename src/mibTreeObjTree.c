@@ -135,11 +135,20 @@ int setAsChild_MibTree(mibObjectTreeNode *parent, mibObjectTreeNode *child) {
     }  
     
     if (IS_NODE_HAS_CHILD_MT(parent)) {
-        return TRUE; 
+        return FALSE; 
     }
 
     parent->child = child;
-    
+
+    return TRUE;
+}
+
+int setAsParent_MibTree(mibObjectTreeNode *child, mibObjectTreeNode *parent) {
+    if (isNullPtr(parent) || isNullPtr(child)) 
+        return ERROR;
+
+    child->parent = parent;
+
     return TRUE;
 }
 
@@ -257,6 +266,7 @@ char * getIdentFromInfo(mibObjectTreeNode *node) {
 
 }
 
+
 char *getOidFromInfo(mibObjectTreeNode *node) {
     if (node->isNode)
         return ((mibNodeInfo *)node->info)->oid;
@@ -301,10 +311,15 @@ mibTree * mibTreeConstruction() {
 
 int mibTreeSetRoot(mibTree *tree, mibObjectTreeNode *rootNode) {
     if (isNullPtr(tree) || isNullPtr(rootNode))
-        return FALSE;
-    tree->root = rootNode;
+        return ERROR;
 
-    return TRUE;
+    setAsParent_MibTree(tree->root, rootNode);
+    if (setAsChild_MibTree(rootNode, tree->root) == FALSE) {
+        return ERROR; 
+    }
+    tree->root = rootNode;
+    
+    return OK;
 }
 
 mibTree * mibTreeNext(mibTree *tree) {
@@ -614,6 +629,53 @@ static int oidComplete(void *arg, mibObjectTreeNode *node) {
     return OK; 
 }
 
+static _Bool continueComplete(symbol_t *symbol) {
+    const char *parent;
+
+    if (symbol->symType == SYMBOL_TYPE_NODE) {
+        parent = symbol->symInfo.nodeMeta.parentIdent;     
+    } else {
+        return FALSE;
+    }
+    
+    if (isStringEqual(parent, "N/A")) {
+        return FALSE; 
+    }
+
+    return TRUE; 
+}
+
+int mibTreeHeadComplete(mibTreeHead *treeHead, symbolTable *symTbl) {
+    if (isNullPtr(treeHead)) return ERROR;
+    
+    assert(treeHead->numOfTree == 1);
+    
+    // Import nothing from another mib files. 
+    if (symTbl->numOfSymbols == 0)
+       return OK; 
+    
+    mibTree *tree = mibTreeHeadFirstTree(treeHead);   
+    char *rootName = tree->rootName;
+    
+    char *ident, *oid, *parent; 
+    symbol_t *symbol = symbolTableSearch(symTbl, rootName);
+    mibObjectTreeNode *node;
+    
+    while (continueComplete(symbol)) {
+        ident = symbol->symIdent;
+        oid = symbol->symInfo.nodeMeta.suffix;
+        parent = symbol->symInfo.nodeMeta.parentIdent;
+        
+        node = mibNodeBuild(strdup(ident), strdup(oid), strdup(parent));    
+        if (mibTreeSetRoot(tree, node) == ERROR)
+            abort();
+         
+        symbol = symbolTableSearch(symTbl, parent);  
+    } 
+
+    return OK;
+}
+
 int mibTreeHeadOidComplete(mibTreeHead *treeHead) {
     mibTree *tree;
 
@@ -636,6 +698,43 @@ mibTree * mibTreeHeadFirstTree(mibTreeHead *treeHead) {
         return NULL;
 
     return mibTreeNext(&treeHead->trees);
+}
+
+// mibTree Type functions
+static char * mibLeaveGetType(mibObjectTreeNode *node) {
+    if (isNullPtr(node)) return NULL; 
+    if (node->isNode) return NULL; 
+
+    mibLeaveInfo *lInfo = node->info;
+    
+    return lInfo->type;
+}
+
+// Todo: Need to check the sequence type.
+_Bool isMibNodeType_TABLE(mibObjectTreeNode *node) {
+    char *type = mibLeaveGetType(node);  
+    
+    assert(isNonNullPtr(type));
+    
+    char *seqPrefix = "SEQUENCE OF"; 
+    
+    if (strncmp(type, seqPrefix, strlen(seqPrefix))) 
+        return FALSE;
+    
+    return TRUE;
+}
+
+_Bool isMibNodeType_ENTRY(mibObjectTreeNode *node) {
+    char *type = mibLeaveGetType(node);
+
+    assert(isNonNullPtr(type));
+
+    typeCate cate = typeTableTypeCate(&mibTypeTbl, type); 
+    if (cate == ERROR) return ERROR; 
+    
+    if (cate == CATE_SEQUENCE) return TRUE;
+
+    return FALSE; 
 }
 
 #ifdef MIB2DOC_UNIT_TESTING
