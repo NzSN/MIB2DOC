@@ -4,6 +4,9 @@
 #include "docGenerate.h"
 #include "options.h"
 #include "dispatcher.h"
+#include "mibTreeGen.h"
+#include "symbolTbl.h"
+#include "typeTable.h"
 
 extern int yylex(void);
 extern FILE *yyin;
@@ -15,6 +18,8 @@ char currentTable[SIZE_OF_CURRENT_TABLE];
 char *sectionRecord[SIZE_OF_SECTION_RECORD];
 extern mibObjectTreeNode mibObjectTreeRoot;
 
+extern int syntaxParserInit(void);
+
 int main(int argc, char *argv[]) {
     int token;
     int ret;
@@ -22,9 +27,16 @@ int main(int argc, char *argv[]) {
     mibObjectTreeNode *node;
     mibLeaveInfo *pInfo; 
 
-    beginFrom = "sys";
+    beginFrom = "org";
+    
+    // Init
+    syntaxParserInit();
     dispatchInit();
-    mibObjectTreeInit(&mibObjectTreeRoot);
+    mibObjectTreeInit();
+    symbolCollectingInit();
+    symTableInit();
+    typeTableInit();
+    
     node = &mibObjectTreeRoot;
     optionsInit(argc, argv);
     
@@ -37,11 +49,13 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    writeTo = fopen("src/result", "w+");
+    writeTo = fopen("result.tex", "w+");
     if (writeTo == NULL)
         printf("%s\n", "result open failed");
-
-    documentGen(&mibObjectTreeRoot, writeTo);
-    showTree(&mibObjectTreeRoot);
+    
+    documentGen(&trees, writeTo);
+    showTree(&trees);
     return 0;
 }
+
+

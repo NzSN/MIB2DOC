@@ -4,6 +4,8 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
+
 #include "mibTreeGen.h"
 #include "type.h"
 #include "list.h"
@@ -12,11 +14,8 @@
 #include "symbolTbl.h"
 
 /* Declaration */
-static int mibTreeLeaveAdd(char *ident, char *type,
-        char *rw, char *desc,
-        char *parent, char *suffix);
-static int mibTreeNodeAdd(char *ident, char *oid, char *parent);
-static char * oidComplement(char *parent, char *suffix);
+static int mibTreeLeaveAdd(mibObjectTreeNode *trap, char *parent);
+static int mibTreeNodeAdd(mibObjectTreeNode *node, char *parent);
 
 char currentTable[64];
 extern mibObjectTreeNode root;
@@ -25,20 +24,72 @@ extern mibObjectTreeNode mibObjectTreeRoot;
 
 /* Global */
 mibObjectTreeNode root;
+mibTreeHead trees;
 symbolTable symTable;
 slice symCollectSlice;
 targetSymbolList tSymListHead;
 
-int mibObjGen(int type) {
-    switch (type) {
+// Type table
+typeTable mibTypeTbl;
+
+_Bool typeTableInit() {
+    memset(&mibTypeTbl, 0, sizeof(typeTable));
+    
+    // Install SNMPv2 Types into type table.
+    typeTableAdd(&mibTypeTbl, "Counter32", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Counter64", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Gauge32", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Integer32", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "IpAddress", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Opaque", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "TimeTicks", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "BITS", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Unsigned32", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "INTEGER", CATE_BUILD_IN, NULL);
+
+    return OK;
+}
+
+int mibObjGen(int nodeType) {
+    mibObjectTreeNode *newNode;
+    char *ident, *type, *rw, *desc, *parent, *suffix;    
+
+    ident = sliceRetriVal(&sliceContainer, SLICE_IDENTIFIER);;
+    type = sliceRetriVal(&sliceContainer, SLICE_TYPE); 
+    rw = sliceRetriVal(&sliceContainer, SLICE_PERMISSION);
+    desc = sliceRetriVal(&sliceContainer, SLICE_DESCRIPTION);
+    parent = sliceRetriVal(&sliceContainer, SLICE_PARENT); 
+    suffix = sliceRetriVal(&sliceContainer, SLICE_OID_SUFFIX);
+    
+    // Node Build
+    switch (nodeType) {
         case OBJECT:
-            mibObjGen_Leave();
+            assert(ident != NULL);
+            assert(type != NULL);
+            assert(rw != NULL);
+            assert(desc != NULL);
+            assert(parent != NULL);
+            assert(suffix != NULL);
+            
+            newNode = mibLeaveBuild(ident, type, rw, desc, suffix, parent);
             break;
         case TRAP:
-            mibObjGen_trap();
+            type = (char *)malloc(strlen("trap") + 1);
+            strncpy(type, "trap", strlen("trap"));
+
+            assert(ident != NULL); 
+            assert(parent != NULL); 
+            assert(suffix != NULL);
+            assert(desc != NULL);
+            
+            newNode = mibLeaveBuild(ident, type, NULL, NULL, suffix, parent); 
             break;
         case OBJECT_IDENTIFIER:
-            mibObjGen_InnerNode();
+            assert(ident != NULL);
+            assert(parent != NULL);
+            assert(suffix != NULL);
+            
+            newNode = mibNodeBuild(ident, suffix, parent);
             break;
         case SEQUENCE:
             /* ignore */
@@ -46,27 +97,55 @@ int mibObjGen(int type) {
         default:
             break;
     }
+
+    assert(mibTreeHeadAppend(&trees, newNode) != FALSE);
+    
+    sliceRelease_STATIC(&sliceContainer);
+
     return 0;
 }
 
-int mibObjGen_Leave() {
-    char *ident, *type, *rw, *desc, *parent, *suffix, *oid;
+static char * oidComplement(char *parent, char *suffix) {
+    char *oid, *parentOid;
+    int oidLength = SIZE_OF_OID_STRING;
+    mibObjectTreeNode *parentNode;
 
-    ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER);
-    type = sliceGetVal(&sliceContainer, SLICE_TYPE);
-    rw = sliceGetVal(&sliceContainer, SLICE_PERMISSION);
-    desc = sliceGetVal(&sliceContainer, SLICE_DESCRIPTION);
-    parent = sliceGetVal(&sliceContainer, SLICE_PARENT);
-    suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX);
+    parentNode = search_MibTree(&mibObjectTreeRoot, parent);
 
-    if (isNullPtr(ident) || isNullPtr(type) || isNullPtr(rw)
-        || isNullPtr(desc) || isNullPtr(desc) || isNullPtr(parent)
-        || isNullPtr(suffix)) {
-        return -1;
+    if (parentNode == NULL)
+        return NULL;
+    
+    parentOid = getOidFromInfo(parentNode);
+
+    // Overflow checking.
+    if (strlen(parentOid) >= SIZE_OF_OID_STRING) {
+        oidLength += EXTRA_OF_OID_LEN; 
     }
 
+    oid = (char *)malloc(oidLength);
+    memset(oid, 0, oidLength);
+
+    strncpy(oid, parentOid, oidLength);
+    strncat(oid, ".", 1);
+    strncat(oid, suffix, strlen(suffix));
+
+    return oid;
+}
+
+int mibObjGen_Leave() {
+    mibObjectTreeNode *obj;
+    char *ident, *type, *rw, *desc, *parent, *suffix, *oid;
+    
+    assert((ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER)) != NULL);
+    assert((type = sliceGetVal(&sliceContainer, SLICE_TYPE)) != NULL);
+    assert((rw = sliceGetVal(&sliceContainer, SLICE_PERMISSION)) != NULL);
+    assert((desc = sliceGetVal(&sliceContainer, SLICE_DESCRIPTION)) != NULL);
+    assert((parent = sliceGetVal(&sliceContainer, SLICE_PARENT)) != NULL);
+    assert((suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX)) != NULL);
+
     oid = oidComplement(parent, suffix);
-    mibTreeLeaveAdd(ident, type, rw, desc, parent, oid);
+    obj = mibLeaveBuild(ident, type, rw, desc, oid, parent);
+    mibTreeLeaveAdd(obj, parent);
 
     sliceReset(sliceNext(&sliceContainer));
     RELEASE_MEM(suffix);
@@ -75,110 +154,76 @@ int mibObjGen_Leave() {
 }
 
 int mibObjGen_InnerNode() {
+    mibObjectTreeNode *node;
     char *ident, *parent, *suffix, *oid;
 
-    ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER);
-    parent = sliceGetVal(&sliceContainer, SLICE_PARENT);
-    suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX);
-
-    if (isNullPtr(ident) || isNullPtr(parent) || isNullPtr(suffix))
-        return -1;
+    assert( (ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER)) != NULL);
+    assert( (parent = sliceGetVal(&sliceContainer, SLICE_PARENT)) != NULL);
+    assert( (suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX)) != NULL);
 
     oid = oidComplement(parent, suffix);
-    mibTreeNodeAdd(ident, oid, parent);
+
+    node = mibNodeBuild(ident, oid, parent);
+    mibTreeNodeAdd(node, parent);
 
     sliceReset(sliceNext(&sliceContainer));
+
     RELEASE_MEM(suffix);
     RELEASE_MEM(parent);
+
     return 0;
 }
 
 int mibObjGen_trap() {
+    mibObjectTreeNode *obj; 
     char *ident, *parent, *suffix, *oid, *desc, *type;
 
-    ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER);
+    assert( (ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER)) != NULL);
+
     type = (char *)malloc(strlen("trap")+1);
     memset(type, 0, strlen("trap")+1);
     strncpy(type, "trap", strlen("trap"));
-    parent = sliceGetVal(&sliceContainer, SLICE_PARENT);
-    suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX);
-    desc = sliceGetVal(&sliceContainer, SLICE_DESCRIPTION);
 
-    if (isNullPtr(ident) || isNullPtr(type) || isNullPtr(parent) || isNullPtr(suffix))
-        return -1;
+    assert( (parent = sliceGetVal(&sliceContainer, SLICE_PARENT)) != NULL);
+    assert( (suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX)) != NULL);
+    assert( (desc = sliceGetVal(&sliceContainer, SLICE_DESCRIPTION)) != NULL);
 
     oid = oidComplement(parent, suffix);
-    mibTreeLeaveAdd(ident, type, NULL, NULL, parent, oid);
+    
+    obj = mibLeaveBuild(ident, type, NULL, NULL, oid, parent); 
+    mibTreeLeaveAdd(obj, parent);
 
     sliceReset(sliceNext(&sliceContainer));
 
     RELEASE_MEM(desc);
     RELEASE_MEM(suffix);
     RELEASE_MEM(parent);
+
     return 0;
 }
 
 void deal_with_sequence() {}
 
 static int tablePrint(char *ident, char *oid, char *rw, char *detail, FILE *output) {
-    if (isNullPtr(ident) || isNullPtr(oid) ||
-        isNullPtr(rw) || isNullPtr(detail))
+    if (isNullPtr(ident) || isNullPtr(oid) || isNullPtr(rw) || isNullPtr(detail))
         return -1;
 }
 
-static int mibTreeLeaveAdd(char *ident, char *type,
-    char *rw, char *desc,
-    char *parent, char *oid) {
-
-    mibObjectTreeNode *obj;
-    mibLeaveInfo *pLeaveInfo;
-
-    if (isNullPtr(ident)
-        || isNullPtr(type)
-        || isNullPtr(parent)
-        || isNullPtr(oid)) {
-        return -1;
-    }
-
-    obj = mibLeaveBuild(ident, type, rw, desc, oid);
+static int mibTreeLeaveAdd(mibObjectTreeNode *obj, char *parent) {
     if (isNullPtr(obj))
         return -1;
-    insert_MibTree(&mibObjectTreeRoot, obj, parent);
+    return insert_MibTree(&mibObjectTreeRoot, obj, parent);
 }
 
-static int mibTreeNodeAdd(char *ident, char *oid, char *parent) {
-    mibObjectTreeNode *obj;
-
-    if (isNullPtr(ident) || isNullPtr(oid))
-        return -1;
-
-    obj = mibNodeBuild(ident, oid);
+static int mibTreeNodeAdd(mibObjectTreeNode *obj, char *parent) {
     if (isNullPtr(obj))
         return -1;
-
-    insert_MibTree(&mibObjectTreeRoot, obj, parent);
-}
-
-static char * oidComplement(char *parent, char *suffix) {
-    char *oid;
-    mibObjectTreeNode *parentNode;
-
-    oid = (char *)malloc(SIZE_OF_OID_STRING);
-    memset(oid, 0, SIZE_OF_OID_STRING);
-    parentNode = search_MibTree(&mibObjectTreeRoot, parent);
-
-    if (parentNode == NULL)
-        return NULL;
-
-    strncpy(oid, getOidFromInfo(parentNode), SIZE_OF_OID_STRING);
-    strncat(oid, ".", 1);
-    strncat(oid, suffix, strlen(suffix));
-
-    return oid;
+    return insert_MibTree(&mibObjectTreeRoot, obj, parent);
 }
 
 extern mibObjectTreeNode mibObjectTreeRoot;
 int upperTreeGeneration(symbolTable *symTbl) {
+#if 0
     mibObjectTreeNode *root;
     mibObjectTreeNode *current;
     mibObjectTreeNode *childNode;
@@ -192,7 +237,7 @@ int upperTreeGeneration(symbolTable *symTbl) {
         return ERROR_NULL_REF;
     }
     root = &mibObjectTreeRoot;
-    insert_MibTree(root, mibNodeBuild("iso", "1"), "root");
+    insert_MibTree(root, mibNodeBuild("iso", "1", NULL), "root");
     push(&stack, root);
 
     sym = (symbol_t *)malloc(sizeof(symbol_t));
@@ -204,7 +249,7 @@ int upperTreeGeneration(symbolTable *symTbl) {
             while (child != NULL) {
                 if (child->symType == SYMBOL_TYPE_NODE) {
                     childNode = mibNodeBuild(strdup(child->symIdent),
-                        strdup(child->symInfo.nodeMeta.suffix));
+                        strdup(child->symInfo.nodeMeta.suffix), NULL);
                     insert_MibTree(root, childNode, strdup(current->identifier));
                     push(&stack, childNode);
                 } else if (child->symType == SYMBOL_TYPE_LEAVE) {
@@ -212,7 +257,7 @@ int upperTreeGeneration(symbolTable *symTbl) {
                         strdup(child->symInfo.leaveMeta.type),
                         strdup(child->symInfo.leaveMeta.permission),
                         NULL,
-                        strdup(child->symInfo.leaveMeta.suffix));
+                        strdup(child->symInfo.leaveMeta.suffix), NULL);
                     insert_MibTree(root, childNode, strdup(current->identifier));
                 }
                 temp = child;
@@ -223,6 +268,7 @@ int upperTreeGeneration(symbolTable *symTbl) {
             }
         }
     }
+#endif
 }
 
 /*
@@ -245,9 +291,9 @@ int (*symbolCollectRoutine[SLICE_TYPE_MAXIMUM])(dispatchParam *);
 /* Initialize symbolCollectRoutine array */
 int symbolCollectingInit() {
     /* Symbol Table building function */
-    symbolCollectRoutine[OBJECT] = symbolCollect_BUILD_INNER_NODE;
+    symbolCollectRoutine[OBJECT_IDENTIFIER] = symbolCollect_BUILD_INNER_NODE;
     symbolCollectRoutine[TRAP] = symbolCollect_BUILD_TRAP;
-    symbolCollectRoutine[OBJECT_IDENTIFIER] = symbolCollect_BUILD_LEAVE_NODE;
+    symbolCollectRoutine[OBJECT] = symbolCollect_BUILD_LEAVE_NODE;
     symbolCollectRoutine[SEQUENCE] = symbolCollect_BUILD_SEQUENCE;
     symbolCollectRoutine[SMI_DEF] = symbolCollect_BUILD_SMI_DEF;
 
@@ -263,9 +309,15 @@ int symbolCollectingInit() {
 }
 
 int symbolCollecting(int type, dispatchParam *param) {
-    // fixme: before collecting a symbol you should 
-    // check to see that whether the symbol you encounter
-    // is the one you want to include
+    char *ident;
+
+    if (type >= OBJECT && type <= SMI_DEF) {
+        ident = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
+        if (!collectInfo_exists(SW_CUR_IMPORT_REF(swState), ident)) {
+            sliceRelease_STATIC(&symCollectSlice);
+            return TRUE;
+        }
+    }   
     return symbolCollectRoutine[type](param);
 }
 
@@ -275,73 +327,70 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
     collectInfo *pCollect;
     symbol_t *newSymbol;
     identList *listHead, *listProcessing;
-    char *modIdent;
-    char *symbolIdent;
-    char *parentIdent ;
+
+    char *symbolIdent, *parentIdent, *suffix;
     
-    parentIdent = sliceGetVal(&symCollectSlice, SLICE_PARENT);
-    symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
+    parentIdent = sliceRetriVal(&symCollectSlice, SLICE_PARENT);
+    symbolIdent = sliceRetriVal(&symCollectSlice, SLICE_IDENTIFIER);
+    suffix = sliceRetriVal(&symCollectSlice, SLICE_OID_SUFFIX); 
 
-    /* Is the symbol exists in symbol table ? */
-    if (symbolSearching(&symTable, symbolIdent)) {
-        /* Already exist only need to remove it from modStack */
-        goto MOD_STACK_OP_REMOVE;
+    // Is the symbol exists in symbol table ?
+    if (symbolTableSearch(&symTable, symbolIdent)) {
+        // Already exist only need to remove it from modStack
+        RELEASE_MEM(parentIdent);
+        RELEASE_MEM(symbolIdent);
+        RELEASE_MEM(suffix);
+        goto POST_CLEANING;
     }
+    
+    // Install the symbol into symbol table.
+    newSymbol = symbolNodeConst(symbolIdent, parentIdent, suffix);
+    symbolTableAdd(&symTable, newSymbol); 
 
-    modIdent = (char *)malloc(MAX_CHAR_OF_MOD_IDENT);
-    switch_CurrentMod(modIdent, MAX_CHAR_OF_MOD_IDENT);
-    parentIdent = sliceGetVal(&symCollectSlice, SLICE_PARENT);
-
-    /* Is the module specify by modIdent is exists ? */
-    if (!symbolTableSearch(&symTable, modIdent)) {
-        newMod = (symbolTable *)malloc(sizeof(symbolTable));
-        newMod->modName = modIdent;
-        symbolModuleAdd(&symTable, newMod);
-    }
-
-    newSymbol = (symbol_t *)malloc(sizeof(symbol_t));
-    newSymbol->symIdent = symbolIdent;
-    newSymbol->symType = SYMBOL_TYPE_NODE;
-    newSymbol->symInfo.nodeMeta.parentIdent = parentIdent;
-    symbolAdd(&symTable, newSymbol, newMod->modName);
-
-MOD_STACK_OP_REMOVE:
-    /* Need to remove the symbol found from list in the modStack */
-    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
-    sliceRelease(&symCollectSlice);
+POST_CLEANING:
+    // Need to remove the symbol found from list in the modStack
+    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
+    sliceRelease_STATIC(&symCollectSlice);
     return retVal;
 }
-
 
 static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
-    sliceRelease(&symCollectSlice);
+
+    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
+    sliceRelease_STATIC(&symCollectSlice);
+
     return retVal;
 }
 
 static int symbolCollect_BUILD_LEAVE_NODE(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
-    sliceRelease(&symCollectSlice);
+     
+    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
+    sliceRelease_STATIC(&symCollectSlice);
+
     return retVal;
 }
 
 static int symbolCollect_BUILD_SEQUENCE(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
-    sliceRelease(&symCollectSlice);
+
+    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
+    sliceRelease_STATIC(&symCollectSlice);
+
     return retVal;
 }
 
 static int symbolCollect_BUILD_SMI_DEF(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-    retVal = rmSymFromIdentList(SW_CUR_IMPORT_REF(swState)->symbols, symbolIdent);
-    sliceRelease(&symCollectSlice);
+
+    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
+    sliceRelease_STATIC(&symCollectSlice);
+
     return retVal;
 }
 
@@ -355,7 +404,6 @@ static int symbolCollect_PARAM_IDENT(dispatchParam *param) {
 }
 
 static int symbolCollect_PARAM_TYPE(dispatchParam *param) {
-
     if (isNullPtr(param)) {
         return -1;
     }
@@ -399,3 +447,32 @@ static int symbolCollect_PARAM_SUFFIX(dispatchParam *param) {
     PARAM_STORE_TO_SYM_LIST(SLICE_OID_SUFFIX, param);
     return 0;
 }
+
+#ifdef MIB2DOC_UNIT_TESTING
+
+#include "test.h"
+
+void mibTreeGen__SYMBOL_COLLECT(void **state) {
+    symbol_t *symbol; 
+    
+    symTableInit(); 
+
+    symbolCollect_PARAM_IDENT(disParamConstruct(strdup("IDENT")));
+    symbolCollect_PARAM_TYPE(disParamConstruct(strdup("TYPE"))); 
+    symbolCollect_PARAM_PARENT(disParamConstruct(strdup("PARENT")));
+    symbolCollect_PARAM_SUFFIX(disParamConstruct(strdup("SUFFIX")));
+    symbolCollect_PARAM_DESC(disParamConstruct(strdup("DESC")));
+    symbolCollect_PARAM_PERM(disParamConstruct(strdup("PERM")));
+
+    symbolCollect_BUILD_INNER_NODE(NULL);
+    
+    symbol = symbolTableSearch(&symTable, "IDENT");
+    assert_non_null(symbol); 
+}
+
+void mibTreeGenTesting(void **state) {
+                   
+}
+
+#endif /* MIB2DOC_UNIT_TESTING */
+

@@ -17,12 +17,12 @@
  */
 #define pushByIndex(STACK_BASE, ELEMENT, /* int */TOP, /* int */MAX, /* int */UNIT_SIZE) ({\
     int ret;\
-    if (TOP >= MAX || TOP+UNIT_SIZE >= MAX) {\
+    if (TOP >= MAX) {\
         /* Stack is full just do nothing */\
         ret = 0;\
     } else {\
-        TOP += UNIT_SIZE;\
-        memcpy(STACK_BASE - TOP, ELEMENT, UNIT_SIZE); \
+        TOP++;\
+        memcpy(STACK_BASE - (TOP * UNIT_SIZE), ELEMENT, UNIT_SIZE); \
         ret = 1;\
     }\
     ret;\
@@ -38,8 +38,8 @@
     if (TOP <= 0) {\
         ret = 0;\
     } else {\
-        memcpy(UNIT, STACK_BASE + TOP, UNIT_SIZE);\
-        TOP -= UNIT_SIZE;\
+        memcpy(UNIT, STACK_BASE - (TOP * UNIT_SIZE), UNIT_SIZE);\
+        TOP--;\
         ret = 1;\
     }\
     ret;\
@@ -57,8 +57,16 @@ typedef struct identStack {
     unsigned char *buffer;
 } genericStack;
 
-int genericStackConstruct();
+int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize);
 int push(genericStack *ps, void *unit);
 int pop(genericStack *ps, void *unit);
 
+#ifdef MIB2DOC_UNIT_TESTING
+
+int stack__STACK_PUSH_POP();
+
+#endif /* MIB2DOC_UNIT_TESTING */
+
+
 #endif /* GL5610_MIB_DOC_GEN_STACK_H */
+

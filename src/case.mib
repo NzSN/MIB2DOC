@@ -1,14 +1,41 @@
 CASE DEFINITIONS ::= BEGIN
 
-IMPORTS
-    XYZ, ZYX FROM ALIALI;
+org OBJECT IDENTIFIER ::= { iso 3 }
+A OBJECT IDENTIFIER ::= { org 1 }
+B OBJECT IDENTIFIER ::= { A 2 }
 
-sys OBJECT-TYPE
+C OBJECT-TYPE
     SYNTAX INTEGER
     MAX-ACCESS read-only
     STATUS current
     DESCRIPTION
-        "Just a case"
-    ::= { enterprises 1 }
+        "C"
+    ::= { B 1 }
+
+D OBJECT-TYPE
+    SYNTAX INTEGER
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION
+        "D"
+    ::= { B 2 }  
+
+ll ::= SEQUENCE {
+    index1  INTEGER
+}
+
+SMI OBJECT-TYPE
+
+gbnPlatformChassis MODULE-IDENTITY
+    LAST-UPDATED    "1105040000Z"  -- May 4, 2011
+    ORGANIZATION    "GreenNet Systems, Inc."
+    CONTACT-INFO    "GreenNet Systems, Inc.
+                        E-mail: support@green-net.com.cn"
+    DESCRIPTION     "GBN Chassis Management Enterprise MIB definition."
+    REVISION        "1105040000Z"  -- May 4, 2011 
+    DESCRIPTION     
+        "Initial MIB creation." 
+    ::= { gbnPlatform 3 } 
 
 END
+

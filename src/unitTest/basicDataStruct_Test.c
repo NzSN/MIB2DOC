@@ -2,16 +2,23 @@
 // Created by ayden on 2017/4/25.
 //
 
-#include <stdarg.h>
-#include <stddef.h>
-#include <setjmp.h>
-#include <cmocka.h>
+#include "test.h"
 #include <stdlib.h>
 #include <string.h>
 #include "type.h"
 #include "list.h"
 #include "mibTreeGen.h"
+#include "mibTreeObjTree.h"
 #include "queue.h"
+#include "stack.h"
+#include "dispatcher.h"
+#include "hash.h"
+#include <stdio.h>
+#include "test.h"
+#include "yy_syn.def.h"
+
+#include "typeTable.h"
+
 
 mibObjectTreeNode mibObjectTreeRoot;
 slice sliceContainer;
@@ -19,7 +26,7 @@ char *sectionRecord[SIZE_OF_SECTION_RECORD];
 
 int tableRecognize(char *buffer, int size);
 
-static void list_test(void **state) {
+static void list__LISTNODE_SLICE(void **state) {
     slice *new1;
     slice *new2;
     slice *got;
@@ -40,8 +47,36 @@ static void list_test(void **state) {
     if ( (got->sliVal != new2->sliVal) || (got->sliKey != new2->sliKey))
         fail();
 
-    sliceRelease(&sliceContainer);
+    sliceRelease_STATIC(&sliceContainer);
     memset(&sliceContainer, 0, sizeof(slice));
+    /*
+    typedef struct {
+        int idx;
+        listNode node;
+    } test_list;
+    
+    int i = 1;
+    test_list head, *current;
+    memset(&head, 0, sizeof(test_list));
+
+    while (i < 100) {
+        current = (test_list *)malloc(sizeof(test_list)); 
+        memset(current, 0, sizeof(test_list));
+        current->idx = i;
+        listNodeInsert(listNodeTail(&head.node), &current->node);
+        ++i;
+    }
+    
+    current = &head;
+
+    do {
+        if (current->node.next == NULL)
+            return;
+        current = containerOf(listNodeNext(&current->node), test_list, node);     
+    } while (current != NULL); 
+
+    // list delete testing 
+    */ 
 }
 
 
@@ -53,10 +88,10 @@ static void mibTree_test(void **state) {
     char *parent;
 
     mibObjectTreeInit(&mibObjectTreeRoot);
-    ident = (char *)malloc(strlen("gogo"));
-    suffix = (char *)malloc(strlen("1"));
-    parent = (char *)malloc(strlen("enterprises"));
-
+    ident = (char *)calloc(1, strlen("gogo")+1);
+    suffix = (char *)calloc(1, strlen("1")+1);
+    parent = (char *)calloc(1, strlen("enterprises")+1);
+    
     strncpy(ident, "gogo", strlen("gogo"));
     strncpy(suffix, "1", strlen("1"));
     strncpy(parent, "enterprises", strlen("enterpises"));
@@ -72,7 +107,7 @@ static void mibTree_test(void **state) {
         fail();
 }
 
-static void tableInfoQueue_test(void **state) {
+static void queue__QUEUE_APPEND(void **state) {
     mibNodeInfoQueue queue;
     tableInfo *pInfo;
 
@@ -127,7 +162,7 @@ static void tableInfoQueue_test(void **state) {
         fail();
 }
 
-static void desc_test(void ** state) {
+static void UNIT_TEST__DESC_CHECK(void ** state) {
     char *ident = "inactiveLineDeviceType";
     char *parentIdent = "inactiveLinePrimaryEntry";
     char *result;
@@ -156,7 +191,7 @@ static void desc_test(void ** state) {
     strncpy(result, ident+pos+1, size-(pos+1));
 }
 
-static void fa_test(void **state) {
+static void util__tableRecognize(void **state) {
     int ret;
     char *buffer = "inactiveVlanTable";
 
@@ -166,24 +201,54 @@ static void fa_test(void **state) {
         fail();
 }
 
-static void disParam_test(void **state) { 
+static void list__DISPATCH_PARAM_STORE(void **state) { 
     char *IDENTIFIER_S = "GOGO";
     dispatchParam *param = disParamConstruct((void *)SLICE_PARENT);
     disParamStore(param, disParamConstruct((void *)IDENTIFIER_S));
+
     if ((unsigned long)disParamRetrive(&param)->param != SLICE_PARENT)
         fail();
     if (strncmp(disParamRetrive(&param)->param, IDENTIFIER_S, strlen(IDENTIFIER_S)) != 0)
         fail();
+    
+    int i = 0;
+    dispatchParam *massive = disParamConstruct((void *)100);
+    while (i < 100) {
+        disParamStore(massive, disParamConstruct((void *)i+1)); 
+        ++i;
+    }
+    
+    i = 0;
+    dispatchParam *current = massive;
+    while (current = dispatchParamNext(current)) {
+        if ((unsigned long)current->param != i+1)
+            fail();
+        ++i;
+    }
+    
+    disParamRelease(massive, NULL);
 }
 
 int main(void) {
     const struct CMUnitTest tests[] = {
-            cmocka_unit_test(list_test),
-            cmocka_unit_test(mibTree_test),
-            cmocka_unit_test(fa_test),
-            cmocka_unit_test(tableInfoQueue_test),
-            cmocka_unit_test(desc_test),
-            cmocka_unit_test(disParam_test)
+            cmocka_unit_test(list__LISTNODE_SLICE),
+            cmocka_unit_test(util__tableRecognize),
+            cmocka_unit_test(queue__QUEUE_APPEND),
+            cmocka_unit_test(UNIT_TEST__DESC_CHECK),
+            cmocka_unit_test(list__DISPATCH_PARAM_STORE),
+            
+            // Module unit testing
+            #ifdef MIB2DOC_UNIT_TESTING
+            cmocka_unit_test(stack__STACK_PUSH_POP),
+            cmocka_unit_test(dispatcher__COLLECT_INFO),
+            cmocka_unit_test(hash__HASH_BASIC),
+            cmocka_unit_test(mibTreeObjTree__MIBTREE_MERGE),
+            cmocka_unit_test(list_symbolTable),
+            cmocka_unit_test(mibTreeGen__SYMBOL_COLLECT),
+            cmocka_unit_test(yy_syn_def__SEQUENCE),
+            cmocka_unit_test(list__TYPE_TABLE) 
+            #endif
     };
+
     return cmocka_run_group_tests(tests, NULL, NULL);
 }

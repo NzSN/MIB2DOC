@@ -1,24 +1,12 @@
+#include "type.h"
+#include "list.h"
+#include "hash.h"
+
 #ifndef _SYMBOLTBL_H_
 #define _SYMBOLTBL_H_
 
-#include "type.h"
-#include "list.h"
-
+#define SIZE_OF_SYMBOL_TBL (256)
 #define MAX_CHAR_OF_MOD_IDENT (64)
-
-typedef struct nodeMeta_t {
-    char *nodeIdent;
-    char *parentIdent;
-    char *suffix;
-} nodeMeta_t;
-
-typedef struct leaveMeta_t {
-    char *ident;
-    char *parent;
-    char *suffix;
-    char *type;
-    char *permission;
-} leaveMeta_t;
 
 typedef enum symErrorCode {
     SYM_TABLE_EXISTS,
@@ -34,33 +22,55 @@ typedef enum symbolType {
     SYMBOL_TYPE_LEAVE
 } symbolType;
 
+typedef struct nodeMeta_t {
+    char *parentIdent;
+    char *suffix;
+} nodeMeta_t;
+
+typedef struct leaveMeta_t {
+    char *parent;
+    char *suffix;
+    char *type;
+    char *permission;
+} leaveMeta_t;
+
 typedef struct symbol_t {
+    pair_val_base base;
     symbolType symType;
     char *symIdent;
     union {
        leaveMeta_t leaveMeta;
        nodeMeta_t nodeMeta;
     } symInfo;
-    listNode symNode;
 } symbol_t;
 
 typedef struct symbolTable {
-    char *modName;
-    symbol_t *symbol;
-    listNode symTblNode;
+    int numOfSymbols;
+    hashMap *symbolMap; 
 } symbolTable;
 
-/* symbol_t and symbolTable */
-symbolTable * symbolTableConstruct(char *name);
-symbolTable * symbolTablePrev(symbolTable *tbl);
-symbolTable * symbolTableNext(symbolTable *tbl);
-symbolTable * symbolTableSearch(symbolTable *tblRoot, char *modName);
-symbolTable * symbolModuleAdd(symbolTable *tblRoot, symbolTable *newTbl);
-symbol_t * symbolPrev(symbol_t *sym);
-symbol_t * symbolNext(symbol_t *sym);
-symbol_t * symbolAdd(symbolTable *symTbl, symbol_t *newSym, char *modName);
-symbol_t *symbolTravel(symbolTable *symbolTblRoot, int (*func)(symbol_t *sym, void *arg), void *arg);
-int symbolSearchingByParent(symbolTable *symTblRoot, char *parent, symbol_t *sym);
-int symbolSearching(symbolTable *symTblRoot, char *sym);
+extern symbolTable symTable;
+
+/* symbolTable functions */
+symbolTable * symbolTableInit();
+symbolTable * symbolTableConstruct();
+symbol_t * symbolTableSearch(symbolTable *tbl, char *symIdent);
+int symbolTableAdd(symbolTable *tbl, symbol_t *sym);
+int symbolTableDelete(symbolTable *tbl, char *symIdent);
+int symbolTableRelease(symbolTable *tbl);
+int symbolTableRelease_static(symbolTable *tbl);
+int symTableInit();
+
+/* symbol_t functions */
+symbol_t * symbolNodeConst(char *ident, char *parent, char *suffix);
+symbol_t * symbolLeaveConst(char *ident, char *parent, char *suffix,
+    char *type, char *perm);
+
+#ifdef MIB2DOC_UNIT_TESTING
+
+void list_symbolTable(void **state);
+
+#endif /* MIB2DOC_UNIT_TESTING */
 
 #endif /* _SYMBOLTBL_H_ */
+
