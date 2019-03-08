@@ -2,6 +2,7 @@
 %option outfile="src/lexer.c"
 
 %{
+    #include "yy_syn.def.h"
     #include "yy_syn.tab.h"
     #include "lexDeal.h"
 
@@ -27,7 +28,7 @@ IpAddress                   |
 MacAddress                  | 
 OCTET[ \n\t\r]+STRING([ \n\t\r]*\(.*\))*    | 
 SEQUENCE[ \n\t\r]+OF[ \n\t\r]*[a-zA-Z]*     | 
-RowStatus                           { yylval.str = strdup(yytext); return TYPE; }
+RowStatus                           { yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
 
 SEQUENCE                            { return SEQ; }
 

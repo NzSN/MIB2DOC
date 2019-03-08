@@ -40,13 +40,12 @@
 %code top {
     #include <stdio.h>
     #include "type.h"
-    #include "mibTreeGen.h"
-    #include "mibTreeObjTree.h"
-    #include "dispatcher.h"
     #include "symbolTbl.h"
     #include "string.h"
     #include "yy_syn.def.h"
-    #include "typeTable.h"   
+    #include "typeCheck.h"
+    #include "dispatcher.h"
+    #include "mibTreeGen.h"
 
     extern typeTable mibTypeTbl;
     extern symbolTable symTable;     
@@ -63,18 +62,16 @@
 %%
 
 MIB :
-	MAIN_PART;
-    
-MAIN_PART :
-	  OBJ_DEAL MAIN_PART
-	| OBJ MAIN_PART
-	| TRAP MAIN_PART
-	| SEQUENCE MAIN_PART
-    | SMI MAIN_PART
-	| END MAIN_PART     
-    | DEFINITION MAIN_PART
-    | IMPORT MAIN_PART
-    | MODULE_DEF MAIN_PART
+	  OBJ_DEAL MIB
+	| OBJ MIB
+	| TRAP MIB
+	| SEQUENCE MIB
+    | SMI MIB
+	| END MIB     
+    | DEFINITION MIB
+    | IMPORT MIB
+    | MODULE_DEF MIB
+    | TYPE_DEFINED MIB
     | /* empty */ ;
 
 DEFINITION :
@@ -87,12 +84,34 @@ IMPORT :
     };
 
 TYPE :
-    TYPE_BUILT_IN { $TYPE = $TYPE_BUILT_IN; }
-    | IDENTIFIER { $TYPE = $IDENTIFIER; /* Customed type */ }
+    TYPE_BUILT_IN { 
+        // Correctness of BUILT_IN type was checked by lexer
+        $TYPE = $TYPE_BUILT_IN; 
+    }
+    | IDENTIFIER { 
+        //  Customed type 
+        $TYPE = $IDENTIFIER;  
+        
+        if (typeCheck_isValid(MIB_TYPE_TBL_R, $TYPE) == FALSE) {
+            errorMsg("%s is not a valid type.\n", $TYPE);
+            exit(1);
+        }
+    }
+
+TYPE_DEFINED :
+    IDENTIFIER ASSIGNED TYPE {
+        _Bool isExists = typeTableIsTypeExists(MIB_TYPE_TBL_R, $IDENTIFIER);
+        if (isExists) {
+            errorMsg("%s is already exists.\n", $IDENTIFIER);
+            abort();
+        }
+        typeTableAdd(MIB_TYPE_TBL_R, $IDENTIFIER, CATE_CUSTOM, NULL);         
+    }
 
 END :
     END_ {
         switchingState *pState = getCurSwInfo();
+
         if (SW_STATE((*pState)) == DISPATCH_MODE_SYMBOL_COLLECTING) {
             // In include context mark the module scan is already done.
         } else if (SW_STATE((*pState)) == DISPATCH_MODE_DOC_GENERATING) {

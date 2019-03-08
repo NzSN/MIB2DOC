@@ -875,7 +875,7 @@ typeCate typeTableTypeCate(const typeTable *tbl, const char *type) {
        return ERROR; 
 
     typeItem *found = typeItemSearch(&tbl->items, type); 
-    if (!found) return ERROR;
+    if (!found) return CATE_ERROR;
 
     return found->cate;
 }

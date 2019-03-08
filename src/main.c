@@ -4,7 +4,6 @@
 #include "docGenerate.h"
 #include "options.h"
 #include "dispatcher.h"
-#include "yy_syn.tab.h"
 #include "mibTreeGen.h"
 #include "symbolTbl.h"
 #include "typeTable.h"
@@ -18,6 +17,8 @@ slice sliceContainer;
 char currentTable[SIZE_OF_CURRENT_TABLE];
 char *sectionRecord[SIZE_OF_SECTION_RECORD];
 extern mibObjectTreeNode mibObjectTreeRoot;
+
+extern int syntaxParserInit(void);
 
 int main(int argc, char *argv[]) {
     int token;

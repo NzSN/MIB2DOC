@@ -709,12 +709,13 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "./src/yy_lex.l"
 #line 5 "./src/yy_lex.l"
+    #include "yy_syn.def.h"
     #include "yy_syn.tab.h"
     #include "lexDeal.h"
 
     void * getCurSwInfo();
 
-#line 718 "src/lexer.c"
+#line 719 "src/lexer.c"
 
 #define INITIAL 0
 #define SMI_FIELD 1
@@ -933,10 +934,10 @@ YY_DECL
 		}
 
 	{
-#line 13 "./src/yy_lex.l"
+#line 14 "./src/yy_lex.l"
 
 
-#line 940 "src/lexer.c"
+#line 941 "src/lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -996,221 +997,221 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 15 "./src/yy_lex.l"
+#line 16 "./src/yy_lex.l"
 
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 16 "./src/yy_lex.l"
+#line 17 "./src/yy_lex.l"
 
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 17 "./src/yy_lex.l"
+#line 18 "./src/yy_lex.l"
 
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 18 "./src/yy_lex.l"
+#line 19 "./src/yy_lex.l"
 { return OBJ_IDEN_; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 19 "./src/yy_lex.l"
+#line 20 "./src/yy_lex.l"
 { return OBJ_SPECIFIER; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 20 "./src/yy_lex.l"
+#line 21 "./src/yy_lex.l"
 { return OBJECTS_; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 21 "./src/yy_lex.l"
+#line 22 "./src/yy_lex.l"
 { return TRAP_SPECIFIER; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 22 "./src/yy_lex.l"
+#line 23 "./src/yy_lex.l"
 { return SYNTAX_SPECIFIER; }
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
-#line 25 "./src/yy_lex.l"
+#line 26 "./src/yy_lex.l"
 case 10:
 /* rule 10 can match eol */
-#line 26 "./src/yy_lex.l"
+#line 27 "./src/yy_lex.l"
 case 11:
 /* rule 11 can match eol */
-#line 27 "./src/yy_lex.l"
+#line 28 "./src/yy_lex.l"
 case 12:
 /* rule 12 can match eol */
-#line 28 "./src/yy_lex.l"
+#line 29 "./src/yy_lex.l"
 case 13:
 /* rule 13 can match eol */
-#line 29 "./src/yy_lex.l"
+#line 30 "./src/yy_lex.l"
 case 14:
 /* rule 14 can match eol */
-#line 30 "./src/yy_lex.l"
+#line 31 "./src/yy_lex.l"
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 30 "./src/yy_lex.l"
-{ yylval.str = strdup(yytext); return TYPE; }
+#line 31 "./src/yy_lex.l"
+{ yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 32 "./src/yy_lex.l"
+#line 33 "./src/yy_lex.l"
 { return SEQ; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 34 "./src/yy_lex.l"
+#line 35 "./src/yy_lex.l"
 { return INDEX_; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 35 "./src/yy_lex.l"
+#line 36 "./src/yy_lex.l"
 { return ACCESS_SPECIFIER; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 36 "./src/yy_lex.l"
+#line 37 "./src/yy_lex.l"
 { return DEF; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 37 "./src/yy_lex.l"
+#line 38 "./src/yy_lex.l"
 { return BEGIN_; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 38 "./src/yy_lex.l"
+#line 39 "./src/yy_lex.l"
 { return IMPORTS_; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 39 "./src/yy_lex.l"
+#line 40 "./src/yy_lex.l"
 { return FROM_; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 40 "./src/yy_lex.l"
+#line 41 "./src/yy_lex.l"
 { return COMMA; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 41 "./src/yy_lex.l"
+#line 42 "./src/yy_lex.l"
 { return SEMICOLON; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 42 "./src/yy_lex.l"
+#line 43 "./src/yy_lex.l"
 { return END_; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 44 "./src/yy_lex.l"
+#line 45 "./src/yy_lex.l"
 { return MOD_SPECIFIER; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 45 "./src/yy_lex.l"
+#line 46 "./src/yy_lex.l"
 { return LAST_UPDATED; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 46 "./src/yy_lex.l"
+#line 47 "./src/yy_lex.l"
 { return REVISION_DATE; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 47 "./src/yy_lex.l"
+#line 48 "./src/yy_lex.l"
 { return ORGANIZATION; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 48 "./src/yy_lex.l"
+#line 49 "./src/yy_lex.l"
 { return REVISION; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 49 "./src/yy_lex.l"
+#line 50 "./src/yy_lex.l"
 { return CONTACT_INFO; }
 	YY_BREAK
 case 32:
-#line 52 "./src/yy_lex.l"
-case 33:
 #line 53 "./src/yy_lex.l"
-case 34:
+case 33:
 #line 54 "./src/yy_lex.l"
-case 35:
+case 34:
 #line 55 "./src/yy_lex.l"
+case 35:
+#line 56 "./src/yy_lex.l"
 case 36:
 YY_RULE_SETUP
-#line 55 "./src/yy_lex.l"
+#line 56 "./src/yy_lex.l"
 { yylval.str = strdup(yytext); return ACCESS_VALUE; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 57 "./src/yy_lex.l"
+#line 58 "./src/yy_lex.l"
 { return STATUS_SPECIFIER; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 58 "./src/yy_lex.l"
+#line 59 "./src/yy_lex.l"
 { return STATUS_VALUE; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 59 "./src/yy_lex.l"
+#line 60 "./src/yy_lex.l"
 { return DESC_SPECIFIER; }
 	YY_BREAK
 case 40:
 /* rule 40 can match eol */
 YY_RULE_SETUP
-#line 60 "./src/yy_lex.l"
+#line 61 "./src/yy_lex.l"
 { yylval.str = strdup(yytext); return DESC_VALUE; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 61 "./src/yy_lex.l"
+#line 62 "./src/yy_lex.l"
 { return ASSIGNED; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 63 "./src/yy_lex.l"
+#line 64 "./src/yy_lex.l"
 { return L_BRACE; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 64 "./src/yy_lex.l"
+#line 65 "./src/yy_lex.l"
 { return R_BRACE; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 66 "./src/yy_lex.l"
+#line 67 "./src/yy_lex.l"
 { yylval.str = strdup(yytext); return NUM; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 68 "./src/yy_lex.l"
+#line 69 "./src/yy_lex.l"
 { BEGIN(SMI_FIELD); return SMI_SPECIFIER; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 70 "./src/yy_lex.l"
+#line 71 "./src/yy_lex.l"
 { yylval.str = strdup(yytext); return IDENTIFIER; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 72 "./src/yy_lex.l"
+#line 73 "./src/yy_lex.l"
 { BEGIN(INITIAL); yylval.str = strdup(yytext); return SMI_VAL; }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(SMI_FIELD):
-#line 74 "./src/yy_lex.l"
+#line 75 "./src/yy_lex.l"
 {
                                         if (switchToPrevModule(getCurSwInfo()) == -1) {
                                             yyterminate();
@@ -1219,10 +1220,10 @@ case YY_STATE_EOF(SMI_FIELD):
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 80 "./src/yy_lex.l"
+#line 81 "./src/yy_lex.l"
 ECHO;
 	YY_BREAK
-#line 1226 "src/lexer.c"
+#line 1227 "src/lexer.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2221,7 +2222,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 80 "./src/yy_lex.l"
+#line 81 "./src/yy_lex.l"
 
 
 int yywrap() {

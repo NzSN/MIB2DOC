@@ -77,7 +77,7 @@ extern int yydebug;
     REVISION_DATE = 287,
     IDENTIFIER = 288,
     NUM = 289,
-    TYPE = 290,
+    TYPE_BUILT_IN = 290,
     ACCESS_VALUE = 291,
     DESC_VALUE = 292
   };
@@ -91,10 +91,10 @@ union YYSTYPE
 #line 12 "./src/yy_syn.y" /* yacc.c:1909  */
 
     char *str;
-#line 29 "./src/yy_syn.y" /* yacc.c:1909  */
+#line 30 "./src/yy_syn.y" /* yacc.c:1909  */
 
-    struct sequence_item *si;
-    struct sequence *sq;    
+    struct sequence_item si;
+    struct sequence sq;    
 
 #line 100 "./src/yy_syn.tab.h" /* yacc.c:1909  */
 };
@@ -108,6 +108,5 @@ typedef union YYSTYPE YYSTYPE;
 extern YYSTYPE yylval;
 
 int yyparse (void);
-int syntaxParserInit(void);
 
 #endif /* !YY_YY_SRC_YY_SYN_TAB_H_INCLUDED  */

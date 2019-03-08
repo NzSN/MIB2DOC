@@ -3,9 +3,13 @@
 #ifndef _TYPE_TABLE_
 #define _TYPE_TABLE_
 
+#include "list.h"
+
 typedef enum {
+    CATE_ERROR = 0,
     CATE_BUILD_IN = 1,
     CATE_SEQUENCE = 2,
+    CATE_CUSTOM   = 3
 } typeCate;
 
 typedef struct typeItem {
