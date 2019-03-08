@@ -89,7 +89,9 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
             parent = getIdentFromInfo(node->parent);
             if (isMibNodeType_ENTRY(node->parent))
                 parent = getIdentFromInfo(node->parent->parent);
+
             appendQueue(&infoQueue, info);
+
             tableGen_Latex(&infoQueue, parent, writeTo);
             break;
         case COLLECTING:
@@ -205,12 +207,14 @@ static int sectionGen_Latex(char *secName, char *OID, FILE *writeTo) {
 
 static int tableGen_Latex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) {
     int i, count, index;
-
+    
     if (isNullPtr(queue) || isNullPtr(writeTo))
         return -1;
 
     count = queue->count;
     index = 1;
+    
+    fprintf(writeTo, "% Table Begin\n");
 
     fprintf(writeTo, "\\begin{table}[H]\n"
                      "\\centerline {\n"
@@ -228,6 +232,8 @@ static int tableGen_Latex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) 
     fprintf(writeTo, "}\n");
     fprintf(writeTo, "\\caption{%s}\n", parent);
     fprintf(writeTo, "\\end{table}\n");
+
+    fprintf(writeTo, "% Table End\n");
 
     parent = NULL;
     return 0;
