@@ -702,8 +702,10 @@ static char * mibLeaveGetType(mibObjectTreeNode *node) {
 
 // Todo: Need to check the sequence type.
 _Bool isMibNodeType_TABLE(mibObjectTreeNode *node) {
+    if (node->isNode == TRUE)
+        return FALSE;
+
     char *type = mibLeaveGetType(node);  
-    
     assert(isNonNullPtr(type));
     
     char *seqPrefix = "SEQUENCE OF"; 
@@ -715,8 +717,10 @@ _Bool isMibNodeType_TABLE(mibObjectTreeNode *node) {
 }
 
 _Bool isMibNodeType_ENTRY(mibObjectTreeNode *node) {
+    if (node->isNode == TRUE) 
+        return FALSE; 
+    
     char *type = mibLeaveGetType(node);
-
     assert(isNonNullPtr(type));
 
     typeCate cate = typeTableTypeCate(&mibTypeTbl, type); 

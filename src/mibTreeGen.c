@@ -45,6 +45,7 @@ _Bool typeTableInit() {
     typeTableAdd(&mibTypeTbl, "TimeTicks", CATE_BUILD_IN, NULL);
     typeTableAdd(&mibTypeTbl, "BITS", CATE_BUILD_IN, NULL);
     typeTableAdd(&mibTypeTbl, "Unsigned32", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "INTEGER", CATE_BUILD_IN, NULL);
 
     return OK;
 }

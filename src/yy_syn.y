@@ -22,15 +22,17 @@
 
 %token <str> IDENTIFIER
 %token <str> NUM
-%token <str> TYPE
+%token <str> TYPE_BUILT_IN
 %token <str> ACCESS_VALUE
 %token <str> DESC_VALUE
+
 
 %union {
     struct sequence_item si;
     struct sequence sq;    
 }
 
+%type <str> TYPE
 %type <si> SEQ_ITEM
 %type <sq> SEQUENCE
 
@@ -83,6 +85,10 @@ IMPORT :
         // Begining to import symbol from another mib files.
         importWorks(&importInfoStack); 
     };
+
+TYPE :
+    TYPE_BUILT_IN { $TYPE = $TYPE_BUILT_IN; }
+    | IDENTIFIER { $TYPE = $IDENTIFIER; /* Customed type */ }
 
 END :
     END_ {
@@ -163,7 +169,6 @@ SEQ_ITEM :
 
 SMI :
     SMI_SPECIFIER SMI_VAL {};
-
 
 MODULE_DEF :
     IDENTIFIER MOD_SPECIFIER MODULE_BODY;
@@ -250,11 +255,6 @@ SYNTAX_VALUE :
 	    disParamStore(param, disParamConstruct($TYPE));
 		dispatch(DISPATCH_PARAM_STAGE, param);
     }
-    | IDENTIFIER {
- 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
-	    disParamStore(param, disParamConstruct($IDENTIFIER));
-		dispatch(DISPATCH_PARAM_STAGE, param);
- 	};
 
 ACCESS :
 	ACCESS_SPECIFIER ACCESS_VALUE {

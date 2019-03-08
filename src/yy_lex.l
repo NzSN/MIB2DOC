@@ -11,6 +11,7 @@
 %x SMI_FIELD
 
 %%
+
 [\n ]+
 [\t ]+
 "--".*
@@ -21,6 +22,7 @@ NOTIFICATION-TYPE                   { return TRAP_SPECIFIER; }
 SYNTAX                              { return SYNTAX_SPECIFIER; }
 
 INTEGER([ \n\t\r]*\(*.*\))* | 
+INTEGER32                   |
 IpAddress                   | 
 MacAddress                  | 
 OCTET[ \n\t\r]+STRING([ \n\t\r]*\(.*\))*    | 

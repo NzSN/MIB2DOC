@@ -38,8 +38,8 @@ static int tableGen_Latex(mibNodeInfoQueue *info, char *parent, FILE *writeTo);
 static char * tableItemGen_Latex(tableInfo *info, int index);
 static int infoPacket(tableInfo *info, mibObjectTreeNode *node);
 char *long2Short(char *str);
-static int latexHeaderGen();
-static int latexTailGen();
+static int latexHeaderGen(FILE *file);
+static int latexTailGen(FILE *file);
 static int docGenerate(void *arg, mibObjectTreeNode *root);
 
 int documentGen(mibTreeHead *treeHead, FILE *writeTo) {
@@ -53,12 +53,21 @@ int documentGen(mibTreeHead *treeHead, FILE *writeTo) {
     assert(treeHead->numOfTree == 1);    
 
     tree = mibTreeHeadFirstTree(treeHead); 
+    
+    // Get begin node 
+    mibObjectTreeNode *beginNode = search_MibTree(tree->root, beginFrom); 
+    if (isNullPtr(beginNode)) {
+        errorMsg("Cant' find begin node: %s\n", beginFrom);
+        abort(); 
+    }
+    beginOid = strlen(getOidFromInfo(beginNode));
+    laTexStrBuffer = (char *) malloc(SIZE_OF_LATEX_BUFFER);
 
-    latexHeaderGen(); 
+    latexHeaderGen(writeTo); 
 
-    travel_MibTree(tree->root, docGenerate, writeTo);
+    travel_MibTree(beginNode, docGenerate, writeTo);
 
-    latexTailGen();
+    latexTailGen(writeTo);
 
     return 0;
 }
@@ -70,17 +79,7 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
     mibObjectTreeNode *pNode;
     mibNodeInfoQueue *pQueue = &infoQueue;
     
-    if (isNullPtr(beginFrom)) {      
-        return 0;
-    }
-
     writeTo = (FILE *) arg;
-
-    pNode = search_MibTree(&mibObjectTreeRoot, beginFrom);
-    if (isNullPtr(pNode)) 
-        return -1; 
-    beginOid = strlen(getOidFromInfo(pNode));
-    laTexStrBuffer = (char *) malloc(SIZE_OF_LATEX_BUFFER);
 
     switch(makeDecision(node)) {
         case TABLE:
@@ -88,8 +87,6 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
             infoPacket(info, node);
             
             parent = getIdentFromInfo(node->parent);
-            // fixme:Should be recognize a table via type of it
-            // but not the name of it.
             if (isMibNodeType_ENTRY(node->parent))
                 parent = getIdentFromInfo(node->parent->parent);
             appendQueue(&infoQueue, info);
@@ -113,18 +110,40 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
 }
 
 // Generate contents before tables of mib nodes.
-static int latexHeaderGen() {}
+static int latexHeaderGen(FILE *file) {
+    if (isNullPtr(file))
+        return ERROR;
+    
+    char *headerSpliter = "% Header ==========>";
+
+    fprintf(file, "\\documentclass{ctexart}\n"
+                  "\\usepackage{float}\n"
+                  "\\begin{document}\n"); 
+    fprintf(file, "%s\n\n", headerSpliter);
+    
+    return OK;
+}
 
 // Generate contents after tables of mib nodes.
-static int latexTailGen() {}
+static int latexTailGen(FILE *file) {
+    if (isNullPtr(file))
+        return ERROR;
+
+    char *tailSpliter = "% Tail ==========>";
+
+    fprintf(file, "\n\n%s\n", tailSpliter);
+    fprintf(file, "\\end{document}\n");
+
+    return 0;
+}
 
 static int makeDecision(mibObjectTreeNode *node) {
     int decision;
     char *ident = getIdentFromInfo(node);
 
-    if (node->isNode || tableRecognize(ident, strlen(ident))) {
+    if (node->isNode || isMibNodeType_TABLE(node)) {
         decision = SECTION;
-    } else if (node->sibling != NULL || entryRecognize(ident, strlen(ident))) {
+    } else if (node->sibling != NULL || isMibNodeType_ENTRY(node)) {
         decision = COLLECTING;
     } else {
         decision = TABLE;
@@ -180,7 +199,7 @@ static int sectionGen_Latex(char *secName, char *OID, FILE *writeTo) {
             prefix = "subparagraph";
     }
 
-    fprintf(writeTo, "\\%s {%s (%s)}.\n", prefix, secName, OID);
+    fprintf(writeTo, "\\%s {%s (%s)}{}\n", prefix, secName, OID);
     return 0;
 }
 

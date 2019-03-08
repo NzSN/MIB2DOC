@@ -48,11 +48,11 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    writeTo = fopen("src/result", "w+");
+    writeTo = fopen("result.tex", "w+");
     if (writeTo == NULL)
         printf("%s\n", "result open failed");
     
-    //documentGen(&trees, writeTo);
+    documentGen(&trees, writeTo);
     showTree(&trees);
     return 0;
 }
