@@ -138,7 +138,7 @@ MODULES_CONTENT :
         while (current = dispatchParamNext(current)) {
             ret = collectInfo_add(importInfo, current->param);
             if (ret == FALSE) {
-                printf("IMPORT: Symbol conflict.\n"); 
+                errorMsg("IMPORT: Symbol conflict.\n"); 
                 exit(1);
             } 
         }
