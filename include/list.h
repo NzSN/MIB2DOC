@@ -57,13 +57,9 @@ int sliceStore(slice *sli, slice *next);
 bool sliceRelease(slice *sli);
 bool sliceRelease_STATIC(slice *sli);
 bool sliceReset(slice *sli);
-<<<<<<< HEAD
-char * sliceGetVal(slice *sliHead, int sliKey);
-=======
 bool sliceReset_STATIC(slice *sli);
 char * sliceGetVal(slice *sliceHead, int sliKey);
 char *sliceRetriVal(slice *sliHead, int sliKey);
->>>>>>> IMPORT_SUPPORT
 
 #endif /* _MIB2DOC_LIST_H_ */
 
