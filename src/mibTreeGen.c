@@ -33,6 +33,7 @@ targetSymbolList tSymListHead;
 typeTable mibTypeTbl;
 
 _Bool typeTableInit() {
+
     memset(&mibTypeTbl, 0, sizeof(typeTable));
     
     // Install SNMPv2 Types into type table.
@@ -51,6 +52,7 @@ _Bool typeTableInit() {
 }
 
 int mibObjGen(int nodeType) {
+
     mibObjectTreeNode *newNode;
     char *ident, *type, *rw, *desc, *parent, *suffix;    
 

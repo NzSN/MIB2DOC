@@ -138,7 +138,8 @@ static int switchInit()
     SW_STATE_SET(swState, DISPATCH_MODE_DOC_GENERATING);
     
     SW_CUR_SWITCH_INFO(swState).purpose = SWITCHING_GEN_PURPOSE;
-
+    
+    // Todo: replace 128 with a macro to get a meaning of it.
     genericStackConstruct(&swState.swStack, 128 * sizeof(switchInfo), sizeof(switchInfo));
     SW_CUR_IMPORT_REF(swState)->symbols = hashMapConstruct(10, symbolHashing); 
 
