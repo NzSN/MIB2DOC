@@ -24,6 +24,9 @@ ll ::= SEQUENCE {
     index1  INTEGER
 }
 
+DisplayString ::= 
+    OCTET STRING
+
 SMI OBJECT-TYPE
 
 gbnPlatformChassis MODULE-IDENTITY

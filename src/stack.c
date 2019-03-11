@@ -4,35 +4,39 @@
 
 #include "stack.h"
 #include "type.h"
+#include <malloc.h>
+#include <string.h>
 
 int genericStackConstruct(genericStack *gStack, int bufferSize, int unitSize) {
     if (isNullPtr(gStack)) {
-        return -1;
+        return ERROR;
     }
     gStack->top = 0;
     gStack->unitSize = unitSize;
     gStack->bufferSize = bufferSize;
     gStack->buffer = (unsigned char *)malloc(bufferSize * unitSize);
     gStack->base = gStack->buffer + bufferSize * unitSize;
-    return 0;
+    return OK;
 }
 
 int push(genericStack *gStack, void *unit) {
     if (isNullPtr(gStack) || isNullPtr(unit))
-        return -1;
+        return ERROR;
 
     if (pushByIndex(gStack->base, unit, gStack->top, gStack->bufferSize, gStack->unitSize) == 0)
-        return -1;
-    return 0;
+        return ERROR;
+
+    return OK;
 }
 
 int pop(genericStack *gStack, void *unit) {
     if (isNullPtr(gStack) || isNullPtr(unit))
-        return -1;
+        return ERROR;
 
     if (popByIndex(gStack->base, gStack->top, unit, gStack->unitSize) == 0)
-        return -1;
-    return 0;
+        return ERROR;
+
+    return OK;
 }
 
 #ifdef MIB2DOC_UNIT_TESTING

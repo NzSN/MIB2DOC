@@ -298,9 +298,9 @@ bool sliceReset_STATIC(slice *sli) {
  * dispatchParam Operation function define *
  *******************************************/
 
- /*
-  * append sliNode to tail of list
-  */
+/*
+ * append sliNode to tail of list
+ */
 dispatchParam * disParamConstruct(void *param) {
     dispatchParam *ret;
      

@@ -93,16 +93,19 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
             appendQueue(&infoQueue, info);
 
             tableGen_Latex(&infoQueue, parent, writeTo);
+
             break;
         case COLLECTING:
             info = (tableInfo *)malloc(sizeof(tableInfo));
             infoPacket(info, node);
             appendQueue(&infoQueue, info);
+
             break;
         case SECTION:
             secname = getIdentFromInfo(node);
             oid = getOidFromInfo(node);
             sectionGen_Latex(secname, oid, writeTo);
+
             break;
         default:
             break;

@@ -278,8 +278,9 @@ char *getOidFromInfo(mibObjectTreeNode *node) {
 
 mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, 
     int (*func)(void *argu, mibObjectTreeNode *node), void *arg) {
+
     int ret;
-    mibObjectTreeNode *targetC, *targetS;
+    mibObjectTreeNode *targetChild, *targetSibling;
 
     if (isNullPtr(obj) || isNullPtr(func))
         return NULL;
@@ -290,13 +291,13 @@ mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
         return obj;
     }
 
-    targetC = travel_MibTree(obj->child, func, arg);
-    targetS = travel_MibTree(obj->sibling, func, arg);
+    targetChild = travel_MibTree(obj->child, func, arg);
+    targetSibling = travel_MibTree(obj->sibling, func, arg);
 
-    if (targetC != NULL)
-        return targetC;
+    if (targetChild != NULL)
+        return targetChild;
     else
-        return targetS;
+        return targetSibling;
 }
 
 // mibTrees functions

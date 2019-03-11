@@ -55,6 +55,13 @@ int main(int argc, char *argv[]) {
     
     documentGen(&trees, writeTo);
     showTree(&trees);
+    
+    fclose(yyin); 
+    fclose(writeTo);
+
+    // PDF Gen
+    system("pdflatex result.tex");
+
     return 0;
 }
 
