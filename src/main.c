@@ -38,9 +38,9 @@ int main(int argc, char *argv[]) {
     typeTableInit();
     
     node = &mibObjectTreeRoot;
-    optionsInit(argc, argv);
+    //optionsInit(argc, argv);
     
-    yyin = fopen("src/case.mib", "r");
+    yyin = fopen(argv[1], "r");
     if (yyin == NULL)
         printf("%s\n", "case open failed");
     

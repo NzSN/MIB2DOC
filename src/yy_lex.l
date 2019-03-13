@@ -26,7 +26,7 @@ INTEGER([ \n\t\r]*\(*.*\))* |
 INTEGER32                   |
 IpAddress                   | 
 MacAddress                  | 
-OCTET[ \n\t\r]+STRING([ \n\t\r]*\(.*\))*    | 
+OCTET[ \n\t\r]+STRING[ \n\t\r]*([ \n\t\r]*\(.*\))*    | 
 SEQUENCE[ \n\t\r]+OF[ \n\t\r]*[a-zA-Z]*     | 
 RowStatus                           { yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
 
@@ -41,6 +41,10 @@ FROM                                { return FROM_; }
 \,                                  { return COMMA; }
 \;                                  { return SEMICOLON; }
 END                                 { return END_; }
+
+TEXTUAL-CONVENTION                  { return TC_SPECIFIER; }
+DISPLAY-HINT                        { return DISPLAY_HINT; }
+REFERENCE                           { return REFERENCE; }
 
 MODULE-IDENTITY                     { return MOD_SPECIFIER; }
 LAST-UPDATED                        { return LAST_UPDATED; }
