@@ -67,19 +67,36 @@ extern int yydebug;
     OBJECTS_ = 277,
     FROM_ = 278,
     IMPORTS_ = 279,
-    SMI_SPECIFIER = 280,
-    SMI_VAL = 281,
-    MOD_SPECIFIER = 282,
-    LAST_UPDATED = 283,
-    ORGANIZATION = 284,
-    REVISION = 285,
-    CONTACT_INFO = 286,
-    REVISION_DATE = 287,
-    IDENTIFIER = 288,
-    NUM = 289,
-    TYPE_BUILT_IN = 290,
-    ACCESS_VALUE = 291,
-    DESC_VALUE = 292
+    DISPLAY_HINT = 280,
+    REFERENCE = 281,
+    TC_SPECIFIER = 282,
+    COMPLIANCE_SPECIFIER = 283,
+    MIN_ACCESS_SPECIFIER = 284,
+    OBJECT_ = 285,
+    ENUMERATE_MEMBER = 286,
+    NOTIFY_SPECIFIER = 287,
+    NOTIFY_GRP_SPECIFIER = 288,
+    MODULE_SPECIFIER = 289,
+    MANDATORY_SPECIFIER = 290,
+    GROUP_SPECIFIER = 291,
+    OBJECT_SPECIFIER = 292,
+    WRITE_SPECIFIER = 293,
+    OBJ_GRP_SPECIFIER = 294,
+    OBJ_IDENTITY_SPECIFIER = 295,
+    NOTIFY_TYPE_SPECIFIER = 296,
+    SMI_SPECIFIER = 297,
+    SMI_VAL = 298,
+    MOD_SPECIFIER = 299,
+    LAST_UPDATED = 300,
+    ORGANIZATION = 301,
+    REVISION = 302,
+    CONTACT_INFO = 303,
+    REVISION_DATE = 304,
+    IDENTIFIER = 305,
+    NUM = 306,
+    TYPE_BUILT_IN = 307,
+    ACCESS_VALUE = 308,
+    DESC_VALUE = 309
   };
 #endif
 
@@ -88,15 +105,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 12 "./src/yy_syn.y" /* yacc.c:1909  */
+#line 37 "./src/yy_syn.y" /* yacc.c:1909  */
 
     char *str;
-#line 30 "./src/yy_syn.y" /* yacc.c:1909  */
+#line 55 "./src/yy_syn.y" /* yacc.c:1909  */
 
     struct sequence_item si;
     struct sequence sq;    
 
-#line 100 "./src/yy_syn.tab.h" /* yacc.c:1909  */
+#line 117 "./src/yy_syn.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

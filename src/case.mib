@@ -40,5 +40,113 @@ gbnPlatformChassis MODULE-IDENTITY
         "Initial MIB creation." 
     ::= { gbnPlatform 3 } 
 
+ifMIB MODULE-IDENTITY
+    LAST-UPDATED "200006140000Z"
+    ORGANIZATION "IETF Interfaces MIB Working Group"
+    CONTACT-INFO
+            "   Keith McCloghrie
+                Cisco Systems, Inc.
+                170 West Tasman Drive
+                San Jose, CA  95134-1706
+                US
+
+                408-526-5260
+                kzm@cisco.com"
+    DESCRIPTION
+            "The MIB module to describe generic objects for network
+            interface sub-layers.  This MIB is an updated version of
+            MIB-II's ifTable, and incorporates the extensions defined in
+            RFC 1229."
+
+    REVISION      "200006140000Z"
+    DESCRIPTION
+            "Clarifications agreed upon by the Interfaces MIB WG, and
+            published as RFC 2863."
+    REVISION      "199602282155Z"
+    DESCRIPTION
+            "Revisions made by the Interfaces MIB WG, and published in
+            RFC 2233."
+    REVISION      "199311082155Z"
+    DESCRIPTION
+            "Initial revision, published as part of RFC 1573."
+    ::= { mib-2 31 }
+
+ifCompliance2 MODULE-COMPLIANCE
+    STATUS      deprecated
+    DESCRIPTION
+            "A compliance statement defined in a previous version of
+            this MIB module, for SNMP entities which have network
+            interfaces."
+
+    MODULE  -- this module
+        MANDATORY-GROUPS { ifGeneralInformationGroup, ifStackGroup2,
+                           ifCounterDiscontinuityGroup }
+
+        GROUP       ifFixedLengthGroup
+        DESCRIPTION
+            "This group is mandatory for all network interfaces which
+            are character-oriented or transmit data in fixed-length
+            transmission units."
+
+        GROUP       ifHCFixedLengthGroup
+        DESCRIPTION
+            "This group is mandatory only for those network interfaces
+            which are character-oriented or transmit data in fixed-
+            length transmission units, and for which the value of the
+            corresponding instance of ifSpeed is greater than 20,000,000
+            bits/second."
+
+        GROUP       ifPacketGroup
+        DESCRIPTION
+            "This group is mandatory for all network interfaces which
+            are packet-oriented."
+
+        GROUP       ifHCPacketGroup
+        DESCRIPTION
+            "This group is mandatory only for those network interfaces
+            which are packet-oriented and for which the value of the
+            corresponding instance of ifSpeed is greater than
+            650,000,000 bits/second."
+
+        GROUP       ifRcvAddressGroup
+        DESCRIPTION
+            "The applicability of this group MUST be defined by the
+            media-specific MIBs.  Media-specific MIBs must define the
+            exact meaning, use, and semantics of the addresses in this
+            group."
+        
+        OBJECT      ifLinkUpDownTrapEnable
+        MIN-ACCESS  read-only
+        DESCRIPTION
+            "Write access is not required."
+
+        OBJECT      ifPromiscuousMode
+        MIN-ACCESS  read-only
+        DESCRIPTION
+            "Write access is not required."
+
+        OBJECT      ifStackStatus
+        SYNTAX      INTEGER { active(1) } -- subset of RowStatus
+        MIN-ACCESS  read-only
+        DESCRIPTION
+            "Write access is not required, and only one of the six
+            enumerated values for the RowStatus textual convention need
+            be supported, specifically: active(1)."
+
+        OBJECT       ifAdminStatus
+        SYNTAX       INTEGER { up(1), down(2) }
+        MIN-ACCESS   read-only
+        DESCRIPTION
+            "Write access is not required, nor is support for the value
+            testing(3)."
+
+        OBJECT       ifAlias
+        MIN-ACCESS   read-only
+        DESCRIPTION
+            "Write access is not required."
+    ::= { ifCompliances 2 }
+
+
+
 END
 

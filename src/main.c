@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
     fclose(writeTo);
 
     // PDF Gen
-    system("pdflatex result.tex");
+    //system("pdflatex result.tex");
 
     return 0;
 }
