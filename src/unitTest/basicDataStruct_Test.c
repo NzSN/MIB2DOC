@@ -214,7 +214,7 @@ static void list__DISPATCH_PARAM_STORE(void **state) {
     int i = 0;
     dispatchParam *massive = disParamConstruct((void *)100);
     while (i < 100) {
-        disParamStore(massive, disParamConstruct((void *)i+1)); 
+        disParamStore(massive, disParamConstruct((void *)(unsigned long)i+1)); 
         ++i;
     }
     

@@ -19,7 +19,7 @@ OBJECT[ \n\t\r]+IDENTIFIER          { return OBJ_IDEN_; }
 OBJECT-TYPE                         { return OBJ_SPECIFIER; }
 OBJECTS                             { return OBJECTS_; }
 OBJECT                              { return OBJECT_; }
-NOTIFICATION-TYPE                   { return TRAP_SPECIFIER; }
+NOTIFICATION-TYPE                   { return NOTIFY_TYPE_SPECIFIER; }
 SYNTAX                              { return SYNTAX_SPECIFIER; }
 
 [a-zA-Z0-9]+\([0-9]+\)              {  return ENUMERATE_MEMBER; }

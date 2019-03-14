@@ -146,6 +146,11 @@ ifCompliance2 MODULE-COMPLIANCE
             "Write access is not required."
     ::= { ifCompliances 2 }
 
+ucdShutdown	NOTIFICATION-TYPE
+    STATUS current
+    DESCRIPTION
+	    "This trap is sent when the agent terminates"
+    ::= { ucdTraps 2 }
 
 
 END
