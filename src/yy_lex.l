@@ -25,7 +25,7 @@ SYNTAX                              { return SYNTAX_SPECIFIER; }
 [a-zA-Z0-9]+\([0-9]+\)              {  return ENUMERATE_MEMBER; }
 
 INTEGER                     | 
-INTEGER32                   |
+Integer32                   |
 IpAddress                   | 
 MacAddress                  | 
 OCTET[ \n\t\r]+STRING[ \n\t\r]*([ \n\t\r]*\(.*\))*    | 

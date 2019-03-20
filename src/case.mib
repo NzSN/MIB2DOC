@@ -152,6 +152,81 @@ ucdShutdown	NOTIFICATION-TYPE
 	    "This trap is sent when the agent terminates"
     ::= { ucdTraps 2 }
 
+dot1dTpBridgeGroup OBJECT-GROUP
+    OBJECTS {
+        dot1dTpLearnedEntryDiscards,
+        dot1dTpAgingTime
+    }
+    STATUS      current
+    DESCRIPTION
+        "Bridge level Transparent Bridging data."
+    ::= { dot1dGroups 7 }
+
+BridgeId ::= TEXTUAL-CONVENTION
+    STATUS      current
+    DESCRIPTION
+        "The Bridge-Identifier, as used in the Spanning Tree
+        Protocol, to uniquely identify a bridge.  Its first two
+        octets (in network byte order) contain a priority value,
+        and its last 6 octets contain the MAC address used to
+        refer to a bridge in a unique fashion (typically, the
+        numerically smallest MAC address of all ports on the
+        bridge)."
+    SYNTAX      OCTET STRING (SIZE (8))
+
+Timeout ::= TEXTUAL-CONVENTION
+    DISPLAY-HINT "d"
+    STATUS      current
+    DESCRIPTION
+        "A Spanning Tree Protocol (STP) timer in units of 1/100
+        seconds.  Several objects in this MIB module represent
+        values of timers used by the Spanning Tree Protocol.
+        In this MIB, these timers have values in units of
+        hundredths of a second (i.e., 1/100 secs).
+
+        These timers, when stored in a Spanning Tree Protocol's
+        BPDU, are in units of 1/256 seconds.  Note, however, that
+        802.1D-1998 specifies a settable granularity of no more
+        than one second for these timers.  To avoid ambiguity,
+        a conversion algorithm is defined below for converting
+        between the different units, which ensures a timer's
+        value is not distorted by multiple conversions.
+
+        To convert a Timeout value into a value in units of
+        1/256 seconds, the following algorithm should be used:
+
+            b = floor( (n * 256) / 100)
+
+        where:
+            floor   =  quotient [ignore remainder]
+            n is the value in 1/100 second units
+            b is the value in 1/256 second units
+
+        To convert the value from 1/256 second units back to
+        1/100 seconds, the following algorithm should be used:
+
+            n = ceiling( (b * 100) / 256)
+
+        where:
+            ceiling = quotient [if remainder is 0], or
+                      quotient + 1 [if remainder is nonzero]
+            n is the value in 1/100 second units
+
+            b is the value in 1/256 second units
+
+        Note: it is important that the arithmetic operations are
+        done in the order specified (i.e., multiply first,
+        divide second)."
+    SYNTAX      Integer32
+
+alarmNotificationsGroup NOTIFICATION-GROUP
+   NOTIFICATIONS { alarmActiveState, alarmClearState }
+   STATUS        current
+   DESCRIPTION
+           "The collection of notifications that can be used to
+           model alarms for faults lacking pre-existing
+           notification definitions."
+   ::= { alarmGroups 6 }
 
 END
 
