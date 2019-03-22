@@ -27,7 +27,8 @@
 %token WRITE_SPECIFIER
 %token OBJ_GRP_SPECIFIER
 
-
+%token OR
+%token SIZE
 /* OBJECT-IDENTITY TOKEN */
 %token OBJ_IDENTITY_SPECIFIER
 
@@ -44,7 +45,8 @@
 %token MOD_SPECIFIER LAST_UPDATED
 %token ORGANIZATION REVISION CONTACT_INFO
 %token <str> REVISION_DATE
-
+ 
+%token <str> RANGE
 %token <str> IDENTIFIER
 %token <str> NUM
 %token <str> TYPE_BUILT_IN
@@ -185,7 +187,9 @@ COMPLIANCE_ACCESS :
 
 /* TEXTUAL-CONVENTION */
 TC_DEFINED :
-    IDENTIFIER ASSIGNED TC_SPECIFIER TC;
+    IDENTIFIER ASSIGNED TC_SPECIFIER TC {
+        typeTableAdd(MIB_TYPE_TBL_R, strdup($IDENTIFIER), CATE_CUSTOM, NULL);         
+    };
 TC :
     DisplayPart STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER DESC_VALUE REF_PART SYNTAX_SPECIFIER SYNTAX_VALUE;
 DisplayPart:
@@ -302,7 +306,6 @@ SEQ_ITEM :
         newItem->ident = $IDENTIFIER;
         newItem->type = $TYPE;
         seqItemAppend(&$$, newItem); 
-
     }
 	| IDENTIFIER TYPE {
         sequence_item *newItem = seqItemConst();
@@ -385,17 +388,33 @@ SYNTAX :
 	SYNTAX_SPECIFIER SYNTAX_VALUE ;
 
 SYNTAX_VALUE :
-	TYPE_BUILT_IN TYPE_ENUMERATE {
+	TYPE TYPE_SPECIFIER {
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
-	    disParamStore(param, disParamConstruct($TYPE_BUILT_IN));
+	    disParamStore(param, disParamConstruct($TYPE));
 		dispatch(DISPATCH_PARAM_STAGE, param);
     }
-TYPE_ENUMERATE :
-    L_BRACE ENUMERATE_MEMBERS R_BRACE
-    | /* empty */; 
+
+TYPE_SPECIFIER :
+    L_BRACE TYPE_SPECIFIER_ R_BRACE
+    | /* empty */;
+TYPE_SPECIFIER_ :
+    ENUMERATE_MEMBERS
+    | STRING_SIZE
+    | ONE_OR_MORE_VAL;
+
 ENUMERATE_MEMBERS :
     ENUMERATE_MEMBER 
     | ENUMERATE_MEMBER COMMA ENUMERATE_MEMBERS; 
+
+STRING_SIZE :
+    SIZE L_BRACE VAL R_BRACE;
+
+ONE_OR_MORE_VAL :
+    VAL
+    | VAL OR ONE_OR_MORE_VAL ;
+VAL :
+    NUM
+    | RANGE;
 
 ACCESS :
 	ACCESS_SPECIFIER ACCESS_VALUE {

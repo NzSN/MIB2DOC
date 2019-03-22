@@ -82,21 +82,24 @@ extern int yydebug;
     OBJECT_SPECIFIER = 292,
     WRITE_SPECIFIER = 293,
     OBJ_GRP_SPECIFIER = 294,
-    OBJ_IDENTITY_SPECIFIER = 295,
-    NOTIFY_TYPE_SPECIFIER = 296,
-    SMI_SPECIFIER = 297,
-    SMI_VAL = 298,
-    MOD_SPECIFIER = 299,
-    LAST_UPDATED = 300,
-    ORGANIZATION = 301,
-    REVISION = 302,
-    CONTACT_INFO = 303,
-    REVISION_DATE = 304,
-    IDENTIFIER = 305,
-    NUM = 306,
-    TYPE_BUILT_IN = 307,
-    ACCESS_VALUE = 308,
-    DESC_VALUE = 309
+    OR = 295,
+    SIZE = 296,
+    OBJ_IDENTITY_SPECIFIER = 297,
+    NOTIFY_TYPE_SPECIFIER = 298,
+    SMI_SPECIFIER = 299,
+    SMI_VAL = 300,
+    MOD_SPECIFIER = 301,
+    LAST_UPDATED = 302,
+    ORGANIZATION = 303,
+    REVISION = 304,
+    CONTACT_INFO = 305,
+    REVISION_DATE = 306,
+    RANGE = 307,
+    IDENTIFIER = 308,
+    NUM = 309,
+    TYPE_BUILT_IN = 310,
+    ACCESS_VALUE = 311,
+    DESC_VALUE = 312
   };
 #endif
 
@@ -105,15 +108,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 37 "./src/yy_syn.y" /* yacc.c:1909  */
+#line 38 "./src/yy_syn.y" /* yacc.c:1909  */
 
     char *str;
-#line 55 "./src/yy_syn.y" /* yacc.c:1909  */
+#line 57 "./src/yy_syn.y" /* yacc.c:1909  */
 
     struct sequence_item si;
     struct sequence sq;    
 
-#line 117 "./src/yy_syn.tab.h" /* yacc.c:1909  */
+#line 120 "./src/yy_syn.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

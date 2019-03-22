@@ -22,7 +22,10 @@ OBJECT                              { return OBJECT_; }
 NOTIFICATION-TYPE                   { return NOTIFY_TYPE_SPECIFIER; }
 SYNTAX                              { return SYNTAX_SPECIFIER; }
 
-[a-zA-Z0-9]+\([0-9]+\)              {  return ENUMERATE_MEMBER; }
+SIZE                                { return SIZE; }
+[a-zA-Z0-9]+\([0-9]+\)              { return ENUMERATE_MEMBER; }
+\([0-9]*\.\.[0-9]*\)                { return RANGE; }
+
 
 INTEGER                     | 
 Integer32                   |

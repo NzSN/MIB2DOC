@@ -228,5 +228,9 @@ alarmNotificationsGroup NOTIFICATION-GROUP
            notification definitions."
    ::= { alarmGroups 6 }
 
+TESTTCTYPE ::= SEQUENCE {
+    TCTYPE     Timeout 
+}
+
 END
 
