@@ -2,7 +2,8 @@
 
 #include "type.h"
 #include "hash.h"
-#include "string.h"
+#include <string.h>
+#include <malloc.h>
 
 static hashChain * hashChainConstruct(pair_key_base *key, pair_val_base *val);
 static hashChain * hashChainSearch(hashChain *chain, pair_key_base *key);

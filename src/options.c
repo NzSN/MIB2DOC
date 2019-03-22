@@ -31,7 +31,6 @@ static void helpInfoPrint();
 int optionsInit(int argc, char *argv[]) {
     char *param;
     char *paramVal;
-    incPathList *incNode;
     int i=0, paramIndex = 0;
 
     if (isNullPtr(argv)) {
@@ -58,23 +57,10 @@ int optionsInit(int argc, char *argv[]) {
         }
         switch(paramMapping(param)) {
             case SourceMibFile:
-                paramVal = argv[i++];
-                optionsManager.sourceMibFilePath = paramVal;
-                mappingTable[SourceMibFile] = null;
                 break;
             case TargetPdfFile:
-                if (TargetPdfFile < UNIQUE_PARAM && optionsManager.targetPdfPATH != null)
-                    return ERROR_GENERIC;
-                paramVal = argv[i++];
-                optionsManager.targetPdfPATH = paramVal;
-                mappingTable[TargetPdfFile] = null;
                 break;
             case IncludePath:
-                paramVal = argv[i++];
-                incNode = (incPathList *)malloc(sizeof(incPathList));
-                memset(incNode, 0, sizeof(incPathList));
-                incNode->path = paramVal;
-                listNodeAppend(&optionsManager.includePath.node, &incNode->node);
                 break;
             default:
                 helpInfoPrint();
@@ -84,6 +70,11 @@ int optionsInit(int argc, char *argv[]) {
         if (i > argc-1)
             break;
     }
+}
+
+const optionVal * getOption(char *opName) {
+    if (isNullPtr(opName)) return NULL;
+
 }
 
 static void helpInfoPrint() {}
@@ -112,51 +103,19 @@ static int paramMapping(char *param) {
     return index;
 }
 
-const char * getOption_SourceMibFilePath() {
-    return optionsManager.sourceMibFilePath;
-}
 
-const char * getOption_targetPdfPath() {
-    return optionsManager.targetPdfPATH;
-}
+/* options hash key, value implementations */
+typedef struct option_hash_key {
+    pair_key_base base;
+    char *key;
+} option_hash_key;
 
-/*
- * Parameter
- *     - index : is used to track where to
- *               start to get next include path
- * Return Value
- *     - null : no more include path to get
- *     - string : a string that describe the path
- *                of include path.
- *     - val < 0 : error
- */
-const char * getOption_includePath(int *index) {
-    int i = *index;
-    incPathList *head;
-    listNode *node;
+typedef struct option_hash_val {
+    pair_val_base base;
+    options_t  *option;
+} option_hash_val;
 
-    if (isNullPtr(index)) {
-        return null;
-    }
-    if (i <= 0) {
-        return null;
-    }
+/* Hash function */
 
-    head = &optionsManager.includePath;
-    node = &head->node;
-
-    while (i--) {
-        node = listNodeNext(&head->node);
-    }
-
-    if (node == null) {
-        return null;
-    }
-
-    head = containerOf(node, incPathList, node);
-
-    (*index)++;
-    return (const char *)head->path;
-}
 
 /* options.c */
