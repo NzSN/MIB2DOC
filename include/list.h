@@ -47,7 +47,10 @@ listNode *listNodeDelete(listNode *node);
 listNode *listNodeAppend(listNode *listH, listNode *listN);
 listNode * listNodeTail(const listNode *head);
 bool listNodeIsEmpty(listNode *node);
+_Bool listNodeIsEqual(const listNode *first, const listNode *second, 
+    listNodeEqualCheck equalCheck);
 _Status listNodeTravel(listNode *head, listNodeTask func, void *arg);
+listNode * listNodeSearch(listNode *head, listNodeCmp cmpOp, void *arg);
 
 /* Slice */
 slice * sliceNext(slice *sli);

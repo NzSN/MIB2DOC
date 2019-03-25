@@ -315,7 +315,7 @@ int symbolCollecting(int type, dispatchParam *param) {
 
     if (type >= OBJECT && type <= SMI_DEF) {
         ident = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-        if (!collectInfo_exists(SW_CUR_IMPORT_REF(swState), ident)) {
+        if (!collectInfo_exists(SW_CUR_IMPORT(&swState), ident)) {
             sliceRelease_STATIC(&symCollectSlice);
             return TRUE;
         }
@@ -351,7 +351,7 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
 
 POST_CLEANING:
     // Need to remove the symbol found from list in the modStack
-    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
+    retVal = collectInfo_del(SW_CUR_IMPORT(&swState), symbolIdent);
     sliceRelease_STATIC(&symCollectSlice);
     return retVal;
 }
@@ -360,7 +360,7 @@ static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
 
-    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
+    retVal = collectInfo_del(SW_CUR_IMPORT(&swState), symbolIdent);
     sliceRelease_STATIC(&symCollectSlice);
 
     return retVal;
@@ -370,7 +370,7 @@ static int symbolCollect_BUILD_LEAVE_NODE(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
      
-    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
+    retVal = collectInfo_del(SW_CUR_IMPORT(&swState), symbolIdent);
     sliceRelease_STATIC(&symCollectSlice);
 
     return retVal;
@@ -380,7 +380,7 @@ static int symbolCollect_BUILD_SEQUENCE(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
 
-    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
+    retVal = collectInfo_del(SW_CUR_IMPORT(&swState), symbolIdent);
     sliceRelease_STATIC(&symCollectSlice);
 
     return retVal;
@@ -390,7 +390,7 @@ static int symbolCollect_BUILD_SMI_DEF(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
 
-    retVal = collectInfo_del(SW_CUR_IMPORT_REF(swState), symbolIdent);
+    retVal = collectInfo_del(SW_CUR_IMPORT(&swState), symbolIdent);
     sliceRelease_STATIC(&symCollectSlice);
 
     return retVal;

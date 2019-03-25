@@ -63,8 +63,8 @@ typedef struct switchingState {
 } switchingState;
 
 // switchingState reference macros
-#define SW_STATE(SW) (SW.state)
-#define SW_STATE_SET(SW, STATE) (SW.state = STATE)
+#define SW_STATE(SW) ((SW)->state)
+#define SW_STATE_SET(SW, STATE) ((SW)->state = STATE)
 #define SW_STATE_REFRESH(SW) ({\
     if (SW.currentSwitchInfo.purpose == SWITCHING_INC_PURPOSE) {\
         SW.state = DISPATCH_MODE_SYMBOL_COLLECTING;\
@@ -74,24 +74,21 @@ typedef struct switchingState {
     0;\
 })
 
-#define SW_COUNTER(SW) (SW.counter)
-#define SW_COUNTER_SET(SW, COUNT) (SW.counter = COUNT)
+#define SW_COUNTER(SW) ((SW)->counter)
+#define SW_COUNTER_SET(SW, COUNT) ((SW)->counter = COUNT)
 
-#define SW_CUR_SWITCH_INFO(SW) (SW.currentSwitchInfo)
-#define SW_CUR_SWITCH_INFO_REF(SW) (&SW.currentSwitchInfo)
+#define SW_CUR_SWITCH_INFO(SW) (&(SW)->currentSwitchInfo)
 
-#define SW_CUR_IMPORT(SW) (SW_CUR_SWITCH_INFO(SW).importInfo)
-#define SW_CUR_IMPORT_REF(SW) (&SW_CUR_IMPORT(SW))
-#define SW_CUR_BUFFER_INFO(SW) (SW_CUR_SWITCH_INFO(SW).bufferInfo)
-#define SW_CUR_BUFFER_INFO_REF(SW) (&SW_CUR_BUFFER_INFO(SW))
-#define SW_CUR_PURPOSE(SW) (SW_CUR_SWITCH_INFO(SW).state)
+#define SW_CUR_IMPORT(SW) (&SW_CUR_SWITCH_INFO(SW)->importInfo)
+#define SW_CUR_BUFFER_INFO(SW) (SW_CUR_SWITCH_INFO(SW)->bufferInfo)
+#define SW_SET_CUR_BUFFER_INFO(SW, BUFFER) (SW_CUR_SWITCH_INFO(SW)->bufferInfo = BUFFER)
+#define SW_CUR_PURPOSE(SW) (SW_CUR_SWITCH_INFO(SW)->state)
 
-#define SW_STACK(SW) (SW.swStack)
-#define SW_STACK_REF(SW) (&SW.swStack)
-#define SW_STACK_BASE(SW) (SW.swStack.base)
-#define SW_STACK_TOP(SW) (SW.swStack.top)
-#define SW_STACK_BUFFER_SIZE(SW) (SW.swStack.bufferSize)
-#define SW_STACK_UNIT_SIZE(SW) (SW.swStack.unitSize)
+#define SW_STACK(SW) (&(SW)->swStack)
+#define SW_STACK_BASE(SW) ((SW)->swStack.base)
+#define SW_STACK_TOP(SW) ((SW)->swStack.top)
+#define SW_STACK_BUFFER_SIZE(SW) ((SW)->swStack.bufferSize)
+#define SW_STACK_UNIT_SIZE(SW) ((SW)->swStack.unitSize)
 
 // identList macros
 #define IDENT_FOUND (1)

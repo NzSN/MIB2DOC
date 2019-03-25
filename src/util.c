@@ -255,8 +255,7 @@ _Bool isStringEqual(const char *strLeft, const char *strRight) {
     
     size_t len = strlen(strLeft);
     _Bool isEqual; 
-    
-    
+     
     isEqual = len == strlen(strRight) && ! strncmp(strLeft, strRight, len);
 
     return isEqual;

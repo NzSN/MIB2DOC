@@ -110,9 +110,9 @@ static int dispatchMakeChoice(dispatch_type dType)
 {
     int choice = -1;
 
-    if (SW_STATE(swState) == DISPATCH_MODE_DOC_GENERATING) {
+    if (SW_STATE(&swState) == DISPATCH_MODE_DOC_GENERATING) {
         choice = dType;
-    } else if (SW_STATE(swState) == DISPATCH_MODE_SYMBOL_COLLECTING) {
+    } else if (SW_STATE(&swState) == DISPATCH_MODE_SYMBOL_COLLECTING) {
         if (dType == DISPATCH_PARAM_STAGE || dType == MIBTREE_GENERATION) {
             choice = SYMBOL_COLLECTING;
         } else {
@@ -120,7 +120,7 @@ static int dispatchMakeChoice(dispatch_type dType)
             choice = dType;
         }
     }
-    if (SW_STATE(swState) == DISPATCH_MODE_DEBUG)
+    if (SW_STATE(&swState) == DISPATCH_MODE_DEBUG)
         choice = DEBUGING;
 
     return choice;
@@ -134,14 +134,14 @@ static int switchInit()
     memset(&swState, 0, sizeof(switchingState)); 
     
 
-    SW_COUNTER_SET(swState, 0);
-    SW_STATE_SET(swState, DISPATCH_MODE_DOC_GENERATING);
+    SW_COUNTER_SET(&swState, 0);
+    SW_STATE_SET(&swState, DISPATCH_MODE_DOC_GENERATING);
     
-    SW_CUR_SWITCH_INFO(swState).purpose = SWITCHING_GEN_PURPOSE;
+    SW_CUR_SWITCH_INFO(&swState)->purpose = SWITCHING_GEN_PURPOSE;
     
     // Todo: replace 128 with a macro to get a meaning of it.
     genericStackConstruct(&swState.swStack, 128 * sizeof(switchInfo), sizeof(switchInfo));
-    SW_CUR_IMPORT_REF(swState)->symbols = hashMapConstruct(10, symbolHashing); 
+    SW_CUR_IMPORT(&swState)->symbols = hashMapConstruct(10, symbolHashing); 
 
     isNeedSwitchInit = FALSE;
 
@@ -156,15 +156,15 @@ int switchToModule(switchingState *swState, char* moduleName)
     }
 
     // Step 1: Push currentSwitchInfo into stack
-    SW_CUR_BUFFER_INFO((*swState)) = getCurrentBufferState();
-    push(SW_STACK_REF((*swState)), SW_CUR_SWITCH_INFO_REF((*swState)));
+    SW_SET_CUR_BUFFER_INFO(swState, getCurrentBufferState());
+    push(SW_STACK(swState), SW_CUR_SWITCH_INFO(swState));
 
     // Step 2: Update currentSwitchInfo
     if (lexBufferSwitching(moduleName) == ERROR_GENERIC)
         /* Terminate program */
         return ABORT;
-
-    SW_CUR_BUFFER_INFO((*swState)) = getCurrentBufferState();
+    
+    SW_SET_CUR_BUFFER_INFO(swState, getCurrentBufferState());
 
     return 0;
 }
@@ -174,15 +174,15 @@ int switchToPrevModule(switchingState *swState) {
        return -1; 
     
     // There is no more module to switch to just exit. 
-    if (SW_STACK_REF((*swState))->top == 0) {
+    if (SW_STACK(swState)->top == 0) {
         return -1;
     }
 
-    collectInfo_release(SW_CUR_IMPORT_REF((*swState)) );
-    yy_delete_buffer(SW_CUR_BUFFER_INFO((*swState)) );
+    collectInfo_release(SW_CUR_IMPORT(swState));
+    yy_delete_buffer(SW_CUR_BUFFER_INFO(swState));
 
-    pop(SW_STACK_REF((*swState)), SW_CUR_SWITCH_INFO_REF((*swState)) ); 
-    yy_switch_to_buffer(SW_CUR_BUFFER_INFO((*swState)) );
+    pop(SW_STACK(swState), SW_CUR_SWITCH_INFO(swState)); 
+    yy_switch_to_buffer(SW_CUR_BUFFER_INFO(swState));
          
     SW_STATE_REFRESH((*swState));
 
@@ -232,7 +232,7 @@ static int symbolHashing(void* key)
     symbolKey* sKey = (symbolKey*)key;
 
     if (isNullPtr(key))
-        return -1;
+        return ERROR;
 
     keyString = sKey->symbolIndex;
 
@@ -488,7 +488,7 @@ int collectInfo_release(collectInfo *cInfo) {
 
 char * switch_CurrentMod()
 {
-    return SW_CUR_IMPORT(swState).modName;
+    return SW_CUR_IMPORT(&swState)->modName;
 }
 
 int importWorks(genericStack *importInfoStack) {
@@ -503,16 +503,14 @@ int importWorks(genericStack *importInfoStack) {
         modName = infoCollect->modName;
         symbolMap = infoCollect->symbols;
         
-        if (switchToModule(&swState, modName) == ABORT) {
-            errorMsg("%s: No such Mib file.\n", modName); 
-            exit(1);   
-        }
+        if (switchToModule(&swState, modName) == ABORT)
+            abortWithMsg("%s: No such Mib file.\n", modName); 
         
-        SW_STATE_SET(swState, DISPATCH_MODE_SYMBOL_COLLECTING); 
-        SW_CUR_SWITCH_INFO(swState).purpose = SWITCHING_INC_PURPOSE;
-
-        SW_CUR_IMPORT(swState).modName = strdup(modName); 
-        SW_CUR_IMPORT(swState).symbols = hashMapDup(symbolMap);
+        SW_STATE_SET(&swState, DISPATCH_MODE_SYMBOL_COLLECTING); 
+        SW_CUR_SWITCH_INFO(&swState)->purpose = SWITCHING_INC_PURPOSE;
+         
+        SW_CUR_IMPORT(&swState)->modName = strdup(modName); 
+        SW_CUR_IMPORT(&swState)->symbols = hashMapDup(symbolMap);
         
         // Clean
         collectInfo_release(infoCollect);    

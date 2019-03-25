@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include "test.h"
 #include "yy_syn.def.h"
+#include "options.h"
 
 #include "typeTable.h"
 
@@ -246,7 +247,8 @@ int main(void) {
             cmocka_unit_test(list_symbolTable),
             cmocka_unit_test(mibTreeGen__SYMBOL_COLLECT),
             cmocka_unit_test(yy_syn_def__SEQUENCE),
-            cmocka_unit_test(list__TYPE_TABLE) 
+            cmocka_unit_test(list__TYPE_TABLE),
+            cmocka_unit_test(option_Basic) 
             #endif
     };
 

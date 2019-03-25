@@ -141,12 +141,19 @@ _Bool listNodeIsEqual(const listNode *first, const listNode *second, listNodeEqu
 }
 
 _Status listNodeTravel(listNode *head, listNodeTask func, void *arg) {
+    listNode *next;
+
     if (isNullPtr(head) || isNullPtr(func) || isNullPtr(arg)) {
         return ERROR_NULL_REF;
     }
+
+    next = listNodeNext(head);
+
     while (head != NULL) {
         func(head, arg);
-        head = listNodeNext(head);
+
+        head = next;
+        next = listNodeNext(next);
     }
     return ERROR_NONE;
 }
