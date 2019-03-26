@@ -18,13 +18,18 @@ typedef struct option_t {
     optionVal *vals; 
 } options_t;
 
-typedef struct optIter {
-    listNode *node;
-} optIter;
-
 typedef struct optionMng {
     hashMap *options;  
 } optionMng;
+
+// fixme: first to implement hashMap iterator.
+typedef struct optIter {} optIter;
+
+typedef struct optValIter {
+    options_t *opt;
+    listNode *node; 
+} optValIter;
+
 
 int optionsInit(int argc, char *argv[]);
 
@@ -46,6 +51,7 @@ int optionRelease(options_t *opt);
 options_t *optionDup(options_t *opt);
 int optionAddValue(options_t *opt, char *value);
 int optionDelValue(options_t *opt, char *value);
+const char * optionNext(optValIter *iter);
 
 #ifdef MIB2DOC_UNIT_TESTING
 
