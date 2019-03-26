@@ -10,7 +10,6 @@
 
 /* Declaration */
 static int paramMapping(char *param);
-static void mappingTableInit();
 
 options_t * optionConst(void);
 options_t * optionInit(options_t *opt);
@@ -47,83 +46,102 @@ static option_hash_val * valCopy(option_hash_val *val);
 static void helpInfoPrint();
 static int optionHashing(option_hash_key *key);
 
+// Options preprocessing procedures
+static _Bool optionValidity(int argc, char *argv[]);
+static char ** * optionArrayGen(int *numOfOpt, char *argv[]);
+static int optionProcessing(char ** *optArray);
+
 
 /* Global Var */
 #define OPT_HASH_MAP_SIZE 20
-options_t * optionsManager;
+optionMng *optionsManager;
 
 /* Local Var */
 typedef enum optionNumber {
     SourceMibFile = 0,
     TargetPdfFile,
-    UNIQUE_PARAM, /* params above this line is unique another is not */
     IncludePath,
     NumOfOptions
 } optionNumber;
 
-static char * mappingTable[NumOfOptions];
+static char * mappingTable[NumOfOptions] = {
+    "-s", /* SourceMibFile */
+    "-t", /* TargetPdfFile */
+    "-I"  /* Include path  */
+};
 
-/* Local Functions */
-
+/* Steps to deal with options:
+ * 1.Check option's validity
+ * 2.Transfer options into [][2] array type.
+ * 3.Deal with every [2] array.
+ */
 int optionsInit(int argc, char *argv[]) {
-    char *param;
-    char *paramVal;
-    int i=0, paramIndex = 0;
+    int i=0, NumOfOptions;
+    char ** *optArray;   // optArray[][]
 
     if (isNullPtr(argv)) {
         return ERROR_NULL_REF;
     }
-    
-    if (argc == 1) {
+       
+    optionsManager = optMngConst(); 
+
+    if (optionValidity(argc, argv) == ERROR) {
         helpInfoPrint();
-        return ERROR_GENERIC;
+        abort();
     }
     
+    optArray = optionArrayGen(&NumOfOptions, argv);
+    if (isNullPtr(optArray))
+        abortWithMsg("Option array generation error...\n");
+    
+    if (optionProcessing(optArray) == ERROR)
+        abortWithMsg("Option processing error...\n");
 
-    mappingTableInit();
+    return OK;
+}
 
-    /*
-     * Note : should deal with error that no paramVal for
-     *        an option, such as only give a "-s" but not
-     *        with the value should after the "-s".
-     */
-    while (param = argv[i++]) {
-        if ((paramIndex = paramMapping(param)) < UNIQUE_PARAM) {
-            if (mappingTable[paramIndex] == null) {
-                return ERROR_GENERIC;
-            }
-        }
-        switch(paramMapping(param)) {
+static int optionProcessing(char ** *optArray) {
+    if (isNullPtr(optArray)) return ERROR;
+    
+    int i = 0;
+    char *optVal, **singleOpt;
+
+    while (i < NumOfOptions) {
+        singleOpt = optArray[i];
+
+        switch(paramMapping(singleOpt[0])) {
             case SourceMibFile:
+                optVal = singleOpt[1];             
+                optMngAddOpt(optionsManager, OPT_KEY_SRC_MIB_FILE);
+                optMngAppendOptVal(optionsManager, OPT_KEY_SRC_MIB_FILE, optVal);
                 break;
             case TargetPdfFile:
+                optVal = singleOpt[1];
+                optMngAddOpt(optionsManager, OPT_KEY_TARGET_PDF);
+                optMngAppendOptVal(optionsManager, OPT_KEY_TARGET_PDF, optVal); 
                 break;
             case IncludePath:
+                optVal = singleOpt[1];
+                optMngAddOpt(optionsManager, OPT_KEY_INCLUDE_PATH);
+                optMngAppendOptVal(optionsManager, OPT_KEY_INCLUDE_PATH, optVal);
                 break;
-            default:
-                helpInfoPrint();
-                return ERROR_WRONG_IDX;
         }
-
-        if (i > argc-1)
-            break;
+        
+        i++;    
     }
-}
-
-const optionVal * getOption(char *opName) {
-    if (isNullPtr(opName)) return NULL;
 
 }
+
+static _Bool optionValidity(int argc, char *argv[]) {
+     
+}
+
+static char ** * optionArrayGen(int *numOfOpt, char *argv[]) {
+    if (isNullPtr(numOfOpt) || isNullPtr(argv))
+        return NULL;
+}  
 
 static void helpInfoPrint() {}
-
-static void mappingTableInit() {
-    mappingTable[SourceMibFile] = "-s";
-    mappingTable[TargetPdfFile] = "-t";
-    mappingTable[IncludePath] = "-I";
-
-    return;
-}
 
 static int paramMapping(char *param) {
     int index = 0;
@@ -634,6 +652,11 @@ void * option_Basic(void **state) {
     } 
     
     optMngRelease(mng);
+
+    // option initialization test
+    char *argv[] = {"-t"};
+    optionsInit(1, argv);
+
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

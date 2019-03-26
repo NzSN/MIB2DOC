@@ -4,6 +4,11 @@
 #include "list.h"
 #include "hash.h"
 
+/* Type define */
+#define OPT_KEY_SRC_MIB_FILE "SOURCE_MIB"
+#define OPT_KEY_TARGET_PDF   "TARGET_PDF"
+#define OPT_KEY_INCLUDE_PATH "INCLUDE_PATH"
+
 typedef struct optionVal {
     char *val;
     listNode node;
