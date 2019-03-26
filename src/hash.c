@@ -66,7 +66,7 @@ hashMap * hashMapDup(hashMap *origin) {
         copyChain = hashChainDup(copyFrom);
         memset(&HASH_MAP_ELEM_SELECT(copy, idx)->chain.node, 0, sizeof(listNode));
         hashChainInsert(&HASH_MAP_ELEM_SELECT(copy, idx)->chain, copyChain);
-
+        
         ++idx; 
     } 
 
@@ -74,8 +74,10 @@ hashMap * hashMapDup(hashMap *origin) {
 }
 
 int hashMapRelease(hashMap *map) {
-    hashElem *selectedElem;
     int index = 0, size = map->size;  
+    hashElem *selectedElem;
+    pair_key_base *key;
+    pair_val_base *val;
     
     if (isNullPtr(map)) {
         return FALSE; 
@@ -84,7 +86,15 @@ int hashMapRelease(hashMap *map) {
     // Chain release.
     while (index < size) {
         selectedElem = HASH_MAP_ELEM_SELECT(map, index);
-        hashChainRelease_STATIC(&selectedElem->chain);
+        if (selectedElem->used == 1) {
+            key = selectedElem->key;
+            val = selectedElem->val;
+            
+            if (key->release) key->release(key);
+            if (val->release) val->release(val);
+
+            hashChainRelease_STATIC(&selectedElem->chain);
+        }
         ++index; 
     } 
 

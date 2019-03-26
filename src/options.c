@@ -183,23 +183,22 @@ options_t * optMngGetOpt(optionMng *mng, char *optName) {
     keyInit(&key);
     key.key = optName;
       
-    return hashMapGet(mng->options, (pair_key_base *)&key);
+    option_hash_val *val = hashMapGet(mng->options, (pair_key_base *)&key);
+    return val->option;
 }
 
 int optMngAddOpt(optionMng *mng, char *optName) {
     if (isNullPtr(mng) || isNullPtr(optName))
         return ERROR;
     
-    option_hash_key key;
-    option_hash_val *val;
-
-    keyInit(&key);
-    key.key = optName;
-
+    option_hash_key *key = keyConst();
+    option_hash_val *val = valConst();
+     
+    key->key = strdup(optName);
     val->option = optionConst();
     val->option->optionName = optName;
 
-    return hashMapPut(mng->options, (pair_key_base *)&key, (pair_val_base *)val);
+    return hashMapPut(mng->options, (pair_key_base *)key, (pair_val_base *)val);
 }
 
 int optMngDelOpt(optionMng *mng, char *optName) {
@@ -228,7 +227,7 @@ int optMngAppendOptVal(optionMng *mng, char *optName, char *value) {
 
     option_hash_val *val;
     val = hashMapGet(mng->options, (pair_key_base *)&key);
-
+    
     if (optionAddValue(val->option, value) == ERROR)
         return ERROR;
 
@@ -312,8 +311,9 @@ int optionRelease(options_t *opt) {
         return ERROR;
 
     RELEASE_MEM(opt->optionName);
-
-    listNodeTravel(&opt->vals->node, (listNodeTask)optValRelease, NULL);
+    
+    if (opt->vals)    
+        listNodeTravel(&opt->vals->node, (listNodeTask)optValRelease, NULL);
     RELEASE_MEM(opt);
 
     return OK;
@@ -357,7 +357,11 @@ int optionAddValue(options_t *opt, char *value) {
     memset(newVal, 0, sizeof(optionVal));
     newVal->val = value;
     
-    listNodeAppend(&opt->vals->node, &newVal->node);
+    if (opt->vals)    
+        listNodeAppend(&opt->vals->node, &newVal->node);
+    else 
+        opt->vals = newVal;  
+
 
     return OK;
 }
@@ -369,6 +373,7 @@ static _Bool optValSearchHelper(const listNode *aNode, void *args) {
     optionVal *val = containerOf(aNode, optionVal, node); 
     return isStringEqual(val->val, (char *)args); 
 }
+
 int optionDelValue(options_t *opt, char *value) {
     if (isNullPtr(opt) || isNullPtr(value)) 
         return ERROR;
@@ -379,6 +384,50 @@ int optionDelValue(options_t *opt, char *value) {
     listNodeDelete(foundNode); 
     RELEASE_MEM(val->val);
     RELEASE_MEM(val);
+
+    return OK;
+}
+
+optValIter * optionIter(options_t *opt) {
+    if (isNullPtr(opt)) return NULL;
+
+    optValIter *iter = (optValIter *)Malloc(sizeof(optValIter));
+    
+    listNode *node;  
+    if (opt->vals == NULL) 
+        node = NULL;
+    else
+        node = &opt->vals->node;
+    
+    iter->opt = opt;  
+    iter->node = node;
+
+    return iter;
+}
+
+const char * optionNext(optValIter *iter) {
+    if (isNullPtr(iter)) return NULL;
+       
+    listNode *aNode = iter->node;
+    if (isNullPtr(aNode)) return NULL;
+
+    optionVal *optVal = containerOf(aNode, optionVal, node);  
+    
+    aNode = listNodeNext(aNode);
+    iter->node = aNode;
+
+    return optVal->val;
+}
+
+int optionRewind(optValIter *iter) {
+    if (isNullPtr(iter)) return ERROR;
+    
+    listNode *aNode; 
+    if (iter->opt->vals) 
+        aNode = &iter->opt->vals->node;
+    else
+        aNode = NULL;
+    iter->node = aNode;
 
     return OK;
 }
@@ -489,7 +538,7 @@ static int optionHashing(option_hash_key *key) {
     
     char *str = key->key;
     
-    int index = 0, size, value, hashValue;
+    int index = 0, size, value, hashValue = 0;
     size = strlen(str);
 
     while (index < size) {
@@ -497,7 +546,6 @@ static int optionHashing(option_hash_key *key) {
         hashValue += (value << 5) + value; 
         ++index;
     }
-    
     return hashValue;
 }
 
@@ -507,7 +555,85 @@ static int optionHashing(option_hash_key *key) {
 
 void * option_Basic(void **state) {
     optionMng *mng = optMngConst();
+    
+    // Add, Get testing 
+    assert_int_equal(optMngAddOpt(mng, strdup("INCLUDE")), TRUE);
 
+    options_t *opt = optMngGetOpt(mng, "INCLUDE");
+    assert_non_null(opt);
+    assert_string_equal(opt->optionName, "INCLUDE");      
+
+    optMngAppendOptVal(mng, "INCLUDE", strdup("."));
+    optMngAppendOptVal(mng, "INCLUDE", strdup(".."));
+    
+    // Iterator testing
+    optValIter *iter = optionIter(opt);
+    const char *val = optionNext(iter);
+    assert_non_null(val);
+    assert_string_equal(val, ".");
+    
+    val = optionNext(iter);
+    assert_non_null(val);
+    assert_string_equal(val, "..");  
+
+    val = optionNext(iter);
+    assert_non_null(!val); 
+
+    if (optionRewind(iter) == ERROR)
+        fail();
+    val = optionNext(iter);
+    assert_non_null(val);
+    assert_string_equal(val, ".");
+
+    // Release tseting
+    optMngRelease(mng); 
+    
+    char *key; 
+    int status = 0; 
+    mng = optMngConst();
+
+    // Try to add manay option
+    unsigned int capacity = 20;
+    unsigned int idx = 0, idx_inner = 0;
+
+    while (idx < capacity) {
+        key = numberToStr(idx);
+
+        status = optMngAddOpt(mng, key); 
+        assert_int_equal(status, TRUE);
+        
+        while (idx_inner < capacity) {
+            optMngAppendOptVal(mng, key, numberToStr(idx_inner));                     
+            ++idx_inner;
+        }
+        idx_inner = 0;
+        ++idx;
+    }
+
+    // Now try to retrive options and check is it correctly. 
+    idx = idx_inner = 0;
+    char *val_cmp;
+    while (idx < capacity) {
+        key = numberToStr(idx);   
+        
+        opt = optMngGetOpt(mng, key);
+        assert_non_null(opt);
+        assert_string_equal(opt->optionName, key);
+        
+        iter = optionIter(opt);
+        while (idx_inner < capacity) {
+            val = optionNext(iter);         
+            val_cmp = numberToStr(idx_inner);
+            assert_string_equal(val, val_cmp);
+
+            RELEASE_MEM(val_cmp);
+            ++idx_inner; 
+        } 
+        idx_inner = 0;
+        ++idx;
+    } 
+    
+    optMngRelease(mng);
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */
