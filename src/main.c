@@ -30,15 +30,35 @@ int main(int argc, char *argv[]) {
     beginFrom = "org";
     
     // Init
+    
+    // Option Manager Initialization
+    // It will read option you provide in command line
+    // and applie options to modules.
+    optionsInit(argc, argv);    
+    
+    // Syntax parser predeal 
+    // This function will initialize global variables that 
+    // may use during parsing.
     syntaxParserInit();
+
+    // Dispatcher initialization
+    // Set default dispatching mode correctly which
+    // decide the action for some CFG bodys.
     dispatchInit();
+
+    // Mib object tree global variables initialization.
     mibObjectTreeInit();
+    
+    // Callback set up for symbol collecting purposes.
     symbolCollectingInit();
+
+    // Symbol table Initialization.
     symTableInit();
+    
+    // Type table initialization.
     typeTableInit();
     
     node = &mibObjectTreeRoot;
-    //optionsInit(argc, argv);
     
     yyin = fopen(argv[1], "r");
     if (yyin == NULL)
