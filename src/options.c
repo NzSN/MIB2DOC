@@ -57,18 +57,9 @@ static int optionProcessing(char ** *optArray);
 optionMng *optionsManager;
 
 /* Local Var */
-typedef enum optionNumber {
-    SourceMibFile = 0,
-    TargetPdfFile,
-    IncludePath,
-    NumOfOptions
-} optionNumber;
 
-static char * mappingTable[NumOfOptions] = {
-    "-s", /* SourceMibFile */
-    "-t", /* TargetPdfFile */
-    "-I"  /* Include path  */
-};
+/* Register info */
+#include "optRegister.h"
 
 /* Steps to deal with options:
  * 1.Check option's validity
@@ -148,13 +139,6 @@ static int paramMapping(char *param) {
 
     if (isNullPtr(param)) {
         return ERROR_NULL_REF;
-    }
-
-    while (index < NumOfOptions) {
-        if (strncmp(param, mappingTable[index], strlen(param)) == 0) {
-            break;
-        }
-        index++;
     }
     return index;
 }

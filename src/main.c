@@ -29,8 +29,6 @@ int main(int argc, char *argv[]) {
 
     beginFrom = "org";
     
-    // Init
-    
     // Option Manager Initialization
     // It will read option you provide in command line
     // and applie options to modules.
