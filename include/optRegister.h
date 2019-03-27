@@ -7,10 +7,8 @@
 
 typedef struct optAttr {
     int withArgs; 
+    char *type; // String or Number
     int index;
-    // String
-    // Number 
-    char *type;
 } optAttr_t;
 
 typedef struct optRegister {
@@ -50,6 +48,8 @@ static optRegister_t registerTable[] = {
 
 #define optAttr(O) ({\
     optRegister_t *optReg = optMatch(O);\
+    optAttr_t *attr = &optReg->attr;\
+    attr;\
 })
 
 #endif /* _OPT_REGISTER_H_ */
