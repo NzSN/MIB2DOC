@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
+
 project(Mib2Doc)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(HOME_DIR .)
+
 set(SRC_DIR ${HOME_DIR}/src)
 set(CMAKE_C_STANDARD 11)
 set(SOURCE_FILES 

@@ -47,7 +47,7 @@ static void helpInfoPrint();
 static int optionHashing(option_hash_key *key);
 
 // Options preprocessing procedures
-static _Bool optionValidity(int argc, char *argv[]);
+static int optionValidity(int argc, char *argv[]);
 static char ** * optionArrayGen(int *numOfOpt, char *argv[]);
 static int optionProcessing(char ** *optArray);
 
@@ -91,6 +91,20 @@ int optionsInit(int argc, char *argv[]) {
     return OK;
 }
 
+static int optionValidity(int argc, char *argv[]) {
+    if (argc < 2 || isNullPtr(argv))     
+        return ERROR;
+    
+    int current_idx = 2; // Index point to the option read next
+   
+    return OK;
+}
+
+static char ** * optionArrayGen(int *numOfOpt, char *argv[]) {
+    if (isNullPtr(numOfOpt) || isNullPtr(argv))
+        return NULL;
+}
+
 static int optionProcessing(char ** *optArray) {
     if (isNullPtr(optArray)) return ERROR;
     
@@ -98,7 +112,7 @@ static int optionProcessing(char ** *optArray) {
     char *optVal, **singleOpt;
 
     while (i < NumOfOptions) {
-        singleOpt = optArray[i];
+        singleOpt = optArray[i++];
 
         switch(paramMapping(singleOpt[0])) {
             case SourceMibFile:
@@ -116,20 +130,9 @@ static int optionProcessing(char ** *optArray) {
                 optMngAddOpt(optionsManager, OPT_KEY_INCLUDE_PATH);
                 optMngAppendOptVal(optionsManager, OPT_KEY_INCLUDE_PATH, optVal);
                 break;
-        }
-        
-        i++;    
+        }        
     }
 
-}
-
-static _Bool optionValidity(int argc, char *argv[]) {
-     
-}
-
-static char ** * optionArrayGen(int *numOfOpt, char *argv[]) {
-    if (isNullPtr(numOfOpt) || isNullPtr(argv))
-        return NULL;
 }  
 
 static void helpInfoPrint() {}
@@ -637,9 +640,14 @@ void * option_Basic(void **state) {
     
     optMngRelease(mng);
 
-    // option initialization test
-    char *argv[] = {"-t"};
-    optionsInit(1, argv);
+    /* option register testing */  
+    optRegister_t *optReg = optMatch("-I"); 
+    assert_string_equal(optReg->optName, "-I");  
+
+    optAttr_t *optAttr = optAttr("-I");
+    assert_int_equal(optAttr_withArgs(optAttr), TRUE);
+    assert_string_equal(optAttr_type(optAttr), "String");
+    assert_int_equal(optAttr_idx(optAttr), IncludePath); 
 
 }
 
