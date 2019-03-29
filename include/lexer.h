@@ -208,6 +208,7 @@ extern char *yytext;
 #ifdef YY_HEADER_EXPORT_START_CONDITIONS
 #define INITIAL 0
 #define SMI_FIELD 1
+#define IMPORT_FIELD 2
 
 #endif
 
@@ -316,9 +317,9 @@ extern int yylex (void);
 #undef YY_DECL
 #endif
 
-#line 104 "./src/yy_lex.l"
+#line 105 "src/yy_lex.l"
 
 
-#line 323 "include/lexer.h"
+#line 324 "include/lexer.h"
 #undef yyIN_HEADER
 #endif /* yyHEADER_H */

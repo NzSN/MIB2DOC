@@ -14,7 +14,7 @@
 /* Declaration Section */
 static void debugging(dispatchParam* param);
 static int dispatchMakeChoice(dispatch_type dType);
-static int lexBufferSwitching(char* newModule);
+static char * lexBufferSwitching(char* newModule);
 static int symbolHashing(void* key);
 static int switchInit();
 
@@ -125,18 +125,22 @@ static int dispatchMakeChoice(dispatch_type dType) {
 // Following codes is added for import feature.
 static int switchInit() {
     int retVal;
-
+    
+    if (!isNeedSwitchInit) return OK;
+    
     memset(&swState, 0, sizeof(switchingState));
-
+         
+    char *srcMibPath = optMngGetOptVal(optionsManager, OPT_KEY_SRC_MIB_FILE);
+    SW_CUR_SET_FILE_NAME(&swState, srcMibPath); 
 
     SW_COUNTER_SET(&swState, 0);
     SW_STATE_SET(&swState, DISPATCH_MODE_DOC_GENERATING);
 
-    SW_CUR_SWITCH_INFO(&swState)->purpose = SWITCHING_GEN_PURPOSE;
+    SW_CUR_SET_PURPOSE(&swState, SWITCHING_GEN_PURPOSE);
 
-    // Todo: replace 128 with a macro to get a meaning of it.
+    // Todo: replace the magic number '128' with a macro to get a meaning of it.
     genericStackConstruct(&swState.swStack, 128 * sizeof(switchInfo), sizeof(switchInfo));
-    SW_CUR_IMPORT(&swState)->symbols = hashMapConstruct(10, symbolHashing);
+    SW_CUR_SET_SYMBOLS(&swState, hashMapConstruct(10, symbolHashing));
 
     isNeedSwitchInit = FALSE;
 
@@ -144,7 +148,9 @@ static int switchInit() {
 }
 
 int switchToModule(switchingState *swState, char* moduleName) {
+    char *path;
     collectInfo* cInfo;
+
     if (isNullPtr(swState) || isNullPtr(moduleName)) {
         return FALSE;
     }
@@ -154,10 +160,11 @@ int switchToModule(switchingState *swState, char* moduleName) {
     push(SW_STACK(swState), SW_CUR_SWITCH_INFO(swState));
 
     // Step 2: Update currentSwitchInfo
-    if (lexBufferSwitching(moduleName) == ERROR_GENERIC)
+    if ( !(path = lexBufferSwitching(moduleName)) )
         /* Terminate program */
         return ABORT;
-
+    
+    SW_CUR_SET_FILE_NAME(swState, path);
     SW_SET_CUR_BUFFER_INFO(swState, getCurrentBufferState());
 
     return 0;
@@ -171,10 +178,13 @@ int switchToPrevModule(switchingState *swState) {
     if (SW_STACK(swState)->top == 0) {
         return -1;
     }
-
+    
+    // Release resources use by current info structure
     collectInfo_release(SW_CUR_IMPORT(swState));
     yy_delete_buffer(SW_CUR_BUFFER_INFO(swState));
-
+    RELEASE_MEM(SW_CUR_FILE_NAME(swState)); 
+    
+    // Switch to prev module
     pop(SW_STACK(swState), SW_CUR_SWITCH_INFO(swState));
     yy_switch_to_buffer(SW_CUR_BUFFER_INFO(swState));
 
@@ -183,34 +193,32 @@ int switchToPrevModule(switchingState *swState) {
     return 0;
 }
 
-static int lexBufferSwitching(char* newModule) {
-    int index = 0;
+static char * lexBufferSwitching(char* newModule) {
+    int index = 0, len;
     const char* path;
     char* targetModulePath;
+    
+    /* Build path similar to ./path/to/module.my */ 
+    path = optMngGetOptVal(optionsManager, OPT_KEY_INCLUDE_PATH);
+    if (isNullPtr(path)) path = ".";
+    
+    /* len = strlen(path) + strlen("/") + strlen(newModule) + <len of module extension> + null */
+    len = strlen(path) + strlen(newModule) + 1 + 5 + 1;
+    targetModulePath = (char *)Malloc(len);
+    memset(targetModulePath, 0, len);
+    
+    strncat(targetModulePath, path, len); 
+    strncat(targetModulePath, "/", len);
+    strncat(targetModulePath, newModule, len);   
+    strncat(targetModulePath, ".my", len);
 
-#if 0
-    while (path = getOption_includePath(&index)) {
-        targetModulePath = (char*)malloc(strlen(path) + strlen(newModule) + 1);
-        strncpy(targetModulePath, path, strlen(path));
-        strncat(targetModulePath, newModule, strlen(newModule));
+    yyin = fopen(targetModulePath, "r");
+    if (!yyin) 
+        abortWithMsg("Can't not open file : %s\n", targetModulePath);
 
-        yyin = fopen(targetModulePath, "r");
-        if (!yyin) {
-            continue;
-        }
-        yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
-    }
-#endif
-
-    yyin = fopen(newModule, "r");
-    if (!yyin)
-        return ERROR_GENERIC;
     yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
 
-    if (path == null) {
-        return ERROR_GENERIC;
-    }
-    return ERROR_NONE;
+    return targetModulePath;;
 }
 
 /**************************

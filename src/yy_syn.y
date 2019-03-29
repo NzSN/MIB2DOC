@@ -455,6 +455,7 @@ MOUNT :
 // Epilogue
 extern YYSTYPE yylval;
 void yyerror(char const *s) {
-    fprintf(stderr, "Error occur during parsing %s at line %d\n", "adf", yylineno - 1);
+    fprintf(stderr, "Error occur during parsing %s at line %d: %s\n", 
+        SW_CUR_FILE_NAME(&swState), yylineno, yytext);
 }    
 

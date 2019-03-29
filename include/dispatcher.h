@@ -45,6 +45,13 @@ enum {
 };
 
 typedef struct switchInfo {
+    char *fileName;
+    /* Kind of purposes:
+     *   SWITCHING_INC_PURPOSE: The purpose of parser is to find the symbol
+     *                          that import by import statements and then 
+     *                          include into symbol table.
+     *   SWITCH_GEN_PURPOSE: The purpose of parser is to translate MIB file
+     *                       into tex format. */
     int purpose;
     collectInfo importInfo;
     YY_BUFFER_STATE bufferInfo;
@@ -65,6 +72,13 @@ typedef struct switchingState {
 // switchingState reference macros
 #define SW_STATE(SW) ((SW)->state)
 #define SW_STATE_SET(SW, STATE) ((SW)->state = STATE)
+
+/* Refresh switchingState: 
+ *   This procedure is a solutions to resolve
+ *   dismatch of purpose between global purpose
+ *   and purpose of current info, you should call
+ *   this procedure to resolve such situation after
+ *   module switching. */
 #define SW_STATE_REFRESH(SW) ({\
     if (SW.currentSwitchInfo.purpose == SWITCHING_INC_PURPOSE) {\
         SW.state = DISPATCH_MODE_SYMBOL_COLLECTING;\
@@ -79,10 +93,15 @@ typedef struct switchingState {
 
 #define SW_CUR_SWITCH_INFO(SW) (&(SW)->currentSwitchInfo)
 
+#define SW_CUR_FILE_NAME(SW) (SW_CUR_SWITCH_INFO(SW)->fileName)
+#define SW_CUR_SET_FILE_NAME(SW, NAME) (SW_CUR_SWITCH_INFO(SW)->fileName = NAME) 
+
 #define SW_CUR_IMPORT(SW) (&SW_CUR_SWITCH_INFO(SW)->importInfo)
+#define SW_CUR_SET_SYMBOLS(SW, SYM) (SW_CUR_IMPORT(SW)->symbols = SYM)
 #define SW_CUR_BUFFER_INFO(SW) (SW_CUR_SWITCH_INFO(SW)->bufferInfo)
 #define SW_SET_CUR_BUFFER_INFO(SW, BUFFER) (SW_CUR_SWITCH_INFO(SW)->bufferInfo = BUFFER)
-#define SW_CUR_PURPOSE(SW) (SW_CUR_SWITCH_INFO(SW)->state)
+#define SW_CUR_PURPOSE(SW) (SW_CUR_SWITCH_INFO(SW)->purpose)
+#define SW_CUR_SET_PURPOSE(SW, PUR) (SW_CUR_SWITCH_INFO(SW)->purpose = PUR)
 
 #define SW_STACK(SW) (&(SW)->swStack)
 #define SW_STACK_BASE(SW) ((SW)->swStack.base)
