@@ -169,7 +169,8 @@ int switchToModule(switchingState *swState, char* moduleName)
     return 0;
 }
 
-int switchToPrevModule(switchingState *swState) {
+int switchToPrevModule(switchingState *swState) 
+{
     if (isNullPtr(swState))
        return -1; 
     

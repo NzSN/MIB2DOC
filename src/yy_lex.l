@@ -1,5 +1,6 @@
 %option header-file="include/lexer.h"
 %option outfile="src/lexer.c"
+%option yylineno
 
 %{
     #include "yy_syn.def.h"
@@ -15,7 +16,7 @@
 "--".*                              { /* empty */ }
 [\n ]+                              { /* empty */ }
 [\t ]+                              { /* empty */ }
-OBJECT[ \n\t\r]+IDENTIFIER          { return OBJ_IDEN_; }
+OBJECT[ \t]+IDENTIFIER              { return OBJ_IDEN_; }
 OBJECT-TYPE                         { return OBJ_SPECIFIER; }
 OBJECTS                             { return OBJECTS_; }
 OBJECT                              { return OBJECT_; }
@@ -31,8 +32,8 @@ INTEGER                     |
 Integer32                   |
 IpAddress                   | 
 MacAddress                  | 
-OCTET[ \n\t\r]+STRING[ \n\t\r]*([ \n\t\r]*\(.*\))*    | 
-SEQUENCE[ \n\t\r]+OF[ \n\t\r]*[a-zA-Z]*     | 
+OCTET[ \t]+STRING[ \t]*([ \t]*\(.*\))*    | 
+SEQUENCE[ \t]+OF[ \t]*[a-zA-Z]*     | 
 RowStatus                           { yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
 
 SEQUENCE                            { return SEQ; }
