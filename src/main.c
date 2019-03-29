@@ -21,12 +21,11 @@ extern mibObjectTreeNode mibObjectTreeRoot;
 extern int syntaxParserInit(void);
 
 int main(int argc, char *argv[]) {
-    int token;
     int ret;
+    char *srcMib, *texPath;
     FILE *writeTo;
     mibObjectTreeNode *node;
-    mibLeaveInfo *pInfo; 
-
+    
     beginFrom = "org";
     
     // Option Manager Initialization
@@ -56,21 +55,25 @@ int main(int argc, char *argv[]) {
     // Type table initialization.
     typeTableInit();
     
-    node = &mibObjectTreeRoot;
+    srcMib = optMngGetOptVal(optionsManager, OPT_KEY_SRC_MIB_FILE); 
+    if (isNullPtr(srcMib)) 
+        abortWithMsg("Please give a path to a mib file.\n");
     
-    yyin = fopen(argv[1], "r");
-    if (yyin == NULL)
-        printf("%s\n", "case open failed");
+    texPath = optMngGetOptVal(optionsManager, OPT_KEY_TARGET_PDF);
+    if (isNullPtr(texPath))
+        texPath = "./mibDocs.tex";
+
+    yyin = fopen(srcMib, "r");
+    if (yyin == NULL) 
+        abortWithMsg("Can not open file : %s\n", srcMib);
     
     ret = yyparse();
-    if (ret == ABORT) {
-        return -1;
-    }
-
-    writeTo = fopen("result.tex", "w+");
+    if (ret == ABORT) abortWithMsg("yyparse error\n");
+     
+    writeTo = fopen(texPath, "w+");
     if (writeTo == NULL)
-        printf("%s\n", "result open failed");
-    
+        abortWithMsg("Can not open file : %s\n", texPath); 
+
     documentGen(&trees, writeTo);
     showTree(&trees);
     

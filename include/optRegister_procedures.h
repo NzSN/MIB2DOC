@@ -63,7 +63,7 @@ static int argInUsedStatusSet(char martix[][NumOfOptions], int optIdx) {
     return OK;
 }
 
-#define VALID_PATH_PATTERN "^/[a-zA-Z0-9/_]+"
+#define VALID_PATH_PATTERN "^.?/?[a-zA-Z0-9/_\\.]+"
 
 /* Property(argc: int, argv: char *) ::=
  *   argumentSplit: argc * argv
@@ -107,6 +107,8 @@ static _Bool argumentChecking(int argc, char *argv[]) {
 
     while (current < argc) {
         attr = optAttr(argv[current]);
+        if (isNullPtr(attr))
+            return FALSE;
         if (attr->check(argc, &current, argv, attr) == FALSE)
             return FALSE;
     }

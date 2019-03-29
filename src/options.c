@@ -76,9 +76,9 @@ int optionsInit(int argc, char *argv[]) {
        
     optionsManager = optMngConst(); 
 
-    if (optionValidity(argc, argv) == ERROR) {
+    if (optionValidity(argc, argv) == FALSE) {
         helpInfoPrint();
-        abort();
+        exit(1);
     }
     
     optArray = optionArrayGen(argc, argv);
@@ -105,43 +105,40 @@ static optPieces optionArrayGen(int argc, char *argv[]) {
 static int optionProcessing(optPieces optArray) {
     if (isNullPtr(optArray)) return ERROR;
     
-    int i = 0;
+    int index = 0;
     optHalfPiece optVal;
-    optPiece singleOpt;
+    optPiecesIter *iter_opt = optPiecesGetIter(optArray);
 
-    while (1) {
-        singleOpt = optArray[i++];
-
-        switch(paramMapping(singleOpt[0])) {
+    while (optVal = optPiecesNext(iter_opt)) {
+        switch(paramMapping(optVal)) {
             case SourceMibFile:
-                optVal = singleOpt[1];             
                 optMngAddOpt(optionsManager, OPT_KEY_SRC_MIB_FILE);
-                optMngAppendOptVal(optionsManager, OPT_KEY_SRC_MIB_FILE, optVal);
+                optMngAppendOptVal(optionsManager, OPT_KEY_SRC_MIB_FILE, optPiecesNext(iter_opt));
                 break;
             case TargetPdfFile:
-                optVal = singleOpt[1];
                 optMngAddOpt(optionsManager, OPT_KEY_TARGET_PDF);
-                optMngAppendOptVal(optionsManager, OPT_KEY_TARGET_PDF, optVal); 
+                optMngAppendOptVal(optionsManager, OPT_KEY_TARGET_PDF, optPiecesNext(iter_opt)); 
                 break;
             case IncludePath:
-                optVal = singleOpt[1];
                 optMngAddOpt(optionsManager, OPT_KEY_INCLUDE_PATH);
-                optMngAppendOptVal(optionsManager, OPT_KEY_INCLUDE_PATH, optVal);
+                optMngAppendOptVal(optionsManager, OPT_KEY_INCLUDE_PATH, optPiecesNext(iter_opt));
                 break;
         }        
     }
 
 }  
 
-static void helpInfoPrint() {}
+static void helpInfoPrint(void) {
+    printf("options is incorrectly and help info is still pending...\n");
+}
 
 static int paramMapping(char *param) {
     int index = 0;
-
-    if (isNullPtr(param)) {
-        return ERROR_NULL_REF;
-    }
-    return index;
+    
+    if (isNullPtr(param)) return ERROR;
+    
+    optAttr_t *attr = optAttr(param);
+    return optAttr_idx(attr);
 }
 
 /* optionMng 
@@ -187,7 +184,15 @@ options_t * optMngGetOpt(optionMng *mng, char *optName) {
     key.key = optName;
       
     option_hash_val *val = hashMapGet(mng->options, (pair_key_base *)&key);
+    if (isNullPtr(val)) return NULL;
     return val->option;
+}
+
+char * optMngGetOptVal(optionMng *mng, char *optName) {
+    options_t *opt = optMngGetOpt(mng, optName);
+    if (opt && opt->vals)
+        return opt->vals->val;
+    return NULL;
 }
 
 int optMngAddOpt(optionMng *mng, char *optName) {
@@ -657,9 +662,22 @@ void * option_Basic(void **state) {
     assert_string_equal(pieces[0][1], "/usr/src");
     assert_string_equal(pieces[1][0], "-I");
     assert_string_equal(pieces[1][1], "/usr/include");
+    assert_string_equal(pieces[2][0], "T");
     
     /* optPieces iterator testing */
+    char *optVal;
+    optPiecesIter *iter__ = optPiecesGetIter(pieces);   
+    assert_string_equal(optPiecesNext(iter__), "-s");
+    assert_string_equal(optPiecesNext(iter__), "/usr/src");
+    assert_string_equal(optPiecesNext(iter__), "-I");
+    assert_string_equal(optPiecesNext(iter__), "/usr/include");    
 
+    /* option module initializations */
+    assert_int_equal(optionsInit(argc, argv), OK);
+    optVal = optMngGetOptVal(optionsManager, OPT_KEY_SRC_MIB_FILE);
+    assert_string_equal(optVal, "/usr/src");
+    optVal = optMngGetOptVal(optionsManager, OPT_KEY_INCLUDE_PATH);
+    assert_string_equal(optVal, "/usr/include");
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

@@ -58,8 +58,10 @@ static optRegister_t registerTable[];
 })
 
 #define optAttr(O) ({\
+    optAttr_t *attr;\
     optRegister_t *optReg = optMatch(O);\
-    optAttr_t *attr = &optReg->attr;\
+    if (isNullPtr(optReg)) attr = NULL;\
+    else attr = &optReg->attr;\
     attr;\
 })
 
@@ -97,19 +99,21 @@ typedef struct optPiecesIter {
 } optPiecesIter;
 
 #define optPiecesConst(NUM_OF_OPTS) ({\
+    char *terminated_flag = "T";\
     int i = 0, NUM = (NUM_OF_OPTS) + 1;\
     optPieces pieces = (optPieces)Malloc((NUM) * sizeof(optPieces));\
     while (i < (NUM)) {\
         pieces[i] = (optPiece)Malloc(2 * sizeof(optPiece));\
-        memset(pieces[i++], 0, 2 * sizeof(optPiece));\
+        memset(pieces[i], 0, 2 * sizeof(optPiece));\
+        pieces[i++][0] = terminated_flag;\
     }\
-    pieces[NUM-1][0] = "T";\
     pieces;\
 })
 #define optPiecesGetIter(OPieces) ({\
     optPiecesIter *iter = (optPiecesIter *)Malloc(sizeof(optPiecesIter));\
     memset(iter, 0, sizeof(optPiecesIter));\
     iter->oPieces = OPieces;\
+    iter;\
 })
 
 #define optPiecesNextHelper(oPIter) ({\
@@ -119,8 +123,8 @@ typedef struct optPiecesIter {
     if (position_in_piece < 2) {\
         optVal = oPIter->oPieces[current_pieces][position_in_piece++];\
     } else {\
-        position_in_piece = 0;\
-        optVal = oPiter->oPieces[++current_pieces][]\
+        position_in_piece = 1;\
+        optVal = oPIter->oPieces[++current_pieces][0];\
     }\
     /* Update iterator */ \
     oPIter->current_pieces = current_pieces;\
@@ -130,14 +134,16 @@ typedef struct optPiecesIter {
 })
 
 #define optPiecesNext(oPIter) ({\
-    char *optVal;\
+    char *optVal = NULL;\
     if (isNullPtr(oPIter)) optVal = NULL;\
     else {\
         while (optVal == NULL)  {\
             optVal = optPiecesNextHelper(oPIter);\
+            if (optVal == NULL) continue;\
             if (isStringEqual(optVal, "T")) {\
                 optVal = NULL;\
                 --oPIter->position_in_piece;\
+                break;\
             }\
         }\
     }\

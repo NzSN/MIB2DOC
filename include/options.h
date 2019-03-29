@@ -35,7 +35,6 @@ typedef struct optValIter {
     listNode *node; 
 } optValIter;
 
-
 int optionsInit(int argc, char *argv[]);
 
 /* Prototypes */
@@ -43,6 +42,7 @@ optionMng * optMngConst(void);
 int optMngRelease(optionMng *mng);
 optionMng * optMngDup(optionMng *mng);
 options_t * optMngGetOpt(optionMng *mng, char *optName);
+char * optMngGetOptVal(optionMng *mng, char *optName);
 int optMngAddOpt(optionMng *mng, char *optName);
 int optMngDelOpt(optionMng *mng, char *optName);
 int optMngAppendOptVal(optionMng *mng, char *optName, char *value);
@@ -56,12 +56,17 @@ int optionRelease(options_t *opt);
 options_t *optionDup(options_t *opt);
 int optionAddValue(options_t *opt, char *value);
 int optionDelValue(options_t *opt, char *value);
+
+optValIter * optionIter(options_t *opt);
 const char * optionNext(optValIter *iter);
+int optionRewind(optValIter *iter);
 
 #ifdef MIB2DOC_UNIT_TESTING
 
 void * option_Basic(void **state);
 
 #endif
+
+extern optionMng *optionsManager;
 
 #endif /* _OPTIONS_H_ */

@@ -43,8 +43,10 @@
 #define RELEASE_IF_NON_NULL(PTR) ({ if (PTR) RELEASE_MEM(PTR); })
 #define errorMsg(msg, args...) fprintf(stderr, msg, ##args)
 #define abortWithMsg(msg, args...) \
+do {\
     errorMsg(msg, ##args);\
-    exit(1)
+    exit(1);\
+} while (0)
 #define containerOf(ptr, ConType, member) ({\
         const typeof( ((ConType *)(0))->member) *__mptr = ptr;\
         (ConType *)((char *)__mptr - offsetof(ConType, member));\
