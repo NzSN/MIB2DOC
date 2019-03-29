@@ -8,6 +8,9 @@
 #include "string.h"
 #include "util.h"
 
+/* Register implementation */
+#include "optRegister.h"
+
 /* Declaration */
 static int paramMapping(char *param);
 
@@ -47,8 +50,8 @@ static void helpInfoPrint();
 static int optionHashing(option_hash_key *key);
 
 // Options preprocessing procedures
-static int optionValidity(int argc, char *argv[]);
-static char ** * optionArrayGen(int *numOfOpt, char *argv[]);
+static _Bool optionValidity(int argc, char *argv[]);
+static optPieces optionArrayGen(int argc, char *argv[]);
 static int optionProcessing(char ** *optArray);
 
 
@@ -58,9 +61,6 @@ optionMng *optionsManager;
 
 /* Local Var */
 
-/* Register info */
-#include "optRegister.h"
-
 /* Steps to deal with options:
  * 1.Check option's validity
  * 2.Transfer options into [][2] array type.
@@ -68,7 +68,7 @@ optionMng *optionsManager;
  */
 int optionsInit(int argc, char *argv[]) {
     int i=0, NumOfOptions;
-    char ** *optArray;   // optArray[][]
+    optPieces optArray;   // optArray[][]
 
     if (isNullPtr(argv)) {
         return ERROR_NULL_REF;
@@ -81,7 +81,7 @@ int optionsInit(int argc, char *argv[]) {
         abort();
     }
     
-    optArray = optionArrayGen(&NumOfOptions, argv);
+    optArray = optionArrayGen(argc, argv);
     if (isNullPtr(optArray))
         abortWithMsg("Option array generation error...\n");
     
@@ -91,27 +91,25 @@ int optionsInit(int argc, char *argv[]) {
     return OK;
 }
 
-static int optionValidity(int argc, char *argv[]) {
-    if (argc < 2 || isNullPtr(argv))     
-        return ERROR;
-    
-    int current_idx = 2; // Index point to the option read next
-   
-    return OK;
+static _Bool optionValidity(int argc, char *argv[]) {
+    return argumentChecking(argc, argv); 
 }
 
-static char ** * optionArrayGen(int *numOfOpt, char *argv[]) {
-    if (isNullPtr(numOfOpt) || isNullPtr(argv))
+static optPieces optionArrayGen(int argc, char *argv[]) {
+    if (isNullPtr(argv))
         return NULL;
+    
+    return argumentSplit(argc, argv);
 }
 
-static int optionProcessing(char ** *optArray) {
+static int optionProcessing(optPieces optArray) {
     if (isNullPtr(optArray)) return ERROR;
     
     int i = 0;
-    char *optVal, **singleOpt;
+    optHalfPiece optVal;
+    optPiece singleOpt;
 
-    while (i < NumOfOptions) {
+    while (1) {
         singleOpt = optArray[i++];
 
         switch(paramMapping(singleOpt[0])) {
@@ -533,7 +531,6 @@ static option_hash_val * valCopy(option_hash_val *val) {
     
     option_hash_val *copy = valConst();
     copy->option = optionDup(val->option); 
-
     return copy;
 }
 
@@ -648,6 +645,20 @@ void * option_Basic(void **state) {
     assert_int_equal(optAttr_withArgs(optAttr), TRUE);
     assert_string_equal(optAttr_type(optAttr), "String");
     assert_int_equal(optAttr_idx(optAttr), IncludePath); 
+    
+    int argc = 5;
+    char *argv[] = { "./test", "-s", "/usr/src", "-I", "/usr/include" };
+
+    assert_int_equal(argumentChecking(argc, argv), TRUE); 
+
+    /* option splite testing */ 
+    optPieces pieces = argumentSplit(argc, argv);
+    assert_string_equal(pieces[0][0], "-s");
+    assert_string_equal(pieces[0][1], "/usr/src");
+    assert_string_equal(pieces[1][0], "-I");
+    assert_string_equal(pieces[1][1], "/usr/include");
+    
+    /* optPieces iterator testing */
 
 }
 

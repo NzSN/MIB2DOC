@@ -5,14 +5,14 @@
 
 /* optBufferIter(obj) ::= 
  *   Iterator(obi) &&
- *   range_check(obi): obi -> _Bool */
+ *   range_check: obi -> _Bool */
 typedef struct optBufferIter {
     int argc;
     int current;
     char **argv;
 } optBufferIter;
 
-/* Property(oBi: optBufferIter) */
+
 #define opt_range_check(obi) (obi->current > 0 && obi->current < obi->argc)
 
 /* Property(argc: int, argv: char **) ::=
@@ -34,46 +34,146 @@ typedef struct optBufferIter {
 #define optBufferNext(obi) ({\
     char *__opt;\
     if (!opt_range_check(obi))\
-        __opt == null;\
-    __opt = obi->argv[obi->current++];\
+        __opt = null;\
+    else\
+        __opt = obi->argv[obi->current++];\
     __opt;\
 })
 
-#define VALID_PATH_PATTERN ""
+static _Bool argConflictCheck(char martix[][NumOfOptions], int optIdx) {
+    int i = 0, accumulate = 0;
+    if (optIdx < 0) return FALSE; 
 
-/* sourceMibFile_argCheck(f) ::= optCheck(f) */
-static _Bool sourceMibFile_argCheck(int argc, int *current, char *argv[], optAttr_t *attr) { 
-    // Precondition: weak_validity && lowerbound
+    while (i < NumOfOptions) {
+        accumulate += martix[optIdx][i++] == REL_CONFLICT_IN;
+    }
+
+    return accumulate == 0;
+}
+
+static int argInUsedStatusSet(char martix[][NumOfOptions], int optIdx) {
+    int i = 0, info, offset = 10;
+    if (optIdx < 0) return ERROR; 
+    
+    while (i < NumOfOptions) {
+        info = martix[i][optIdx];
+        martix[i++][optIdx] = info * REL_CONFLICT_IN;
+    }
+
+    return OK;
+}
+
+#define VALID_PATH_PATTERN "^/[a-zA-Z0-9/_]+"
+
+/* Property(argc: int, argv: char *) ::=
+ *   argumentSplit: argc * argv
+ *     (argc, argv) -- withArgs(argc, argv) */
+static optPieces argumentSplit(int argc, char *argv[]) {
+    if (argc < 2 || isNullPtr(argv)) 
+        return FALSE;
+    
+    optPieces pieces = optPiecesConst(argc- 1);
+    
+    char *opt, *optVal; 
+    optAttr_t *attr;
+    int numOfOptions = 0; 
+    
+    optBufferIter *iter = optBufferIterConst(argc, argv); 
+    
+    while (opt = optBufferNext(iter)) {
+        attr = optAttr(opt); 
+        pieces[numOfOptions][0] = opt;
+        
+        if (optAttr_withArgs(attr)) {
+            optVal = optBufferNext(iter); 
+            pieces[numOfOptions][1] = optVal;
+        } 
+
+        ++numOfOptions;
+    }
+
+    return pieces;
+}
+
+/* Property(argc: int, argv: char **) ::=
+ *     argumentChecking: argc * current * argv * attr
+ *       (argc, argv) -- withArgs(argc, argv) */ 
+static _Bool argumentChecking(int argc, char *argv[]) {
+    if (argc < 2 || isNullPtr(argv)) 
+        return FALSE;
+    
+    int current = 1; 
+    optAttr_t *attr;
+
+    while (current < argc) {
+        attr = optAttr(argv[current]);
+        if (attr->check(argc, &current, argv, attr) == FALSE)
+            return FALSE;
+    }
+
+    return TRUE;
+}
+
+/* Property(path: const char *, pattern: re_t) ::=
+ *   isPathString: path * pattern 
+ *       (path, pattern) -- (pattern == NULL || pattern != NULL) &&
+ *                          (pattern != NULL && pattern(str) == TRUE) 
+ *                          => (str is belong to subset of pathStr);
+ */
+static _Bool isPathString(const char *path, re_t pattern) {
+    if (isNullPtr(path)) return FALSE; 
+    
+    re_t pattern_ = pattern; 
+    if (isNullPtr(pattern_)) 
+        pattern_ = re_compile(VALID_PATH_PATTERN); 
+
+    if (re_matchp(pattern_, path) == ERROR) {
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+/* Concept(optCheck) */
+static _Bool pathArgumentCheck(int argc, int *current, char *argv[], optAttr_t *attr) {
+    int ret = TRUE;
+
+    // Precondition: weak_validity
     if (isNullPtr(current) || isNullPtr(argv))
         return FALSE;
     
-    int current_int = *current;
-    if (argc < 2 || current_int <= 0 || current_int >= argc)
-        return FALSE; 
-    
     char *optVal;  
     optBufferIter *iter = optBufferIterConst(argc, argv);
-    re_t pattern = re_compile(VALID_PATH_PATTERN); 
+    iter->current = *current + 1;
 
     /* Argument checking via regex */ 
     if (optAttr_withArgs(attr)) {
         optVal = optBufferNext(iter); 
+        if (isNullPtr(optVal)) {
+            ret = FALSE;
+            goto EXIT;
+        } 
         
-        if (re_matchp(pattern, optVal) == ERROR)
-            return FALSE;
-    } 
+        if (!isPathString(optVal, NULL)) {
+            ret = FALSE; 
+            goto EXIT;
+        }
+    }
+     
 
     /* Conflict check */
-     
-}
+    int index = attr->index;
+    argInUsedStatusSet(optionRelation, index);
+    if (argConflictCheck(optionRelation, index) == FALSE) {
+        ret = FALSE;
+    }
+    
+EXIT:
 
-/* targetPdfFile_argCheck(f) ::= optCheck(f) */
-static _Bool targetPdfFile_argCheck(int argc, int *current, char *argv[], optAttr_t *attr) {
-         
-}
+    *current = iter->current;
 
-/* includePath_argCheck(f) ::= optCheck(f) */
-static _Bool includePath_argCheck(int argc, int *current, char *argv[], optAttr_t *attr) {
+    RELEASE_MEM(iter);
+    return ret;
 
 }
 
