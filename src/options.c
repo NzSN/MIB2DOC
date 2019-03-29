@@ -73,18 +73,18 @@ int optionsInit(int argc, char *argv[]) {
     if (isNullPtr(argv)) {
         return ERROR_NULL_REF;
     }
-       
-    optionsManager = optMngConst(); 
+
+    optionsManager = optMngConst();
 
     if (optionValidity(argc, argv) == FALSE) {
         helpInfoPrint();
         exit(1);
     }
-    
+
     optArray = optionArrayGen(argc, argv);
     if (isNullPtr(optArray))
         abortWithMsg("Option array generation error...\n");
-    
+
     if (optionProcessing(optArray) == ERROR)
         abortWithMsg("Option processing error...\n");
 
@@ -92,41 +92,41 @@ int optionsInit(int argc, char *argv[]) {
 }
 
 static _Bool optionValidity(int argc, char *argv[]) {
-    return argumentChecking(argc, argv); 
+    return argumentChecking(argc, argv);
 }
 
 static optPieces optionArrayGen(int argc, char *argv[]) {
     if (isNullPtr(argv))
         return NULL;
-    
+
     return argumentSplit(argc, argv);
 }
 
 static int optionProcessing(optPieces optArray) {
     if (isNullPtr(optArray)) return ERROR;
-    
+
     int index = 0;
     optHalfPiece optVal;
     optPiecesIter *iter_opt = optPiecesGetIter(optArray);
 
     while (optVal = optPiecesNext(iter_opt)) {
         switch(paramMapping(optVal)) {
-            case SourceMibFile:
-                optMngAddOpt(optionsManager, OPT_KEY_SRC_MIB_FILE);
-                optMngAppendOptVal(optionsManager, OPT_KEY_SRC_MIB_FILE, optPiecesNext(iter_opt));
-                break;
-            case TargetPdfFile:
-                optMngAddOpt(optionsManager, OPT_KEY_TARGET_PDF);
-                optMngAppendOptVal(optionsManager, OPT_KEY_TARGET_PDF, optPiecesNext(iter_opt)); 
-                break;
-            case IncludePath:
-                optMngAddOpt(optionsManager, OPT_KEY_INCLUDE_PATH);
-                optMngAppendOptVal(optionsManager, OPT_KEY_INCLUDE_PATH, optPiecesNext(iter_opt));
-                break;
-        }        
+        case SourceMibFile:
+            optMngAddOpt(optionsManager, OPT_KEY_SRC_MIB_FILE);
+            optMngAppendOptVal(optionsManager, OPT_KEY_SRC_MIB_FILE, optPiecesNext(iter_opt));
+            break;
+        case TargetPdfFile:
+            optMngAddOpt(optionsManager, OPT_KEY_TARGET_PDF);
+            optMngAppendOptVal(optionsManager, OPT_KEY_TARGET_PDF, optPiecesNext(iter_opt));
+            break;
+        case IncludePath:
+            optMngAddOpt(optionsManager, OPT_KEY_INCLUDE_PATH);
+            optMngAppendOptVal(optionsManager, OPT_KEY_INCLUDE_PATH, optPiecesNext(iter_opt));
+            break;
+        }
     }
 
-}  
+}
 
 static void helpInfoPrint(void) {
     printf("options is incorrectly and help info is still pending...\n");
@@ -134,14 +134,14 @@ static void helpInfoPrint(void) {
 
 static int paramMapping(char *param) {
     int index = 0;
-    
+
     if (isNullPtr(param)) return ERROR;
-    
+
     optAttr_t *attr = optAttr(param);
     return optAttr_idx(attr);
 }
 
-/* optionMng 
+/* optionMng
  * . Construction
  * . Destruction
  * . CopyConstruction
@@ -156,8 +156,8 @@ optionMng * optMngConst(void) {
 
 int optMngRelease(optionMng *mng) {
     if (isNullPtr(mng)) return ERROR;
-    
-    return hashMapRelease(mng->options);    
+
+    return hashMapRelease(mng->options);
 }
 
 optionMng * optMngDup(optionMng *mng) {
@@ -178,11 +178,11 @@ optionMng * optMngDup(optionMng *mng) {
 options_t * optMngGetOpt(optionMng *mng, char *optName) {
     if (isNullPtr(mng) || isNullPtr(optName))
         return NULL;
-    
+
     option_hash_key key;
     keyInit(&key);
     key.key = optName;
-      
+
     option_hash_val *val = hashMapGet(mng->options, (pair_key_base *)&key);
     if (isNullPtr(val)) return NULL;
     return val->option;
@@ -198,10 +198,10 @@ char * optMngGetOptVal(optionMng *mng, char *optName) {
 int optMngAddOpt(optionMng *mng, char *optName) {
     if (isNullPtr(mng) || isNullPtr(optName))
         return ERROR;
-    
+
     option_hash_key *key = keyConst();
     option_hash_val *val = valConst();
-     
+
     key->key = strdup(optName);
     val->option = optionConst();
     val->option->optionName = optName;
@@ -212,12 +212,12 @@ int optMngAddOpt(optionMng *mng, char *optName) {
 int optMngDelOpt(optionMng *mng, char *optName) {
     if (isNullPtr(mng) || isNullPtr(optName))
         return ERROR;
-    
+
     option_hash_key key;
     option_hash_val *val;
-    
+
     keyInit(&key);
-    key.key = optName; 
+    key.key = optName;
 
     if (hashMapDelete(mng->options, (pair_key_base *)&key) == ERROR)
         return ERROR;
@@ -235,7 +235,7 @@ int optMngAppendOptVal(optionMng *mng, char *optName, char *value) {
 
     option_hash_val *val;
     val = hashMapGet(mng->options, (pair_key_base *)&key);
-    
+
     if (optionAddValue(val->option, value) == ERROR)
         return ERROR;
 
@@ -276,30 +276,30 @@ options_t * optionInit(options_t *opt) {
     if (isNullPtr(opt)) return NULL;
 
     opt->optionName = NULL;
-    opt->vals = NULL; 
-    
+    opt->vals = NULL;
+
     return opt;
 }
 
 static _Bool isOptValEqual(const listNode *node_l, const listNode *node_r) {
     optionVal *val_l, *val_r;
-    
+
     if (isNullPtr(node_l) || isNullPtr(node_r))
         return ERROR;
 
     val_l = containerOf(node_l, optionVal, node);
     val_r = containerOf(node_r, optionVal, node);
 
-    _Bool isEqual = isStringEqual(val_l->val, val_r->val); 
+    _Bool isEqual = isStringEqual(val_l->val, val_r->val);
 
     return isEqual;
 }
 int optionIsEqual(options_t *opt_l, options_t *opt_r) {
     if (isNullPtr(opt_l) || isNullPtr(opt_r))
-      return ERROR;  
+        return ERROR;
 
-    _Bool isNameEqual = isStringEqual(opt_l->optionName, opt_r->optionName); 
-    _Bool isValsEqual = listNodeIsEqual(&opt_l->vals->node, &opt_r->vals->node, isOptValEqual); 
+    _Bool isNameEqual = isStringEqual(opt_l->optionName, opt_r->optionName);
+    _Bool isValsEqual = listNodeIsEqual(&opt_l->vals->node, &opt_r->vals->node, isOptValEqual);
 
     return isNameEqual && isValsEqual;
 }
@@ -319,8 +319,8 @@ int optionRelease(options_t *opt) {
         return ERROR;
 
     RELEASE_MEM(opt->optionName);
-    
-    if (opt->vals)    
+
+    if (opt->vals)
         listNodeTravel(&opt->vals->node, (listNodeTask)optValRelease, NULL);
     RELEASE_MEM(opt);
 
@@ -328,47 +328,47 @@ int optionRelease(options_t *opt) {
 }
 
 static int optValDup(const listNode *node, void *args) {
-    if (isNullPtr(node) || isNullPtr(args)) 
+    if (isNullPtr(node) || isNullPtr(args))
         return ERROR;
-    
-    listNode *head = args; 
+
+    listNode *head = args;
     optionVal *val = containerOf(node, optionVal, node);
-    
+
     optionVal *val_copy = (optionVal *)Malloc(sizeof(optionVal));
     memset(val_copy, 0, sizeof(optionVal));
     val_copy->val = strdup(val->val);
-     
+
     listNodeAppend(head, &val_copy->node);
 
     return OK;
 }
 options_t * optionDup(options_t *opt) {
     if (isNullPtr(opt))
-     return NULL;
-    
+        return NULL;
+
     listNode head;
-    memset(&head, 0, sizeof(listNode)); 
+    memset(&head, 0, sizeof(listNode));
 
     options_t *opt_copy = optionConst();
     opt_copy->optionName = strdup(opt->optionName);
     listNodeTravel(&opt->vals->node, (listNodeTask)optValDup, (void *)&head);
     opt_copy->vals = containerOf(listNodeNext(&head), optionVal, node);
-    
+
     return opt_copy;
 }
 
 int optionAddValue(options_t *opt, char *value) {
     if (isNullPtr(opt) || isNullPtr(value))
         return ERROR;
-        
+
     optionVal *newVal = (optionVal *)Malloc(sizeof(optionVal));
     memset(newVal, 0, sizeof(optionVal));
     newVal->val = value;
-    
-    if (opt->vals)    
+
+    if (opt->vals)
         listNodeAppend(&opt->vals->node, &newVal->node);
-    else 
-        opt->vals = newVal;  
+    else
+        opt->vals = newVal;
 
 
     return OK;
@@ -377,19 +377,19 @@ int optionAddValue(options_t *opt, char *value) {
 static _Bool optValSearchHelper(const listNode *aNode, void *args) {
     if (isNullPtr(aNode) || isNullPtr(args))
         return ERROR;
-    
-    optionVal *val = containerOf(aNode, optionVal, node); 
-    return isStringEqual(val->val, (char *)args); 
+
+    optionVal *val = containerOf(aNode, optionVal, node);
+    return isStringEqual(val->val, (char *)args);
 }
 
 int optionDelValue(options_t *opt, char *value) {
-    if (isNullPtr(opt) || isNullPtr(value)) 
+    if (isNullPtr(opt) || isNullPtr(value))
         return ERROR;
-    
-    listNode *foundNode = listNodeSearch(&opt->vals->node, (listNodeCmp)optValSearchHelper, (void *)value);
-    optionVal *val = containerOf(foundNode, optionVal, node); 
 
-    listNodeDelete(foundNode); 
+    listNode *foundNode = listNodeSearch(&opt->vals->node, (listNodeCmp)optValSearchHelper, (void *)value);
+    optionVal *val = containerOf(foundNode, optionVal, node);
+
+    listNodeDelete(foundNode);
     RELEASE_MEM(val->val);
     RELEASE_MEM(val);
 
@@ -400,14 +400,14 @@ optValIter * optionIter(options_t *opt) {
     if (isNullPtr(opt)) return NULL;
 
     optValIter *iter = (optValIter *)Malloc(sizeof(optValIter));
-    
-    listNode *node;  
-    if (opt->vals == NULL) 
+
+    listNode *node;
+    if (opt->vals == NULL)
         node = NULL;
     else
         node = &opt->vals->node;
-    
-    iter->opt = opt;  
+
+    iter->opt = opt;
     iter->node = node;
 
     return iter;
@@ -415,12 +415,12 @@ optValIter * optionIter(options_t *opt) {
 
 const char * optionNext(optValIter *iter) {
     if (isNullPtr(iter)) return NULL;
-       
+
     listNode *aNode = iter->node;
     if (isNullPtr(aNode)) return NULL;
 
-    optionVal *optVal = containerOf(aNode, optionVal, node);  
-    
+    optionVal *optVal = containerOf(aNode, optionVal, node);
+
     aNode = listNodeNext(aNode);
     iter->node = aNode;
 
@@ -429,9 +429,9 @@ const char * optionNext(optValIter *iter) {
 
 int optionRewind(optValIter *iter) {
     if (isNullPtr(iter)) return ERROR;
-    
-    listNode *aNode; 
-    if (iter->opt->vals) 
+
+    listNode *aNode;
+    if (iter->opt->vals)
         aNode = &iter->opt->vals->node;
     else
         aNode = NULL;
@@ -445,12 +445,12 @@ int optionRewind(optValIter *iter) {
 /* option_hash_key members */
 static option_hash_key * keyConst() {
     option_hash_key *key = (option_hash_key *)Malloc(sizeof(option_hash_key));
- 
+
     return keyInit(key);
 }
 
 static option_hash_key * keyInit(option_hash_key *key) {
-    if (isNullPtr(key)) return NULL; 
+    if (isNullPtr(key)) return NULL;
 
     key->base.release = (pairKeyRelease)keyRelease;
     key->base.value = (pairKeyValue)keyValue;
@@ -487,7 +487,7 @@ struct option_hash_key * keyCopy(option_hash_key *key) {
     if (isNullPtr(key)) return NULL;
 
     option_hash_key *key_copy = (option_hash_key *)Malloc(sizeof(option_hash_key));
-    key_copy->key = strdup(key->key); 
+    key_copy->key = strdup(key->key);
 
     return key_copy;
 }
@@ -501,19 +501,19 @@ static option_hash_val * valConst() {
 
 static option_hash_val * valInit(option_hash_val *val) {
     if (isNullPtr(val)) return NULL;
-    
+
     val->base.release = (pairValRelease)valRelease;
     val->base.isEqual = (pairValIsEqual)valIsEqual;
     val->base.copy = (pairValCopy)valCopy;
     val->base.value = (pairValValue)valValue;
-    
+
     return val;
 }
 
 static int valRelease(option_hash_val *val) {
     if (isNullPtr(val)) return ERROR;
-     
-    if (val->option) 
+
+    if (val->option)
         return optionRelease(val->option);
 
     return OK;
@@ -525,7 +525,7 @@ static void * valValue(option_hash_val *val) {
 }
 
 static int valIsEqual(option_hash_val *val_l, option_hash_val *val_r) {
-    if (isNullPtr(val_l) || isNullPtr(val_r)) 
+    if (isNullPtr(val_l) || isNullPtr(val_r))
         return ERROR;
 
     return optionIsEqual(val_l->option, val_r->option);
@@ -533,24 +533,24 @@ static int valIsEqual(option_hash_val *val_l, option_hash_val *val_r) {
 
 static option_hash_val * valCopy(option_hash_val *val) {
     if (isNullPtr(val)) return NULL;
-    
+
     option_hash_val *copy = valConst();
-    copy->option = optionDup(val->option); 
+    copy->option = optionDup(val->option);
     return copy;
 }
 
 /* Hash function */
 static int optionHashing(option_hash_key *key) {
     if (isNullPtr(key)) return ERROR;
-    
+
     char *str = key->key;
-    
+
     int index = 0, size, value, hashValue = 0;
     size = strlen(str);
 
     while (index < size) {
         value = str[index];
-        hashValue += (value << 5) + value; 
+        hashValue += (value << 5) + value;
         ++index;
     }
     return hashValue;
@@ -562,29 +562,29 @@ static int optionHashing(option_hash_key *key) {
 
 void * option_Basic(void **state) {
     optionMng *mng = optMngConst();
-    
-    // Add, Get testing 
+
+    // Add, Get testing
     assert_int_equal(optMngAddOpt(mng, strdup("INCLUDE")), TRUE);
 
     options_t *opt = optMngGetOpt(mng, "INCLUDE");
     assert_non_null(opt);
-    assert_string_equal(opt->optionName, "INCLUDE");      
+    assert_string_equal(opt->optionName, "INCLUDE");
 
     optMngAppendOptVal(mng, "INCLUDE", strdup("."));
     optMngAppendOptVal(mng, "INCLUDE", strdup(".."));
-    
+
     // Iterator testing
     optValIter *iter = optionIter(opt);
     const char *val = optionNext(iter);
     assert_non_null(val);
     assert_string_equal(val, ".");
-    
-    val = optionNext(iter);
-    assert_non_null(val);
-    assert_string_equal(val, "..");  
 
     val = optionNext(iter);
-    assert_non_null(!val); 
+    assert_non_null(val);
+    assert_string_equal(val, "..");
+
+    val = optionNext(iter);
+    assert_non_null(!val);
 
     if (optionRewind(iter) == ERROR)
         fail();
@@ -593,10 +593,10 @@ void * option_Basic(void **state) {
     assert_string_equal(val, ".");
 
     // Release tseting
-    optMngRelease(mng); 
-    
-    char *key; 
-    int status = 0; 
+    optMngRelease(mng);
+
+    char *key;
+    int status = 0;
     mng = optMngConst();
 
     // Try to add manay option
@@ -606,71 +606,71 @@ void * option_Basic(void **state) {
     while (idx < capacity) {
         key = numberToStr(idx);
 
-        status = optMngAddOpt(mng, key); 
+        status = optMngAddOpt(mng, key);
         assert_int_equal(status, TRUE);
-        
+
         while (idx_inner < capacity) {
-            optMngAppendOptVal(mng, key, numberToStr(idx_inner));                     
+            optMngAppendOptVal(mng, key, numberToStr(idx_inner));
             ++idx_inner;
         }
         idx_inner = 0;
         ++idx;
     }
 
-    // Now try to retrive options and check is it correctly. 
+    // Now try to retrive options and check is it correctly.
     idx = idx_inner = 0;
     char *val_cmp;
     while (idx < capacity) {
-        key = numberToStr(idx);   
-        
+        key = numberToStr(idx);
+
         opt = optMngGetOpt(mng, key);
         assert_non_null(opt);
         assert_string_equal(opt->optionName, key);
-        
+
         iter = optionIter(opt);
         while (idx_inner < capacity) {
-            val = optionNext(iter);         
+            val = optionNext(iter);
             val_cmp = numberToStr(idx_inner);
             assert_string_equal(val, val_cmp);
 
             RELEASE_MEM(val_cmp);
-            ++idx_inner; 
-        } 
+            ++idx_inner;
+        }
         idx_inner = 0;
         ++idx;
-    } 
-    
+    }
+
     optMngRelease(mng);
 
-    /* option register testing */  
-    optRegister_t *optReg = optMatch("-I"); 
-    assert_string_equal(optReg->optName, "-I");  
+    /* option register testing */
+    optRegister_t *optReg = optMatch("-I");
+    assert_string_equal(optReg->optName, "-I");
 
     optAttr_t *optAttr = optAttr("-I");
     assert_int_equal(optAttr_withArgs(optAttr), TRUE);
     assert_string_equal(optAttr_type(optAttr), "String");
-    assert_int_equal(optAttr_idx(optAttr), IncludePath); 
-    
+    assert_int_equal(optAttr_idx(optAttr), IncludePath);
+
     int argc = 5;
     char *argv[] = { "./test", "-s", "/usr/src", "-I", "/usr/include" };
 
-    assert_int_equal(argumentChecking(argc, argv), TRUE); 
+    assert_int_equal(argumentChecking(argc, argv), TRUE);
 
-    /* option splite testing */ 
+    /* option splite testing */
     optPieces pieces = argumentSplit(argc, argv);
     assert_string_equal(pieces[0][0], "-s");
     assert_string_equal(pieces[0][1], "/usr/src");
     assert_string_equal(pieces[1][0], "-I");
     assert_string_equal(pieces[1][1], "/usr/include");
     assert_string_equal(pieces[2][0], "T");
-    
+
     /* optPieces iterator testing */
     char *optVal;
-    optPiecesIter *iter__ = optPiecesGetIter(pieces);   
+    optPiecesIter *iter__ = optPiecesGetIter(pieces);
     assert_string_equal(optPiecesNext(iter__), "-s");
     assert_string_equal(optPiecesNext(iter__), "/usr/src");
     assert_string_equal(optPiecesNext(iter__), "-I");
-    assert_string_equal(optPiecesNext(iter__), "/usr/include");    
+    assert_string_equal(optPiecesNext(iter__), "/usr/include");
 
     /* option module initializations */
     assert_int_equal(optionsInit(argc, argv), OK);

@@ -35,7 +35,7 @@ typeTable mibTypeTbl;
 _Bool typeTableInit() {
 
     memset(&mibTypeTbl, 0, sizeof(typeTable));
-    
+
     // Install SNMPv2 Types into type table.
     typeTableAdd(&mibTypeTbl, "Counter32", CATE_BUILD_IN, NULL);
     typeTableAdd(&mibTypeTbl, "Counter64", CATE_BUILD_IN, NULL);
@@ -54,54 +54,54 @@ _Bool typeTableInit() {
 int mibObjGen(int nodeType) {
 
     mibObjectTreeNode *newNode;
-    char *ident, *type, *rw, *desc, *parent, *suffix;    
+    char *ident, *type, *rw, *desc, *parent, *suffix;
 
     ident = sliceRetriVal(&sliceContainer, SLICE_IDENTIFIER);;
-    type = sliceRetriVal(&sliceContainer, SLICE_TYPE); 
+    type = sliceRetriVal(&sliceContainer, SLICE_TYPE);
     rw = sliceRetriVal(&sliceContainer, SLICE_PERMISSION);
     desc = sliceRetriVal(&sliceContainer, SLICE_DESCRIPTION);
-    parent = sliceRetriVal(&sliceContainer, SLICE_PARENT); 
+    parent = sliceRetriVal(&sliceContainer, SLICE_PARENT);
     suffix = sliceRetriVal(&sliceContainer, SLICE_OID_SUFFIX);
-    
+
     // Node Build
     switch (nodeType) {
-        case OBJECT:
-            assert(ident != NULL);
-            assert(type != NULL);
-            assert(rw != NULL);
-            assert(desc != NULL);
-            assert(parent != NULL);
-            assert(suffix != NULL);
-            
-            newNode = mibLeaveBuild(ident, type, rw, desc, suffix, parent);
-            break;
-        case TRAP:
-            type = (char *)malloc(strlen("trap") + 1);
-            strncpy(type, "trap", strlen("trap"));
+    case OBJECT:
+        assert(ident != NULL);
+        assert(type != NULL);
+        assert(rw != NULL);
+        assert(desc != NULL);
+        assert(parent != NULL);
+        assert(suffix != NULL);
 
-            assert(ident != NULL); 
-            assert(parent != NULL); 
-            assert(suffix != NULL);
-            assert(desc != NULL);
-            
-            newNode = mibLeaveBuild(ident, type, NULL, NULL, suffix, parent); 
-            break;
-        case OBJECT_IDENTIFIER:
-            assert(ident != NULL);
-            assert(parent != NULL);
-            assert(suffix != NULL);
-            
-            newNode = mibNodeBuild(ident, suffix, parent);
-            break;
-        case SEQUENCE:
-            /* ignore */
-            break;
-        default:
-            break;
+        newNode = mibLeaveBuild(ident, type, rw, desc, suffix, parent);
+        break;
+    case TRAP:
+        type = (char *)malloc(strlen("trap") + 1);
+        strncpy(type, "trap", strlen("trap"));
+
+        assert(ident != NULL);
+        assert(parent != NULL);
+        assert(suffix != NULL);
+        assert(desc != NULL);
+
+        newNode = mibLeaveBuild(ident, type, NULL, NULL, suffix, parent);
+        break;
+    case OBJECT_IDENTIFIER:
+        assert(ident != NULL);
+        assert(parent != NULL);
+        assert(suffix != NULL);
+
+        newNode = mibNodeBuild(ident, suffix, parent);
+        break;
+    case SEQUENCE:
+        /* ignore */
+        break;
+    default:
+        break;
     }
 
     assert(mibTreeHeadAppend(&trees, newNode) != FALSE);
-    
+
     sliceRelease_STATIC(&sliceContainer);
 
     return 0;
@@ -116,12 +116,12 @@ static char * oidComplement(char *parent, char *suffix) {
 
     if (parentNode == NULL)
         return NULL;
-    
+
     parentOid = getOidFromInfo(parentNode);
 
     // Overflow checking.
     if (strlen(parentOid) >= SIZE_OF_OID_STRING) {
-        oidLength += EXTRA_OF_OID_LEN; 
+        oidLength += EXTRA_OF_OID_LEN;
     }
 
     oid = (char *)malloc(oidLength);
@@ -137,7 +137,7 @@ static char * oidComplement(char *parent, char *suffix) {
 int mibObjGen_Leave() {
     mibObjectTreeNode *obj;
     char *ident, *type, *rw, *desc, *parent, *suffix, *oid;
-    
+
     assert((ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER)) != NULL);
     assert((type = sliceGetVal(&sliceContainer, SLICE_TYPE)) != NULL);
     assert((rw = sliceGetVal(&sliceContainer, SLICE_PERMISSION)) != NULL);
@@ -177,7 +177,7 @@ int mibObjGen_InnerNode() {
 }
 
 int mibObjGen_trap() {
-    mibObjectTreeNode *obj; 
+    mibObjectTreeNode *obj;
     char *ident, *parent, *suffix, *oid, *desc, *type;
 
     assert( (ident = sliceGetVal(&sliceContainer, SLICE_IDENTIFIER)) != NULL);
@@ -191,8 +191,8 @@ int mibObjGen_trap() {
     assert( (desc = sliceGetVal(&sliceContainer, SLICE_DESCRIPTION)) != NULL);
 
     oid = oidComplement(parent, suffix);
-    
-    obj = mibLeaveBuild(ident, type, NULL, NULL, oid, parent); 
+
+    obj = mibLeaveBuild(ident, type, NULL, NULL, oid, parent);
     mibTreeLeaveAdd(obj, parent);
 
     sliceReset(sliceNext(&sliceContainer));
@@ -251,15 +251,15 @@ int upperTreeGeneration(symbolTable *symTbl) {
             while (child != NULL) {
                 if (child->symType == SYMBOL_TYPE_NODE) {
                     childNode = mibNodeBuild(strdup(child->symIdent),
-                        strdup(child->symInfo.nodeMeta.suffix), NULL);
+                                             strdup(child->symInfo.nodeMeta.suffix), NULL);
                     insert_MibTree(root, childNode, strdup(current->identifier));
                     push(&stack, childNode);
                 } else if (child->symType == SYMBOL_TYPE_LEAVE) {
                     childNode = mibLeaveBuild(strdup(child->symIdent),
-                        strdup(child->symInfo.leaveMeta.type),
-                        strdup(child->symInfo.leaveMeta.permission),
-                        NULL,
-                        strdup(child->symInfo.leaveMeta.suffix), NULL);
+                                              strdup(child->symInfo.leaveMeta.type),
+                                              strdup(child->symInfo.leaveMeta.permission),
+                                              NULL,
+                                              strdup(child->symInfo.leaveMeta.suffix), NULL);
                     insert_MibTree(root, childNode, strdup(current->identifier));
                 }
                 temp = child;
@@ -319,7 +319,7 @@ int symbolCollecting(int type, dispatchParam *param) {
             sliceRelease_STATIC(&symCollectSlice);
             return TRUE;
         }
-    }   
+    }
     return symbolCollectRoutine[type](param);
 }
 
@@ -331,10 +331,10 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
     identList *listHead, *listProcessing;
 
     char *symbolIdent, *parentIdent, *suffix;
-    
+
     parentIdent = sliceRetriVal(&symCollectSlice, SLICE_PARENT);
     symbolIdent = sliceRetriVal(&symCollectSlice, SLICE_IDENTIFIER);
-    suffix = sliceRetriVal(&symCollectSlice, SLICE_OID_SUFFIX); 
+    suffix = sliceRetriVal(&symCollectSlice, SLICE_OID_SUFFIX);
 
     // Is the symbol exists in symbol table ?
     if (symbolTableSearch(&symTable, symbolIdent)) {
@@ -344,10 +344,10 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
         RELEASE_MEM(suffix);
         goto POST_CLEANING;
     }
-    
+
     // Install the symbol into symbol table.
     newSymbol = symbolNodeConst(symbolIdent, parentIdent, suffix);
-    symbolTableAdd(&symTable, newSymbol); 
+    symbolTableAdd(&symTable, newSymbol);
 
 POST_CLEANING:
     // Need to remove the symbol found from list in the modStack
@@ -369,7 +369,7 @@ static int symbolCollect_BUILD_TRAP(dispatchParam *param) {
 static int symbolCollect_BUILD_LEAVE_NODE(dispatchParam *param) {
     int retVal;
     char *symbolIdent = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
-     
+
     retVal = collectInfo_del(SW_CUR_IMPORT(&swState), symbolIdent);
     sliceRelease_STATIC(&symCollectSlice);
 
@@ -455,25 +455,25 @@ static int symbolCollect_PARAM_SUFFIX(dispatchParam *param) {
 #include "test.h"
 
 void mibTreeGen__SYMBOL_COLLECT(void **state) {
-    symbol_t *symbol; 
-    
-    symTableInit(); 
+    symbol_t *symbol;
+
+    symTableInit();
 
     symbolCollect_PARAM_IDENT(disParamConstruct(strdup("IDENT")));
-    symbolCollect_PARAM_TYPE(disParamConstruct(strdup("TYPE"))); 
+    symbolCollect_PARAM_TYPE(disParamConstruct(strdup("TYPE")));
     symbolCollect_PARAM_PARENT(disParamConstruct(strdup("PARENT")));
     symbolCollect_PARAM_SUFFIX(disParamConstruct(strdup("SUFFIX")));
     symbolCollect_PARAM_DESC(disParamConstruct(strdup("DESC")));
     symbolCollect_PARAM_PERM(disParamConstruct(strdup("PERM")));
 
     symbolCollect_BUILD_INNER_NODE(NULL);
-    
+
     symbol = symbolTableSearch(&symTable, "IDENT");
-    assert_non_null(symbol); 
+    assert_non_null(symbol);
 }
 
 void mibTreeGenTesting(void **state) {
-                   
+
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

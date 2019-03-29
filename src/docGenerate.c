@@ -43,27 +43,27 @@ static int latexTailGen(FILE *file);
 static int docGenerate(void *arg, mibObjectTreeNode *root);
 
 int documentGen(mibTreeHead *treeHead, FILE *writeTo) {
-    
-    mibTree *tree; 
-    
+
+    mibTree *tree;
+
     if (isNullPtr(treeHead) || isNullPtr(writeTo))
         return ERROR;
 
     // Check that is only one tree here
-    assert(treeHead->numOfTree == 1);    
+    assert(treeHead->numOfTree == 1);
 
-    tree = mibTreeHeadFirstTree(treeHead); 
-    
-    // Get begin node 
-    mibObjectTreeNode *beginNode = search_MibTree(tree->root, beginFrom); 
+    tree = mibTreeHeadFirstTree(treeHead);
+
+    // Get begin node
+    mibObjectTreeNode *beginNode = search_MibTree(tree->root, beginFrom);
     if (isNullPtr(beginNode)) {
         errorMsg("Cant' find begin node: %s\n", beginFrom);
-        abort(); 
+        abort();
     }
     beginOid = strlen(getOidFromInfo(beginNode));
     laTexStrBuffer = (char *) malloc(SIZE_OF_LATEX_BUFFER);
 
-    latexHeaderGen(writeTo); 
+    latexHeaderGen(writeTo);
 
     travel_MibTree(beginNode, docGenerate, writeTo);
 
@@ -78,37 +78,37 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
     tableInfo *info;
     mibObjectTreeNode *pNode;
     mibNodeInfoQueue *pQueue = &infoQueue;
-    
+
     writeTo = (FILE *) arg;
 
     switch(makeDecision(node)) {
-        case TABLE:
-            info = (tableInfo *)malloc(sizeof(tableInfo));
-            infoPacket(info, node);
-            
-            parent = getIdentFromInfo(node->parent);
-            if (isMibNodeType_ENTRY(node->parent))
-                parent = getIdentFromInfo(node->parent->parent);
+    case TABLE:
+        info = (tableInfo *)malloc(sizeof(tableInfo));
+        infoPacket(info, node);
 
-            appendQueue(&infoQueue, info);
+        parent = getIdentFromInfo(node->parent);
+        if (isMibNodeType_ENTRY(node->parent))
+            parent = getIdentFromInfo(node->parent->parent);
 
-            tableGen_Latex(&infoQueue, parent, writeTo);
+        appendQueue(&infoQueue, info);
 
-            break;
-        case COLLECTING:
-            info = (tableInfo *)malloc(sizeof(tableInfo));
-            infoPacket(info, node);
-            appendQueue(&infoQueue, info);
+        tableGen_Latex(&infoQueue, parent, writeTo);
 
-            break;
-        case SECTION:
-            secname = getIdentFromInfo(node);
-            oid = getOidFromInfo(node);
-            sectionGen_Latex(secname, oid, writeTo);
+        break;
+    case COLLECTING:
+        info = (tableInfo *)malloc(sizeof(tableInfo));
+        infoPacket(info, node);
+        appendQueue(&infoQueue, info);
 
-            break;
-        default:
-            break;
+        break;
+    case SECTION:
+        secname = getIdentFromInfo(node);
+        oid = getOidFromInfo(node);
+        sectionGen_Latex(secname, oid, writeTo);
+
+        break;
+    default:
+        break;
     }
 
     return 0;
@@ -118,14 +118,14 @@ static int docGenerate(void *arg, mibObjectTreeNode *node) {
 static int latexHeaderGen(FILE *file) {
     if (isNullPtr(file))
         return ERROR;
-    
+
     char *headerSpliter = "% Header ==========>";
 
     fprintf(file, "\\documentclass{ctexart}\n"
-                  "\\usepackage{float}\n"
-                  "\\begin{document}\n"); 
+            "\\usepackage{float}\n"
+            "\\begin{document}\n");
     fprintf(file, "%s\n\n", headerSpliter);
-    
+
     return OK;
 }
 
@@ -185,23 +185,23 @@ static int sectionGen_Latex(char *secName, char *OID, FILE *writeTo) {
     depth = (strlen(OID) - beginOid) / 2 + 1;
 
     switch (depth) {
-        case section:
-            prefix = "section";
-            break;
-        case subsection:
-            prefix = "subsection";
-            break;
-        case subsubsection:
-            prefix = "subsubsection";
-            break;
-        case paragraph:
-            prefix = "paragraph";
-            break;
-        case subparagraph:
-            prefix = "subparagraph";
-            break;
-        default:
-            prefix = "subparagraph";
+    case section:
+        prefix = "section";
+        break;
+    case subsection:
+        prefix = "subsection";
+        break;
+    case subsubsection:
+        prefix = "subsubsection";
+        break;
+    case paragraph:
+        prefix = "paragraph";
+        break;
+    case subparagraph:
+        prefix = "subparagraph";
+        break;
+    default:
+        prefix = "subparagraph";
     }
 
     fprintf(writeTo, "\\%s {%s (%s)}{}\n", prefix, secName, OID);
@@ -210,21 +210,21 @@ static int sectionGen_Latex(char *secName, char *OID, FILE *writeTo) {
 
 static int tableGen_Latex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) {
     int i, count, index;
-    
+
     if (isNullPtr(queue) || isNullPtr(writeTo))
         return -1;
 
     count = queue->count;
     index = 1;
-    
+
     fprintf(writeTo, "% Table Begin\n");
 
     fprintf(writeTo, "\\begin{table}[H]\n"
-                     "\\centerline {\n"
-                     "\\begin{tabular} {|c|c|c|c|c|c|c|}\n"
-                     "\\hline\n"
-                     "Index & Name & Desc & OID & RW & Type & Detail \\\\ \n"
-                     "\\hline\n");
+            "\\centerline {\n"
+            "\\begin{tabular} {|c|c|c|c|c|c|c|}\n"
+            "\\hline\n"
+            "Index & Name & Desc & OID & RW & Type & Detail \\\\ \n"
+            "\\hline\n");
 
     for (i=0; i<count; i++, index++) {
         fprintf(writeTo, "%s \\\\\n", tableItemGen_Latex((tableInfo *)getQueue(queue), index));

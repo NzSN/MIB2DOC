@@ -22,7 +22,7 @@ enum {
  ************/
 listNode *listNodeNext(const listNode *sliNode) {
     if (isNullPtr(sliNode) || isNullPtr(sliNode->next))
-        return NULL;  
+        return NULL;
     return sliNode->next;
 }
 
@@ -67,7 +67,7 @@ listNode * listNodeDelete(listNode *sliNode) {
     } else {
         /* Single sliNode */
     }
-    
+
     sliNode->next = NULL;
     sliNode->prev = NULL;
 
@@ -86,7 +86,7 @@ listNode * listNodeTail(const listNode *head) {
 
 listNode * listNodeAppend(listNode *listH, listNode *listN) {
     if (isNullPtr(listH) || isNullPtr(listN)) {
-        return NULL; 
+        return NULL;
     }
     listH = listNodeTail(listH);
     listNodeInsert(listH, listN);
@@ -95,7 +95,7 @@ listNode * listNodeAppend(listNode *listH, listNode *listN) {
 
 bool listNodeIsEmpty(listNode *head) {
     int i = 0;
-    
+
     if (isNullPtr(head)) {
         return FALSE;
     }
@@ -109,15 +109,15 @@ bool listNodeIsEmpty(listNode *head) {
 listNode * listNodeSearch(listNode *head, listNodeCmp cmpOp, void *arg) {
     if (isNullPtr(head) || isNullPtr(cmpOp) || isNullPtr(arg))
         return NULL;
-    
+
     listNode *currentNode = head;
 
     while (isNonNullPtr(currentNode)) {
-        if (cmpOp(currentNode, arg) == TRUE) 
-            break; 
+        if (cmpOp(currentNode, arg) == TRUE)
+            break;
         currentNode = listNodeNext(currentNode);
     }
-    
+
     return currentNode;
 }
 
@@ -130,9 +130,9 @@ _Bool listNodeIsEqual(const listNode *first, const listNode *second, listNodeEqu
     const listNode *current_second = second;
 
     while (isNonNullPtr(current_first)) {
-        isEqual = equalCheck(current_first, current_second); 
+        isEqual = equalCheck(current_first, current_second);
         if (!isEqual) return FALSE;
-        
+
         current_first = listNodeNext(current_first);
         current_second = listNodeNext(current_second);
     }
@@ -220,23 +220,23 @@ char * sliceGetVal(slice *sliHead, int sliKey) {
 char *sliceRetriVal(slice *sliHead, int sliKey) {
     slice *sli;
     char *val;
-    
+
     if (sli = sliceGet(sliHead, sliKey)) {
-        val = sli->sliVal; 
+        val = sli->sliVal;
         sli->sliVal = NULL;
     }
-    return val; 
+    return val;
 }
 
 int sliceStore(slice *sliHead, slice *newSli) {
     if (isNullPtr(sliHead) || isNullPtr(newSli)) {
         return ERROR_NULL_REF;
-    } 
+    }
 
     if (sliceGet(sliHead, newSli->sliKey)) {
         return ERROR_NONE;
     }
-    
+
     while (sliHead != NULL) {
         if (sliceNext(sliHead) == NULL) {
             sliHead->sliNode.next = &newSli->sliNode;
@@ -251,9 +251,9 @@ bool sliceRelease(slice *sli) {
     slice *pSli;
     slice *pSli_next;
 
-    if (isNullPtr(sli)) 
+    if (isNullPtr(sli))
         return FALSE;
-    
+
     for (pSli = sli; pSli != NULL; pSli = pSli_next) {
         pSli_next = sliceNext(pSli);
         sliceDestruct(pSli);
@@ -264,7 +264,7 @@ bool sliceRelease(slice *sli) {
 bool sliceRelease_STATIC(slice *sli) {
     slice *pSli;
 
-    if (isNullPtr(sli)) 
+    if (isNullPtr(sli))
         return FALSE;
 
     sliceRelease(sliceNext(sli));
@@ -284,19 +284,19 @@ bool sliceReset(slice *sli) {
     while (sli != NULL) {
         pSli = sli;
         sli = sliceNext(sli);
-        RELEASE_MEM(pSli); 
+        RELEASE_MEM(pSli);
     }
     return TRUE;
 }
 
 bool sliceReset_STATIC(slice *sli) {
     slice *pSli;
-    
+
     if (isNullPtr(sli))
         return FALSE;
 
     if (sliceReset(sliceNext(sli))) {
-        memset(&sli->sliNode, 0, sizeof(listNode));     
+        memset(&sli->sliNode, 0, sizeof(listNode));
     }
     return TRUE;
 }
@@ -310,15 +310,15 @@ bool sliceReset_STATIC(slice *sli) {
  */
 dispatchParam * disParamConstruct(void *param) {
     dispatchParam *ret;
-     
+
     if (isNullPtr(param)) {
         return NULL;
     }
-     
+
     ret  = (dispatchParam *)Malloc(sizeof(dispatchParam));
     memset(ret, 0, sizeof(dispatchParam));
     ret->param = param;
-    
+
     return ret;
 }
 
@@ -347,7 +347,7 @@ dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {
 }
 
 void * disParamGet(dispatchParam *disparam) {
-    if (disparam == NULL) 
+    if (disparam == NULL)
         return NULL;
     return disparam->param;
 }
@@ -357,13 +357,13 @@ void * disParamGet(dispatchParam *disparam) {
 //        <dispatchParam->param>
 int disParamRelease(dispatchParam *disParam, int (*destruct)(void *)) {
     dispatchParam *current, *released;
-   
+
     if (isNullPtr(disParam))
         return FALSE;
 
     released = disParam;
     current = dispatchParamNext(disParam);
-    
+
     do {
         if (!isNullPtr(destruct))
             destruct(released->param);
@@ -379,11 +379,11 @@ int disParamRelease_Static(dispatchParam *disParam, int (*destruct)(void *)) {
 
     if (isNullPtr(disParam))
         return FALSE;
-    
+
     ret = disParamRelease(dispatchParamNext(disParam), destruct);
     memset(disParam, 0, sizeof(dispatchParam));
 
-    return ret; 
+    return ret;
 }
 
 /*
@@ -428,10 +428,10 @@ static symbol_k * symbolKCopy(symbol_k *key) {
 
 static int symbolKRelease(symbol_k *key) {
     symbol_k *pKey = key;
- 
+
     if (isNullPtr(key))
-        return FALSE;          
-    
+        return FALSE;
+
     RELEASE_MEM(pKey->ident);
     RELEASE_MEM(pKey);
 
@@ -439,7 +439,7 @@ static int symbolKRelease(symbol_k *key) {
 }
 
 static symbol_k * symbolKValue(symbol_k *key) {
-    if (isNullPtr(key)) 
+    if (isNullPtr(key))
         return NULL;
 
     return (void *)key->ident;
@@ -466,7 +466,7 @@ static symbol_k * symbolKInit(symbol_k *key, char *name) {
 
 static symbol_k * symbolKConst(char *name) {
     symbol_k *pKey;
-    
+
     if (isNullPtr(name))
         return NULL;
 
@@ -482,15 +482,15 @@ static int symbolTblHash(symbol_k *key) {
     if (isNullPtr(key))
         return FALSE;
 
-    keyStr = key->ident; 
+    keyStr = key->ident;
 
     hashVal = 0;
     size = strlen(keyStr);
 
     for (index = 0; index < size; ++index) {
         value = keyStr[index];
-        hashVal += HASH_DEFAULT_METHOD(value); 
-    } 
+        hashVal += HASH_DEFAULT_METHOD(value);
+    }
     return hashVal;
 }
 
@@ -503,7 +503,7 @@ int symTableInit() {
 symbolTable * symbolTableInit(symbolTable *tbl) {
     if (isNullPtr(tbl))
         return NULL;
-    
+
     tbl->numOfSymbols = 0;
     tbl->symbolMap = hashMapConstruct(SIZE_OF_SYMBOL_TBL, (hashFunction)symbolTblHash);
 
@@ -512,7 +512,7 @@ symbolTable * symbolTableInit(symbolTable *tbl) {
 
 symbolTable * symbolTableConstruct() {
     symbolTable *newTable;
-     
+
     newTable = (symbolTable *)Malloc(sizeof(symbolTable));
     return symbolTableInit(newTable);
 }
@@ -541,9 +541,9 @@ symbol_t * symbolTableSearch(symbolTable *tbl, char *sym) {
     hashMap *symMap;
 
     if (isNullPtr(tbl) || isNullPtr(sym))
-       return NULL; 
-    
-    symbolKInit(&key, sym); 
+        return NULL;
+
+    symbolKInit(&key, sym);
 
     symMap = tbl->symbolMap;
     return (symbol_t *)hashMapGet(symMap, (pair_key_base *)&key);
@@ -552,9 +552,9 @@ symbol_t * symbolTableSearch(symbolTable *tbl, char *sym) {
 int symbolTableAdd(symbolTable *tbl, symbol_t *sym) {
     symbol_k *key;
 
-    if (isNullPtr(tbl) || isNullPtr(sym)) 
-        return FALSE; 
-     
+    if (isNullPtr(tbl) || isNullPtr(sym))
+        return FALSE;
+
     key = symbolKConst(strdup(sym->symIdent));
     ++tbl->numOfSymbols;
 
@@ -565,9 +565,9 @@ int symbolTableDelete(symbolTable *tbl, char *symIdent) {
     symbol_k key;
 
     if (isNullPtr(tbl) || isNullPtr(symIdent))
-        return FALSE; 
+        return FALSE;
     symbolKInit(&key, symIdent);
-    --tbl->numOfSymbols; 
+    --tbl->numOfSymbols;
     return hashMapDelete(tbl->symbolMap, (pair_key_base *)&key);
 }
 
@@ -589,7 +589,7 @@ inline static int leaveMetaRelease(leaveMeta_t *lm) {
     RELEASE_MEM(lm->suffix);
     RELEASE_MEM(lm->type);
     RELEASE_MEM(lm->permission);
-    
+
     return TRUE;
 }
 
@@ -598,32 +598,32 @@ symbol_t * symbolCopy(symbol_t *origin) {
     leaveMeta_t *leave;
     if (isNullPtr(origin))
         return NULL;
-    
+
     if (origin->symType == SYMBOL_TYPE_NODE) {
         node = &origin->symInfo.nodeMeta;
         return symbolNodeConst(strdup(origin->symIdent),
-            strdup(node->parentIdent), strdup(node->suffix)); 
+                               strdup(node->parentIdent), strdup(node->suffix));
     } else if (origin->symType = SYMBOL_TYPE_LEAVE) {
         leave = &origin->symInfo.leaveMeta;
         return symbolLeaveConst(strdup(origin->symIdent),
-            strdup(leave->parent), strdup(leave->suffix),
-            strdup(leave->type), strdup(leave->suffix));  
+                                strdup(leave->parent), strdup(leave->suffix),
+                                strdup(leave->type), strdup(leave->suffix));
     }
 }
 
 int symbolRelease(symbol_t *sym) {
     if (isNullPtr(sym))
         return FALSE;
-    
+
     if (sym->symType == SYMBOL_TYPE_NODE)
         nodeMetaRelease(&sym->symInfo.nodeMeta);
     else
         leaveMetaRelease(&sym->symInfo.leaveMeta);
 
-    RELEASE_MEM(sym->symIdent);     
+    RELEASE_MEM(sym->symIdent);
     RELEASE_MEM(sym);
-    
-    return TRUE;  
+
+    return TRUE;
 }
 
 char * symbolIdent(symbol_t *sym) {
@@ -642,7 +642,7 @@ symbol_t * symbolNodeConst(char *ident, char *parent, char *suffix) {
     symbol_t *pSym;
 
     if (isNullPtr(ident) || isNullPtr(parent) || isNullPtr(suffix))
-       return NULL; 
+        return NULL;
 
     pSym = (symbol_t *)Malloc(sizeof(symbol_t));
     pSym->symType = SYMBOL_TYPE_NODE;
@@ -662,17 +662,17 @@ symbol_t * symbolLeaveConst(char *ident, char *parent, char *suffix, char *type,
     symbol_t *pSym;
 
     if (isNullPtr(ident) || isNullPtr(parent) || isNullPtr(suffix) ||
-        isNullPtr(type) || isNullPtr(perm))
+            isNullPtr(type) || isNullPtr(perm))
         return NULL;
 
     pSym = (symbol_t *)Malloc(sizeof(symbol_t));
     pSym->symType = SYMBOL_TYPE_LEAVE;
     pSym->symIdent = ident;
-    
+
     pSym->symInfo.leaveMeta.parent = parent;
     pSym->symInfo.leaveMeta.suffix = suffix;
     pSym->symInfo.leaveMeta.type = type;
-    pSym->symInfo.leaveMeta.permission = perm; 
+    pSym->symInfo.leaveMeta.permission = perm;
 
     pSym->base.release = (pairValRelease)symbolRelease;
     pSym->base.value = (pairValValue)symbolIdent;
@@ -709,10 +709,10 @@ typeItem * typeItemConst() {
 // not editable so Shallow copy is not a problem.
 typeItem * typeItemCopy(typeItem *item) {
     if (isNullPtr(item)) return NULL;
-    
+
     typeItem *item_copy = typeItemConst();
     item_copy->cate = item->cate;
-    item_copy->type = strdup(item->type);  
+    item_copy->type = strdup(item->type);
     item_copy->ref = item->ref;
 
     return item_copy;
@@ -720,20 +720,20 @@ typeItem * typeItemCopy(typeItem *item) {
 
 int typeItemDestruct(typeItem *item) {
     if (isNullPtr(item)) return ERROR;
-    
+
     RELEASE_IF_NON_NULL(item->type);
 
     RELEASE_MEM(item);
-    
+
     return OK;
 }
 
 int typeItemAssignment(typeItem *lval, const typeItem *rval) {
     if (isNullPtr(lval) || isNullPtr(rval))
-       return ERROR; 
-    
+        return ERROR;
+
     RELEASE_IF_NON_NULL(lval->type);
-    
+
     lval->cate = rval->cate;
     lval->type = strdup(rval->type);
     lval->ref = rval->ref;
@@ -748,10 +748,10 @@ static _Bool itemCmp(const listNode *node, const char *typeName) {
 
 typeItem * typeItemSearch(const typeItem *items, const char *typeName) {
     if (isNullPtr(items) || isNullPtr(typeName))
-        return NULL; 
-    
+        return NULL;
+
     listNode *found = listNodeSearch(listNodeNext(&items->node), (listNodeCmp)itemCmp, (void *)typeName);
-    if (isNullPtr(found)) return NULL; 
+    if (isNullPtr(found)) return NULL;
 
     return containerOf(found, typeItem, node);
 }
@@ -759,7 +759,7 @@ typeItem * typeItemSearch(const typeItem *items, const char *typeName) {
 int typeItemIsEqual(const typeItem *first, const typeItem *sec) {
     if (isNullPtr(first) || isNullPtr(sec))
         return ERROR;
-    
+
     return isStringEqual(first->type, sec->type);
 }
 
@@ -770,7 +770,7 @@ int typeItemAppend(typeItem *items, char *typeName, typeCate cate, const void *r
     typeItem *lastItem = typeItemTail(items);
     typeItem *newItem = typeItemConst();
 
-    newItem->type = typeName; 
+    newItem->type = typeName;
     newItem->ref = (void *)ref;
     newItem->cate = cate;
 
@@ -788,22 +788,22 @@ int typeItemDel(typeItem *items, char *typeName) {
 
     found = typeItemSearch(items, typeName);
     if (found) {
-        listNodeDelete(&found->node); 
+        listNodeDelete(&found->node);
         typeItemDestruct(found);
-    } 
+    }
 
     return OK;
 }
 
 typeItem * typeItemTail(const typeItem *item) {
-    if (isNullPtr(item)) 
+    if (isNullPtr(item))
         return NULL;
-    
+
     return containerOf(listNodeTail(&item->node), typeItem, node);
 }
 
 typeItem * typeItemPrev(const typeItem *item) {
-    if (isNullPtr(item) || isNullPtr(item->node.prev)) 
+    if (isNullPtr(item) || isNullPtr(item->node.prev))
         return NULL;
 
     return containerOf(listNodePrev(&item->node), typeItem, node);
@@ -820,25 +820,25 @@ typeItem * typeItemNext(const typeItem *item) {
 // typeTable
 typeTable * typeTableConst() {
     typeTable *tbl = (typeTable *)Malloc(sizeof(typeTable));
-    
+
     memset(tbl, 0, sizeof(typeTable));
 
-    return tbl;    
+    return tbl;
 }
 
 typeTable * typeTableCopy(const typeTable *tbl) {}
 
 int typeTableDestruct(typeTable *tbl) {
     if (isNullPtr(tbl)) return ERROR;
-    
-    typeItem *itemCurrent = typeItemNext(&tbl->items); 
+
+    typeItem *itemCurrent = typeItemNext(&tbl->items);
     typeItem *itemNext = typeItemNext(itemCurrent);
 
     while (isNonNullPtr(itemCurrent)) {
-        typeItemDestruct(itemCurrent);        
+        typeItemDestruct(itemCurrent);
 
         itemCurrent = itemNext;
-        itemNext = typeItemNext(itemNext); 
+        itemNext = typeItemNext(itemNext);
     }
 
     return OK;
@@ -847,12 +847,12 @@ int typeTableDestruct(typeTable *tbl) {
 int typeTableAssignment(typeTable *lval, const typeTable *rval) {}
 
 static _Bool typeTableEqualChecke(const listNode *lNode, const listNode *rNode) {
-    typeItem *lItem = containerOf(lNode, typeItem, node); 
+    typeItem *lItem = containerOf(lNode, typeItem, node);
     typeItem *rItem = containerOf(rNode, typeItem, node);
-    
+
     if (isStringEqual(lItem->type, rItem->type))
         return TRUE;
-    else 
+    else
         return FALSE;
 }
 
@@ -860,35 +860,35 @@ int typeTableIsEqual(const typeTable *firstTbl, const typeTable *secTbl) {
     if (isNullPtr(firstTbl) || isNullPtr(secTbl))
         return ERROR;
 
-    if (firstTbl->numOfTypes != secTbl->numOfTypes)  
+    if (firstTbl->numOfTypes != secTbl->numOfTypes)
         return FALSE;
-    
-    return listNodeIsEqual(listNodeNext(&firstTbl->items.node), 
-                           listNodeNext(&secTbl->items.node), 
+
+    return listNodeIsEqual(listNodeNext(&firstTbl->items.node),
+                           listNodeNext(&secTbl->items.node),
                            typeTableEqualChecke);
 }
 
 int typeTableIsTypeExists(const typeTable *tbl, const char *type) {
     if (isNullPtr(tbl) || isNullPtr(type))
         return ERROR;
-    
+
     typeItem *found = typeItemSearch(&tbl->items, type);
 
     return isNonNullPtr(found) ? TRUE : FALSE;
-} 
+}
 
 typeCate typeTableTypeCate(const typeTable *tbl, const char *type) {
     if (isNullPtr(tbl) || isNullPtr(type))
-       return ERROR; 
+        return ERROR;
 
-    typeItem *found = typeItemSearch(&tbl->items, type); 
+    typeItem *found = typeItemSearch(&tbl->items, type);
     if (!found) return CATE_ERROR;
 
     return found->cate;
 }
 
 int typeTableAdd(typeTable *tbl, char *type, typeCate cate, const void *ref) {
-    if (isNullPtr(tbl) || isNullPtr(type)) 
+    if (isNullPtr(tbl) || isNullPtr(type))
         return ERROR;
 
     if (typeItemAppend(&tbl->items, type, cate, ref) == ERROR)
@@ -905,9 +905,9 @@ int typeTableDel(typeTable *tbl, char *type) {
 
     if (typeItemDel(&tbl->items, type) == ERROR)
         return ERROR;
-    
-    
-    assert(tbl->numOfTypes-- >= 0);    
+
+
+    assert(tbl->numOfTypes-- >= 0);
 
     return OK;
 }
@@ -918,10 +918,10 @@ int typeTableDel(typeTable *tbl, char *type) {
 
 void list_symbolTable(void **state) {
     symbol_t *symbol, *found;
-    symbolTable symTbl; 
-    
-    symbolTableInit(&symTbl);    
-    
+    symbolTable symTbl;
+
+    symbolTableInit(&symTbl);
+
     symbol = symbolNodeConst("B", "A", "1");
     symbolTableAdd(&symTbl, symbol);
 
@@ -933,7 +933,7 @@ void list_symbolTable(void **state) {
 
 void list__TYPE_TABLE(void **state) {
     _Bool isExists;
-    typeTable *tbl = typeTableConst();         
+    typeTable *tbl = typeTableConst();
 
     typeTableAdd(tbl, strdup("INTEGER"), CATE_BUILD_IN, NULL);
     isExists = typeTableIsTypeExists(tbl, "INTEGER");
@@ -942,11 +942,11 @@ void list__TYPE_TABLE(void **state) {
 
     typeTableDel(tbl, "INTEGER");
     isExists = typeTableIsTypeExists(tbl, "INTEGER");
-    assert_int_equal(isExists, FALSE); 
-    
+    assert_int_equal(isExists, FALSE);
+
     _Bool isEqual;
     typeTable *tbl_ = typeTableConst();
-    
+
     typeTableAdd(tbl, strdup("INTEGER"), CATE_BUILD_IN, NULL);
     typeTableAdd(tbl_, strdup("INTEGER"), CATE_BUILD_IN, NULL);
     isEqual = typeTableIsEqual(tbl, tbl_);
@@ -954,15 +954,15 @@ void list__TYPE_TABLE(void **state) {
 
     int idx = 0;
     while (idx < 100) {
-        typeTableAdd(tbl, numberToStr(idx), CATE_BUILD_IN, NULL);  
-        ++idx; 
+        typeTableAdd(tbl, numberToStr(idx), CATE_BUILD_IN, NULL);
+        ++idx;
     }
 
     idx = 0;
     while (idx < 100) {
         isExists = typeTableIsTypeExists(tbl, numberToStr(idx));
         assert_int_equal(isExists, TRUE);
-        ++idx;  
+        ++idx;
     }
 }
 

@@ -19,7 +19,7 @@ _Bool typeCheck_isCustomType(const typeTable *tbl, const char *type) {
     typeCate cate = typeCheck_CateOfType(tbl, type);
     if (cate == CATE_CUSTOM) return TRUE;
 
-    return FALSE; 
+    return FALSE;
 }
 
 _Bool typeCheck_isSequenceType(const typeTable *tbl, const char *type) {
@@ -31,7 +31,7 @@ _Bool typeCheck_isSequenceType(const typeTable *tbl, const char *type) {
 
 _Bool typeCheck_isValid(const typeTable *tbl, const char *type) {
     _Bool isValid;
-    
+
     isValid = typeCheck_isBuiltInType(tbl, type);
     if (isValid == TRUE) return TRUE;
 

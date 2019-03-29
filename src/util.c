@@ -9,11 +9,11 @@ int stringToIdentList(char *str, hashMap *symbolMap, char seperator) {
         beginPoint[256] = { 0 };
     char *strCopy = null;
     identList *listTmp;
-    
+
     if (isNullPtr(str) || isNullPtr(symbolMap)) {
         return ERROR_NULL_REF;
     }
-    
+
     strCopy = strdup(str);
     if (strCopy == null) {
         return -1;
@@ -136,12 +136,12 @@ int entryRecognize(char *buffer, int size) {
     int ret, index;
     char current;
 
-    S_init:
+S_init:
     index = -1;
     ret = -1;
     goto S_0;
 
-    S_0:
+S_0:
     if (index < size)
         index++;
     else
@@ -154,7 +154,7 @@ int entryRecognize(char *buffer, int size) {
     else
         goto S_0;
 
-    S_1:
+S_1:
     if (index < size)
         index++;
     else
@@ -167,7 +167,7 @@ int entryRecognize(char *buffer, int size) {
     else
         goto S_0;
 
-    S_2:
+S_2:
     if (index < size)
         index++;
     else
@@ -180,7 +180,7 @@ int entryRecognize(char *buffer, int size) {
     else
         goto S_0;
 
-    S_3:
+S_3:
     if (index < size)
         index++;
     else
@@ -193,7 +193,7 @@ int entryRecognize(char *buffer, int size) {
     else
         goto S_0;
 
-    S_4:
+S_4:
     if (index < size)
         index++;
     else
@@ -206,21 +206,21 @@ int entryRecognize(char *buffer, int size) {
     else
         goto S_0;
 
-    S_accept:
+S_accept:
     ret = 1;
     goto S_finished;
 
-    S_out:
+S_out:
     ret = 0;
 
-    S_finished:
+S_finished:
     return ret;
 }
 
 char * randStr(int length) {
     if (length <= 0)
         return NULL;
-    
+
     char *str = (char *)malloc(length);
     int begin = 'a', end = 'z', idx = 0;
     int randNum, distance = end - begin;
@@ -252,10 +252,10 @@ void * Malloc(size_t size) {
 _Bool isStringEqual(const char *strLeft, const char *strRight) {
     if (isNullPtr(strLeft) || isNullPtr(strRight))
         return FALSE;
-    
+
     size_t len = strlen(strLeft);
-    _Bool isEqual; 
-     
+    _Bool isEqual;
+
     isEqual = len == strlen(strRight) && ! strncmp(strLeft, strRight, len);
 
     return isEqual;

@@ -47,7 +47,7 @@ int push_wrapper(genericStack *stack, int range) {
     int idx = 0;
     while (idx < range) {
         if (push(stack, &idx) == -1) {
-            return -1; 
+            return -1;
         }
         idx++;
     }
@@ -59,8 +59,8 @@ int pop_wrapper(genericStack *stack, int range) {
     int idx = 0, ret;
     while (idx < range) {
         if (pop(stack, &ret) == -1) {
-            return -1; 
-        } 
+            return -1;
+        }
         assert_int_equal(ret, 10 - idx - 1);
         idx++;
     }
@@ -71,22 +71,22 @@ int stack__STACK_PUSH_POP() {
     int ret, value = 4, idx = 0;
     genericStack gStack, *pStack = &gStack;
     genericStackConstruct(pStack, 10, sizeof(int));
-    
-    // push & pop in normal range. 
+
+    // push & pop in normal range.
     while (idx < 100) {
-        push_wrapper(pStack, 10); 
-        pop_wrapper(pStack, 10); 
+        push_wrapper(pStack, 10);
+        pop_wrapper(pStack, 10);
         idx++;
     }
 
-    assert_int_equal(pStack->top , 0);
+    assert_int_equal(pStack->top, 0);
 
-    // push overflow testing 
-    ret = push_wrapper(pStack, 11);  
-    assert_int_equal(ret, -1); 
+    // push overflow testing
+    ret = push_wrapper(pStack, 11);
+    assert_int_equal(ret, -1);
     // pop overflow testing
     ret = pop_wrapper(pStack, 11);
-    assert_int_equal(ret, -1); 
+    assert_int_equal(ret, -1);
 
     assert_int_equal(pStack->top, 0);
 }

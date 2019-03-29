@@ -33,12 +33,12 @@ static int descriptionDeal(mibObjectTreeNode *node);
 })
 
 /* Declaration */
-mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, 
-    int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
+mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
+                                   int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
 
 int mibObjectTreeInit() {
     mibObjectTreeNode *obj;
-    
+
     mibTreeHeadInit(&trees);
     return OK;
 }
@@ -58,7 +58,7 @@ mibObjectTreeNode * mibNodeBuild(char *ident, char *oid, char *parent) {
 
     obj = (mibObjectTreeNode *)malloc(sizeof(mibObjectTreeNode));
     memset(obj, 0, sizeof(mibObjectTreeNode));
-    
+
     obj->identifier = ident;
     obj->isNode = 1;
     obj->info = (void *)info;
@@ -131,11 +131,11 @@ MISC:
 
 int setAsChild_MibTree(mibObjectTreeNode *parent, mibObjectTreeNode *child) {
     if (isNullPtr(parent) || isNullPtr(child)) {
-        return FALSE; 
-    }  
-    
+        return FALSE;
+    }
+
     if (IS_NODE_HAS_CHILD_MT(parent)) {
-        return FALSE; 
+        return FALSE;
     }
 
     parent->child = child;
@@ -144,7 +144,7 @@ int setAsChild_MibTree(mibObjectTreeNode *parent, mibObjectTreeNode *child) {
 }
 
 int setAsParent_MibTree(mibObjectTreeNode *child, mibObjectTreeNode *parent) {
-    if (isNullPtr(parent) || isNullPtr(child)) 
+    if (isNullPtr(parent) || isNullPtr(child))
         return ERROR;
 
     child->parent = parent;
@@ -158,7 +158,7 @@ static int descriptionDeal(mibObjectTreeNode *node) {
     char *ident = getIdentFromInfo(node);
     char *parentIdent = getIdentFromInfo(node->parent);
     mibLeaveInfo *info;
-    
+
     if (strlen(ident) > strlen(parentIdent))
         size = strlen(parentIdent);
     else
@@ -216,7 +216,7 @@ int showTree(mibTreeHead *treeHead) {
 
     if (isNullPtr(treeHead))
         return ERROR;
-    
+
     for (currentTree = &treeHead->trees; !isNullPtr(currentTree); currentTree = mibTreeNext(currentTree)) {
         if (isNullPtr(currentTree->root))
             continue;
@@ -276,8 +276,8 @@ char *getOidFromInfo(mibObjectTreeNode *node) {
 }
 
 
-mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, 
-    int (*func)(void *argu, mibObjectTreeNode *node), void *arg) {
+mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
+                                   int (*func)(void *argu, mibObjectTreeNode *node), void *arg) {
 
     int ret;
     mibObjectTreeNode *targetChild, *targetSibling;
@@ -313,11 +313,11 @@ mibTree * mibTreeConstruction() {
 int mibTreeSetRoot(mibTree *tree, mibObjectTreeNode *rootNode) {
     if (isNullPtr(tree) || isNullPtr(rootNode))
         return ERROR;
-    
-    if (isNonNullPtr(tree->root)) { 
+
+    if (isNonNullPtr(tree->root)) {
         setAsParent_MibTree(tree->root, rootNode);
         if (setAsChild_MibTree(rootNode, tree->root) == FALSE) {
-            return ERROR; 
+            return ERROR;
         }
     }
 
@@ -344,11 +344,11 @@ mibTree * mibTreePrev(mibTree *tree) {
 mibTree * mibTreeSearch(mibTree *tree, char *name) {
     mibTree *currentTree;
 
-    if (isNullPtr(tree) || MIBTREE_IS_LAST_TREE(tree)) 
+    if (isNullPtr(tree) || MIBTREE_IS_LAST_TREE(tree))
         return NULL;
-    
+
     int match = FALSE;
-    currentTree = tree; 
+    currentTree = tree;
 
     do {
         match = strncmp(currentTree->rootName, name, strlen(name));
@@ -362,33 +362,33 @@ mibTree * mibTreeSearch(mibTree *tree, char *name) {
 
 int mibTreeAppend(mibTree *head, mibTree *new) {
     if (isNullPtr(head) || isNullPtr(new)) {
-        return FALSE; 
+        return FALSE;
     }
 
     if (listNodeAppend(&head->node, &new->node) == NULL) {
-        return FALSE; 
+        return FALSE;
     }
-    
+
     return TRUE;
 }
 
 mibTree * mibTreeDelete(mibTree *node) {
     if (isNullPtr(node)) {
-        return NULL; 
+        return NULL;
     }
     if (listNodeDelete(&node->node) == NULL) {
-        return NULL; 
+        return NULL;
     }
     return node;
 }
 
 mibTree * mibTreeDeleteByName(mibTree *treeListHead, char *name) {
-    mibTree *beDeleted;    
+    mibTree *beDeleted;
 
     if (isNullPtr(treeListHead) || isNullPtr(name)) {
         return NULL;
     }
-    
+
     beDeleted = mibTreeSearch(treeListHead, name);
     mibTreeDelete(beDeleted);
 
@@ -400,12 +400,12 @@ mibTree * mibTreeDeleteByName(mibTree *treeListHead, char *name) {
 mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree) {
     int ret;
     mibTree *merged;
-    
+
     // Try to merge left tree into right tree.
     ret = insert_MibTree(lTree->root, rTree->root, MIB_OBJ_TREE_NODE_PARENT_NAME(rTree->root));
     if (ret == 0) {
         return lTree;
-    } 
+    }
     // Try to merge right tree into left tree.
     ret = insert_MibTree(rTree->root, lTree->root, MIB_OBJ_TREE_NODE_PARENT_NAME(lTree->root));
     if (ret == 0) {
@@ -416,9 +416,9 @@ mibTree * mibTreeMerge(mibTree *lTree, mibTree *rTree) {
 
 /* mibTreeHead functions */
 int mibTreeHeadInit(mibTreeHead *treeHead) {
-    if (isNullPtr(treeHead)) 
+    if (isNullPtr(treeHead))
         return FALSE;
-    
+
     memset(treeHead, 0, sizeof(mibTreeHead));
     return TRUE;
 }
@@ -435,7 +435,7 @@ int mibTreeHeadMerge_LAST(mibTreeHead *treeHead) {
     if (isNullPtr(treeHead)) {
         return FALSE;
     }
-    
+
     last = treeHead->last;
     current = &treeHead->trees;
 
@@ -443,7 +443,7 @@ int mibTreeHeadMerge_LAST(mibTreeHead *treeHead) {
         if (current == last) {
             continue;
         }
-        
+
         newTree = mibTreeMerge(current, last);
         // Merge success
         // After that we should remove the two tree
@@ -455,27 +455,27 @@ int mibTreeHeadMerge_LAST(mibTreeHead *treeHead) {
             last = mibTreeDelete(last);
 
             if (isNullPtr(current) || isNullPtr(last)) {
-                return FALSE; 
+                return FALSE;
             }
-            
-            mibTreeAppend(&treeHead->trees, newTree);            
+
+            mibTreeAppend(&treeHead->trees, newTree);
 
             last = newTree;
             current = current_tmp;
         }
     } while (current = mibTreeNext(current));
-    
+
     return TRUE;
 }
 
-/* Desc: Try to merge each tree of the list 
- * to let the number of tree in the tree list 
+/* Desc: Try to merge each tree of the list
+ * to let the number of tree in the tree list
  * as small as possible.
  */
 inline static mibTree * currentUpdate(mibTree *current, mibTree *currentMerge, mibTree *iterMerge) {
     while (current = mibTreeNext(current)) {
         if (current != currentMerge && current != iterMerge) {
-            break; 
+            break;
         }
     }
     return current;
@@ -483,46 +483,46 @@ inline static mibTree * currentUpdate(mibTree *current, mibTree *currentMerge, m
 
 int mibTreeHeadMerge(mibTreeHead *treeHead) {
     int skip, numOfTree;
-    mibTree *current, *current_merge, 
+    mibTree *current, *current_merge,
             *current_merge_tmp, *newTree,
             *iterMerge, *iterMerge_tmp;
 
-    if (isNullPtr(treeHead)) 
+    if (isNullPtr(treeHead))
         return FALSE;
-   
+
     numOfTree = treeHead->numOfTree;
 
     for (current = &treeHead->trees; ! isNullPtr(current); current = mibTreeNext(current)) {
         current_merge = current;
         iterMerge = mibTreeNext(current);
-        
+
         skip = isNullPtr(current_merge->root) || MIBTREE_IS_LAST_TREE(current_merge);
         if (skip) continue;
-        
+
         iterMerge_tmp = NULL;
 
-        do { 
-            newTree = mibTreeMerge(current_merge, iterMerge);   
+        do {
+            newTree = mibTreeMerge(current_merge, iterMerge);
             if (!isNullPtr(newTree)) {
-                // current update 
-                current = currentUpdate(current, current_merge, iterMerge);  
+                // current update
+                current = currentUpdate(current, current_merge, iterMerge);
                 iterMerge_tmp = mibTreeNext(iterMerge);
-                
+
                 if (current_merge->node.prev != NULL && current_merge->node.next != NULL)
-                    numOfTree -= 1; 
+                    numOfTree -= 1;
 
                 mibTreeDelete(current_merge);
                 mibTreeDelete(iterMerge);
-                numOfTree -= 1; 
+                numOfTree -= 1;
 
-                current_merge = newTree;   
+                current_merge = newTree;
             }
-        } while (iterMerge = iterMerge_tmp); 
-        
+        } while (iterMerge = iterMerge_tmp);
+
         mibTreeAppend(&treeHead->trees, newTree);
         numOfTree += 1;
-    } 
-    
+    }
+
     treeHead->numOfTree = numOfTree;
     return TRUE;
 }
@@ -530,34 +530,34 @@ int mibTreeHeadMerge(mibTreeHead *treeHead) {
 int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode) {
     char *parent;
     mibTree *treeIter, *last;
-    mibObjectTreeNode *treeRoot; 
+    mibObjectTreeNode *treeRoot;
 
     if (isNullPtr(treeHead) || isNullPtr(newNode)) {
-        return FALSE; 
+        return FALSE;
     }
-    
+
     parent = newNode->mergeInfo.parent;
 
     // A new root.
     if (isNullPtr(parent)) {
-        goto NEW_TREE; 
+        goto NEW_TREE;
     }
 
-    // First check last tree. 
-    treeIter = treeHead->last; 
+    // First check last tree.
+    treeIter = treeHead->last;
     if (isNullPtr(treeIter))
         goto ITERATE_OVER_ALL;
 
 LAST_TREE:
     treeRoot = treeIter->root;
-    
+
     if (insert_MibTree(treeRoot, newNode, parent) != -1) {
-        return TRUE; 
+        return TRUE;
     }
 
-ITERATE_OVER_ALL: 
+ITERATE_OVER_ALL:
     // Iterate over all another trees.
-    last = treeHead->last;    
+    last = treeHead->last;
     treeIter = &treeHead->trees;
 
     if (isNullPtr(treeIter))
@@ -571,10 +571,10 @@ ITERATE_OVER_ALL:
     } while (treeIter = mibTreeNext(treeIter));
 
 NEW_TREE:
-    // Build a new tree. 
+    // Build a new tree.
     treeIter = mibTreeConstruction();
     mibTreeSetRoot(treeIter, newNode);
-    
+
     mibTreeAppend(&treeHead->trees, treeIter);
     treeHead->last = treeIter;
     treeHead->numOfTree++;
@@ -585,13 +585,13 @@ NEW_TREE:
 static char * oidComplement(char *parentOid, char *suffix) {
     char *oid;
     int oidLength = SIZE_OF_OID_STRING;
-    
+
     if (isNullPtr(parentOid) || isNullPtr(suffix))
         return NULL;
 
     // Overflow checking.
     if (strlen(parentOid) >= SIZE_OF_OID_STRING) {
-        oidLength += EXTRA_OF_OID_LEN; 
+        oidLength += EXTRA_OF_OID_LEN;
     }
 
     oid = (char *)malloc(oidLength);
@@ -615,54 +615,54 @@ static int oidComplete(void *arg, mibObjectTreeNode *node) {
 
     if (isNullPtr(node->parent))
         return OK;
-    
-    parent = node->parent; 
+
+    parent = node->parent;
     nInfo_P = parent->info;
 
     if (node->isNode) {
-        nInfo_C = node->info; 
-        newOid = oidComplement(nInfo_P->oid, nInfo_C->oid); 
+        nInfo_C = node->info;
+        newOid = oidComplement(nInfo_P->oid, nInfo_C->oid);
         RELEASE_MEM(nInfo_C->oid);
         nInfo_C->oid = newOid;
     } else {
         lInfo_C = node->info;
-        newOid = oidComplement(nInfo_P->oid, lInfo_C->nodeInfo->oid); 
+        newOid = oidComplement(nInfo_P->oid, lInfo_C->nodeInfo->oid);
         RELEASE_MEM(lInfo_C->nodeInfo->oid);
         lInfo_C->nodeInfo->oid = newOid;
     }
-     
-    return OK; 
+
+    return OK;
 }
 
 int mibTreeHeadComplete(mibTreeHead *treeHead, symbolTable *symTbl) {
     if (isNullPtr(treeHead)) return ERROR;
-    
+
     assert(treeHead->numOfTree == 1);
-    
-    // Import nothing from another mib files. 
+
+    // Import nothing from another mib files.
     if (symTbl->numOfSymbols == 0)
-       return OK; 
-    
-    mibTree *tree = mibTreeHeadFirstTree(treeHead);   
-    
-    char *ident, *oid, *parent; 
+        return OK;
+
+    mibTree *tree = mibTreeHeadFirstTree(treeHead);
+
+    char *ident, *oid, *parent;
 
     parent = tree->root->mergeInfo.parent;
     symbol_t *symbol = symbolTableSearch(symTbl, parent);
 
     mibObjectTreeNode *node;
-    
+
     while (isNonNullPtr(symbol)) {
         ident = symbol->symIdent;
         oid = symbol->symInfo.nodeMeta.suffix;
         parent = symbol->symInfo.nodeMeta.parentIdent;
-        
-        node = mibNodeBuild(strdup(ident), strdup(oid), strdup(parent));    
+
+        node = mibNodeBuild(strdup(ident), strdup(oid), strdup(parent));
         if (mibTreeSetRoot(tree, node) == ERROR)
             abort();
-         
-        symbol = symbolTableSearch(symTbl, parent);  
-    } 
+
+        symbol = symbolTableSearch(symTbl, parent);
+    }
 
     return OK;
 }
@@ -672,11 +672,11 @@ int mibTreeHeadOidComplete(mibTreeHead *treeHead) {
 
     if (isNullPtr(treeHead))
         return ERROR;
-    
+
     // Oid completment should be run after mibTree merge
     // there should only one mibTree exists in the tree list.
-    assert(treeHead->numOfTree == 1); 
-    
+    assert(treeHead->numOfTree == 1);
+
     tree = mibTreeHeadFirstTree(treeHead);
 
     travel_MibTree(tree->root, oidComplete, NULL);
@@ -693,11 +693,11 @@ mibTree * mibTreeHeadFirstTree(mibTreeHead *treeHead) {
 
 // mibTree Type functions
 static char * mibLeaveGetType(mibObjectTreeNode *node) {
-    if (isNullPtr(node)) return NULL; 
-    if (node->isNode) return NULL; 
+    if (isNullPtr(node)) return NULL;
+    if (node->isNode) return NULL;
 
     mibLeaveInfo *lInfo = node->info;
-    
+
     return lInfo->type;
 }
 
@@ -706,30 +706,30 @@ _Bool isMibNodeType_TABLE(mibObjectTreeNode *node) {
     if (node->isNode == TRUE)
         return FALSE;
 
-    char *type = mibLeaveGetType(node);  
+    char *type = mibLeaveGetType(node);
     assert(isNonNullPtr(type));
-    
-    char *seqPrefix = "SEQUENCE OF"; 
-    
-    if (strncmp(type, seqPrefix, strlen(seqPrefix))) 
+
+    char *seqPrefix = "SEQUENCE OF";
+
+    if (strncmp(type, seqPrefix, strlen(seqPrefix)))
         return FALSE;
-    
+
     return TRUE;
 }
 
 _Bool isMibNodeType_ENTRY(mibObjectTreeNode *node) {
-    if (node->isNode == TRUE) 
-        return FALSE; 
-    
+    if (node->isNode == TRUE)
+        return FALSE;
+
     char *type = mibLeaveGetType(node);
     assert(isNonNullPtr(type));
 
-    typeCate cate = typeTableTypeCate(&mibTypeTbl, type); 
-    if (cate == ERROR) return ERROR; 
-    
+    typeCate cate = typeTableTypeCate(&mibTypeTbl, type);
+    if (cate == ERROR) return ERROR;
+
     if (cate == CATE_SEQUENCE) return TRUE;
 
-    return FALSE; 
+    return FALSE;
 }
 
 #ifdef MIB2DOC_UNIT_TESTING
@@ -745,15 +745,15 @@ typedef struct {
 static int mibTreeMergeAssert(void *arg, mibObjectTreeNode *node) {
     int idx;
     order *pOrder = arg;
-    mibNodeInfo *info; 
-    
+    mibNodeInfo *info;
+
     info = node->info;
 
-    idx = pOrder->idx; 
+    idx = pOrder->idx;
     if (pOrder->order[idx] != node->identifier[0])
         fail();
     if (strncmp(pOrder->oid[idx], info->oid, strlen(info->oid)) != 0)
-       fail(); 
+        fail();
 
     ++idx;
     pOrder->idx = idx;
@@ -763,48 +763,48 @@ void mibTreeObjTree__MIBTREE_MERGE(void **state) {
     // Merge testing
     mibObjectTreeNode *node;
     mibTreeHead treeHead;
-    mibTree *currentTree; 
+    mibTree *currentTree;
 
     memset(&treeHead, 0, sizeof(mibTreeHead));
-    
-    node = mibNodeBuild("A", strdup("1"), NULL); 
+
+    node = mibNodeBuild("A", strdup("1"), NULL);
     mibTreeHeadAppend(&treeHead, node);
-    
+
     node = mibNodeBuild("B", strdup("2"), "A");
-    mibTreeHeadAppend(&treeHead, node); 
-    
+    mibTreeHeadAppend(&treeHead, node);
+
     node = mibNodeBuild("F", strdup("1"), "C");
     mibTreeHeadAppend(&treeHead, node);
-    
-    node = mibNodeBuild("E", strdup("2"), "C"); 
+
+    node = mibNodeBuild("E", strdup("2"), "C");
     mibTreeHeadAppend(&treeHead, node);
 
     node = mibNodeBuild("C", strdup("3"), "A");
     mibTreeHeadAppend(&treeHead, node);
-     
+
     node = mibNodeBuild("G", strdup("2"), "B");
     mibTreeHeadAppend(&treeHead, node);
-    
+
     node = mibNodeBuild("D", strdup("1"), "B");
     mibTreeHeadAppend(&treeHead, node);
 
     assert_int_equal(treeHead.numOfTree, 3);
-    
+
     mibTreeHeadMerge(&treeHead);
     mibTreeHeadOidComplete(&treeHead);
-    
+
     assert_int_equal(treeHead.numOfTree, 1);
-    
+
     char nodeOrder[7] = {'A', 'B', 'G', 'D', 'C', 'F', 'E'};
     char *oid[7] = {"1", "1.2", "1.2.2", "1.2.1", "1.3", "1.3.1", "1.3.2"};
     order orderDeck;
 
     orderDeck.idx = 0;
     orderDeck.order = nodeOrder;
-    
+
     currentTree = mibTreeNext(&treeHead.trees);
     travel_MibTree(currentTree->root, mibTreeMergeAssert, &orderDeck);
-    
+
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */
