@@ -9,13 +9,14 @@
 %token OBJ_IDEN_ L_BRACE R_BRACE OBJECTS_
 %token FROM_ IMPORTS_
 
+%token L_PAREN R_PAREN
+
 %token DISPLAY_HINT
 %token REFERENCE
 %token TC_SPECIFIER
 %token COMPLIANCE_SPECIFIER
 %token MIN_ACCESS_SPECIFIER
 %token OBJECT_
-%token ENUMERATE_MEMBER 
 
 %token NOTIFY_SPECIFIER
 %token NOTIFY_GRP_SPECIFIER
@@ -27,6 +28,7 @@
 %token WRITE_SPECIFIER
 %token OBJ_GRP_SPECIFIER
 
+%token TO
 %token OR
 %token SIZE
 /* OBJECT-IDENTITY TOKEN */
@@ -46,7 +48,6 @@
 %token ORGANIZATION REVISION CONTACT_INFO
 %token <str> REVISION_DATE
  
-%token <str> RANGE
 %token <str> IDENTIFIER
 %token <str> NUM
 %token <str> TYPE_BUILT_IN
@@ -204,18 +205,18 @@ TYPE :
     | IDENTIFIER { 
         //  Customed type 
         $TYPE = $IDENTIFIER;  
-        
         if (typeCheck_isValid(MIB_TYPE_TBL_R, $TYPE) == FALSE) {
-            errorMsg("%s is not a valid type.\n", $TYPE);
-            exit(1);
+            /* Go into second pass because the checking may fail by
+               define after use */     
+            disParamStore(pendingTypes, disParamConstruct($IDENTIFIER));
         }
     }
 
 /* OBJECT-IDENTITY */
 OBJ_IDENTITY_DEFINED :
-    IDENTIFIER OBJ_IDENTITY_SPECIFIER OBJ_IDENTITY;
+    IDENTIFIER OBJ_IDENTITY_SPECIFIER OBJ_IDENTITY MOUNT;
 OBJ_IDENTITY :
-    STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER DESC_VALUE REF_PART MOUNT;  
+    STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER DESC_VALUE REF_PART;  
 
 /* NOTIFICATION-TYPE */
 NOTIFY_TYPE_DEFINED : 
@@ -392,22 +393,21 @@ SYNTAX_VALUE :
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct($TYPE));
 		dispatch(DISPATCH_PARAM_STAGE, param);
-    }
+    } 
+    | OBJ_IDEN_;
 
 TYPE_SPECIFIER :
-    L_BRACE TYPE_SPECIFIER_ R_BRACE
+    TYPE_SPECIFIER_
     | /* empty */;
 TYPE_SPECIFIER_ :
-    ENUMERATE_MEMBERS
-    | STRING_SIZE
+    L_BRACE ENUMERATE_MEMBERS R_BRACE
     | ONE_OR_MORE_VAL;
 
 ENUMERATE_MEMBERS :
     ENUMERATE_MEMBER 
     | ENUMERATE_MEMBER COMMA ENUMERATE_MEMBERS; 
-
-STRING_SIZE :
-    SIZE L_BRACE VAL R_BRACE;
+ENUMERATE_MEMBER:
+    IDENTIFIER L_PAREN NUM R_PAREN;
 
 ONE_OR_MORE_VAL :
     VAL
@@ -415,6 +415,8 @@ ONE_OR_MORE_VAL :
 VAL :
     NUM
     | RANGE;
+RANGE:
+    L_PAREN NUM TO NUM R_PAREN
 
 ACCESS :
 	ACCESS_SPECIFIER ACCESS_VALUE {

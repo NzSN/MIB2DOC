@@ -6,7 +6,6 @@
 #define UNIT_TEST_LEXDEAL_H
 
 char * strDuplicate(char *src);
-void * getCurSwInfo();
 
 #endif //UNIT_TEST_LEXDEAL_H
 

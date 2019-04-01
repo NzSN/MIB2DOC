@@ -481,6 +481,12 @@ inline static mibTree * currentUpdate(mibTree *current, mibTree *currentMerge, m
     return current;
 }
 
+/* Situations: Assume exist two trees then
+ * (1) A is descendent of B, vice versa.
+ * (2) A and B has same set of ancestors.
+ */
+static mibTree * mergeByComplete(mibTree *l, mibTree *r);
+
 int mibTreeHeadMerge(mibTreeHead *treeHead) {
     int skip, numOfTree;
     mibTree *current, *current_merge,
@@ -496,18 +502,23 @@ int mibTreeHeadMerge(mibTreeHead *treeHead) {
         current_merge = current;
         iterMerge = mibTreeNext(current);
 
-        skip = isNullPtr(current_merge->root) || MIBTREE_IS_LAST_TREE(current_merge);
+        skip = isNullPtr(current_merge->root) || 
+               MIBTREE_IS_LAST_TREE(current_merge);
         if (skip) continue;
 
         iterMerge_tmp = NULL;
 
         do {
+            // Merge into one tree and return the root of the new tree.
             newTree = mibTreeMerge(current_merge, iterMerge);
-            if (!isNullPtr(newTree)) {
+            if (isNullPtr(newTree)) 
+               newTree = mergeByComplete(current_merge, iterMerge); 
+
+            if (!isNullPtr(newTree)) { 
                 // current update
                 current = currentUpdate(current, current_merge, iterMerge);
                 iterMerge_tmp = mibTreeNext(iterMerge);
-
+                  
                 if (current_merge->node.prev != NULL && current_merge->node.next != NULL)
                     numOfTree -= 1;
 
@@ -525,6 +536,10 @@ int mibTreeHeadMerge(mibTreeHead *treeHead) {
 
     treeHead->numOfTree = numOfTree;
     return TRUE;
+}
+
+static mibTree * mergeByComplete(mibTree *l, mibTree *r) {
+
 }
 
 int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode) {

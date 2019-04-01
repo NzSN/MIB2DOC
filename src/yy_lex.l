@@ -6,14 +6,24 @@
     #include "yy_syn.def.h"
     #include "yy_syn.tab.h"
     #include "lexDeal.h"
+    #include <malloc.h>
 
-    void * getCurSwInfo();
+    #define yyHEADER_H
+    #include "util.h"
+    #include "mibTreeGen.h"
+    #undef yyHEADER_H
+
 %}
 
 %x SMI_FIELD
 %s IMPORT_FIELD
 
 %%
+
+<IMPORT_FIELD>FROM                  { return FROM_; }
+<IMPORT_FIELD>([a-zA-Z0-9]|"-")+    { yylval.str = strdup(yytext); return IDENTIFIER; }
+<IMPORT_FIELD>\;                    { BEGIN(INITIAL); return SEMICOLON; }
+
 "--".*                              { /* empty */ }
 [\n ]+                              { /* empty */ }
 [\t ]+                              { /* empty */ }
@@ -24,18 +34,17 @@ OBJECT                              { return OBJECT_; }
 NOTIFICATION-TYPE                   { return NOTIFY_TYPE_SPECIFIER; }
 SYNTAX                              { return SYNTAX_SPECIFIER; }
 
+\(                                  { return L_PAREN; }
+\)                                  { return R_PAREN; }
+\.\.                                { return TO; }
 SIZE                                { return SIZE; }
-[a-zA-Z0-9]+\([0-9]+\)              { return ENUMERATE_MEMBER; }
-\([0-9]*\.\.[0-9]*\)                { return RANGE; }
 
 
-INTEGER                     | 
-Integer32                   |
-IpAddress                   | 
-MacAddress                  | 
-OCTET[ \t]+STRING[ \t]*([ \t]*\(.*\))*    | 
-SEQUENCE[ \t]+OF[ \t]*[a-zA-Z]*     | 
-RowStatus                           { yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
+INTEGER                                 | 
+Integer32                               |
+IpAddress                               | 
+OCTET[ \t]+STRING[ \t]*([ \t]*\(.*\))*  | 
+SEQUENCE[ \t]+OF[ \t]*[a-zA-Z]*         { yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
 
 SEQUENCE                            { return SEQ; }
 
@@ -44,7 +53,7 @@ MAX-ACCESS                          { return ACCESS_SPECIFIER; }
 MIN-ACCESS                          { return MIN_ACCESS_SPECIFIER; }
 DEFINITIONS                         { return DEF; }
 BEGIN                               { return BEGIN_; }
-IMPORTS                             { return IMPORTS_; }
+IMPORTS                             { BEGIN(IMPORT_FIELD); return IMPORTS_; }
 FROM                                { return FROM_; }
 \,                                  { return COMMA; }
 \;                                  { return SEMICOLON; }
@@ -71,11 +80,13 @@ MANDATORY-GROUPS                    { return MANDATORY_SPECIFIER; }
 WRITE-SYNTAX                        { return WRITE_SPECIFIER; }
 MODULE                              { return MODULE_SPECIFIER; }
 
+OBJECT-IDENTITY                     { return OBJ_IDENTITY_SPECIFIER; }
+
 read-only               |
-write                   |
 read-write              |
+read-create             |
 accessible-for-notify   |
-not-accessible                      { yylval.str = strdup(yytext); return ACCESS_VALUE; }
+not-accessible                       { yylval.str = strdup(yytext); return ACCESS_VALUE; }
 
 STATUS                              { return STATUS_SPECIFIER; }
 current |
@@ -97,6 +108,22 @@ SMI                                 { BEGIN(SMI_FIELD); return SMI_SPECIFIER; }
 <SMI_FIELD>([0-9a-zA-Z]|"-")+       { BEGIN(INITIAL); yylval.str = strdup(yytext); return SMI_VAL; }
 
 <<EOF>>                             {
+                                        /* First to do a type recheck for those fail in
+                                           first pass type checking */
+                                        int isValid;
+                                        char *typeName;
+                                        dispatchParam *current = pendingTypes;
+                                        breakNode(); 
+                                        while (current = dispatchParamNext(current)) {
+                                            typeName = (char *)disParamGet(current);
+                                            isValid = typeCheck_isValid(MIB_TYPE_TBL_R, typeName); 
+                                        
+                                            if (isValid == FALSE) {
+                                                abortWithMsg("Unknow type: %s\n", typeName); 
+                                            }
+                                        }
+                                        disParamRelease(dispatchParamNext(pendingTypes), free); 
+                                         
                                         if (switchToPrevModule(getCurSwInfo()) == -1) {
                                             yyterminate();
                                         }

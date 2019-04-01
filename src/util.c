@@ -261,5 +261,7 @@ _Bool isStringEqual(const char *strLeft, const char *strRight) {
     return isEqual;
 }
 
+void breakNode(void) {}
+
 /* util.c */
 

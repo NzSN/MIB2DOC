@@ -14,9 +14,11 @@
 extern mibTreeHead trees;
 extern typeTable mibTypeTbl;
 extern symbolTable symTable;
+extern dispatchParam *pendingTypes;
 
 #define SYMBOL_TBL_R (&symTable)
 #define MIB_TYPE_TBL_R (&mibTypeTbl)
+
 #define MIB_TREE_R (&trees)
 
 enum {

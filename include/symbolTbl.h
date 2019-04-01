@@ -38,6 +38,8 @@ typedef struct symbol_t {
     pair_val_base base;
     symbolType symType;
     char *symIdent;
+    // A flag to notify some msg
+    unsigned long wall;
     union {
        leaveMeta_t leaveMeta;
        nodeMeta_t nodeMeta;

@@ -179,6 +179,8 @@ int switchToPrevModule(switchingState *swState) {
         return -1;
     }
     
+    printf("file: %s\n", swState->currentSwitchInfo.fileName);
+
     // Release resources use by current info structure
     collectInfo_release(SW_CUR_IMPORT(swState));
     yy_delete_buffer(SW_CUR_BUFFER_INFO(swState));

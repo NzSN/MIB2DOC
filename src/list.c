@@ -1,6 +1,11 @@
-//
-// Created by ayden on 17-5-1.
-//
+/* list.c 
+ * 
+ * Todo: (1) refactoring list module to provide a generic linear structure
+ *       (2) Type name of some type define in this module is so specific such as
+ *           the type dispatchParam the name of type hurt generic of it, cause
+ *           a it contain a <void *> pointer inside its structure it can be more
+ *           generic than present.
+ */
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -220,7 +225,7 @@ char * sliceGetVal(slice *sliHead, int sliKey) {
 char *sliceRetriVal(slice *sliHead, int sliKey) {
     slice *sli;
     char *val;
-
+     
     if (sli = sliceGet(sliHead, sliKey)) {
         val = sli->sliVal;
         sli->sliVal = NULL;

@@ -5,7 +5,7 @@ A OBJECT IDENTIFIER ::= { org 1 }
 B OBJECT IDENTIFIER ::= { A 2 }
 
 C OBJECT-TYPE
-    SYNTAX INTEGER
+    SYNTAX INTEGER (0..214748)
     MAX-ACCESS read-only
     STATUS current
     DESCRIPTION
@@ -13,16 +13,24 @@ C OBJECT-TYPE
     ::= { B 1 }
 
 D OBJECT-TYPE
-    SYNTAX INTEGER
+    SYNTAX INTEGER {
+        up(1),
+        down(2)     
+    }
     MAX-ACCESS read-only
     STATUS current
     DESCRIPTION
         "D"
     ::= { B 2 }  
 
-ll ::= SEQUENCE {
-    index1  INTEGER
-}
+E OBJECT-TYPE
+    SYNTAX ll
+    MAX-ACCESS read-only
+    STATUS current
+    DESCRIPTION
+        "E"
+    ::= { B 3 }
+
 
 DisplayString ::= 
     OCTET STRING

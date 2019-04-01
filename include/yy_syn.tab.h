@@ -67,39 +67,40 @@ extern int yydebug;
     OBJECTS_ = 277,
     FROM_ = 278,
     IMPORTS_ = 279,
-    DISPLAY_HINT = 280,
-    REFERENCE = 281,
-    TC_SPECIFIER = 282,
-    COMPLIANCE_SPECIFIER = 283,
-    MIN_ACCESS_SPECIFIER = 284,
-    OBJECT_ = 285,
-    ENUMERATE_MEMBER = 286,
-    NOTIFY_SPECIFIER = 287,
-    NOTIFY_GRP_SPECIFIER = 288,
-    MODULE_SPECIFIER = 289,
-    MANDATORY_SPECIFIER = 290,
-    GROUP_SPECIFIER = 291,
-    OBJECT_SPECIFIER = 292,
-    WRITE_SPECIFIER = 293,
-    OBJ_GRP_SPECIFIER = 294,
-    OR = 295,
-    SIZE = 296,
-    OBJ_IDENTITY_SPECIFIER = 297,
-    NOTIFY_TYPE_SPECIFIER = 298,
-    SMI_SPECIFIER = 299,
-    SMI_VAL = 300,
-    MOD_SPECIFIER = 301,
-    LAST_UPDATED = 302,
-    ORGANIZATION = 303,
-    REVISION = 304,
-    CONTACT_INFO = 305,
-    REVISION_DATE = 306,
-    RANGE = 307,
-    IDENTIFIER = 308,
-    NUM = 309,
-    TYPE_BUILT_IN = 310,
-    ACCESS_VALUE = 311,
-    DESC_VALUE = 312
+    L_PAREN = 280,
+    R_PAREN = 281,
+    DISPLAY_HINT = 282,
+    REFERENCE = 283,
+    TC_SPECIFIER = 284,
+    COMPLIANCE_SPECIFIER = 285,
+    MIN_ACCESS_SPECIFIER = 286,
+    OBJECT_ = 287,
+    NOTIFY_SPECIFIER = 288,
+    NOTIFY_GRP_SPECIFIER = 289,
+    MODULE_SPECIFIER = 290,
+    MANDATORY_SPECIFIER = 291,
+    GROUP_SPECIFIER = 292,
+    OBJECT_SPECIFIER = 293,
+    WRITE_SPECIFIER = 294,
+    OBJ_GRP_SPECIFIER = 295,
+    TO = 296,
+    OR = 297,
+    SIZE = 298,
+    OBJ_IDENTITY_SPECIFIER = 299,
+    NOTIFY_TYPE_SPECIFIER = 300,
+    SMI_SPECIFIER = 301,
+    SMI_VAL = 302,
+    MOD_SPECIFIER = 303,
+    LAST_UPDATED = 304,
+    ORGANIZATION = 305,
+    REVISION = 306,
+    CONTACT_INFO = 307,
+    REVISION_DATE = 308,
+    IDENTIFIER = 309,
+    NUM = 310,
+    TYPE_BUILT_IN = 311,
+    ACCESS_VALUE = 312,
+    DESC_VALUE = 313
   };
 #endif
 
@@ -108,15 +109,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 38 "./src/yy_syn.y" /* yacc.c:1909  */
+#line 40 "./src/yy_syn.y" /* yacc.c:1909  */
 
     char *str;
-#line 57 "./src/yy_syn.y" /* yacc.c:1909  */
+#line 58 "./src/yy_syn.y" /* yacc.c:1909  */
 
     struct sequence_item si;
     struct sequence sq;    
 
-#line 120 "./src/yy_syn.tab.h" /* yacc.c:1909  */
+#line 121 "./src/yy_syn.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -44,6 +44,7 @@ hashMap * hashMapDup(hashMap *origin) {
     int idx, size;
     hashMap *copy;
     hashChain *copyChain, *copyFrom;
+    hashElem *pElem_orig, *pElem_copy;
 
     if (isNullPtr(origin)) {
         return NULL;
@@ -51,12 +52,20 @@ hashMap * hashMapDup(hashMap *origin) {
 
     copy = hashMapConstruct(origin->size, origin->hashFunc);
 
-    memcpy(copy->space, origin->space, origin->size * sizeof(hashElem));
+    memcpy(copy->space, origin->space, origin->size * sizeof(hashElem)); 
 
     idx = 0;
     size = origin->size;
 
     while (idx < size) {
+        pElem_copy = HASH_MAP_ELEM_SELECT(copy, idx);
+        pElem_orig = HASH_MAP_ELEM_SELECT(origin, idx);
+        
+        if (pElem_orig->key)
+            pElem_copy->key = pElem_orig->key->copy(pElem_orig->key);
+        if (pElem_orig->val)
+            pElem_copy->val = pElem_orig->val->copy(pElem_orig->val); 
+
         copyFrom = &(HASH_MAP_ELEM_SELECT(origin, idx)->chain);
         copyFrom = hashChainNext(copyFrom);
         if (isNullPtr(copyFrom)) {
@@ -90,8 +99,8 @@ int hashMapRelease(hashMap *map) {
             key = selectedElem->key;
             val = selectedElem->val;
 
-            if (key->release) key->release(key);
-            if (val->release) val->release(val);
+            if (key && key->release) key->release(key);
+            if (val && val->release) val->release(val);
 
             hashChainRelease_STATIC(&selectedElem->chain);
         }

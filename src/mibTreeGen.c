@@ -29,11 +29,20 @@ symbolTable symTable;
 slice symCollectSlice;
 targetSymbolList tSymListHead;
 
-// Type table
+/* Type table
+ * 
+ * Type Checking split into two pass:
+ * (1) Checking a type we got and if checking fail go 
+ *     into second pass
+ * (2) After a mib file parse done do a recheck for types
+ *     fail to check in first pass because of define after
+ *     use of it.  */
 typeTable mibTypeTbl;
+dispatchParam *pendingTypes;
 
 _Bool typeTableInit() {
-
+    
+    pendingTypes = disParamConstruct("head"); 
     memset(&mibTypeTbl, 0, sizeof(typeTable));
 
     // Install SNMPv2 Types into type table.
