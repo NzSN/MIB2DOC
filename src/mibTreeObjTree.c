@@ -486,60 +486,148 @@ inline static mibTree * currentUpdate(mibTree *current, mibTree *currentMerge, m
  * (2) A and B has same set of ancestors.
  */
 static mibTree * mergeByComplete(mibTree *l, mibTree *r);
-
+// Merge treeSet into theTree
+static mibTree * __mergeHelper(mibTree *theTree, mibTree *treeSet, int *numOfTree);
 int mibTreeHeadMerge(mibTreeHead *treeHead) {
-    int skip, numOfTree;
-    mibTree *current, *current_merge,
-            *current_merge_tmp, *newTree,
-            *iterMerge, *iterMerge_tmp;
-
+    int numOfTree, numOfTree_prev;
+    mibTree *current, *current_merge, *newTree,
+            *deleteMerge, *theTree;
+            
     if (isNullPtr(treeHead))
         return FALSE;
+    
+    numOfTree = treeHead->numOfTree; 
 
-    numOfTree = treeHead->numOfTree;
+    theTree = mibTreeNext(&treeHead->trees); 
+    current = mibTreeNext(theTree);
 
-    for (current = &treeHead->trees; ! isNullPtr(current); current = mibTreeNext(current)) {
-        current_merge = current;
-        iterMerge = mibTreeNext(current);
+    mibTreeDelete(theTree);
+    --numOfTree; 
+    
+    // Merge a set of trees with theTree 
+    theTree = __mergeHelper(theTree, current, &numOfTree);
 
-        skip = isNullPtr(current_merge->root) || 
-               MIBTREE_IS_LAST_TREE(current_merge);
-        if (skip) continue;
-
-        iterMerge_tmp = NULL;
-
-        do {
-            // Merge into one tree and return the root of the new tree.
-            newTree = mibTreeMerge(current_merge, iterMerge);
-            if (isNullPtr(newTree)) 
-               newTree = mergeByComplete(current_merge, iterMerge); 
-
-            if (!isNullPtr(newTree)) { 
-                // current update
-                current = currentUpdate(current, current_merge, iterMerge);
-                iterMerge_tmp = mibTreeNext(iterMerge);
-                  
-                if (current_merge->node.prev != NULL && current_merge->node.next != NULL)
-                    numOfTree -= 1;
-
-                mibTreeDelete(current_merge);
-                mibTreeDelete(iterMerge);
-                numOfTree -= 1;
-
-                current_merge = newTree;
-            }
-        } while (iterMerge = iterMerge_tmp);
-
-        mibTreeAppend(&treeHead->trees, newTree);
-        numOfTree += 1;
-    }
-
+    mibTreeAppend(&treeHead->trees, theTree);
     treeHead->numOfTree = numOfTree;
+
     return TRUE;
 }
 
-static mibTree * mergeByComplete(mibTree *l, mibTree *r) {
+static mibTree * __mergeHelper(mibTree *theTree, mibTree *treeSet, int *numOfTree) {
+    int numOfTree_prev, num = *numOfTree;
+    mibTree *deletedTree, *currentMerge, *current, *newTree;
+    current = treeSet;
 
+    do {
+        currentMerge = current;
+        numOfTree_prev = num;
+
+        while (currentMerge) {
+            newTree = mibTreeMerge(theTree, currentMerge);
+            if (!newTree)
+                newTree = mergeByComplete(theTree, currentMerge);
+
+            if (newTree) {
+                if (isStringEqual(newTree->rootName, theTree->rootName))
+                    theTree = newTree;
+                else 
+                    theTree = currentMerge;
+
+                if (current == currentMerge)
+                    current = mibTreeNext(current);
+
+                deletedTree = currentMerge;
+                currentMerge = mibTreeNext(currentMerge);
+                mibTreeDelete(deletedTree);
+
+                --num;
+                continue;
+            } else {
+                currentMerge = mibTreeNext(currentMerge);
+            }
+        }
+    } while (numOfTree_prev > num); 
+
+    *numOfTree = num + 1;
+    return theTree;
+}
+
+static char * ancestorCommon(mibObjectTreeNode *l, mibObjectTreeNode *r) {
+    if (isNullPtr(l) || isNullPtr(r))
+        return NULL;
+    
+    symbol_t *sym_l, *sym_r;
+    char *parent_l, *parent_r;
+    parent_l = l->mergeInfo.parent;
+    parent_r = r->mergeInfo.parent;
+    
+    while (parent_l != NULL || parent_r != NULL) {
+        if (parent_l) {
+            sym_l = symbolTableSearch(SYMBOL_TBL_R, parent_l);  
+            if (sym_l == null) 
+                parent_l = null;
+            else {
+                if (sym_l->wall == (unsigned long)parent_r)
+                    return sym_l->symIdent;
+                sym_l->wall = (unsigned long)parent_l; 
+                parent_l = sym_l->symIdent;
+            }
+        }
+        if (parent_r) {
+            sym_r = symbolTableSearch(SYMBOL_TBL_R, parent_r);
+            if (sym_r == null) 
+                parent_r = null;
+            else {
+                if (sym_r->wall == (unsigned long)parent_l)
+                    return sym_r->symIdent;
+                sym_r->wall = (unsigned long)parent_r;
+                parent_r = sym_r->symIdent;
+            }
+        }
+    } 
+    return NULL;
+}
+static mibTree * mergeByComplete(mibTree *l, mibTree *r) {
+    if (isNullPtr(l) || isNullPtr(r))
+        return NULL;
+    
+    symbol_t *symbol; 
+    char *parent;
+    mibObjectTreeNode *node;
+
+    // Find common ancestor
+    char *ancestor = ancestorCommon(l->root, r->root);
+    if (isNullPtr(ancestor))
+       return NULL; 
+
+    // Expand tree up to common ancestor 
+    int idx = 0;
+    mibTree *trees[2] = { l, r }; 
+
+    while (idx < 2) {
+        parent = trees[idx]->root->mergeInfo.parent;
+        while (parent != NULL) {
+            symbol = symbolTableSearch(SYMBOL_TBL_R, parent);  
+            parent = symbol->symIdent;
+            if (isStringEqual(parent, ancestor)) 
+                break; 
+            node = mibNodeBuild(parent, 
+                                symbol->symInfo.nodeMeta.suffix, 
+                                symbol->symInfo.nodeMeta.parentIdent);
+
+            mibTreeSetRoot(trees[idx], node);
+        }
+        ++idx;
+    }
+    
+    node = mibNodeBuild(parent, 
+                        symbol->symInfo.nodeMeta.suffix,
+                        symbol->symInfo.nodeMeta.parentIdent);
+    mibTreeSetRoot(l, node);
+    mibTreeSetRoot(r, node);
+
+    l->root = node;
+    return l;
 }
 
 int mibTreeHeadAppend(mibTreeHead *treeHead, mibObjectTreeNode *newNode) {
@@ -819,7 +907,29 @@ void mibTreeObjTree__MIBTREE_MERGE(void **state) {
 
     currentTree = mibTreeNext(&treeHead.trees);
     travel_MibTree(currentTree->root, mibTreeMergeAssert, &orderDeck);
+    
+    // Merge by complete testing
+    symTableInit();
 
+    memset(&treeHead, 0, sizeof(mibTreeHead));
+
+    symbol_t *symbol = symbolNodeConst("A", "N/A", "1");
+    symbolTableAdd(SYMBOL_TBL_R, symbol);
+    
+    node = mibNodeBuild("B", strdup("1"), "A");
+    mibTreeHeadAppend(&treeHead, node);
+
+    node = mibNodeBuild("C", strdup("1"), "B");
+    mibTreeHeadAppend(&treeHead, node);
+
+    node = mibNodeBuild("D", strdup("2"), "A");
+    mibTreeHeadAppend(&treeHead, node);
+
+    node = mibNodeBuild("E", strdup("2"), "D");
+    mibTreeHeadAppend(&treeHead, node);
+     
+    mibTreeHeadMerge(&treeHead);
+    assert_int_equal(treeHead.numOfTree, 1);
 }
 
 #endif /* MIB2DOC_UNIT_TESTING */

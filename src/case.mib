@@ -32,6 +32,10 @@ E OBJECT-TYPE
     ::= { B 3 }
 
 
+ll ::= SEQUENCE {
+    index  INTEGER    
+}
+
 DisplayString ::= 
     OCTET STRING
 
