@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
     if (writeTo == NULL)
         abortWithMsg("Can not open file : %s\n", texPath);
 
-    //documentGen(&trees, writeTo);
+    documentGen(&trees, writeTo);
     showTree(&trees);
 
     fclose(yyin);

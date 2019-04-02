@@ -329,8 +329,13 @@ SMI :
     SMI_SPECIFIER SMI_VAL {};
 
 MODULE_DEF :
-    IDENTIFIER MOD_SPECIFIER MODULE_BODY {
-        PARAM_FLUSH();
+    IDENTIFIER MOD_SPECIFIER MODULE_BODY MOUNT {
+        dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
+        disParamStore(param, disParamConstruct($IDENTIFIER));
+        dispatch(DISPATCH_PARAM_STAGE, param);              
+        
+        param = disParamConstruct(OBJECT_IDENTIFIER);
+        dispatch(MIBTREE_GENERATION, param);
     };
 
 MODULE_BODY : 
@@ -338,8 +343,7 @@ MODULE_BODY :
     ORGANIZATION DESC_VALUE 
     CONTACT_INFO DESC_VALUE 
     DESC_SPECIFIER DESC_VALUE 
-    REVISIONS 
-    MOUNT;
+    REVISIONS;
 
 
 REVISIONS : 

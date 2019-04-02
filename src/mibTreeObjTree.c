@@ -135,7 +135,8 @@ int setAsChild_MibTree(mibObjectTreeNode *parent, mibObjectTreeNode *child) {
     }
 
     if (IS_NODE_HAS_CHILD_MT(parent)) {
-        return FALSE;
+        insert_MibTree(parent, child, child->mergeInfo.parent);
+        return TRUE;
     }
 
     parent->child = child;
@@ -243,19 +244,7 @@ int nodeCmp(void *arg, mibObjectTreeNode *node) {
     int size, size1, size2;
     ident = arg;
 
-    targetIdent = getIdentFromInfo(node);
-    size1 = strlen(ident);
-    size2 = strlen(targetIdent);
-
-    if (size1 < size2)
-        size = size1;
-    else
-        size = size2;
-
-    if (strncmp(ident, getIdentFromInfo(node), size) == 0)
-        return 1;
-    else
-        return 0;
+    return isStringEqual(ident, getIdentFromInfo(node));
 }
 
 char * getIdentFromInfo(mibObjectTreeNode *node) {
@@ -468,19 +457,6 @@ int mibTreeHeadMerge_LAST(mibTreeHead *treeHead) {
     return TRUE;
 }
 
-/* Desc: Try to merge each tree of the list
- * to let the number of tree in the tree list
- * as small as possible.
- */
-inline static mibTree * currentUpdate(mibTree *current, mibTree *currentMerge, mibTree *iterMerge) {
-    while (current = mibTreeNext(current)) {
-        if (current != currentMerge && current != iterMerge) {
-            break;
-        }
-    }
-    return current;
-}
-
 /* Situations: Assume exist two trees then
  * (1) A is descendent of B, vice versa.
  * (2) A and B has same set of ancestors.
@@ -567,10 +543,10 @@ static char * ancestorCommon(mibObjectTreeNode *l, mibObjectTreeNode *r) {
             if (sym_l == null) 
                 parent_l = null;
             else {
-                if (sym_l->wall == (unsigned long)parent_r)
+                if (sym_l->wall == (unsigned long)r)
                     return sym_l->symIdent;
-                sym_l->wall = (unsigned long)parent_l; 
-                parent_l = sym_l->symIdent;
+                sym_l->wall = (unsigned long)l; 
+                parent_l = sym_l->symInfo.nodeMeta.parentIdent;
             }
         }
         if (parent_r) {
@@ -578,10 +554,10 @@ static char * ancestorCommon(mibObjectTreeNode *l, mibObjectTreeNode *r) {
             if (sym_r == null) 
                 parent_r = null;
             else {
-                if (sym_r->wall == (unsigned long)parent_l)
+                if (sym_r->wall == (unsigned long)l)
                     return sym_r->symIdent;
-                sym_r->wall = (unsigned long)parent_r;
-                parent_r = sym_r->symIdent;
+                sym_r->wall = (unsigned long)r;
+                parent_r = sym_r->symInfo.nodeMeta.parentIdent;
             }
         }
     } 
