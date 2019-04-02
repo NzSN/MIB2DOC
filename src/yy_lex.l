@@ -122,7 +122,6 @@ SMI                                 { BEGIN(SMI_FIELD); return SMI_SPECIFIER; }
                                                 abortWithMsg("Unknow type: %s\n", typeName); 
                                             }
                                         }
-                                        disParamRelease(dispatchParamNext(pendingTypes), free); 
                                          
                                         if (switchToPrevModule(getCurSwInfo()) == -1) {
                                             yyterminate();

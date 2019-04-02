@@ -122,8 +122,8 @@ static int latexHeaderGen(FILE *file) {
     char *headerSpliter = "% Header ==========>";
 
     fprintf(file, "\\documentclass{ctexart}\n"
-            "\\usepackage{float}\n"
-            "\\begin{document}\n");
+                  "\\usepackage{float}\n"
+                  "\\begin{document}\n");
     fprintf(file, "%s\n\n", headerSpliter);
 
     return OK;
@@ -204,7 +204,7 @@ static int sectionGen_Latex(char *secName, char *OID, FILE *writeTo) {
         prefix = "subparagraph";
     }
 
-    fprintf(writeTo, "\\%s {%s (%s)}{}\n", prefix, secName, OID);
+    fprintf(writeTo, "\\%s {%s (%s)}.\n", prefix, secName, OID);
     return 0;
 }
 

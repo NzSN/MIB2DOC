@@ -229,11 +229,12 @@ int showTree(mibTreeHead *treeHead) {
 }
 
 static int Treeprint(void *arg, mibObjectTreeNode *node) {
+    mibLeaveInfo *info;
     printf("%s : %s", getIdentFromInfo(node), getOidFromInfo(node));
-    if (!node->isNode)
-        printf(" -- %s -- %s\n", ((mibLeaveInfo *)node->info)->type,
-               ((mibLeaveInfo *)node->info)->detail);
-    else
+    if (!node->isNode) {
+        info = node->info;
+        printf(" -- %s -- %s\n", info->type, info->detail);
+    } else
         printf("\n");
     return 0;
 }
@@ -684,10 +685,10 @@ static char * oidComplement(char *parentOid, char *suffix) {
 }
 
 static int oidComplete(void *arg, mibObjectTreeNode *node) {
-    char *newOid;
+    char *newOid, *parentOid;
     mibObjectTreeNode *parent;
     mibNodeInfo *nInfo_P, *nInfo_C;
-    mibLeaveInfo *lInfo_C;
+    mibLeaveInfo *lInfo_P, *lInfo_C;
 
     if (isNullPtr(node))
         return ERROR;
@@ -697,15 +698,23 @@ static int oidComplete(void *arg, mibObjectTreeNode *node) {
 
     parent = node->parent;
     nInfo_P = parent->info;
+    
+    if (parent->isNode) {
+        nInfo_P = parent->info;
+        parentOid = nInfo_P->oid;
+    } else {
+        lInfo_P = parent->info;
+        parentOid = lInfo_P->nodeInfo->oid; 
+    }
 
     if (node->isNode) {
         nInfo_C = node->info;
-        newOid = oidComplement(nInfo_P->oid, nInfo_C->oid);
+        newOid = oidComplement(parentOid, nInfo_C->oid);
         RELEASE_MEM(nInfo_C->oid);
         nInfo_C->oid = newOid;
     } else {
         lInfo_C = node->info;
-        newOid = oidComplement(nInfo_P->oid, lInfo_C->nodeInfo->oid);
+        newOid = oidComplement(parentOid, lInfo_C->nodeInfo->oid);
         RELEASE_MEM(lInfo_C->nodeInfo->oid);
         lInfo_C->nodeInfo->oid = newOid;
     }
