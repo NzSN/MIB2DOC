@@ -1,0 +1,22 @@
+--
+-- MG-SOFT Corporation root SMI
+--
+-- Copyright (C) 1995, 2003 by MG-SOFT Corporation.
+-- All rights reserved.
+--
+-- Comments to: <info@mg-soft.com>
+-- Web URL: http://www.mg-soft.com/
+--
+
+     MGSOFT-SMI-V1 DEFINITIONS ::= BEGIN
+
+     IMPORTS
+         enterprises
+               FROM RFC1155-SMI;
+
+         
+     mg-soft	OBJECT IDENTIFIER ::= { enterprises 1315 }
+
+     mgSamples	OBJECT IDENTIFIER ::= { mg-soft 99 }
+
+END

@@ -1,0 +1,38 @@
+--
+-- MG-SOFT Corporation root SMI
+--
+-- Copyright (C) 1995, 2003 by MG-SOFT Corporation.
+-- All rights reserved.
+--
+-- Comments to: <info@mg-soft.com>
+-- Web URL: http://www.mg-soft.com/
+--
+
+     MGSOFT-SMI DEFINITIONS ::= BEGIN
+
+     IMPORTS
+        enterprises, MODULE-IDENTITY
+        	FROM SNMPv2-SMI;
+
+     mgSoft   MODULE-IDENTITY
+         LAST-UPDATED "0310101040Z"
+         ORGANIZATION "MG-SOFT Corporation"
+         CONTACT-INFO
+              "MG-SOFT Corporation
+               Strma ulica 8
+               2000 Maribor
+               Slovenia
+
+               Phone:  +386 2 2506565
+               Fax:    +386 2 2506566
+               Web:    http://www.mg-soft.com/
+               E-Mail: info@mg-soft.com"
+
+         DESCRIPTION
+               "MG-SOFT Corporation root MIB module."  
+                       	     
+       ::= { enterprises 1315 }
+
+     mgSamples OBJECT IDENTIFIER ::= { mgSoft 99 }
+
+END

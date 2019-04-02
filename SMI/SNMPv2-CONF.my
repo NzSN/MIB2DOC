@@ -1,0 +1,16 @@
+-- file: SNMPv2-CONF.my
+-- Changes:
+--      Converted to SMIC format.
+-- dperkins@scruznet.com
+
+SNMPv2-CONF DEFINITIONS ::= BEGIN
+
+-- macros
+
+SMI OBJECT-GROUP
+SMI NOTIFICATION-GROUP
+SMI MODULE-COMPLIANCE
+SMI AGENT-CAPABILITIES
+
+END
+
