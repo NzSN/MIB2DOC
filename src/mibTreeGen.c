@@ -60,6 +60,11 @@ _Bool typeTableInit() {
     return OK;
 }
 
+void PARAM_FLUSH() {
+    sliceRelease_STATIC(&symCollectSlice);
+    sliceRelease_STATIC(&sliceContainer);
+}
+
 int mibObjGen(int nodeType) {
 
     mibObjectTreeNode *newNode;
@@ -322,7 +327,7 @@ int symbolCollectingInit() {
 int symbolCollecting(int type, dispatchParam *param) {
     char *ident;
 
-    if (type >= OBJECT && type <= SMI_DEF) {
+    if (type >= OBJECT && type <= SMI_DEF && type != OBJECT_IDENTIFIER) {
         ident = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
         if (!collectInfo_exists(SW_CUR_IMPORT(&swState), ident)) {
             sliceRelease_STATIC(&symCollectSlice);

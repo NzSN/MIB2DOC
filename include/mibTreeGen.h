@@ -41,6 +41,7 @@ int mibObjGen_InnerNode();
 int mibObjGen_trap();
 int symbolCollecting(int type, dispatchParam *param);
 int symbolCollectingInit();
+void PARAM_FLUSH();
 
 
 _Bool typeTableInit();

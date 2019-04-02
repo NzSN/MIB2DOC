@@ -179,8 +179,6 @@ int switchToPrevModule(switchingState *swState) {
         return -1;
     }
     
-    printf("file: %s\n", swState->currentSwitchInfo.fileName);
-
     // Release resources use by current info structure
     collectInfo_release(SW_CUR_IMPORT(swState));
     yy_delete_buffer(SW_CUR_BUFFER_INFO(swState));
@@ -233,7 +231,7 @@ static int symbolHashing(void* key) {
     char* keyString;
     symbolKey* sKey = (symbolKey*)key;
 
-    if (isNullPtr(key))
+    if (isNullPtr(sKey) || sKey->symbolIndex == NULL)
         return ERROR;
 
     keyString = sKey->symbolIndex;
@@ -274,12 +272,14 @@ static symbolVal * symbolValCopy(symbolVal *origin) {
 
 static int symbolKeyEqual(symbolKey* lSymbol, symbolKey* rSymbol) {
     int lLength, rLength;
+    
+    char *lStr, *rStr;
 
-    char* lStr = lSymbol->symbolIndex;
-    char* rStr = rSymbol->symbolIndex;
-
-    if (isNullPtr(lStr) || isNullPtr(rStr))
+    if (isNullPtr(lSymbol) || isNullPtr(rSymbol))
         return FALSE;
+
+    lStr = lSymbol->symbolIndex;
+    rStr = rSymbol->symbolIndex;
 
     lLength = lLength > rLength ? lLength : rLength;
     return !strncmp(lStr, rStr, lLength);
@@ -291,11 +291,13 @@ static int symbolValEqual(symbolVal* lSymbol, symbolVal* rSymbol) {
     if (isNullPtr(lSymbol) || isNullPtr(rSymbol))
         return FALSE;
 
-    char* lStr = lSymbol->symbol;
-    char* rStr = rSymbol->symbol;
+    char* lStr, *rStr;
 
-    if (isNullPtr(lStr) || isNullPtr(rStr))
+    if (isNullPtr(lSymbol) || isNullPtr(rSymbol))
         return FALSE;
+
+    lStr = lSymbol->symbol;
+    rStr = rSymbol->symbol;
 
     lLength = lLength > rLength ? lLength : rLength;
     return !strncmp(lStr, rStr, lLength);
@@ -429,12 +431,13 @@ int collectInfo_add(collectInfo* cInfo, char* symbol) {
 }
 
 int collectInfo_del(collectInfo* cInfo, char* symbol) {
-    symbolKey key;
-    if (isNullPtr(cInfo))
-        return FALSE;
-
-    symbolKeyInit(&key, symbol);
-    return hashMapDelete(cInfo->symbols, (pair_key_base *)&key);
+    symbolKey key = { 0 };
+    if (isNullPtr(cInfo) || isNullPtr(symbol))
+        return ERROR;
+    
+    if (symbolKeyInit(&key, symbol))
+        return hashMapDelete(cInfo->symbols, (pair_key_base *)&key);
+    return ERROR;
 }
 
 char* collectInfo_retrive(collectInfo* cInfo, char* symbol) {

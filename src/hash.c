@@ -127,21 +127,22 @@ void * hashMapGet(hashMap *map, pair_key_base *key) {
 
     beChecked = key;
 
-    if (HASH_ELEM_IS_COLLIDE(pElem)) {
-        selectedKey = pElem->key;
+    selectedKey = pElem->key;
 
-        if (isNullPtr(selectedKey)) {
-            return NULL;
-        }
-        if (selectedKey->isEqual(selectedKey, beChecked)) {
-            return pElem->val;
-        }
+    if (isNullPtr(selectedKey)) {
+        return NULL;
+    }
+    if (selectedKey->isEqual(selectedKey, beChecked)) {
+        return pElem->val;
+    }
+
+    if (HASH_ELEM_IS_COLLIDE(pElem)) {
         chainBeFound = hashChainSearch(HASH_ELEM_CHAIN_REF(pElem), key);
         if (isNullPtr(chainBeFound))
             return NULL;
         return chainBeFound->val;
     }
-    return pElem->val;
+    return null;
 }
 
 int hashMapPut(hashMap *map, pair_key_base *key, pair_val_base *val) {
@@ -183,10 +184,10 @@ int hashMapDelete(hashMap *map, pair_key_base *key) {
     if (isNullPtr(map) || isNullPtr(key))
         return FALSE;
 
-    pElem = HASH_MAP_HASH_GET(map, key);
+    pElem = HASH_MAP_HASH_GET(map, key); 
 
     // Try to matching with the key outside of chain.
-    if (key->isEqual(key, pElem->key)) {
+    if (key->isEqual && key->isEqual(key, pElem->key)) {
         theKey = pElem->key;
         theVal = pElem->val;
 
@@ -287,7 +288,7 @@ static hashChain * hashChainSearch(hashChain *chainNode, pair_key_base *key) {
         selectedKey = chainNode->key;
         beChecked = key;
 
-        if (!isNullPtr(selectedKey)) {
+        if (!isNullPtr(selectedKey) && selectedKey->isEqual) {
             if (selectedKey->isEqual(selectedKey, beChecked)) {
                 break;
             } else {
