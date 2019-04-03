@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
+#include "queue.h"
 #include "format.h"
 #include "util.h"
 
@@ -82,6 +83,21 @@ static int latexSection(char *secName, char *oid, FILE *file, formatInfo *info) 
     return OK;
 }
 
+static int latexTable(mibNodeInfoQueue *queue, char *parent, FILE *file) {
+    int i, count, index;
+
+    if (isNullPtr(queue) || isNullPtr(parent) || isNullPtr(file))
+       return ERROR; 
+    
+    index = 1;
+    count = queue->count;
+
+    fprintf(file, "% Table Begin\n"
+                  "\\begin{center}\n"
+                  "\\begin{longtable}{|l|l|l|l|l|l|l|}\n");
+
+}
+
 static char * latexTableItem(tableInfo *info, int index) {
     int isNeedExpand = FALSE, strLen;
     char *format = "%d & %s & %s & %s & %s & %s & %s";
@@ -89,7 +105,7 @@ static char * latexTableItem(tableInfo *info, int index) {
     if (isNullPtr(info) || index < 0)
        return null; 
     
-    strLen = info->length + 3 * 6 + 1;
+    strLen = info->length + 3 + 3 * 6 + 1;
 
     if (laTexStrBuffLenAcc < strLen) {
        isNeedExpand = TRUE; 
