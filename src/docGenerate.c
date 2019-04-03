@@ -11,6 +11,7 @@
 #include "util.h"
 #include "type.h"
 
+#include "format.h"
 #include "mibTreeGen.h"
 #include "typeTable.h"
 
@@ -41,6 +42,9 @@ char *long2Short(char *str);
 static int latexHeaderGen(FILE *file);
 static int latexTailGen(FILE *file);
 static int docGenerate(void *arg, mibObjectTreeNode *root);
+
+typedef int (*docGenInFormat)(mibObjectTreeNode *, char *filePath); 
+static docGenInFormat docGenRoutine[] = {};
 
 int documentGen(mibTreeHead *treeHead, FILE *writeTo) {
 
@@ -145,10 +149,14 @@ static int latexTailGen(FILE *file) {
 static int makeDecision(mibObjectTreeNode *node) {
     int decision;
     char *ident = getIdentFromInfo(node);
+    
+    _Bool isNeddCollecting = (node->sibling != NULL && 
+                              !isMibNodeType_TABLE(node->sibling)) ||
+                              isMibNodeType_ENTRY(node);
 
     if (node->isNode || isMibNodeType_TABLE(node)) {
         decision = SECTION;
-    } else if (node->sibling != NULL || isMibNodeType_ENTRY(node)) {
+    } else if (isNeddCollecting) {
         decision = COLLECTING;
     } else {
         decision = TABLE;
@@ -157,15 +165,25 @@ static int makeDecision(mibObjectTreeNode *node) {
 }
 
 static int infoPacket(tableInfo *info, mibObjectTreeNode *node) {
-    info->identifier = getIdentFromInfo(node);
-    info->oid = getOidFromInfo(node);
+    if (isNullPtr(info) || isNullPtr(node))
+        return ERROR;
 
-    if (node->isNode)
-        return 1;
+    info->identifier = getIdentFromInfo(node);
+    info->length += strlen(info->identifier);
+
+    info->oid = getOidFromInfo(node);
+    info->length += strlen(info->oid);
+
+    if (node->isNode) return OK;
 
     info->desc = ((mibLeaveInfo *)(node->info))->desc;
+    info->length += strlen(info->desc);
+
     info->type = long2Short(((mibLeaveInfo *)(node->info))->type);
+    info->length += strlen(info->type);
+
     info->rw = ((mibLeaveInfo *)(node->info))->rw;
+    info->length += strlen(info->rw);
 
     return 0;
 }

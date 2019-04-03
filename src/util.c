@@ -245,7 +245,7 @@ char * numberToStr(int num) {
 void * Malloc(size_t size) {
     void *mem = malloc(size);
     if (isNullPtr(mem)) abort();
-
+    memset(mem, 0, size);
     return mem;
 }
 

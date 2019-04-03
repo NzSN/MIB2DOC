@@ -116,6 +116,7 @@ static int dispatchMakeChoice(dispatch_type dType) {
             choice = dType;
         }
     }
+
     if (SW_STATE(&swState) == DISPATCH_MODE_DEBUG)
         choice = DEBUGING;
 

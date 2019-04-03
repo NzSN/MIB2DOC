@@ -47,9 +47,17 @@ typedef struct mibTreeHead {
     mibTree trees;
 } mibTreeHead;
 
+enum {
+    VISIT_PRE,
+    VISIT_IN,
+    VISIT_POST
+};
 
 /* mibObjectTreeNode functions */
-#define MIB_OBJ_TREE_NODE_PARENT_NAME(node) (node->mergeInfo.parent)
+#define MIB_OBJ_TREE_NODE_PARENT_NAME(node) ((node)->mergeInfo.parent)
+#define MIB_OBJ_TREE_NODE_PARENT(node) ((node)->parent)
+#define MIB_OBJ_TREE_NODE_CHILD(node) ((node)->child)
+#define MIB_OBJ_TREE_NODE_SIBLING(node) ((node)->sibling)
 
 int mibObjectTreeInit();
 int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent);

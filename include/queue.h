@@ -3,6 +3,7 @@
 //
 
 #include "../include/docGenerate.h"
+#include "format.h"
 
 #ifndef GL5610_MIB_DOC_GEN_QUEUE_H
 #define GL5610_MIB_DOC_GEN_QUEUE_H

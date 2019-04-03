@@ -33,20 +33,25 @@
 
 #define cSpace ' '
 #define null (0)
+
 #define SIZE_OF_CURRENT_TABLE 64
 #define SIZE_OF_SECTION_RECORD 1024
 #define SIZE_OF_OID_STRING 256
 #define EXTRA_OF_OID_LEN 10
+
 #define isNullPtr(PTR) (PTR == NULL)
 #define isNonNullPtr(PTR) (PTR != NULL)
+
 #define RELEASE_MEM(PTR) ({ free(PTR); PTR=NULL; })
 #define RELEASE_IF_NON_NULL(PTR) ({ if (PTR) RELEASE_MEM(PTR); })
+
 #define errorMsg(msg, args...) fprintf(stderr, msg, ##args)
 #define abortWithMsg(msg, args...) \
 do {\
     errorMsg(msg, ##args);\
     exit(1);\
 } while (0)
+
 #define containerOf(ptr, ConType, member) ({\
         const typeof( ((ConType *)(0))->member) *__mptr = ptr;\
         (ConType *)((char *)__mptr - offsetof(ConType, member));\

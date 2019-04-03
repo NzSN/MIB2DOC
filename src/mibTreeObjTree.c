@@ -263,31 +263,78 @@ char *getOidFromInfo(mibObjectTreeNode *node) {
     else
         return ((mibLeaveInfo *)node->info)->nodeInfo->oid;
 
+} 
+
+int travel_step(mibObjectTreeNode **node, int *visitState) {
+    mibObjectTreeNode *pNode;
+
+    if (isNullPtr(node) || isNullPtr(visitState))
+        return -2;
+    
+    pNode  = *node; 
+
+    switch(*visitState) {
+        case VISIT_PRE:
+            if (IS_NODE_HAS_CHILD_MT(pNode)) {
+                *node = MIB_OBJ_TREE_NODE_CHILD(pNode);
+                return 1;
+            } else {
+                *visitState = VISIT_IN; 
+                return 0;
+            }
+            break;
+
+        case VISIT_IN:
+            if (IS_NODE_HAS_SIBLING_MT(pNode)) {
+                *visitState = VISIT_PRE;
+                *node = MIB_OBJ_TREE_NODE_SIBLING(pNode); 
+                return 1;
+            } else {
+                *visitState = VISIT_POST; 
+                return 0;
+            }
+            break; 
+
+        case VISIT_POST:
+            if (IS_NODE_HAS_SIBLING_MT(pNode)) {
+                *visitState = VISIT_IN;
+                return 0;
+            } else {
+                *node = MIB_OBJ_TREE_NODE_PARENT(pNode);
+                return -1;
+            }
+            break;
+
+        default:
+            return -2;
+    }
+
+    return -2;
 }
 
 
 mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
-                                   int (*func)(void *argu, mibObjectTreeNode *node), void *arg) {
+                                   int (*func)(void *argu, mibObjectTreeNode *node), 
+                                   void *arg) {
 
-    int ret;
-    mibObjectTreeNode *targetChild, *targetSibling;
+    int ret = 0;
 
     if (isNullPtr(obj) || isNullPtr(func))
         return NULL;
 
+    int visit = VISIT_PRE;
+    mibObjectTreeNode *root = obj;
 
-    ret = func(arg, obj);
-    if (ret == 1) {
-        return obj;
-    }
+    do {
+        if (visit == VISIT_PRE) {
+            ret = func(arg, obj);
+            if (ret == 1) return obj;
+        } 
 
-    targetChild = travel_MibTree(obj->child, func, arg);
-    targetSibling = travel_MibTree(obj->sibling, func, arg);
-
-    if (targetChild != NULL)
-        return targetChild;
-    else
-        return targetSibling;
+        travel_step(&obj, &visit); 
+    } while (obj != root || visit != VISIT_POST);
+    
+    return null;
 }
 
 // mibTrees functions
@@ -523,7 +570,7 @@ static mibTree * __mergeHelper(mibTree *theTree, mibTree *treeSet, int *numOfTre
                 currentMerge = mibTreeNext(currentMerge);
             }
         }
-    } while (numOfTree_prev > num); 
+    } while (numOfTree_prev > num);
 
     *numOfTree = num + 1;
     return theTree;
