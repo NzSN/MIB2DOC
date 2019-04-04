@@ -70,15 +70,10 @@ int main(int argc, char *argv[]) {
     ret = yyparse();
     if (ret == ABORT) abortWithMsg("yyparse error\n");
 
-    writeTo = fopen(texPath, "w+");
-    if (writeTo == NULL)
-        abortWithMsg("Can not open file : %s\n", texPath);
-
-    documentGen(&trees, writeTo);
+    documentGen(&trees, texPath);
     showTree(&trees);
 
     fclose(yyin);
-    fclose(writeTo);
 
     // PDF Gen
     //system("pdflatex result.tex");

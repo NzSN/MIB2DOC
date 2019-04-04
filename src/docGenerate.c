@@ -22,35 +22,19 @@
 char *beginFrom;
 int beginOid;
 int isInitilized;
-/* enumeration */
-enum {
-    TABLE = 1,
-    COLLECTING,
-    SECTION
-};
-extern mibObjectTreeNode mibObjectTreeRoot;
 
 /* Local */
-char *laTexStrBuffer;
-mibNodeInfoQueue infoQueue;
-static int makeDecision(mibObjectTreeNode *node);
-static int sectionGen_Latex(char *secName, char *OID, FILE *writeTo);
-static int tableGen_Latex(mibNodeInfoQueue *info, char *parent, FILE *writeTo);
-static char * tableItemGen_Latex(tableInfo *info, int index);
-static int infoPacket(tableInfo *info, mibObjectTreeNode *node);
-char *long2Short(char *str);
-static int latexHeaderGen(FILE *file);
-static int latexTailGen(FILE *file);
-static int docGenerate(void *arg, mibObjectTreeNode *root);
+typedef int (*docGenInFormat)(mibObjectTreeNode *, FILE *file, formatInfo *info); 
+static docGenInFormat docGenRoutine[] = { 
+    // Latex format
+    docGenInLatex 
+};
 
-typedef int (*docGenInFormat)(mibObjectTreeNode *, char *filePath); 
-static docGenInFormat docGenRoutine[] = {};
-
-int documentGen(mibTreeHead *treeHead, FILE *writeTo) {
+int documentGen(mibTreeHead *treeHead, char *filePath) {
 
     mibTree *tree;
 
-    if (isNullPtr(treeHead) || isNullPtr(writeTo))
+    if (isNullPtr(treeHead) || isNullPtr(filePath))
         return ERROR;
 
     // Check that is only one tree here
@@ -65,228 +49,20 @@ int documentGen(mibTreeHead *treeHead, FILE *writeTo) {
         abort();
     }
     beginOid = strlen(getOidFromInfo(beginNode));
-    laTexStrBuffer = (char *) malloc(SIZE_OF_LATEX_BUFFER);
-
-    latexHeaderGen(writeTo);
-
-    travel_MibTree(beginNode, docGenerate, writeTo);
-
-    latexTailGen(writeTo);
-
-    return 0;
-}
-
-static int docGenerate(void *arg, mibObjectTreeNode *node) {
-    FILE *writeTo;
-    char *secname, *oid, *parent;
-    tableInfo *info;
-    mibObjectTreeNode *pNode;
-    mibNodeInfoQueue *pQueue = &infoQueue;
-
-    writeTo = (FILE *) arg;
-
-    switch(makeDecision(node)) {
-    case TABLE:
-        info = (tableInfo *)malloc(sizeof(tableInfo));
-        infoPacket(info, node);
-
-        parent = getIdentFromInfo(node->parent);
-        if (isMibNodeType_ENTRY(node->parent))
-            parent = getIdentFromInfo(node->parent->parent);
-
-        appendQueue(&infoQueue, info);
-
-        tableGen_Latex(&infoQueue, parent, writeTo);
-
-        break;
-    case COLLECTING:
-        info = (tableInfo *)malloc(sizeof(tableInfo));
-        infoPacket(info, node);
-        appendQueue(&infoQueue, info);
-
-        break;
-    case SECTION:
-        secname = getIdentFromInfo(node);
-        oid = getOidFromInfo(node);
-        sectionGen_Latex(secname, oid, writeTo);
-
-        break;
-    default:
-        break;
-    }
-
-    return 0;
-}
-
-// Generate contents before tables of mib nodes.
-static int latexHeaderGen(FILE *file) {
-    if (isNullPtr(file))
-        return ERROR;
-
-    char *headerSpliter = "% Header ==========>";
-
-    fprintf(file, "\\documentclass{ctexart}\n"
-                  "\\usepackage{float}\n"
-                  "\\begin{document}\n");
-    fprintf(file, "%s\n\n", headerSpliter);
-
-    return OK;
-}
-
-// Generate contents after tables of mib nodes.
-static int latexTailGen(FILE *file) {
-    if (isNullPtr(file))
-        return ERROR;
-
-    char *tailSpliter = "% Tail ==========>";
-
-    fprintf(file, "\n\n%s\n", tailSpliter);
-    fprintf(file, "\\end{document}\n");
-
-    return 0;
-}
-
-static int makeDecision(mibObjectTreeNode *node) {
-    int decision;
-    char *ident = getIdentFromInfo(node);
     
-    _Bool isNeddCollecting = (node->sibling != NULL && 
-                              !isMibNodeType_TABLE(node->sibling)) ||
-                              isMibNodeType_ENTRY(node);
+    FILE *file = fopen(filePath, "w+");
+    if (isNullPtr(file))
+        abortWithMsg("Can't open file %s\n", filePath);
+    
+    formatInfo info;
+    int status;
 
-    if (node->isNode || isMibNodeType_TABLE(node)) {
-        decision = SECTION;
-    } else if (isNeddCollecting) {
-        decision = COLLECTING;
-    } else {
-        decision = TABLE;
-    }
-    return decision;
-}
+    info.beginOid = beginOid;
+    
+    // Todo: choose format via option
+    status = docGenRoutine[0](beginNode, file, &info);
+     
+    fclose(file);
 
-static int infoPacket(tableInfo *info, mibObjectTreeNode *node) {
-    if (isNullPtr(info) || isNullPtr(node))
-        return ERROR;
-
-    info->identifier = getIdentFromInfo(node);
-    info->length += strlen(info->identifier);
-
-    info->oid = getOidFromInfo(node);
-    info->length += strlen(info->oid);
-
-    if (node->isNode) return OK;
-
-    info->desc = ((mibLeaveInfo *)(node->info))->desc;
-    info->length += strlen(info->desc);
-
-    info->type = long2Short(((mibLeaveInfo *)(node->info))->type);
-    info->length += strlen(info->type);
-
-    info->rw = ((mibLeaveInfo *)(node->info))->rw;
-    info->length += strlen(info->rw);
-
-    return 0;
-}
-
-static int sectionGen_Latex(char *secName, char *OID, FILE *writeTo) {
-    enum {
-        section = 1,
-        subsection = 2,
-        subsubsection = 3,
-        paragraph = 4,
-        subparagraph = 5
-    };
-
-    int depth;
-    char *prefix;
-
-    depth = (strlen(OID) - beginOid) / 2 + 1;
-
-    switch (depth) {
-    case section:
-        prefix = "section";
-        break;
-    case subsection:
-        prefix = "subsection";
-        break;
-    case subsubsection:
-        prefix = "subsubsection";
-        break;
-    case paragraph:
-        prefix = "paragraph";
-        break;
-    case subparagraph:
-        prefix = "subparagraph";
-        break;
-    default:
-        prefix = "subparagraph";
-    }
-
-    fprintf(writeTo, "\\%s {%s (%s)}.\n", prefix, secName, OID);
-    return 0;
-}
-
-static int tableGen_Latex(mibNodeInfoQueue *queue, char *parent, FILE *writeTo) {
-    int i, count, index;
-
-    if (isNullPtr(queue) || isNullPtr(writeTo))
-        return -1;
-
-    count = queue->count;
-    index = 1;
-
-    fprintf(writeTo, "% Table Begin\n");
-
-    fprintf(writeTo, "\\begin{table}[H]\n"
-            "\\centerline {\n"
-            "\\begin{tabular} {|c|c|c|c|c|c|c|}\n"
-            "\\hline\n"
-            "Index & Name & Desc & OID & RW & Type & Detail \\\\ \n"
-            "\\hline\n");
-
-    for (i=0; i<count; i++, index++) {
-        fprintf(writeTo, "%s \\\\\n", tableItemGen_Latex((tableInfo *)getQueue(queue), index));
-        fprintf(writeTo, "\\hline\n");
-    }
-
-    fprintf(writeTo, "\\end{tabular}\n");
-    fprintf(writeTo, "}\n");
-    fprintf(writeTo, "\\caption{%s}\n", parent);
-    fprintf(writeTo, "\\end{table}\n");
-
-    fprintf(writeTo, "% Table End\n");
-
-    parent = NULL;
-    return 0;
-}
-
-static char * tableItemGen_Latex(tableInfo *info, int index) {
-
-    if (isNullPtr(info))
-        return NULL;
-
-    memset(laTexStrBuffer, 0, SIZE_OF_LATEX_BUFFER);
-    sprintf(laTexStrBuffer, "%d & %s & %s & %s & %s & %s & %s",
-            index, info->identifier, info->desc, info->oid, info->rw, info->type, " ");
-
-    return laTexStrBuffer;
-}
-
-char * long2Short(char *str) {
-    if (isNullPtr(str))
-        return NULL;
-
-    if (strncmp(str, "INTEGER", strlen("INTEGER")) == 0) {
-        return "INT";
-    }
-
-    if (strncmp(str, "OCTET", strlen("OCTET")) == 0) {
-        return "OCT";
-    }
-
-    if (entryRecognize(str, strlen(str))) {
-        return "Entry";
-    }
-
-    return str;
+    return status;
 }

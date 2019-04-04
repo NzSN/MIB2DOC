@@ -7,6 +7,7 @@
 
 #include "type.h"
 #include "mibTreeObjTree.h"
+#include <stdio.h>
 
 typedef struct tableInfo {
     char *identifier;
@@ -23,7 +24,7 @@ typedef struct formatInfo {
 } formatInfo;
 
 /* Latex format */
-int docGenInLatex(mibObjectTreeNode *from, char *filePath, formatInfo *info);
+int docGenInLatex(mibObjectTreeNode *from, FILE *file, formatInfo *info);
 
 
 /* Plain text */

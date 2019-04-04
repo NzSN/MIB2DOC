@@ -46,7 +46,7 @@ void PARAM_FLUSH();
 
 _Bool typeTableInit();
 
-int documentGen(mibTreeHead *treeHead, FILE *writeTo);
+int documentGen(mibTreeHead *treeHead, char *filePath);
 
 /* Note: this macro is only use for symbolCollect_XXXX series function */
 #define PARAM_STORE_TO_SYM_LIST(type, param) ({\

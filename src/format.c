@@ -3,14 +3,17 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
+
 #include "queue.h"
 #include "format.h"
 #include "util.h"
+#include "mibTreeObjTree.h"
 
 /* Latex format */
 #define laTexStrBufferLen 25
 static char *laTexStrBuffer;
 static unsigned laTexStrBuffLenAcc = 0;
+mibNodeInfoQueue infoQueue;
 
 enum {
     section = 1,
@@ -20,21 +23,103 @@ enum {
     subparagraph = 5
 };
 
+enum {
+    TABLE = 1,
+    COLLECTING,
+    SECTION
+};
 
-int docGenInLatex(mibObjectTreeNode *from, char *filePath, formatInfo *info) {
-    if (isNullPtr(from) || isNullPtr(filePath))
+static int latexHeader(FILE *file);
+static int latexTail(FILE *file);
+static int latexSection(char *secName, char *oid, FILE *file, formatInfo *info);
+static int latexTable(mibNodeInfoQueue *queue, char *parent, FILE *file);
+static char * latexTableItem(tableInfo *info, int index);
+static char * long2Short(char *str);
+static int infoPacket(tableInfo *info, mibObjectTreeNode *node);
+static int latexGen(void *arg, mibObjectTreeNode *node);
+static int makeDecision(mibObjectTreeNode *node);
+
+int docGenInLatex(mibObjectTreeNode *from, FILE *file, formatInfo *info) {
+    if (isNullPtr(from) || isNullPtr(file) || isNullPtr(info))
         return ERROR;
     
-     
+    void *args[2] = { file, info };
+
+    latexHeader(file); 
+
+    travel_MibTree(from, latexGen, args);
+
+    latexTail(file);
+
+    return OK;
+}
+
+static int latexGen(void *arg, mibObjectTreeNode *node) {
+    if (isNullPtr(arg) || isNullPtr(node))
+        return ERROR;
+    
+    void **args = arg;  
+    FILE *file = args[0];
+    formatInfo *fInfo = args[1];
+
+    tableInfo *info;
+    char *parent, *oid, *secName;
+
+    switch(makeDecision(node)) {
+        case TABLE:
+            info = (tableInfo *)Malloc(sizeof(tableInfo));
+            infoPacket(info, node);
+
+            parent = getIdentFromInfo(node->parent);
+            if (isMibNodeType_ENTRY(node->parent))
+                parent = getIdentFromInfo(node->parent->parent);
+
+            appendQueue(&infoQueue, info);
+            latexTable(&infoQueue, parent, file);
+            break;
+
+        case COLLECTING:
+            info = (tableInfo *)Malloc(sizeof(tableInfo));
+            infoPacket(info, node);
+            appendQueue(&infoQueue, info);
+            break;
+        case SECTION:
+            secName = getIdentFromInfo(node);
+            oid = getOidFromInfo(node);
+            latexSection(secName, oid, file, fInfo);
+            break;
+        default:
+            break; 
+    }
+
+    return OK;
+}
+
+static int makeDecision(mibObjectTreeNode *node) {
+    int decision;
+
+    _Bool isNeedCollecting = (node->sibling != null &&
+                              !isMibNodeType_TABLE(node->sibling)) ||
+                              isMibNodeType_ENTRY(node);
+
+    if (node->isNode || isMibNodeType_TABLE(node)) {
+        decision = SECTION; 
+    } else if (isNeedCollecting) {
+        decision = COLLECTING; 
+    } else {
+        decision = TABLE; 
+    }
+
+    return decision;
 }
 
 static int latexHeader(FILE *file) {
     if (isNullPtr(file))
        return ERROR; 
 
-    fprintf(file, "\\documentclass{ctexart}\n",
-                  "\\usepackage{float}\n",
-                  "\\usepackage{longtable}\n",
+    fprintf(file, "\\documentclass{ctexart}\n"
+                  "\\usepackage{float}\n"
+                  "\\usepackage{longtable}\n"
                   "\\begin{document}\n");
     fprintf(file, "\n\n\n");
 
@@ -95,12 +180,60 @@ static int latexTable(mibNodeInfoQueue *queue, char *parent, FILE *file) {
     fprintf(file, "% Table Begin\n"
                   "\\begin{center}\n"
                   "\\begin{longtable}{|l|l|l|l|l|l|l|}\n");
+    fprintf(file, "\\caption{%s}\\\\ \n", parent); 
+    // endfirst
+    fprintf(file, "\\hline\n"
+                  "\\multicolumn{1}{|c|}{\\textbf{Index}} & "
+                  "\\multicolumn{1}{c|}{\\textbf{Name}} & "
+                  "\\multicolumn{1}{c|}{\\textbf{Oid}} & "
+                  "\\multicolumn{1}{c|}{\\textbf{RW}} & "
+                  "\\multicolumn{1}{c|}{\\textbf{Type}} & "
+                  "\\multicolumn{1}{|c|}{\\textbf{Detail}} \\\\ \n"
+                  "\\hline\n"
+                  "\\endfirsthead\n");
 
+    // endhead
+    fprintf(file, "\\hline\n"
+                  "\\multicolumn{6}{|c|}{%s}\\\\ \n"
+                  "\\hline\n"
+                  "\\multicolumn{1}{|c|}{\\textbf{Index}} & "
+                  "\\multicolumn{1}{c|}{\\textbf{Name}} & "
+                  "\\multicolumn{1}{c|}{\\textbf{Oid}} & "
+                  "\\multicolumn{1}{c|}{\\textbf{RW}} & "
+                  "\\multicolumn{1}{c|}{\\textbf{Type}} & "
+                  "\\multicolumn{1}{|c|}{\\textbf{Detail}} \\\\ \n"
+                  "\\hline\n"
+                  "\\endhead\n", parent);
+
+    // endfoot
+    fprintf(file, "\\hline\n"
+                  "\\multicolumn{6}{|c|}{Continue to next} \\\\ \n"
+                  "\\hline\n"
+                  "\\endfoot\n");
+
+    // endlastfoot
+    fprintf(file, "\\hline\n"
+                  "\\multicolumn{6}{|c|}{Last page of table} \\\\"
+                  "\\hline\n"
+                  "\\endlastfoot\n\n");
+    
+    tableInfo *info;
+    for (i = 0; i < count; ++i, ++index) {
+        info = (tableInfo *)getQueue(queue);
+        fprintf(file, "%s \\\\ \n", latexTableItem(info, index));  
+        fprintf(file, "\\hline\n");
+    }
+
+    fprintf(file, "\\end{longtable}\n"
+                  "\\end{center}\n");
+    fprintf(file, "% Table End\n");
+
+    return OK;
 }
 
 static char * latexTableItem(tableInfo *info, int index) {
     int isNeedExpand = FALSE, strLen;
-    char *format = "%d & %s & %s & %s & %s & %s & %s";
+    char *format = "%d & %s & %s & %s & %s & %s";
 
     if (isNullPtr(info) || index < 0)
        return null; 
@@ -122,7 +255,6 @@ static char * latexTableItem(tableInfo *info, int index) {
     
     sprintf(laTexStrBuffer, format, index, 
                                     info->identifier,
-                                    info->desc,
                                     info->oid,
                                     info->rw,
                                     info->type,

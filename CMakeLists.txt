@@ -16,7 +16,7 @@ set(SOURCE_FILES
     ${SRC_DIR}/options.c ${SRC_DIR}/util.c ${SRC_DIR}/dispatcher.c
     ${SRC_DIR}/docGenerate.c ${SRC_DIR}/misc.c ${SRC_DIR}/hash.c
     ${SRC_DIR}/yy_syn.def.c ${SRC_DIR}/typeCheck.c
-    ${SRC_DIR}/re.c)
+    ${SRC_DIR}/re.c ${SRC_DIR}/format.c)
 add_executable(Mib2Doc ${SOURCE_FILES})
 
 project(UNIT_TEST)
