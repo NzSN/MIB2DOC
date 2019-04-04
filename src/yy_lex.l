@@ -39,7 +39,6 @@ SYNTAX                              { return SYNTAX_SPECIFIER; }
 \.\.                                { return TO; }
 SIZE                                { return SIZE; }
 
-
 INTEGER                                 | 
 Integer32                               |
 IpAddress                               | 

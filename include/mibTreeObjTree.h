@@ -53,6 +53,8 @@ enum {
     VISIT_POST
 };
 
+typedef int (*travelFunc)(void *argu, mibObjectTreeNode *node);
+
 /* mibObjectTreeNode functions */
 #define MIB_OBJ_TREE_NODE_PARENT_NAME(node) ((node)->mergeInfo.parent)
 #define MIB_OBJ_TREE_NODE_PARENT(node) ((node)->parent)
@@ -69,8 +71,7 @@ mibObjectTreeNode * search_MibTree(mibObjectTreeNode *root, char *const ident);
 char * getIdentFromInfo(mibObjectTreeNode *node);
 char * getOidFromInfo(mibObjectTreeNode *node);
 int showTree(mibTreeHead *head);
-mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, 
-    int (*func)(void *argu, mibObjectTreeNode *node), void *arg);
+mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, travelFunc func, void *arg);
 
 /* mibTree operations */
 #define MIBTREE_IS_FIRST_TREE(MIBTREE) (MIBTREE->node.prev == NULL)

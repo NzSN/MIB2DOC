@@ -312,11 +312,7 @@ int travel_step(mibObjectTreeNode **node, int *visitState) {
     return -2;
 }
 
-
-mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
-                                   int (*func)(void *argu, mibObjectTreeNode *node), 
-                                   void *arg) {
-
+mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj, travelFunc func, void *arg) { 
     int ret = 0;
 
     if (isNullPtr(obj) || isNullPtr(func))
@@ -330,7 +326,6 @@ mibObjectTreeNode * travel_MibTree(mibObjectTreeNode *obj,
             ret = func(arg, obj);
             if (ret == 1) return obj;
         } 
-
         travel_step(&obj, &visit); 
     } while (obj != root || visit != VISIT_POST);
     
