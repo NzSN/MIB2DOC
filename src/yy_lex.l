@@ -17,12 +17,17 @@
 
 %x SMI_FIELD
 %s IMPORT_FIELD
+%s STATUS_FIELD
 
 %%
 
 <IMPORT_FIELD>FROM                  { return FROM_; }
 <IMPORT_FIELD>([a-zA-Z0-9]|"-")+    { yylval.str = strdup(yytext); return IDENTIFIER; }
 <IMPORT_FIELD>\;                    { BEGIN(INITIAL); return SEMICOLON; }
+
+<STATUS_FIELD>current |
+<STATUS_FIELD>deprecated |
+<STATUS_FIELD>obsolete              { BEGIN(INITIAL); return STATUS_VALUE; }
 
 "--".*                              { /* empty */ }
 [\n ]+                              { /* empty */ }
@@ -34,16 +39,24 @@ OBJECT                              { return OBJECT_; }
 NOTIFICATION-TYPE                   { return NOTIFY_TYPE_SPECIFIER; }
 SYNTAX                              { return SYNTAX_SPECIFIER; }
 
+DEFVAL                              { return DEFVAL_SPECIFIER; }
+UNITS                               { return UNITS_SPECIFIER;  }
+AUGMENTS                            { return AUGMENTS_; }
+
+\|                                  { return OR; }
+
 \(                                  { return L_PAREN; }
 \)                                  { return R_PAREN; }
 \.\.                                { return TO; }
 SIZE                                { return SIZE; }
 
+\'[a-fA-F]*\'H                      { return HEX_STRING; }
+
 INTEGER                                 | 
 Integer32                               |
 IpAddress                               | 
 OCTET[ \t]+STRING[ \t]*([ \t]*\(.*\))*  | 
-SEQUENCE[ \t]+OF[ \t]*[a-zA-Z]*         { yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
+SEQUENCE[ \t]+OF[ \t]*[a-zA-Z0-9]*         { yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
 
 SEQUENCE                            { return SEQ; }
 
@@ -87,18 +100,15 @@ read-create             |
 accessible-for-notify   |
 not-accessible                       { yylval.str = strdup(yytext); return ACCESS_VALUE; }
 
-STATUS                              { return STATUS_SPECIFIER; }
-current |
-deprecated |
-obsolete                            { return STATUS_VALUE; }
+STATUS                              { BEGIN(STATUS_FIELD); return STATUS_SPECIFIER; }
 DESCRIPTION                         { return DESC_SPECIFIER; }
-\"[^\"]*\"{1}                       { yylval.str = strdup(yytext); return DESC_VALUE; }
+\"[^\"]*\"{1}                       { yylval.str = strdup(yytext); return STRING; }
 ::=                                 { return ASSIGNED; }
 
 \{                                  { return L_BRACE; }
 \}                                  { return R_BRACE; }
 
-[0-9]+                              { yylval.str = strdup(yytext); return NUM; }
+(-?)[0-9]+                          { yylval.str = strdup(yytext); return NUM; }
 
 SMI                                 { BEGIN(SMI_FIELD); return SMI_SPECIFIER; }
 
@@ -128,6 +138,7 @@ SMI                                 { BEGIN(SMI_FIELD); return SMI_SPECIFIER; }
                                     }
 
 %%
+
 int yywrap() {
     return 1;
 }

@@ -294,7 +294,8 @@ static int infoPacket(tableInfo *info, mibObjectTreeNode *node) {
     if (node->isNode) return OK;
 
     info->desc = ((mibLeaveInfo *)(node->info))->desc;
-    info->length += strlen(info->desc);
+    if (info->desc)
+        info->length += strlen(info->desc);
 
     info->type = long2Short(((mibLeaveInfo *)(node->info))->type);
     info->length += strlen(info->type);

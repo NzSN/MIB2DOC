@@ -133,6 +133,7 @@ static int switchInit() {
          
     char *srcMibPath = optMngGetOptVal(optionsManager, OPT_KEY_SRC_MIB_FILE);
     SW_CUR_SET_FILE_NAME(&swState, srcMibPath); 
+    SW_CUR_SET_LINE_NO(&swState, 1); 
 
     SW_COUNTER_SET(&swState, 0);
     SW_STATE_SET(&swState, DISPATCH_MODE_DOC_GENERATING);
@@ -155,9 +156,10 @@ int switchToModule(switchingState *swState, char* moduleName) {
     if (isNullPtr(swState) || isNullPtr(moduleName)) {
         return FALSE;
     }
-
+    
     // Step 1: Push currentSwitchInfo into stack
     SW_SET_CUR_BUFFER_INFO(swState, getCurrentBufferState());
+    SW_CUR_SET_LINE_NO(swState, yylineno);
     push(SW_STACK(swState), SW_CUR_SWITCH_INFO(swState));
 
     // Step 2: Update currentSwitchInfo
@@ -166,7 +168,11 @@ int switchToModule(switchingState *swState, char* moduleName) {
         return ABORT;
     
     SW_CUR_SET_FILE_NAME(swState, path);
+    SW_CUR_SET_LINE_NO(swState, 1);
     SW_SET_CUR_BUFFER_INFO(swState, getCurrentBufferState());
+    
+    // Step 3: Update environment
+    yylineno = SW_CUR_LINE_NO(swState);
 
     return 0;
 }
@@ -188,6 +194,7 @@ int switchToPrevModule(switchingState *swState) {
     // Switch to prev module
     pop(SW_STACK(swState), SW_CUR_SWITCH_INFO(swState));
     yy_switch_to_buffer(SW_CUR_BUFFER_INFO(swState));
+    yylineno = SW_CUR_LINE_NO(swState);
 
     SW_STATE_REFRESH((*swState));
 
@@ -492,13 +499,13 @@ int importWorks(genericStack *importInfoStack) {
     if (isNullPtr(importInfoStack))
         return FALSE;
 
-    while (pop(importInfoStack, &infoCollect) == 0) {
+    while (pop(importInfoStack, &infoCollect) == OK) {
         modName = infoCollect->modName;
         symbolMap = infoCollect->symbols;
-
+        
         if (switchToModule(&swState, modName) == ABORT)
             abortWithMsg("%s: No such Mib file.\n", modName);
-
+        
         SW_STATE_SET(&swState, DISPATCH_MODE_SYMBOL_COLLECTING);
         SW_CUR_SWITCH_INFO(&swState)->purpose = SWITCHING_INC_PURPOSE;
 

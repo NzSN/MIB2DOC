@@ -46,6 +46,10 @@ enum {
 
 typedef struct switchInfo {
     char *fileName;
+    /* Flex only maintain a global line number for 
+     * all files it has parsing so keep track of 
+     * line number of a file via switchInfo */
+    unsigned int lineNo;
     /* Kind of purposes:
      *   SWITCHING_INC_PURPOSE: The purpose of parser is to find the symbol
      *                          that import by import statements and then 
@@ -95,6 +99,9 @@ typedef struct switchingState {
 
 #define SW_CUR_FILE_NAME(SW) (SW_CUR_SWITCH_INFO(SW)->fileName)
 #define SW_CUR_SET_FILE_NAME(SW, NAME) (SW_CUR_SWITCH_INFO(SW)->fileName = NAME) 
+
+#define SW_CUR_LINE_NO(SW) (SW_CUR_SWITCH_INFO(SW)->lineNo)
+#define SW_CUR_SET_LINE_NO(SW, lNo) (SW_CUR_SWITCH_INFO(SW)->lineNo = lNo)
 
 #define SW_CUR_IMPORT(SW) (&SW_CUR_SWITCH_INFO(SW)->importInfo)
 #define SW_CUR_SET_SYMBOLS(SW, SYM) (SW_CUR_IMPORT(SW)->symbols = SYM)
