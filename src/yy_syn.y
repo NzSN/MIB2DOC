@@ -236,7 +236,7 @@ NOTIFY_TYPE_DEFINED :
         PARAM_FLUSH();
     };
 NOTIFY_TYPE : 
-    NOTIFY_TYPE_OBJ_PART STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER STRING;
+    NOTIFY_TYPE_OBJ_PART STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER STRING REF_PART;
 NOTIFY_TYPE_OBJ_PART :
     OBJ_PART
     | /* empty */;
@@ -245,11 +245,9 @@ NOTIFY_TYPE_OBJ_PART :
 TYPE_DEFINED :
     IDENTIFIER ASSIGNED TYPE {
         _Bool isExists = typeTableIsTypeExists(MIB_TYPE_TBL_R, $IDENTIFIER);
-        if (isExists) {
-            errorMsg("%s is already exists.\n", $IDENTIFIER);
-            abort();
+        if (!isExists) {
+            typeTableAdd(MIB_TYPE_TBL_R, $IDENTIFIER, CATE_CUSTOM, NULL);         
         }
-        typeTableAdd(MIB_TYPE_TBL_R, $IDENTIFIER, CATE_CUSTOM, NULL);         
     }
 
 END :
@@ -394,6 +392,7 @@ PROPERTY :
 	ACCESS
 	STATUS
 	DESCRIPTION
+    REF_PART
 	INDEX
     DEFVAL
  	MOUNT

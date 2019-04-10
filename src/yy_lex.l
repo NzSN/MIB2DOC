@@ -18,6 +18,7 @@
 %x SMI_FIELD
 %s IMPORT_FIELD
 %s STATUS_FIELD
+%s SEQUENCE_FIELD
 
 %%
 
@@ -28,6 +29,9 @@
 <STATUS_FIELD>current |
 <STATUS_FIELD>deprecated |
 <STATUS_FIELD>obsolete              { BEGIN(INITIAL); return STATUS_VALUE; }
+
+<SEQUENCE_FIELD>OBJECT[ \T]+IDENTIFIER { yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
+<SEQUENCE_FIELD>\}                  { BEGIN(INITIAL); return R_BRACE; }
 
 "--".*                              { /* empty */ }
 [\n ]+                              { /* empty */ }
@@ -58,7 +62,7 @@ IpAddress                               |
 OCTET[ \t]+STRING[ \t]*([ \t]*\(.*\))*  | 
 SEQUENCE[ \t]+OF[ \t]*[a-zA-Z0-9]*         { yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
 
-SEQUENCE                            { return SEQ; }
+SEQUENCE                            { BEGIN(SEQUENCE_FIELD); return SEQ; }
 
 INDEX                               { return INDEX_; }
 MAX-ACCESS                          { return ACCESS_SPECIFIER; }

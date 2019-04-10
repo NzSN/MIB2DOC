@@ -210,6 +210,7 @@ extern char *yytext;
 #define SMI_FIELD 1
 #define IMPORT_FIELD 2
 #define STATUS_FIELD 3
+#define SEQUENCE_FIELD 4
 
 #endif
 
@@ -318,9 +319,9 @@ extern int yylex (void);
 #undef YY_DECL
 #endif
 
-#line 140 "./src/yy_lex.l"
+#line 144 "./src/yy_lex.l"
 
 
-#line 325 "include/lexer.h"
+#line 326 "include/lexer.h"
 #undef yyIN_HEADER
 #endif /* yyHEADER_H */
