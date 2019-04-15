@@ -42,10 +42,10 @@ static int makeDecision(mibObjectTreeNode *node);
 int docGenInLatex(mibObjectTreeNode *from, FILE *file, formatInfo *info) {
     if (isNullPtr(from) || isNullPtr(file) || isNullPtr(info))
         return ERROR;
-    
+
     void *args[2] = { file, info };
 
-    latexHeader(file); 
+    latexHeader(file);
 
     travel_MibTree(from, latexGen, args);
 
@@ -57,8 +57,8 @@ int docGenInLatex(mibObjectTreeNode *from, FILE *file, formatInfo *info) {
 static int latexGen(void *arg, mibObjectTreeNode *node) {
     if (isNullPtr(arg) || isNullPtr(node))
         return ERROR;
-    
-    void **args = arg;  
+
+    void **args = arg;
     FILE *file = args[0];
     formatInfo *fInfo = args[1];
 
@@ -98,16 +98,22 @@ static int latexGen(void *arg, mibObjectTreeNode *node) {
 static int makeDecision(mibObjectTreeNode *node) {
     int decision;
 
-    _Bool isNeedCollecting = (node->sibling != null &&
-                              !isMibNodeType_TABLE(node->sibling)) ||
-                              isMibNodeType_ENTRY(node);
+    _Bool isNeedCollecting =
+        /* If sibling is exists and it's not a table node */
+        (node->sibling != null && !isMibNodeType_TABLE(node->sibling)) ||
+        /* If it's an entry node */
+        isMibNodeType_ENTRY(node);
 
+    /* Action of SECTION: Create section imediatly.
+     * Action of COLLECTING: Temporarily store node info.
+     * Action of TABLE: Store info of current node and print out
+     *                  infos that stored in buffer. */
     if (node->isNode || isMibNodeType_TABLE(node)) {
-        decision = SECTION; 
+        decision = SECTION;
     } else if (isNeedCollecting) {
-        decision = COLLECTING; 
+        decision = COLLECTING;
     } else {
-        decision = TABLE; 
+        decision = TABLE;
     }
 
     return decision;
@@ -115,7 +121,7 @@ static int makeDecision(mibObjectTreeNode *node) {
 
 static int latexHeader(FILE *file) {
     if (isNullPtr(file))
-       return ERROR; 
+       return ERROR;
 
     fprintf(file, "\\documentclass{ctexart}\n"
                   "\\usepackage{float}\n"
@@ -129,7 +135,7 @@ static int latexHeader(FILE *file) {
 static int latexTail(FILE *file) {
     if (isNullPtr(file))
         return ERROR;
-    
+
     fprintf(file, "\\end{document}\n");
 
     return OK;
@@ -138,9 +144,9 @@ static int latexTail(FILE *file) {
 static int latexSection(char *secName, char *oid, FILE *file, formatInfo *info) {
     int depth;
     char *prefix;
-    
+
     if (isNullPtr(secName) || isNullPtr(oid) || isNullPtr(file))
-       return ERROR; 
+       return ERROR;
 
     depth = (strlen(oid) - info->beginOid) / 2 + 1;
 
@@ -172,15 +178,15 @@ static int latexTable(mibNodeInfoQueue *queue, char *parent, FILE *file) {
     int i, count, index;
 
     if (isNullPtr(queue) || isNullPtr(parent) || isNullPtr(file))
-       return ERROR; 
-    
+       return ERROR;
+
     index = 1;
     count = queue->count;
 
     fprintf(file, "% Table Begin\n"
                   "\\begin{center}\n"
                   "\\begin{longtable}{|l|l|l|l|l|l|l|}\n");
-    fprintf(file, "\\caption{%s}\\\\ \n", parent); 
+    fprintf(file, "\\caption{%s}\\\\ \n", parent);
     // endfirst
     fprintf(file, "\\hline\n"
                   "\\multicolumn{1}{|c|}{\\textbf{Index}} & "
@@ -216,11 +222,11 @@ static int latexTable(mibNodeInfoQueue *queue, char *parent, FILE *file) {
                   "\\multicolumn{6}{|c|}{Last page of table} \\\\"
                   "\\hline\n"
                   "\\endlastfoot\n\n");
-    
+
     tableInfo *info;
     for (i = 0; i < count; ++i, ++index) {
         info = (tableInfo *)getQueue(queue);
-        fprintf(file, "%s \\\\ \n", latexTableItem(info, index));  
+        fprintf(file, "%s \\\\ \n", latexTableItem(info, index));
         fprintf(file, "\\hline\n");
     }
 
@@ -236,29 +242,29 @@ static char * latexTableItem(tableInfo *info, int index) {
     char *format = "%d & %s & %s & %s & %s & %s";
 
     if (isNullPtr(info) || index < 0)
-       return null; 
-    
+       return null;
+
     strLen = info->length + 3 + 3 * 6 + 1;
 
     if (laTexStrBuffLenAcc < strLen) {
-       isNeedExpand = TRUE; 
+       isNeedExpand = TRUE;
 
-        while (laTexStrBuffLenAcc < strLen) 
-            laTexStrBuffLenAcc += laTexStrBufferLen; 
+        while (laTexStrBuffLenAcc < strLen)
+            laTexStrBuffLenAcc += laTexStrBufferLen;
     }
-    
+
     if (isNeedExpand) {
         if (!isNullPtr(laTexStrBuffer))
-            RELEASE_MEM(laTexStrBuffer); 
+            RELEASE_MEM(laTexStrBuffer);
         laTexStrBuffer = (char *)Malloc(laTexStrBuffLenAcc);
     }
-    
-    sprintf(laTexStrBuffer, format, index, 
-                                    info->identifier,
-                                    info->oid,
-                                    info->rw,
-                                    info->type,
-                                    " ");
+
+    sprintf(laTexStrBuffer,
+            format, index,
+            info->identifier,
+            info->oid,
+            info->rw, info->type, " ");
+
     return laTexStrBuffer;
 }
 

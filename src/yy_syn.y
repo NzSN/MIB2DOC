@@ -353,7 +353,7 @@ REVISIONS :
     | /* empty */;
 
 OBJ_DEAL :
-	OBJ_IDENTIFIER { 
+	OBJ_IDENTIFIER {
         dispatchParam *param = disParamConstruct(OBJECT_IDENTIFIER);
         dispatch(MIBTREE_GENERATION, param);
     };
@@ -414,7 +414,7 @@ SYNTAX_VALUE :
 		dispatchParam *param = disParamConstruct(SLICE_TYPE);
 	    disParamStore(param, disParamConstruct($TYPE));
 		dispatch(DISPATCH_PARAM_STAGE, param);
-    } 
+    }
     | OBJ_IDEN_;
 
 TYPE_SPECIFIER :

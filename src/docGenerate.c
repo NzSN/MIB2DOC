@@ -49,19 +49,19 @@ int documentGen(mibTreeHead *treeHead, char *filePath) {
         abort();
     }
     beginOid = strlen(getOidFromInfo(beginNode));
-    
+
     FILE *file = fopen(filePath, "w+");
     if (isNullPtr(file))
         abortWithMsg("Can't open file %s\n", filePath);
-    
+
     formatInfo info;
     int status;
 
     info.beginOid = beginOid;
-    
+
     // Todo: choose format via option
     status = docGenRoutine[0](beginNode, file, &info);
-     
+
     fclose(file);
 
     return status;

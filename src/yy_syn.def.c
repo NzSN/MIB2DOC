@@ -455,5 +455,89 @@ void yy_syn_def__SEQUENCE(void **state) {
 
 #endif /* MIB2DOC_UNIT_TESTING */
 
+
+/* OBJECT-TYPE */
+OBJECT_TYPE_t * objTypeConst(void) {
+    OBJECT_TYPE_t *objType = (OBJECT_TYPE_t *)Malloc(sizeof(OBJECT_TYPE_t));
+    return objType;
+}
+
+SYNTAX_t * objTypeSyntax(OBJECT_TYPE_t *obj) {
+    if (isNullPtr(obj)) return NULL;
+    return obj->syntax;
+}
+
+int objTypeSetSyntax(OBJECT_TYPE_t *obj, SYNTAX_t *syn) {
+    if (isNullPtr(obj)) return ERROR;
+    obj->syntax = syn;
+    return OK;
+}
+
+ACCESS_t * objTypeAccess(OBJECT_TYPE_t *obj) {
+    if (isNullPtr(obj)) return NULL;
+    return obj->access;
+}
+
+int objTypeSetAccess(OBJECT_TYPE_t *obj, ACCESS_t *access) {
+    if (isNullPtr(obj)) return ERROR;
+    obj->access = access;
+    return OK;
+}
+
+STATUS_t * objTypeStatus(OBJECT_TYPE_t *obj) {
+    if (isNullPtr(obj)) return NULL;
+    return obj->status;
+}
+
+int objTypeSetStatus(OBJECT_TYPE_t *obj, STATUS_t *status) {
+    if (isNullPtr(obj)) return ERROR;
+    obj->status = status;
+    return OK;
+}
+
+DESC_t * objTypeStatus(OBJECT_TYPE_t *obj) {
+    if (isNullPtr(obj)) return NULL;
+    return obj->desc;
+}
+
+int objTypeSetDesc(OBJECT_TYPE_t *obj, DESC_T *DESC) {
+    if (isNullPtr(obj)) return ERROR;
+    obj->desc = DESC;
+    return OK;
+}
+
+REF_t * objTypeRef(OBJECT_TYPE_t *obj) {
+    if (isNullPtr(obj)) return NULL;
+    return obj->ref;
+}
+
+int objTypeSetRef(OBJECT_TYPE_t *obj, REF_t *ref) {
+    if (isNullPtr(obj)) return ERROR;
+    obj->ref = ref;
+    return OK;
+}
+
+INDEX_t * objTypeIndex(OBJECT_TYPE_t *obj) {
+    if (isNullPtr(obj)) return NULL;
+    return obj->index;
+}
+
+int objTypeSetIndex(OBJECT_TYPE_t *obj, INDEX_t *index) {
+    if (isNullPtr(obj)) return NULL;
+    obj->index = index;
+    return OK;
+}
+
+MOUNT_t * objTypeMount(OBJECT_TYPE_t *obj) {
+    if (isNullPtr(obj)) return NULL;
+    return obj->mount;
+}
+
+int objTypeSetMount(OBJECT_TYPE_t *obj, MOUNT_t *mount) {
+    if (isNullPtr(obj)) return ERROR;
+    obj->mount = mount;
+    return OK;
+}
+
 /* yy_syn.def.c */
 

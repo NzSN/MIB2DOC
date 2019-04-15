@@ -252,6 +252,8 @@ int sliceStore(slice *sliHead, slice *newSli) {
     return TRUE;
 }
 
+int sliceStore_without_key(slice *sliHead, slice *newSli) {}
+
 bool sliceRelease(slice *sli) {
     slice *pSli;
     slice *pSli_next;
