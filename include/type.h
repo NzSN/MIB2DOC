@@ -57,6 +57,9 @@ do {\
         (ConType *)((char *)__mptr - offsetof(ConType, member));\
 })
 
+#define PreCond(Args, Clause) /* empty */
+#define PostCond(Args, Ret, Clause) /* empty */
+
 typedef int _Status;
 typedef void * anything;
 

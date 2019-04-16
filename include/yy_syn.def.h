@@ -5,7 +5,7 @@
 
 #include "type.h"
 #include "list.h"
-#include "iterator.h"
+#include "iterators.h"
 
 /* SEQUENCE */
 typedef struct sequence_item {
@@ -86,6 +86,7 @@ typedef struct SYNTAX_t {
     char *val;
     slice *vals;
 } SYNTAX_t;
+typedef sliceIter SYNTAX_iter;
 
 typedef struct UNITS_t {
     char *unitInfo;
@@ -114,12 +115,14 @@ typedef struct INDEX_t {
     char *idx;
     slice *idxs;
 } INDEX_t;
+typedef sliceIter INDEX_iter;
 
 typedef struct DEFVAL_t {
     DEFVAL_TYPE type;
     char *val;
     slice *vals;
 } DEFVAL_t;
+typedef sliceIter DEFVAL_iter;
 
 typedef struct MOUNT_t {
     char *parent;
@@ -238,6 +241,17 @@ int         objTypeSetIndex(OBJECT_TYPE_t *obj, INDEX_t *index);
 MOUNT_t  *  objTypeMount(OBJECT_TYPE_t *obj);
 int         objTypeSetMount(OBJECT_TYPE_t *obj, MOUNT_t *mount);
 
+SYNTAX_iter * syntaxGetIter(SYNTAX_t *syn, SYNTAX_iter *iter);
+SYNTAX_iter * syntaxSuccessor(SYNTAX_iter *i);
+SYNTAX_iter * syntaxPredecessor(SYNTAX_iter *i);
+slice * syntaxNext(SYNTAX_iter *i);
+slice * syntaxPrev(SYNTAX_iter *i);
+
+INDEX_iter * indexGetIter(INDEX_t *idx, INDEX_iter *iter);
+INDEX_iter * indexSuccessor(INDEX_iter *i);
+INDEX_iter * indexPredecessor(INDEX_iter *i);
+slice      * indexNext(INDEX_iter *i);
+slice      * indexPrev(INDEX_iter *i);
 
 #endif /* __YY_SYN_DEF_H__ */
 

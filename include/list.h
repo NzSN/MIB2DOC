@@ -30,6 +30,10 @@ typedef struct slice {
     listNode sliNode;
 } slice;
 
+
+typedef slice sliceIter;
+
+PreCond((Slice), slice(Slice))
 #define IS_VALID_SLICE_TYPE(Slice) (Slice > SLICE_TYPE_MINIMUM && Slice < SLICE_TYPE_MAXIMUM)
 
 /* ListNode */
@@ -52,10 +56,12 @@ _Bool listNodeIsEqual(const listNode *first, const listNode *second,
 _Status listNodeTravel(listNode *head, listNodeTask func, void *arg);
 listNode * listNodeSearch(listNode *head, listNodeCmp cmpOp, void *arg);
 
-/* Slice */
-slice * sliceNext(slice *sli);
+/* Slice Prototype */
+slice * sliceGetPrev(sliceIter *sli);
+slice * sliceGetNext(sliceIter *sli);
 slice * sliceConstruct(int sliKey, char *sliVal);
 slice * sliceGet(slice *sli, int sliKey);
+int sliceAssignment(slice *sli_l, slice *sli_r);
 int sliceStore(slice *sli, slice *next);
 int sliceStore_without_key(slice *sliHead, slice *newSli);
 bool sliceRelease(slice *sli);
@@ -63,7 +69,27 @@ bool sliceRelease_STATIC(slice *sli);
 bool sliceReset(slice *sli);
 bool sliceReset_STATIC(slice *sli);
 char * sliceGetVal(slice *sliceHead, int sliKey);
-char *sliceRetriVal(slice *sliHead, int sliKey);
+char * sliceRetriVal(slice *sliHead, int sliKey);
+sliceIter * sliceGetIter(slice *sl, sliceIter *si);
+sliceIter * sliceSuccessor(sliceIter *si);
+sliceIter * slicePredecessor(sliceIter *si);
+slice     * slicePrev(sliceIter *si);
+slice     * sliceNext(sliceIter *si);
+
+/* Procedures implement as macro */
+/* Provide readability to slice iterators */
+PreCond((si), slice(si))
+#define sliceSource(si) ((slice *)si)
+
+/* Provide writability to slice iterators */
+PreCond((si), slice(si))
+#define sliceSink(si_l, si_r) ({\
+    slice *sl_l = sliceSource(si_l);\
+    slice *sl_r = sliceSource(si_r);\
+    sliceAssignment(sl_l, sl_r);    \
+    OK;\
+})
+
 
 #endif /* _MIB2DOC_LIST_H_ */
 

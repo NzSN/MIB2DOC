@@ -495,12 +495,12 @@ int objTypeSetStatus(OBJECT_TYPE_t *obj, STATUS_t *status) {
     return OK;
 }
 
-DESC_t * objTypeStatus(OBJECT_TYPE_t *obj) {
+DESC_t * objTypeDesc(OBJECT_TYPE_t *obj) {
     if (isNullPtr(obj)) return NULL;
     return obj->desc;
 }
 
-int objTypeSetDesc(OBJECT_TYPE_t *obj, DESC_T *DESC) {
+int objTypeSetDesc(OBJECT_TYPE_t *obj, DESC_t *DESC) {
     if (isNullPtr(obj)) return ERROR;
     obj->desc = DESC;
     return OK;
@@ -537,6 +537,48 @@ int objTypeSetMount(OBJECT_TYPE_t *obj, MOUNT_t *mount) {
     if (isNullPtr(obj)) return ERROR;
     obj->mount = mount;
     return OK;
+}
+
+/* Syntax */
+SYNTAX_iter * syntaxGetIter(SYNTAX_t *syn, SYNTAX_iter *iter) {
+    return sliceGetIter(syn->vals, iter);
+}
+
+SYNTAX_iter * syntaxSuccessor(SYNTAX_iter *i) {
+    return sliceSuccessor(i);
+}
+
+SYNTAX_iter *syntaxPredecessor(SYNTAX_iter *i) {
+    return slicePredecessor(i);
+}
+
+slice * syntaxNext(SYNTAX_iter *i) {
+    return sliceNext(i);
+}
+
+slice * syntaxPrev(SYNTAX_iter *i) {
+    return slicePrev(i);
+}
+
+/* Index */
+INDEX_iter * indexGetIter(INDEX_t *idx, INDEX_iter *iter) {
+    return sliceGetIter(idx->idxs, iter);
+}
+
+INDEX_iter * indexSuccessor(INDEX_iter *i) {
+    return sliceSuccessor(i);
+}
+
+INDEX_iter * indexPredecessor(INDEX_iter *i) {
+    return slicePredecessor(i);
+}
+
+slice * indexNext(INDEX_iter *i) {
+    return sliceNext(i);
+}
+
+slice * indexPrev(INDEX_iter *i) {
+    return slicePrev(i);
 }
 
 /* yy_syn.def.c */
