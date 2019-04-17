@@ -145,22 +145,28 @@ typedef struct OBJECT_type_t {
 /* Procedure implement as macro */
 #define syntaxType(S) ((S)->type)
 #define syntaxSetType(S, TYPE) ((S)->type = TYPE)
-#define syntaxVal(S, I) ({                \
-    char *theVal = NULL;                  \
-    if ((S)->type = SYNTAX_TYPE_BITNAME) {\
-        theVal = successor(I);            \
-    } else {                              \
-        theVal = (S)->val;                \
-    }                                     \
-    theVal;                               \
+#define syntaxVal(S, I) ({\
+    char *theVal = NULL;\
+    if ((S)->type == SYNTAX_TYPE_BIT_NAME) {\
+        theVal = source(I)->sliVal;\
+        I = successor(I);\
+    } else {\
+        theVal = (S)->val;\
+    }\
+    theVal;\
 })
 #define syntaxSetVal(S, V) ((S)->val = V)
-#define syntaxAddVal(S, V) ({                   \
-    int ret = OK;                               \
-    slice *sl = sliceConstruct(0, (void *)V);   \
-    if (isNullPtr(sl)) ret = ERROR;             \
-    else ret = sliceStore_without_key(S, sl);   \
-    ret;                                        \
+#define syntaxAddVal(S, V) ({\
+    int ret = OK;\
+    slice *sl = sliceConstruct(0, (void *)V);\
+    if (isNullPtr(sl)) ret = ERROR;\
+    else {                       \
+        if (S->vals)\
+            ret = sliceStore_without_key(S->vals, sl);\
+        else\
+            S->vals = sl;\
+    }\
+    ret;\
 })
 
 #define unitInfo(U) ((U)->unitInfo)
@@ -181,30 +187,35 @@ typedef struct OBJECT_type_t {
 
 #define defvalType(D) ((D)->type)
 #define defvalSetType(D, T) ((D)->type = T)
-#define defvalGetVal(D, I) ({          \
-    char *theVal = NULL;               \
+#define defvalGetVal(D, I) ({\
+    char *theVal = NULL;\
     if ((D)->type = DEFVAL_TYPE_BITS) {\
-        theVal = sucessor(I);          \
-    } else {                           \
-        theVal = (D)->val;             \
-    }                                  \
-    theVal;                            \
+        theVal = sucessor(I);\
+    } else {\
+        theVal = (D)->val;\
+    }\
+    theVal;\
 })
 #define defValSetVal(D, V) ((D)->val = V)
 #define defValAddVal(D, V) ({\
     int ret = OK;\
     slice *sl = sliceConstruct(0, (void *)V);\
     if (isNullPtr(sl)) ret = ERROR;\
-    else ret = sliceStore_without_key(D, sl);\
+    else {                                    \
+        if (D->vals)\
+            ret = sliceStore_without_key(D, sl);    \
+        else\
+            D->valse = sl;\
+    }\
     ret;\
 })
 
 #define indexNumOf(I) ((I)->numOfIdx)
 #define indexSetNumOf(I, N) ((I)->numOfIdx = N)
-#define indexGetVal(I, ITER) ({                      \
+#define indexGetVal(I, ITER) ({\
     char *theVal = NULL;\
     if (indexNumOf(I) > 1) {\
-        theVal = successor(ITER);                  \
+        theVal = successor(ITER);\
     } else {\
         theVal = (I)->idx;\
     }\
@@ -215,7 +226,12 @@ typedef struct OBJECT_type_t {
     int ret = OK;\
     slice *sl = sliceConstruct(0, (void *)V);\
     if (isNullPtr(sl)) ret = ERROR;\
-    else ret = sliceStore_without_key(I, sl);\
+    else {                       \
+        if (I->idxs)\
+            ret = sliceStore_without_key(I->idxs, sl);    \
+        else                                  \
+            I->idxs = sl; \
+    }\ 
     ret;\
 })
 
@@ -241,19 +257,32 @@ int         objTypeSetIndex(OBJECT_TYPE_t *obj, INDEX_t *index);
 MOUNT_t  *  objTypeMount(OBJECT_TYPE_t *obj);
 int         objTypeSetMount(OBJECT_TYPE_t *obj, MOUNT_t *mount);
 
-SYNTAX_iter * syntaxGetIter(SYNTAX_t *syn, SYNTAX_iter *iter);
-SYNTAX_iter * syntaxSuccessor(SYNTAX_iter *i);
-SYNTAX_iter * syntaxPredecessor(SYNTAX_iter *i);
+SYNTAX_t * syntaxConst(void);
+SYNTAX_t * syntaxInit(SYNTAX_t *syn);
+SYNTAX_iter syntaxGetIter(SYNTAX_t *syn);
+SYNTAX_iter syntaxSuccessor(SYNTAX_iter i);
+SYNTAX_iter syntaxPredecessor(SYNTAX_iter i);
 slice * syntaxNext(SYNTAX_iter *i);
 slice * syntaxPrev(SYNTAX_iter *i);
 
-INDEX_iter * indexGetIter(INDEX_t *idx, INDEX_iter *iter);
-INDEX_iter * indexSuccessor(INDEX_iter *i);
-INDEX_iter * indexPredecessor(INDEX_iter *i);
+INDEX_t * indexConst(void);
+INDEX_t * indexInit(INDEX_t *idx);
+INDEX_iter indexGetIter(INDEX_t *idx);
+INDEX_iter indexSuccessor(INDEX_iter i);
+INDEX_iter indexPredecessor(INDEX_iter i);
 slice      * indexNext(INDEX_iter *i);
 slice      * indexPrev(INDEX_iter *i);
 
-#endif /* __YY_SYN_DEF_H__ */
+#ifdef MIB2DOC_UNIT_TESTING
 
-/* yy_syn.def.h */
+void yy_syn_def_Basic_Field(void **state);
+
+#endif 
+
+/* IMPORT */
+typedef struct moduleItem {
+    slice items;
+} moduleItem;
+
+#endif /* YY_syn.def.h */
 

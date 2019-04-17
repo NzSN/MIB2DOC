@@ -192,26 +192,16 @@ slice * sliceGet(slice *sliHead, int sliKey) {
         mib2docError = ERROR_NULL_REF;
         return NULL;
     }
+    
+    sliceIter iter = sliceGetIter(sliHead);
+    slice *current = sliceNext(&iter);
 
-    for (; sliHead != NULL; sliHead = sliceGetNext(sliHead)) {
-        if (sliHead->sliKey == sliKey)
-            return sliHead;
+    while (current != NULL) {
+        if (current->sliKey == sliKey)
+            break;
+        current = sliceNext(&iter);
     }
-    return NULL;
-}
-
-slice * sliceGetPrev(slice *sli) {
-    if (!isNullPtr(sli) && isNullPtr(sli->sliNode.prev)) {
-        return NULL;
-    }
-    return containerOf(sli->sliNode.prev, slice, sliNode);
-}
-
-slice * sliceGetNext(slice *sli) {
-    if (isNullPtr(sli) || isNullPtr(sli->sliNode.next)) {
-        return NULL;
-    }
-    return containerOf(sli->sliNode.next, slice, sliNode);
+    return current;
 }
 
 char * sliceGetVal(slice *sliHead, int sliKey) {
@@ -249,12 +239,14 @@ int sliceStore_without_key(slice *sliHead, slice *newSli) {
     if (isNullPtr(sliHead) || isNullPtr(newSli))
         return ERROR;
 
+    sliceIter iter = sliceGetIter(sliHead);
     while (sliHead != NULL) {
-        if (sliceGetNext(sliHead) == NULL) {
+        if (IS_LAST_SLICE_NODE(sliHead)) {
             sliHead->sliNode.next = &newSli->sliNode;
+            newSli->sliNode.prev = &sliHead->sliNode;
             return OK;
         }
-        sliHead = sliceGetNext(sliHead);
+        sliHead = sliceNext(&iter);
     }
     return OK;
 }
@@ -276,8 +268,9 @@ bool sliceRelease(slice *sli) {
     if (isNullPtr(sli))
         return FALSE;
 
-    for (pSli = sli; pSli != NULL; pSli = pSli_next) {
-        pSli_next = sliceGetNext(pSli);
+    sliceIter iter = sliceGetIter(sli);
+    for (pSli = sliceNext(&iter); pSli != NULL; pSli = pSli_next) {
+        pSli_next = sliceNext(&iter);
         sliceDestruct(pSli);
     }
     return TRUE;
@@ -289,7 +282,10 @@ bool sliceRelease_STATIC(slice *sli) {
     if (isNullPtr(sli))
         return FALSE;
 
-    sliceRelease(sliceGetNext(sli));
+    sliceIter iter = sliceGetIter(sli);
+    iter = sliceSuccessor(iter);
+
+    sliceRelease(sliceSource(iter));
 
     sli->sliNode.next = NULL;
     sli->sliNode.prev = NULL;
@@ -300,12 +296,13 @@ bool sliceRelease_STATIC(slice *sli) {
 bool sliceReset(slice *sli) {
     slice *pSli;
 
-    if (isNullPtr(sli)) {
+    if (isNullPtr(sli))
         return FALSE;
-    }
+
+    sliceIter iter = sliceGetIter(sli);
     while (sli != NULL) {
         pSli = sli;
-        sli = sliceGetNext(sli);
+        sli = sliceNext(&iter);
         RELEASE_MEM(pSli);
     }
     return TRUE;
@@ -317,41 +314,61 @@ bool sliceReset_STATIC(slice *sli) {
     if (isNullPtr(sli))
         return FALSE;
 
-    if (sliceReset(sliceGetNext(sli))) {
+    sliceIter iter = sliceGetIter(sli);
+    if (sliceReset(sliceNext(&iter))) {
         memset(&sli->sliNode, 0, sizeof(listNode));
     }
     return TRUE;
 }
 
-sliceIter * sliceGetIter(slice *sl, sliceIter *si) {
-    if (isNullPtr(sl)) return null;
-
-    if (isNullPtr(si))
-        si = (sliceIter *)Malloc(sizeof(sliceIter));
-    sliceAssignment(si, sl);
-    si->sliNode = sl->sliNode;
-
+sliceIter sliceGetIter(slice *sl) {
+    sliceIter si = {
+        .sl = sl,
+        .node = &sl->sliNode
+    };
     return si;
 }
 
-sliceIter * sliceSuccessor(sliceIter *si) {
-    return sliceGetNext(si);
+sliceIter sliceSuccessor(sliceIter si) {
+    si.node = listNodeNext(si.node);
+    return si;
 }
 
-sliceIter * slicePredecessor(sliceIter *si) {
-    return slicePrev(si);
+sliceIter slicePredecessor(sliceIter si) {
+    si.node = listNodePrev(si.node);
+    return si;
 }
 
 slice * sliceNext(sliceIter *si) {
-    if (isNullPtr(si)) return null;
-    si->sliNode = *listNodeNext(&si->sliNode);
-    return containerOf(&si->sliNode, slice, sliNode);
+    if (isNullPtr(si) || isNullPtr(si->node))
+        return null;
+
+    listNode *current = si->node;
+    si->node = listNodeNext(current);
+    return containerOf(current, slice, sliNode);
 }
 
 slice * slicePrev(sliceIter *si) {
-    if (isNullPtr(si)) return null;
-    si->sliNode = *listNodePrev(&si->sliNode);
-    return containerOf(&si->sliNode, slice, sliNode);
+    if (isNullPtr(si) || isNullPtr(si->node->prev))
+        return null;
+    si->node = listNodePrev(si->node);
+    return containerOf(si->node, slice, sliNode);
+}
+
+slice * sliceSource(sliceIter si) {
+    if (isNullPtr(si.node)) return NULL;
+    return containerOf(si.node, slice, sliNode);
+}
+
+int sliceSink(sliceIter si_l, sliceIter si_r) {
+    if (isNullPtr(si_l.node) || isNullPtr(si_r.node))
+        return ERROR;
+
+    slice *sl_l = sliceSource(si_l);
+    slice *sl_r = sliceSource(si_r);
+    sliceAssignment(sl_l, sl_r);
+
+    return OK;
 }
 
 /*******************************************

@@ -540,15 +540,28 @@ int objTypeSetMount(OBJECT_TYPE_t *obj, MOUNT_t *mount) {
 }
 
 /* Syntax */
-SYNTAX_iter * syntaxGetIter(SYNTAX_t *syn, SYNTAX_iter *iter) {
-    return sliceGetIter(syn->vals, iter);
+SYNTAX_t * syntaxConst() {
+    SYNTAX_t *syn = (SYNTAX_t *)Malloc(sizeof(SYNTAX_t));
+    return syntaxInit(syn);
 }
 
-SYNTAX_iter * syntaxSuccessor(SYNTAX_iter *i) {
+SYNTAX_t * syntaxInit(SYNTAX_t *syn) {
+    if (isNullPtr(syn)) return NULL;
+
+    memset(syn, 0, sizeof(SYNTAX_t));
+    return syn;
+}
+
+SYNTAX_iter syntaxGetIter(SYNTAX_t *syn) {
+    SYNTAX_iter iter = sliceGetIter(syn->vals);
+    return iter;
+}
+
+SYNTAX_iter syntaxSuccessor(SYNTAX_iter i) {
     return sliceSuccessor(i);
 }
 
-SYNTAX_iter *syntaxPredecessor(SYNTAX_iter *i) {
+SYNTAX_iter syntaxPredecessor(SYNTAX_iter i) {
     return slicePredecessor(i);
 }
 
@@ -561,15 +574,27 @@ slice * syntaxPrev(SYNTAX_iter *i) {
 }
 
 /* Index */
-INDEX_iter * indexGetIter(INDEX_t *idx, INDEX_iter *iter) {
-    return sliceGetIter(idx->idxs, iter);
+INDEX_t * indexConst() {
+    INDEX_t *idx = (INDEX_t *)Malloc(sizeof(INDEX_t));
+    return indexInit(idx);
 }
 
-INDEX_iter * indexSuccessor(INDEX_iter *i) {
+INDEX_t * indexInit(INDEX_t *idx) {
+    if (isNullPtr(idx)) return NULL;
+    memset(idx, 0, sizeof(INDEX_t));
+    return idx;
+}
+
+INDEX_iter indexGetIter(INDEX_t *idx) {
+    INDEX_iter iter = sliceGetIter(idx->idxs);
+    return iter;
+}
+
+INDEX_iter indexSuccessor(INDEX_iter i) {
     return sliceSuccessor(i);
 }
 
-INDEX_iter * indexPredecessor(INDEX_iter *i) {
+INDEX_iter indexPredecessor(INDEX_iter i) {
     return slicePredecessor(i);
 }
 
@@ -580,6 +605,48 @@ slice * indexNext(INDEX_iter *i) {
 slice * indexPrev(INDEX_iter *i) {
     return slicePrev(i);
 }
+
+#ifdef MIB2DOC_UNIT_TESTING
+
+void yy_syn_def_Basic_Field(void **state) {
+    OBJECT_TYPE_t *obj = objTypeConst();
+
+    objTypeSetSyntax(obj, syntaxConst());
+
+    /* Syntax */
+    SYNTAX_t *syn = objTypeSyntax(obj);
+    syntaxSetType(syn, SYNTAX_TYPE_BIT_NAME);
+    syntaxAddVal(syn, "Hello, World!");
+
+    SYNTAX_iter synIter = syntaxGetIter(syn);
+
+    char *synVal = syntaxVal(syn, synIter);
+    assert_non_null(synVal);
+    assert_string_equal(synVal, "Hello, World!");
+
+    objTypeSetIndex(obj, indexConst());
+
+    /* Index */
+    int num = 0;
+    INDEX_t *idx = objTypeIndex(obj);
+    indexSetNumOf(idx, 2);
+    while (num < 1000) {
+        indexAddVal(idx, numberToStr(num));
+        ++num;
+    }
+
+    slice *current;
+    INDEX_iter idxIter = indexGetIter(idx);
+
+    num = 0;
+    while (current = indexNext(&idxIter)) {
+        assert_non_null(current);
+        assert_string_equal(current->sliVal, numberToStr(num));
+        ++num;
+    }
+}
+
+#endif MIB2DOC_UNIT_TESTING
 
 /* yy_syn.def.c */
 

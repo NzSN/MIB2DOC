@@ -14,40 +14,28 @@
 
 #define successor(Iter)\
     _Generic((Iter), \
-             sliceIter*   : sliceSuccessor,\
-             SYNTAX_iter* : syntaxSucessor,\
-             INDEX_iter*  : indexSucessor)(Iter)
+             sliceIter : sliceSuccessor)(Iter)
 
 #define predecessor(Iter)\
     _Generic((Iter), \
-             sliceIter*   : slicePredecessor,\
-             SYNTAX_iter* : syntaxPredecessor,\
-             INDEX_iter*  : indexPredecessor)(Iter)
+             sliceIter : slicePredecessor)(Iter)
 
 #define source(Iter)\
     _Generic((Iter), \
-             sliceIter*   : sliceSource,\
-             SYNTAX_iter* : sliceSource,\
-             INDEX_iter*  : sliceSource)(Iter)
+             sliceIter : sliceSource)(Iter)
 
 #define sink(Iter_l, Iter_r)\
     _Generic((Iter_l), \
-             sliceIter*   : sliceSink,\
-             SYNTAX_iter* : sliceSink,\
-             INDEX_iter*  : sliceSink)(Iter_l, Iter_r)
+             sliceIter : sliceSink)(Iter_l, Iter_r)
 
 PreCond((Iter), Iterator(Iter) && (Reference(Iter) || Mutable(Iter)))
 #define next(Iter)\
     _Generic((Iter), \
-             sliceIter*   : sliceNext,\
-             SYNTAX_iter* : syntaxNext,\
-             INDEX_iter*  : indexNext)(Iter)
+             sliceIter * : sliceNext)(Iter)
 
 PreCond((Iter), Iterator(Iter) && (Reference(Iter) || Mutable(Iter)))
 #define prev(Iter)\
     _Generic((Iter), \
-             sliceIter*   : slicePrev,\
-             SYNTAX_iter* : syntaxPrev,\
-             INDEX_iter*  : indexPrev)(Iter)
+             sliceIter * : slicePrev)(Iter)
 
 #endif /* _ITERATORS_H_ */

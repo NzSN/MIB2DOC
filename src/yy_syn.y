@@ -199,7 +199,7 @@ COMPLIANCE_ACCESS :
 /* TEXTUAL-CONVENTION */
 TC_DEFINED :
     IDENTIFIER ASSIGNED TC_SPECIFIER TC {
-        typeTableAdd(MIB_TYPE_TBL_R, strdup($IDENTIFIER), CATE_CUSTOM, NULL);         
+        typeTableAdd(MIB_TYPE_TBL_R, strdup($IDENTIFIER), CATE_CUSTOM, NULL);
     };
 TC :
     DisplayPart STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER STRING REF_PART SYNTAX_SPECIFIER SYNTAX_VALUE;
@@ -208,16 +208,16 @@ DisplayPart:
     | /* empty */;
 
 TYPE :
-    TYPE_BUILT_IN { 
+    TYPE_BUILT_IN {
         // Correctness of BUILT_IN type was checked by lexer
-        $TYPE = $TYPE_BUILT_IN; 
+        $TYPE = $TYPE_BUILT_IN;
     }
-    | IDENTIFIER { 
-        //  Customed type 
-        $TYPE = $IDENTIFIER;  
+    | IDENTIFIER {
+        //  Customed type
+        $TYPE = $IDENTIFIER;
         if (typeCheck_isValid(MIB_TYPE_TBL_R, $TYPE) == FALSE) {
-            /* Go into second pass because the checking may fail by
-               define after use */     
+            /* Go into second pass because the checking may fail if it's
+               defined after use */
             disParamStore(pendingTypes, disParamConstruct($IDENTIFIER));
         }
     }
@@ -246,7 +246,7 @@ TYPE_DEFINED :
     IDENTIFIER ASSIGNED TYPE {
         _Bool isExists = typeTableIsTypeExists(MIB_TYPE_TBL_R, $IDENTIFIER);
         if (!isExists) {
-            typeTableAdd(MIB_TYPE_TBL_R, $IDENTIFIER, CATE_CUSTOM, NULL);         
+            typeTableAdd(MIB_TYPE_TBL_R, $IDENTIFIER, CATE_CUSTOM, NULL);
         }
     }
 
@@ -256,6 +256,8 @@ END :
 
         if (SW_STATE(pState) == DISPATCH_MODE_SYMBOL_COLLECTING) {
             // In include context mark the module scan is already done.
+            // Todo: type checking second pass should deal here but not at
+            //       <<EOF>> of flex.
         } else if (SW_STATE(pState) == DISPATCH_MODE_DOC_GENERATING) {
             // In mibTreeGen context we should merge seperate trees into one.
             mibTreeHeadMerge(MIB_TREE_R);  
@@ -272,10 +274,10 @@ MODULES_CONTENT :
     ITEMS FROM_ IDENTIFIER {
         dispatchParam *current;    
         current = &importParam;
-        
+
         int ret = TRUE;
         collectInfo *importInfo = collectInfoConst($IDENTIFIER);
-         
+
         // Store symbols that should be included.
         while (current = dispatchParamNext(current)) {
             ret = collectInfo_add(importInfo, current->param);
@@ -291,12 +293,14 @@ MODULES_CONTENT :
 
 ITEMS :
 	IDENTIFIER { 
-        if (disParamStore(&importParam, disParamConstruct($IDENTIFIER)) == NULL) {
+        dispatchParam *symbol = disParamConstruct($IDENTIFIER);
+        if (disParamStore(&importParam, symbol) == NULL) {
             exit(1); 
         }
     }
 	| IDENTIFIER COMMA ITEMS { 
-        if (disParamStore(&importParam, disParamConstruct($IDENTIFIER)) == NULL) {
+        dispatchParam *symbol = disParamConstruct($IDENTIFIER);
+        if (disParamStore(&importParam, symbol) == NULL) {
             exit(1); 
         }
     }
@@ -456,8 +460,8 @@ DESCRIPTION :
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
 
-INDEX : 
-    INDEX_ L_BRACE INDEX_ITEM R_BRACE 
+INDEX :
+    INDEX_ L_BRACE INDEX_ITEM R_BRACE
     | AUGMENTS_ L_BRACE IDENTIFIER R_BRACE
     | /* empty */;
 
