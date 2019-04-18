@@ -11,6 +11,7 @@ char * randStr(int length);
 char * numberToStr(int num);
 
 void * Malloc(size_t size);
+void * zMalloc(size_t size);
 _Bool isStringEqual(const char *strLeft, const char *strRight);
 void breakNode(void);
 

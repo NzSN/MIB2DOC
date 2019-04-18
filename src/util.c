@@ -249,6 +249,12 @@ void * Malloc(size_t size) {
     return mem;
 }
 
+void * zMalloc(size_t size) {
+    void *mem = Malloc(size);
+    memset(mem, 0, size);
+    return mem;
+}
+
 _Bool isStringEqual(const char *strLeft, const char *strRight) {
     if (isNullPtr(strLeft) || isNullPtr(strRight))
         return FALSE;

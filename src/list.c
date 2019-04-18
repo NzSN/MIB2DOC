@@ -22,6 +22,235 @@ enum {
     SYM_TRAVEL_STOP = 11
 };
 
+/***********
+ * List    *
+ ***********/
+list * listConst(void) {
+    list *l = (list *)zMalloc(sizeof(list));
+    return l;
+}
+
+static _Status listReleaseHelper(listNode *head, void *arg) {
+    list *l = arg;
+    l->release(containerOf(head, listEntry, node));
+    return OK;
+}
+void listRelease(list *l) {
+    listIter iter;
+    listEntry *current, *next;
+
+    if (isNullPtr(l))
+        return /* void */;
+
+    if (l->entry)
+        listNodeTravel(&l->entry->node, listReleaseHelper, (void *)l);
+
+    return /* void */;
+}
+
+static _Status listCopyHelper(listNode *head, void *arg) {
+    list *l_copy = arg;
+    listEntry *current = containerOf(head, listEntry, node);
+    listAppend(l_copy, l_copy->copy(current->element));
+    return OK;
+}
+list * listCopy(list *l) {
+    if (isNullPtr(l))
+        return NULL;
+
+    list *l_copy = (list *)zMalloc(sizeof(list));
+
+    listSetSize(l_copy, 0);
+
+    listSetCopyMethod(l_copy, l->copy);
+    listSetReleaseMethod(l_copy, l->release);
+    listSetEqualMethod(l_copy, l->isEqual);
+
+    if (l->entry)
+        listNodeTravel(&l->entry->node, listCopyHelper, (void *)l_copy);
+
+    return l_copy;
+}
+
+int listAssignment(list *l, list *r) {
+    listEntry entry = { 0 };
+
+    if (isNullPtr(l) || isNullPtr(r))
+        return ERROR;
+
+    listSetSize(l, 0);
+
+    listSetCopyMethod(l, r->copy);
+    listSetReleaseMethod(l, r->release);
+    listSetEqualMethod(l, r->isEqual);
+
+    // Release entries of list l
+    if (l->entry) listNodeTravel(&l->entry->node, listReleaseHelper, (void *)l);
+    // Copy entries into list l
+    listNodeTravel(&r->entry->node, listCopyHelper, (void *)l);
+
+    return OK;
+}
+
+_Bool listEqualHelper(const listNode *node_l, const listNode *node_r, void *arg) {
+    list *l = arg;
+    listEntry *entry_l = containerOf(node_l, listEntry, node);
+    listEntry *entry_r = containerOf(node_r, listEntry, node);
+
+    return l->isEqual(entry_l->element, entry_r->element);
+}
+int listIsEqual(list *l, list *r) {
+    if (isNullPtr(l) || isNullPtr(r))
+        return false;
+
+    if (l->size != r->size)
+        return false;
+
+    return listNodeIsEqual_extra(&l->entry->node, &r->entry->node, (void *)l, listEqualHelper);
+}
+
+int listConcate(list *l, list *r) {
+    if (isNullPtr(l) || isNullPtr(r))
+        return ERROR;
+
+    // Append first entry of r onto last entry of l
+    listNodeAppend(&l->entry->node, &r->entry->node);
+
+    return OK;
+}
+
+int listAppend(list *l, void *elem) {
+    if (isNullPtr(l) || isNullPtr(elem))
+        return ERROR;
+
+    listEntry *newEntry = (listEntry *)zMalloc(sizeof(listEntry));
+    newEntry->element = elem;
+
+    if (l->entry == null) {
+        l->entry = newEntry;
+        ++l->size;
+        return OK;
+    }
+
+    listNodeAppend(&l->entry->node, &newEntry->node);
+    ++l->size;
+
+    return OK;
+}
+
+void * listRetriveTail(list *l) {
+    if (isNullPtr(l)) return NULL;
+
+    listNode *tail = listNodeTail(&l->entry->node);
+    listEntry *lastEntry = containerOf(tail, listEntry, node);
+    void *elem = lastEntry->element;
+
+    listNodeDelete(tail);
+    RELEASE_MEM(lastEntry);
+
+    return elem;
+}
+
+int listPush(list *l, void *elem) {
+    if (isNullPtr(l) || isNullPtr(elem))
+        return ERROR;
+
+    listEntry *newEntry = (listEntry *)zMalloc(sizeof(listEntry));
+    newEntry->element = elem;
+
+    listNodeAppend(&newEntry->node, &l->entry->node);
+    l->entry = newEntry;
+
+    ++l->size;
+
+    return OK;
+}
+
+void * listPop(list *l) {
+    if (isNullPtr(l))
+        return ERROR;
+
+    listEntry *firstEntry = l->entry;
+    void *elem = firstEntry->element;
+
+    l->entry = containerOf(&firstEntry->node, listEntry, node);
+
+    listNodeDelete(firstEntry);
+    RELEASE_MEM(firstEntry);
+
+    return elem;
+}
+
+listIter listGetIter(list *l) {
+    listIter iter = { 0 };
+
+    if (isNullPtr(l))
+        return iter;
+
+    iter.entry = l->entry;
+    iter.l = l;
+
+    return iter;
+}
+
+listIter listPredecessor(listIter li) {
+    listIter iter;
+
+    iter.l = li.l;
+    if (li.entry && li.entry->node.prev)
+        iter.entry = containerOf(li.entry->node.next, listEntry, node);
+
+    return iter;
+}
+
+listIter listSuccessor(listIter li) {
+    listIter iter;
+
+    iter.l = li.l;
+    if (li.entry && li.entry->node.prev)
+        iter.entry = containerOf(li.entry->node.prev, listEntry, node);
+
+    return iter;
+}
+
+listEntry * listPrev(listIter *li) {
+    if (isNullPtr(li)) return NULL;
+
+    listEntry *current = li->entry;
+    if (current)
+        if (current->node.prev)
+            li->entry = containerOf(current->node.prev, listEntry, node);
+        else
+            li->entry = NULL;
+
+    return current;
+}
+
+listEntry * listNext(listIter *li) {
+    if (isNullPtr(li)) return NULL;
+
+    listEntry *current = li->entry;
+    if (current)
+        if (current->node.next)
+            li->entry = containerOf(current->node.next, listEntry, node);
+        else
+            li->entry = NULL;
+
+    return current;
+}
+
+listEntry * listSource(listIter li) {
+    return li.entry;
+}
+
+int listSink(listIter li_l, listIter li_r) {
+    if (li_l.entry && li_r.entry) {
+        li_l.l->release(li_l.entry->element);
+        li_l.entry->element = li_l.l->copy(li_r.entry->element);
+    }
+    return OK;
+}
+
 /************
  * ListNode *
  ************/
@@ -142,6 +371,26 @@ _Bool listNodeIsEqual(const listNode *first, const listNode *second, listNodeEqu
         current_second = listNodeNext(current_second);
     }
 
+    return TRUE;
+}
+
+_Bool listNodeIsEqual_extra(const listNode *first, const listNode *second,
+                            void *arg, listNodeEqualCheck_extra equalCheck) {
+
+    if (isNullPtr(first) || isNullPtr(second) || isNullPtr(equalCheck))
+        return ERROR;
+
+    _Bool isEqual;
+    const listNode *current_first = first;
+    const listNode *current_second = second;
+
+    while (isNonNullPtr(current_first) && isNonNullPtr(current_second)) {
+        isEqual = equalCheck(current_first, current_second, arg);
+        if (!isEqual) return FALSE;
+
+        current_first = listNodeNext(current_first);
+        current_second = listNodeNext(current_second);
+    }
     return TRUE;
 }
 
@@ -985,6 +1234,111 @@ int typeTableDel(typeTable *tbl, char *type) {
 #ifdef MIB2DOC_UNIT_TESTING
 
 #include "test.h"
+
+void insert_range_to_list(list *l, int from, int to) {
+    while (from <= to) {
+        listAppend(l, numberToStr(from++));
+    }
+}
+
+listEntry * peek_next_list(listIter *iter) {
+    return listNext(iter);
+}
+
+void listRelease_Test(void *elem) {
+    free(elem);
+}
+
+void * listCopy_Test(void *elem) {
+    char *orig = (char *)elem;
+    char *copy;
+
+    copy = (char *)zMalloc(strlen(orig));
+    strncpy(copy, orig, strlen(orig));
+
+    return copy;
+}
+
+int listIsEqual_Test(void *l, void *r) {
+    char *l_c = (char *)l;
+    char *r_c = (char *)r;
+    return TRUE;
+}
+
+void list__Generic_List(void **state) {
+    int num = 0;
+    listEntry *entry;
+    list *l = listConst();
+
+    listSetReleaseMethod(l, listRelease_Test);
+    listSetCopyMethod(l, listCopy_Test);
+    listSetEqualMethod(l, listIsEqual_Test);
+
+    // Insert 1000 element into list.
+    insert_range_to_list(l, 0, 1000);
+    // Peek into entries and check is entries valid
+    listIter iter = listGetIter(l);
+    while (entry = peek_next_list(&iter)) {
+        assert_string_equal(entry->element, numberToStr(num++));
+    }
+
+    // Copy validity
+    num = 0;
+    list *l_copy = listCopy(l);
+    listIter iter_copy = listGetIter(l_copy);
+
+    entry = peek_next_list(&iter_copy);
+    assert_non_null(entry);
+    assert_string_equal(entry->element, numberToStr(num++));
+
+    while (entry = peek_next_list(&iter_copy)) {
+        assert_string_equal(entry->element, numberToStr(num++));
+    }
+
+    // Assignment checking
+    num = 0;
+    list *l_assign = listConst();
+
+    listAssignment(l_assign, l);
+
+    listIter iter_assign = listGetIter(l_assign);
+
+    while (entry = peek_next_list(&iter_assign)) {
+        assert_string_equal(entry->element, numberToStr(num++));
+    }
+
+    // Equal checking
+    assert_int_equal(listIsEqual(l_assign, l_copy), TRUE);
+    assert_int_equal(listIsEqual(l_assign, l), TRUE);
+    assert_int_equal(listIsEqual(l, l_copy), TRUE);
+    assert_int_equal(listIsEqual(l, l), TRUE);
+
+    // Should be equal after insert equal value into both list
+    listAppend(l, "YY");
+    listAppend(l_copy, "YY");
+    assert_int_equal(listIsEqual(l, l_copy), TRUE);
+
+    // Should be false in this case
+    listAppend(l, "TT");
+    assert_int_equal(listIsEqual(l, l_copy), FALSE);
+
+    // List concate operation
+    list *l_concate = listConst();
+    list *r_concate = listConst();
+
+    insert_range_to_list(l_concate, 0, 4);
+    insert_range_to_list(r_concate, 5, 9);
+
+    listConcate(l_concate, r_concate);
+    iter = listGetIter(l_concate);
+
+    num = 0;
+    while (entry = peek_next_list(&iter)) {
+        assert_string_equal(entry->element, numberToStr(num++));
+    }
+
+    
+}
 
 void list_symbolTable(void **state) {
     symbol_t *symbol, *found;

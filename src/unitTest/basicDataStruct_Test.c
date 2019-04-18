@@ -249,7 +249,8 @@ int main(void) {
             cmocka_unit_test(yy_syn_def__SEQUENCE),
             cmocka_unit_test(yy_syn_def_Basic_Field),
             cmocka_unit_test(list__TYPE_TABLE),
-            cmocka_unit_test(option_Basic)
+            cmocka_unit_test(option_Basic),
+            cmocka_unit_test(list__Generic_List)
             #endif
     };
 

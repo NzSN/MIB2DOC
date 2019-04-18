@@ -24,12 +24,29 @@ typedef struct listNode {
     struct listNode *prev;
 } listNode;
 
+typedef struct listEntry {
+    void *element;
+    listNode node;
+} listEntry;
+
+typedef struct list {
+    listEntry *entry;
+    void   (*release)(void *);
+    void * (*copy)(void *);
+    int    (*isEqual)(void *, void *);
+    int size;
+} list;
+
+typedef struct listIter {
+    list *l;
+    listEntry *entry;
+} listIter;
+
 typedef struct slice {
     int sliKey;
     char *sliVal;
     listNode sliNode;
 } slice;
-
 
 typedef struct sliceIter {
     slice *sl;
@@ -41,10 +58,39 @@ PreCond((Slice), slice(Slice))
 PreCond((slice), slice(slice))
 #define IS_LAST_SLICE_NODE(slice) (slice->sliNode.next == NULL)
 
+/* list */
+#define listGetEntry(l) ((l)->entry)
+#define listSetEntry(l, e) ((l)->entry = e)
+#define listSetReleaseMethod(l, m) ((l)->release = m)
+#define listSetCopyMethod(l, m) ((l)->copy = m)
+#define listSetEqualMethod(l, m) ((l)->isEqual = m)
+#define listGetSize(l) ((l)->size)
+#define listSetSize(l, s) ((l)->size = s)
+
+list * listConst(void);
+void   listRelease(list *l);
+list * listCopy(list *l);
+int    listAssignment(list *l, list *r);
+int    listIsEqual(list *l, list *r);
+int    listConcate(list *l, list *r);
+int    listAppend(list *l, void *);
+void * listRetriveTail(list *l);
+int    listPush(list *l, void *);
+void * listPop(list *l);
+
+listIter listGetIter(list *l);
+listIter    listPredecessor(listIter li);
+listIter    listSuccessor(listIter li);
+listEntry * listPrev(listIter *li);
+listEntry * listNext(listIter *li);
+listEntry * listSource(listIter li);
+int         listSink(listIter li_l, listIter li_r);
+
 /* ListNode */
 typedef _Bool (*listNodeCmp)(const listNode *node, const void *arg);
 typedef _Status (*listNodeTask)(listNode *head, void *arg);
 typedef _Bool (*listNodeEqualCheck)(const listNode *node, const listNode *node_);
+typedef _Bool (*listNodeEqualCheck_extra)(const listNode *node, const listNode *node_, void *arg);
 listNode *listNodePrev(const listNode *node);
 listNode *listNodeNext(const listNode *node);
 listNode *listNodeInsert(listNode *head, listNode *node);
@@ -57,7 +103,9 @@ listNode *listNodeAppend(listNode *listH, listNode *listN);
 listNode * listNodeTail(const listNode *head);
 bool listNodeIsEmpty(listNode *node);
 _Bool listNodeIsEqual(const listNode *first, const listNode *second, 
-    listNodeEqualCheck equalCheck);
+                      listNodeEqualCheck equalCheck);
+_Bool listNodeIsEqual_extra(const listNode *first, const listNode *second,
+                            void *arg, listNodeEqualCheck_extra equalCheck);
 _Status listNodeTravel(listNode *head, listNodeTask func, void *arg);
 listNode * listNodeSearch(listNode *head, listNodeCmp cmpOp, void *arg);
 
@@ -81,7 +129,11 @@ slice   * sliceNext(sliceIter *si);
 slice   * sliceSource(sliceIter si);
 int       sliceSink(sliceIter si_l, sliceIter si_r);
 
-/* Procedures implement as macro */
+#ifdef MIB2DOC_UNIT_TESTING
+
+void list__Generic_List(void **state);
+
+#endif /* MIB2DOC_UNIT_TESTING */
 
 #endif /* _MIB2DOC_LIST_H_ */
 
