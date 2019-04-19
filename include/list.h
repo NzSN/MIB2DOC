@@ -102,7 +102,7 @@ listNode *listNodeDelete(listNode *node);
 listNode *listNodeAppend(listNode *listH, listNode *listN);
 listNode * listNodeTail(const listNode *head);
 bool listNodeIsEmpty(listNode *node);
-_Bool listNodeIsEqual(const listNode *first, const listNode *second, 
+_Bool listNodeIsEqual(const listNode *first, const listNode *second,
                       listNodeEqualCheck equalCheck);
 _Bool listNodeIsEqual_extra(const listNode *first, const listNode *second,
                             void *arg, listNodeEqualCheck_extra equalCheck);

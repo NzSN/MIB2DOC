@@ -437,8 +437,7 @@ ENUMERATE_MEMBERS :
     };
 ENUMERATE_MEMBER:
     IDENTIFIER L_PAREN NUM R_PAREN {
-        pairSetLeft(&$$, $IDENTIFIER);
-        pairSetRight(&$$, $NUM);
+
     };
 
 ONE_OR_MORE_VAL :

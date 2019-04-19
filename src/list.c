@@ -115,6 +115,7 @@ int listConcate(list *l, list *r) {
 
     // Append first entry of r onto last entry of l
     listNodeAppend(&l->entry->node, &r->entry->node);
+    l->size += r->size;
 
     return OK;
 }
@@ -139,11 +140,15 @@ int listAppend(list *l, void *elem) {
 }
 
 void * listRetriveTail(list *l) {
-    if (isNullPtr(l)) return NULL;
+    if (isNullPtr(l) || isNullPtr(l->entry))
+        return NULL;
 
     listNode *tail = listNodeTail(&l->entry->node);
     listEntry *lastEntry = containerOf(tail, listEntry, node);
     void *elem = lastEntry->element;
+
+    if (--l->size == 1)
+        l->entry = NULL;
 
     listNodeDelete(tail);
     RELEASE_MEM(lastEntry);
@@ -158,7 +163,13 @@ int listPush(list *l, void *elem) {
     listEntry *newEntry = (listEntry *)zMalloc(sizeof(listEntry));
     newEntry->element = elem;
 
-    listNodeAppend(&newEntry->node, &l->entry->node);
+    if (l->entry == NULL) {
+        ++l->size;
+        l->entry = newEntry;
+        return OK;
+    }
+
+    listNodeAppend(&l->entry->node, &newEntry->node);
     l->entry = newEntry;
 
     ++l->size;
@@ -167,13 +178,16 @@ int listPush(list *l, void *elem) {
 }
 
 void * listPop(list *l) {
-    if (isNullPtr(l))
-        return ERROR;
+    if (isNullPtr(l) || l->size == 0)
+        return NULL;
 
     listEntry *firstEntry = l->entry;
     void *elem = firstEntry->element;
 
-    l->entry = containerOf(&firstEntry->node, listEntry, node);
+    l->entry = containerOf(firstEntry->node.next, listEntry, node);
+
+    if (--l->size == 0)
+        l->entry = NULL;
 
     listNodeDelete(firstEntry);
     RELEASE_MEM(firstEntry);
@@ -1332,12 +1346,29 @@ void list__Generic_List(void **state) {
     listConcate(l_concate, r_concate);
     iter = listGetIter(l_concate);
 
+    assert_int_equal(l_concate->size, 10);
+
     num = 0;
     while (entry = peek_next_list(&iter)) {
         assert_string_equal(entry->element, numberToStr(num++));
     }
 
-    
+    // listRetriveTail testing
+    num = 9;
+    char *elem;
+    while (elem = listRetriveTail(l_concate)) {
+        assert_string_equal(elem, numberToStr(num));
+        assert_int_equal(l_concate->size, num--);
+    }
+
+    // listPush and listPop testing
+    list *l_push = listConst();
+    listPush(l_push, numberToStr(1));
+    listPush(l_push, numberToStr(2));
+    assert_string_equal(listPop(l_push), numberToStr(2));
+    assert_int_equal(l_push->size, 1);
+    assert_string_equal(listPop(l_push), numberToStr(1));
+    assert_int_equal(l_push->size, 0);
 }
 
 void list_symbolTable(void **state) {
