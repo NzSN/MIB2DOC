@@ -169,7 +169,7 @@ int listPush(list *l, void *elem) {
         return OK;
     }
 
-    listNodeAppend(&l->entry->node, &newEntry->node);
+    listNodeAppend(&newEntry->node, &l->entry->node);
     l->entry = newEntry;
 
     ++l->size;
@@ -518,6 +518,7 @@ int sliceAssignment(slice *sl_l, slice *sl_r) {
     if (isNullPtr(sl_l) || isNullPtr(sl_r))
         return ERROR;
 
+    // Todo: Shallow copy is dangerous fix it.
     sl_l->sliKey = sl_r->sliKey;
     sl_l->sliVal = sl_r->sliVal;
 

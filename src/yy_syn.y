@@ -51,7 +51,7 @@
 %token MOD_SPECIFIER LAST_UPDATED
 %token ORGANIZATION REVISION CONTACT_INFO
 %token <str> REVISION_DATE
- 
+
 %token <str> IDENTIFIER
 %token <str> NUM
 %token <str> TYPE_BUILT_IN
@@ -60,10 +60,12 @@
 
 
 %union {
+    // SEQUENCE
     struct sequence_item si;
-    struct sequence sq;    
+    struct sequence sq;
 }
 
+// SEQUENCE
 %type <str> TYPE
 %type <si> SEQ_ITEM
 %type <sq> SEQUENCE
@@ -80,14 +82,20 @@
     #include "mibTreeGen.h"
 
     extern typeTable mibTypeTbl;
-    extern symbolTable symTable;     
+    extern symbolTable symTable;
     dispatchParam importParam;
-    genericStack importInfoStack; 
-     
+    genericStack importInfoStack;
+
     int syntaxParserInit(void) {
         memset(&importParam, 0, sizeof(dispatchParam));
-        genericStackConstruct(&importInfoStack, 20, sizeof(collectInfo *)); 
+        genericStackConstruct(&importInfoStack, 20, sizeof(collectInfo *));
     }
+
+    // TYPE Block type
+    typedef enum {
+        BLOCK_TYPE_BIT_NAME,
+        BLOCK_TYPE_LITERAL
+    };
 }
 
 // Grammar rules
@@ -415,25 +423,27 @@ SYNTAX :
 
 SYNTAX_VALUE :
 	TYPE TYPE_SPECIFIER {
-		dispatchParam *param = disParamConstruct(SLICE_TYPE);
-	    disParamStore(param, disParamConstruct($TYPE));
-		dispatch(DISPATCH_PARAM_STAGE, param);
+
     }
     | OBJ_IDEN_;
 
 TYPE_SPECIFIER :
-    TYPE_SPECIFIER_
+    TYPE_SPECIFIER_ {
+
+    }
     | /* empty */;
 TYPE_SPECIFIER_ :
-    L_BRACE ENUMERATE_MEMBERS R_BRACE
+    L_BRACE ENUMERATE_MEMBERS R_BRACE {
+
+    }
     | L_PAREN ONE_OR_MORE_VAL R_PAREN;
 
 ENUMERATE_MEMBERS :
     ENUMERATE_MEMBER {
-        
+
     }
     | ENUMERATE_MEMBER COMMA ENUMERATE_MEMBERS {
-        
+
     };
 ENUMERATE_MEMBER:
     IDENTIFIER L_PAREN NUM R_PAREN {
@@ -446,6 +456,7 @@ ONE_OR_MORE_VAL :
 VAL :
     NUM
     | RANGE;
+
 RANGE:
     NUM TO NUM
 

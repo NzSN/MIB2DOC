@@ -42,9 +42,16 @@ typedef struct listIter {
     listEntry *entry;
 } listIter;
 
+// Todo: slice should be replaced by list
 typedef struct slice {
     int sliKey;
-    char *sliVal;
+    union {
+        char *sliVal;
+        void *sliVal_;
+        double number;
+        int num_h;
+        int num_l;
+    };
     listNode sliNode;
 } slice;
 
