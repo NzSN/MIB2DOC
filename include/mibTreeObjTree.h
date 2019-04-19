@@ -19,6 +19,7 @@ typedef struct mibInfo {
     char *type;
     char *desc;
     char *detail;
+    list *additional;
 } mibLeaveInfo;
 
 typedef struct mibObjectTreeNode {
@@ -65,7 +66,7 @@ int mibObjectTreeInit();
 int insert_MibTree(mibObjectTreeNode *root, mibObjectTreeNode *obj, char *parent);
 mibObjectTreeNode * parent_MibTree(mibObjectTreeNode *root, char *ident);
 mibObjectTreeNode * mibLeaveBuild(char *ident, char *type, char *rw, 
-    char *desc, char *oid, char *parent);
+                                  char *desc, char *oid, char *parent, list *additional);
 mibObjectTreeNode * mibNodeBuild(char *ident, char *oid, char *parent);
 mibObjectTreeNode * search_MibTree(mibObjectTreeNode *root, char *const ident);
 char * getIdentFromInfo(mibObjectTreeNode *node);

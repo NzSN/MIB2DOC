@@ -43,7 +43,6 @@ int symbolCollecting(int type, dispatchParam *param);
 int symbolCollectingInit();
 void PARAM_FLUSH();
 
-
 _Bool typeTableInit();
 
 int documentGen(mibTreeHead *treeHead, char *filePath);

@@ -75,38 +75,26 @@ int mibObjGen(int nodeType) {
     rw = sliceRetriVal(&sliceContainer, SLICE_PERMISSION);
     desc = sliceRetriVal(&sliceContainer, SLICE_DESCRIPTION);
     parent = sliceRetriVal(&sliceContainer, SLICE_PARENT);
-    suffix = sliceRetriVal(&sliceContainer, SLICE_OID_SUFFIX);
+    suffix = sliceRetriVal(&sliceContainer, SLICE_OID_SUFFIX); 
 
     // Node Build
     switch (nodeType) {
     case OBJECT:
-        assert(ident != NULL);
-        assert(type != NULL);
-        assert(rw != NULL);
-        assert(desc != NULL);
-        assert(parent != NULL);
-        assert(suffix != NULL);
-
-        newNode = mibLeaveBuild(ident, type, rw, desc, suffix, parent);
+        // Deal with additional infomation of leave nodes.
+        newNode = mibLeaveBuild(ident, type, rw, desc, suffix, parent, NULL);
         break;
+
     case TRAP:
-        type = (char *)malloc(strlen("trap") + 1);
+        type = (char *)zMalloc(strlen("trap") + 1);
         strncpy(type, "trap", strlen("trap"));
 
-        assert(ident != NULL);
-        assert(parent != NULL);
-        assert(suffix != NULL);
-        assert(desc != NULL);
-
-        newNode = mibLeaveBuild(ident, type, NULL, NULL, suffix, parent);
+        newNode = mibLeaveBuild(ident, type, NULL, NULL, suffix, parent, NULL);
         break;
-    case OBJECT_IDENTIFIER:
-        assert(ident != NULL);
-        assert(parent != NULL);
-        assert(suffix != NULL);
 
+    case OBJECT_IDENTIFIER:
         newNode = mibNodeBuild(ident, suffix, parent);
         break;
+
     case SEQUENCE:
         /* ignore */
         break;
@@ -114,6 +102,7 @@ int mibObjGen(int nodeType) {
         break;
     }
 
+    assert(newNode != NULL);
     assert(mibTreeHeadAppend(&trees, newNode) != FALSE);
 
     sliceRelease_STATIC(&sliceContainer);
@@ -160,7 +149,7 @@ int mibObjGen_Leave() {
     assert((suffix = sliceGetVal(&sliceContainer, SLICE_OID_SUFFIX)) != NULL);
 
     oid = oidComplement(parent, suffix);
-    obj = mibLeaveBuild(ident, type, rw, desc, oid, parent);
+    obj = mibLeaveBuild(ident, type, rw, desc, oid, parent, NULL);
     mibTreeLeaveAdd(obj, parent);
 
     sliceReset(sliceNext(&sliceContainer));
@@ -206,7 +195,7 @@ int mibObjGen_trap() {
 
     oid = oidComplement(parent, suffix);
 
-    obj = mibLeaveBuild(ident, type, NULL, NULL, oid, parent);
+    obj = mibLeaveBuild(ident, type, NULL, NULL, oid, parent, NULL);
     mibTreeLeaveAdd(obj, parent);
 
     sliceReset(sliceNext(&sliceContainer));
@@ -273,7 +262,9 @@ int upperTreeGeneration(symbolTable *symTbl) {
                                               strdup(child->symInfo.leaveMeta.type),
                                               strdup(child->symInfo.leaveMeta.permission),
                                               NULL,
-                                              strdup(child->symInfo.leaveMeta.suffix), NULL);
+                                              strdup(child->symInfo.leaveMeta.suffix),
+                                              NULL,
+                                              NULL);
                     insert_MibTree(root, childNode, strdup(current->identifier));
                 }
                 temp = child;
@@ -324,8 +315,16 @@ int symbolCollectingInit() {
     return 0;
 }
 
+static int isValidCollectingType(int type) {
+    return type >= OBJECT && type < SLICE_TYPE_MAXIMUM;
+}
+
 int symbolCollecting(int type, dispatchParam *param) {
     char *ident;
+
+    if (!isValidCollectingType(type)) {
+        return TRUE;
+    }
 
     if (type >= OBJECT && type <= SMI_DEF && type != OBJECT_IDENTIFIER) {
         ident = sliceGetVal(&symCollectSlice, SLICE_IDENTIFIER);
@@ -334,6 +333,7 @@ int symbolCollecting(int type, dispatchParam *param) {
             return TRUE;
         }
     }
+
     return symbolCollectRoutine[type](param);
 }
 

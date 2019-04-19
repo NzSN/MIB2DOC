@@ -10,6 +10,7 @@
 #include <options.h>
 #include <stdlib.h>
 #include <util.h>
+#include "pair.h"
 
 /* Declaration Section */
 static void debugging(dispatchParam* param);
@@ -46,37 +47,71 @@ int dispatchInit() {
     return ERROR_NONE;
 }
 
+static pair dispatcher_param_retrive(dispatchParam *param) {
+    pair p;
+    p.left = (void *)disParamGet(disParamRetrive(&param));
+    p.right = (void *)disParamGet(disParamRetrive(&param));
+
+    return p;
+}
+
+static void dispatcher_param_processing(pair *p) {
+    list *bitNameList;
+    slice *bitNameSlice;
+
+    if (p->left == SLICE_BIT_NAME) {
+        bitNameSlice = sliceGet(&sliceContainer, SLICE_BIT_NAME);
+        if (isNullPtr(bitNameSlice)) {
+            bitNameList = listConst();
+            listAppend(bitNameList, pairConstWithContent(p->copy(p->left), p->copy(p->right)));
+            sliceStore(&sliceContainer, sliceConstruct(SLICE_BIT_NAME, bitNameList));
+        } else {
+            bitNameList = (list *)bitNameSlice->sliVal_;
+            listAppend(bitNameList, pairConstWithContent(p->copy(p->left), p->copy(p->right)));
+        }
+        listAppend(bitNameList, pairConstWithContent(p->copy(p->left), p->copy(p->right)));
+    } else {
+        sliceStore(&sliceContainer, sliceConstruct(p->left, p->right));
+    }
+}
+
 int dispatch(dispatch_type disType, dispatchParam* param) {
     int symCollectType;
-    unsigned long key;
-    char *val, *moduleName, *sCollection;
+    char *moduleName, *sCollection;
+    pair keyVal_pair;
     errorType ret = ERROR_NONE;
 
-    if (isNullPtr(param)) {
+    if (isNullPtr(param))
         return ERROR_NULL_REF;
-    }
 
     switch (dispatchMakeChoice(disType)) {
     case DISPATCH_PARAM_STAGE:
-        key = (unsigned long)disParamGet(disParamRetrive(&param));
-        val = (char*)disParamGet(disParamRetrive(&param));
-        sliceStore(&sliceContainer, sliceConstruct(key, val));
+        keyVal_pair = dispatcher_param_retrive(param);
+        dispatcher_param_processing(&keyVal_pair);
         break;
+
     case MIBTREE_GENERATION:
         mibObjGen((unsigned long)disParamGet(disParamRetrive(&param)));
         break;
+
     case SYMBOL_COLLECTING:
         symCollectType = (unsigned long)disParamGet(disParamRetrive(&param));
         symbolCollecting(symCollectType, param);
         break;
+
     case IGNORE:
         /* Do nothing */
         break;
+
     case DEBUGING:
         debugging(param);
+        break;
+
     default:
         ret = ERROR_WRONG_IDX;
     }
+
+    disParamRelease(param, NULL);
     return ret;
 }
 

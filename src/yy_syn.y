@@ -447,7 +447,10 @@ ENUMERATE_MEMBERS :
     };
 ENUMERATE_MEMBER:
     IDENTIFIER L_PAREN NUM R_PAREN {
-
+        pair *p = pairConstWithContent($IDENTIFIER, $NUM);
+        dispatchParam *param = disParamConstruct(SLICE_BIT_NAME);
+        disParamStore(param, disParamConstruct(p));
+        dispatch(DISPATCH_PARAM_STAGE, param);
     };
 
 ONE_OR_MORE_VAL :

@@ -16,7 +16,8 @@ enum elementType {
     SLICE_DESCRIPTION,
     SLICE_PARENT,
     SLICE_OID_SUFFIX,
-    SLICE_TYPE_MAXIMUM
+    SLICE_TYPE_MAXIMUM,
+    SLICE_BIT_NAME
 } sliceType;
 
 typedef struct listNode {

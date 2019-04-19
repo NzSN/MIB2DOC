@@ -67,11 +67,14 @@ mibObjectTreeNode * mibNodeBuild(char *ident, char *oid, char *parent) {
     return obj;
 }
 
-mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, char *oid, char *parent) {
+mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc,
+                                 char *oid, char *parent, list *additional) {
     mibObjectTreeNode *obj;
     mibLeaveInfo *info;
 
-    if (isNullPtr(ident) || isNullPtr(type) ||  isNullPtr(oid))
+    if (isNullPtr(ident) || isNullPtr(type)
+        ||  isNullPtr(oid) || isNullPtr(rw)
+        || isNullPtr(desc) || isNullPtr(parent))
         return NULL;
 
     info = (mibLeaveInfo *)malloc(sizeof(mibLeaveInfo));
@@ -84,6 +87,7 @@ mibObjectTreeNode *mibLeaveBuild(char *ident, char *type, char *rw, char *desc, 
     info->type = type;
     info->rw = rw;
     info->detail = desc;
+    info->additional = additional;
 
     obj = (mibObjectTreeNode *)malloc(sizeof(mibObjectTreeNode));
     memset(obj, 0, sizeof(mibObjectTreeNode));
