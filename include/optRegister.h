@@ -31,6 +31,7 @@ typedef enum optionNumber {
     SourceMibFile = 0,
     TargetPdfFile,
     IncludePath,
+    TreePrint,
     NumOfOptions
 } optionNumber;
 
@@ -77,11 +78,11 @@ enum {
 };
 
 static char optionRelation[NumOfOptions][NumOfOptions] = {
-    { 0, 0, 0 },
-    { 0, 0, 0 },
-    { 0, 0, 0 }
+    { 0, 0, 0, 0 },
+    { 0, 0, 0, 0 },
+    { 0, 0, 0, 0 },
+    { 0, 0, 0, 0 }
 };
-
 
 typedef char         * optHalfPiece;
 typedef optHalfPiece * optPiece;
@@ -156,16 +157,15 @@ typedef struct optPiecesIter {
 
 static optRegister_t registerTable[] = {
     /* Source mib file */
-    { "-s", { TRUE, "String", SourceMibFile, pathArgumentCheck } }, 
+    { "-s", { TRUE, "String", SourceMibFile, pathArgumentCheck } },
     /* Target pdf file */
-    { "-t", { TRUE, "String", TargetPdfFile, pathArgumentCheck } }, 
+    { "-t", { TRUE, "String", TargetPdfFile, pathArgumentCheck } },
     /* Include path */
-    { "-I", { TRUE, "String", IncludePath,   pathArgumentCheck } }, 
+    { "-I", { TRUE, "String", IncludePath,   pathArgumentCheck } },
+    /* Tree print   */
+    { "-p", { FALSE, "N/A", TreePrint, trivialArgumentCheck } },
     /* End */
     { "N/A", { FALSE, "Number", NumOfOptions, NULL } }
 };
 
-
-
 #endif /* _OPT_REGISTER_H_ */
-

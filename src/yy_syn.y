@@ -80,6 +80,8 @@
     #include "typeCheck.h"
     #include "dispatcher.h"
     #include "mibTreeGen.h"
+    #include "pair.h"
+    #include "util.h"
 
     extern typeTable mibTypeTbl;
     extern symbolTable symTable;
@@ -448,6 +450,10 @@ ENUMERATE_MEMBERS :
 ENUMERATE_MEMBER:
     IDENTIFIER L_PAREN NUM R_PAREN {
         pair *p = pairConstWithContent($IDENTIFIER, $NUM);
+        pairSetCopyMethod(p, strdup);
+        pairSetEqualMethod(p, isStringEqual);
+        pairSetReleaseMethod(p, free);
+
         dispatchParam *param = disParamConstruct(SLICE_BIT_NAME);
         disParamStore(param, disParamConstruct(p));
         dispatch(DISPATCH_PARAM_STAGE, param);

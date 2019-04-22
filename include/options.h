@@ -8,6 +8,7 @@
 #define OPT_KEY_SRC_MIB_FILE "SOURCE_MIB"
 #define OPT_KEY_TARGET_PDF   "TARGET_PDF"
 #define OPT_KEY_INCLUDE_PATH "INCLUDE_PATH"
+#define OPT_KEY_TREE_PRINT   "TREE_PRINT"
 
 typedef struct optionVal {
     char *val;
@@ -43,6 +44,7 @@ int optMngRelease(optionMng *mng);
 optionMng * optMngDup(optionMng *mng);
 options_t * optMngGetOpt(optionMng *mng, char *optName);
 char * optMngGetOptVal(optionMng *mng, char *optName);
+int optMngIsOptSet(optionMng *mng, char *optName);
 int optMngAddOpt(optionMng *mng, char *optName);
 int optMngDelOpt(optionMng *mng, char *optName);
 int optMngAppendOptVal(optionMng *mng, char *optName, char *value);

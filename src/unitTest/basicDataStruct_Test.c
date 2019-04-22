@@ -230,7 +230,35 @@ static void list__DISPATCH_PARAM_STORE(void **state) {
     disParamRelease(massive, NULL);
 }
 
+typedef int (*callback)(int);
+int op(int a, callback c) {
+    return c(a);
+}
+int op_(int a) {
+    return 1;
+}
 
+int main(void) {
+    const struct CMUnitTest tests[] = {
+            cmocka_unit_test(list__LISTNODE_SLICE),
+            cmocka_unit_test(util__tableRecognize),
+            cmocka_unit_test(queue__QUEUE_APPEND),
+            cmocka_unit_test(UNIT_TEST__DESC_CHECK),
+            cmocka_unit_test(list__DISPATCH_PARAM_STORE),
+
+            // Module unit testing
+            #ifdef MIB2DOC_UNIT_TESTING
+            cmocka_unit_test(stack__STACK_PUSH_POP),
+            cmocka_unit_test(dispatcher__COLLECT_INFO),
+            cmocka_unit_test(hash__HASH_BASIC),
+            cmocka_unit_test(mibTreeObjTree__MIBTREE_MERGE),
+            cmocka_unit_test(list_symbolTable),
+            cmocka_unit_test(mibTreeGen__SYMBOL_COLLECT),
+            cmocka_unit_test(yy_syn_def__SEQUENCE),
+            cmocka_unit_test(yy_syn_def_Basic_Field),
+            cmocka_unit_test(list__TYPE_TABLE),
+            cmocka_unit_test(option_Basic),
+            cmocka_unit_test(list__Generic_List),
             #endif
     };
 

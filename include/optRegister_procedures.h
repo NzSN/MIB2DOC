@@ -40,9 +40,17 @@ typedef struct optBufferIter {
     __opt;\
 })
 
+/* Property(oBi: optBufferIter) */
+#define optBufferMoveForward(obi, nSteps) ({\
+    optBufferIter *__iter = obi;\
+    int i = nSteps;\
+    __iter->current += i;   \
+    __iter;\
+})
+
 static _Bool argConflictCheck(char martix[][NumOfOptions], int optIdx) {
     int i = 0, accumulate = 0;
-    if (optIdx < 0) return FALSE; 
+    if (optIdx < 0) return FALSE;
 
     while (i < NumOfOptions) {
         accumulate += martix[optIdx][i++] == REL_CONFLICT_IN;
@@ -99,10 +107,10 @@ static optPieces argumentSplit(int argc, char *argv[]) {
  *     argumentChecking: argc * current * argv * attr
  *       (argc, argv) -- withArgs(argc, argv) */ 
 static _Bool argumentChecking(int argc, char *argv[]) {
-    if (argc < 2 || isNullPtr(argv)) 
+    if (argc < 2 || isNullPtr(argv))
         return FALSE;
-    
-    int current = 1; 
+
+    int current = 1;
     optAttr_t *attr;
 
     while (current < argc) {
@@ -146,7 +154,7 @@ static _Bool pathArgumentCheck(int argc, int *current, char *argv[], optAttr_t *
     
     char *optVal;  
     optBufferIter *iter = optBufferIterConst(argc, argv);
-    iter->current = *current + 1;
+    iter = optBufferMoveForward(iter, *current);
 
     /* Argument checking via regex */ 
     if (optAttr_withArgs(attr)) {
@@ -176,6 +184,10 @@ EXIT:
 
     RELEASE_MEM(iter);
     return ret;
-
 }
 
+/* Concept(optCheck) */
+static _Bool trivialArgumentCheck(int argc, int *current, char *argv[], optAttr_t *attr) {
+    ++(*current);
+    return TRUE;
+}

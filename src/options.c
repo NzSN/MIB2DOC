@@ -123,6 +123,9 @@ static int optionProcessing(optPieces optArray) {
             optMngAddOpt(optionsManager, OPT_KEY_INCLUDE_PATH);
             optMngAppendOptVal(optionsManager, OPT_KEY_INCLUDE_PATH, optPiecesNext(iter_opt));
             break;
+        case TreePrint:
+            optMngAddOpt(optionsManager, OPT_KEY_TREE_PRINT);
+            break;
         }
     }
 
@@ -207,6 +210,17 @@ int optMngAddOpt(optionMng *mng, char *optName) {
     val->option->optionName = optName;
 
     return hashMapPut(mng->options, (pair_key_base *)key, (pair_val_base *)val);
+}
+
+int optMngIsOptSet(optionMng *mng, char *optName) {
+    if (isNullPtr(mng) || isNullPtr(optName))
+        return ERROR;
+
+    if (optMngGetOpt(mng, optName)) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
 }
 
 int optMngDelOpt(optionMng *mng, char *optName) {

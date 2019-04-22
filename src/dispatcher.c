@@ -49,6 +49,7 @@ int dispatchInit() {
 
 static pair dispatcher_param_retrive(dispatchParam *param) {
     pair p;
+
     p.left = (void *)disParamGet(disParamRetrive(&param));
     p.right = (void *)disParamGet(disParamRetrive(&param));
 
@@ -63,13 +64,12 @@ static void dispatcher_param_processing(pair *p) {
         bitNameSlice = sliceGet(&sliceContainer, SLICE_BIT_NAME);
         if (isNullPtr(bitNameSlice)) {
             bitNameList = listConst();
-            listAppend(bitNameList, pairConstWithContent(p->copy(p->left), p->copy(p->right)));
+            listAppend(bitNameList, p->right);
             sliceStore(&sliceContainer, sliceConstruct(SLICE_BIT_NAME, bitNameList));
         } else {
             bitNameList = (list *)bitNameSlice->sliVal_;
-            listAppend(bitNameList, pairConstWithContent(p->copy(p->left), p->copy(p->right)));
+            listAppend(bitNameList, p->right);
         }
-        listAppend(bitNameList, pairConstWithContent(p->copy(p->left), p->copy(p->right)));
     } else {
         sliceStore(&sliceContainer, sliceConstruct(p->left, p->right));
     }

@@ -69,7 +69,7 @@ static int latexGen(void *arg, mibObjectTreeNode *node) {
         case TABLE:
             info = (tableInfo *)Malloc(sizeof(tableInfo));
             infoPacket(info, node);
-
+            
             parent = getIdentFromInfo(node->parent);
             if (isMibNodeType_ENTRY(node->parent))
                 parent = getIdentFromInfo(node->parent->parent);

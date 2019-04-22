@@ -30,13 +30,14 @@ set(UNIT_TEST_SRC ${UTEST_DIR}/basicDataStruct_Test.c
     ${SRC_DIR}/lexDeal.c ${SRC_DIR}/misc.c
     ${SRC_DIR}/util.c ${SRC_DIR}/options.c
     ${SRC_DIR}/hash.c ${SRC_DIR}/yy_syn.def.c
-    ${SRC_DIR}/typeCheck.c ${SRC_DIR}/re.c)
+    ${SRC_DIR}/typeCheck.c ${SRC_DIR}/re.c ${DATASTRUCTURES_SRC}/pair.c)
 link_libraries(cmocka)
 add_executable(UNIT_TEST ${UNIT_TEST_SRC})
 target_compile_definitions(UNIT_TEST PUBLIC MIB2DOC_UNIT_TESTING)
 
-set(HEADER_DIR ${HOME_DIR}/include ${HOME_DIR}/include/datastructures)
-include_directories(${HEADER_DIR})
+set(HEADER_DIR ${HOME_DIR}/include)
+set(DATA_STRUCTURES_HEADER_DIR ${HEADER_DIR}/datastructures)
+include_directories(${HEADER_DIR} ${DATA_STRUCTURES_HEADER_DIR})
 
 add_custom_target(lexBison ALL DEPENDS)
 add_custom_target(lexBison_H ALL DEPENDS)
