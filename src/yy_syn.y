@@ -2,7 +2,7 @@
 %token SYNTAX_SPECIFIER
 %token ACCESS_SPECIFIER
 %token STATUS_SPECIFIER STATUS_VALUE
-%token DESC_SPECIFIER 
+%token DESC_SPECIFIER
 %token MOUNT_POINT ASSIGNED
 %token BEGIN_ END_ DEF SEQ
 %token COMMA SEMICOLON INDEX_ AUGMENTS_ TRAP_SPECIFIER
@@ -108,7 +108,7 @@ MIB :
 	| OBJ           MIB
 	| SEQUENCE      MIB
     | SMI           MIB
-	| END           MIB     
+	| END           MIB
     | DEFINITION    MIB
     | IMPORT        MIB
     | MODULE_DEF    MIB
@@ -127,7 +127,7 @@ DEFINITION :
 IMPORT :
 	IMPORTS_ MODULES SEMICOLON    {
         // Begining to import symbol from another mib files.
-        importWorks(&importInfoStack); 
+        importWorks(&importInfoStack);
     };
 
 REF_PART :
@@ -142,7 +142,7 @@ OBJ_GRP :
     OBJ_PART STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER STRING REF_PART;
 OBJ_PART :
     OBJECTS_ L_BRACE OBJS R_BRACE
-OBJS : 
+OBJS :
     IDENTIFIER
     | IDENTIFIER COMMA OBJS;
 
@@ -162,46 +162,46 @@ NOTIFICATIONS :
 /* MODULE_COMPILANCE */
 COMPLIANCE_DEFINED :
     IDENTIFIER COMPLIANCE_SPECIFIER COMPLIANCE_BODY MOUNT {
-       PARAM_FLUSH(); 
+       PARAM_FLUSH();
     };
 COMPLIANCE_BODY :
     STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER STRING REF_PART MODULE_PART;
 MODULE_PART : MODULES_;
-MODULES_ : 
+MODULES_ :
     MODULE_
     | MODULE_ MODULES_;
 MODULE_ :
     MODULE_SPECIFIER MODULE_NAME MANDATORY_PART COMPLIANCE_PART;
 MODULE_NAME :
-    IDENTIFIER 
+    IDENTIFIER
     | /* empty */;
-MANDATORY_PART : 
-    MANDATORY_SPECIFIER L_BRACE GROUPS R_BRACE; 
-GROUPS: 
-    Group 
+MANDATORY_PART :
+    MANDATORY_SPECIFIER L_BRACE GROUPS R_BRACE;
+GROUPS:
+    Group
     | Group COMMA GROUPS;
 Group : IDENTIFIER;
-COMPLIANCE_PART : 
+COMPLIANCE_PART :
     COMPLIANCES
     | /* empty */;
-COMPLIANCES : 
-    COMPLIANCE 
+COMPLIANCES :
+    COMPLIANCE
     | COMPLIANCE COMPLIANCES;
-COMPLIANCE : 
+COMPLIANCE :
     COMPLIANCE_GRP
     | COMPLIANCE_OBJ;
 COMPLIANCE_GRP :
     GROUP_SPECIFIER IDENTIFIER
     DESC_SPECIFIER STRING;
-COMPLIANCE_OBJ : 
-    OBJECT_ IDENTIFIER COMPLIANCE_SYNTAX COMPLIANCE_WRITE COMPLIANCE_ACCESS DESC_SPECIFIER STRING; 
-COMPLIANCE_SYNTAX : 
+COMPLIANCE_OBJ :
+    OBJECT_ IDENTIFIER COMPLIANCE_SYNTAX COMPLIANCE_WRITE COMPLIANCE_ACCESS DESC_SPECIFIER STRING;
+COMPLIANCE_SYNTAX :
     SYNTAX_SPECIFIER SYNTAX_VALUE
     | /* empty */;
-COMPLIANCE_WRITE : 
+COMPLIANCE_WRITE :
     WRITE_SPECIFIER SYNTAX_VALUE
     | /* empty */;
-COMPLIANCE_ACCESS : 
+COMPLIANCE_ACCESS :
     MIN_ACCESS_SPECIFIER ACCESS_VALUE
     | /* empty */;
 
@@ -238,14 +238,14 @@ OBJ_IDENTITY_DEFINED :
         PARAM_FLUSH();
     };
 OBJ_IDENTITY :
-    STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER STRING REF_PART;  
+    STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER STRING REF_PART;
 
 /* NOTIFICATION-TYPE */
-NOTIFY_TYPE_DEFINED : 
+NOTIFY_TYPE_DEFINED :
     IDENTIFIER NOTIFY_TYPE_SPECIFIER NOTIFY_TYPE MOUNT {
         PARAM_FLUSH();
     };
-NOTIFY_TYPE : 
+NOTIFY_TYPE :
     NOTIFY_TYPE_OBJ_PART STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER STRING REF_PART;
 NOTIFY_TYPE_OBJ_PART :
     OBJ_PART
@@ -270,19 +270,19 @@ END :
             //       <<EOF>> of flex.
         } else if (SW_STATE(pState) == DISPATCH_MODE_DOC_GENERATING) {
             // In mibTreeGen context we should merge seperate trees into one.
-            mibTreeHeadMerge(MIB_TREE_R);  
+            mibTreeHeadMerge(MIB_TREE_R);
             mibTreeHeadComplete(MIB_TREE_R, SYMBOL_TBL_R);
             mibTreeHeadOidComplete(MIB_TREE_R);
         }
     }
 
 MODULES :
-	MODULES_CONTENT MODULES 
+	MODULES_CONTENT MODULES
     | /* empty */  ;
 
 MODULES_CONTENT :
     ITEMS FROM_ IDENTIFIER {
-        dispatchParam *current;    
+        dispatchParam *current;
         current = &importParam;
 
         int ret = TRUE;
@@ -292,26 +292,26 @@ MODULES_CONTENT :
         while (current = dispatchParamNext(current)) {
             ret = collectInfo_add(importInfo, current->param);
             if (ret == FALSE) {
-                errorMsg("IMPORT: Symbol conflict.\n"); 
+                errorMsg("IMPORT: Symbol conflict.\n");
                 exit(1);
-            } 
+            }
         }
-        disParamRelease_Static(&importParam, NULL); 
+        disParamRelease_Static(&importParam, NULL);
 
-        push(&importInfoStack, &importInfo); 
+        push(&importInfoStack, &importInfo);
     }
 
 ITEMS :
-	IDENTIFIER { 
+	IDENTIFIER {
         dispatchParam *symbol = disParamConstruct($IDENTIFIER);
         if (disParamStore(&importParam, symbol) == NULL) {
-            exit(1); 
+            exit(1);
         }
     }
-	| IDENTIFIER COMMA ITEMS { 
+	| IDENTIFIER COMMA ITEMS {
         dispatchParam *symbol = disParamConstruct($IDENTIFIER);
         if (disParamStore(&importParam, symbol) == NULL) {
-            exit(1); 
+            exit(1);
         }
     }
 	| /* empty */ ;
@@ -319,12 +319,12 @@ ITEMS :
 SEQUENCE :
 	IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE {
         // Todo: fix the length value to be correctly.
-        $SEQUENCE.identifier = $IDENTIFIER; 
+        $SEQUENCE.identifier = $IDENTIFIER;
         $SEQUENCE.length = -1;
         sequence_item *head = seqItemNext(&$SEQ_ITEM);
         seqItemAppend(&$SEQUENCE.items, head);
 
-        typeTableAdd(&mibTypeTbl, strdup($IDENTIFIER), CATE_SEQUENCE, &$SEQUENCE); 
+        typeTableAdd(&mibTypeTbl, strdup($IDENTIFIER), CATE_SEQUENCE, &$SEQUENCE);
     };
 
 SEQ_ITEM :
@@ -332,13 +332,13 @@ SEQ_ITEM :
         sequence_item *newItem = seqItemConst();
         newItem->ident = $IDENTIFIER;
         newItem->type = $TYPE;
-        seqItemAppend(&$$, newItem); 
+        seqItemAppend(&$$, newItem);
     }
 	| IDENTIFIER TYPE {
         sequence_item *newItem = seqItemConst();
         newItem->ident = $IDENTIFIER;
-        newItem->type = $TYPE; 
-        seqItemAppend(&$$, newItem); 
+        newItem->type = $TYPE;
+        seqItemAppend(&$$, newItem);
     };
 
 SMI :
@@ -348,21 +348,21 @@ MODULE_DEF :
     IDENTIFIER MOD_SPECIFIER MODULE_BODY MOUNT {
         dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
         disParamStore(param, disParamConstruct($IDENTIFIER));
-        dispatch(DISPATCH_PARAM_STAGE, param);              
-        
+        dispatch(DISPATCH_PARAM_STAGE, param);
+
         param = disParamConstruct(OBJECT_IDENTIFIER);
         dispatch(MIBTREE_GENERATION, param);
     };
 
-MODULE_BODY : 
+MODULE_BODY :
     LAST_UPDATED STRING
-    ORGANIZATION STRING 
-    CONTACT_INFO STRING 
-    DESC_SPECIFIER STRING 
+    ORGANIZATION STRING
+    CONTACT_INFO STRING
+    DESC_SPECIFIER STRING
     REVISIONS;
 
 
-REVISIONS : 
+REVISIONS :
     REVISION STRING DESC_SPECIFIER STRING REVISIONS
     | /* empty */;
 
@@ -438,7 +438,8 @@ TYPE_SPECIFIER_ :
     L_BRACE ENUMERATE_MEMBERS R_BRACE {
 
     }
-    | L_PAREN ONE_OR_MORE_VAL R_PAREN;
+    | L_PAREN ONE_OR_MORE_VAL R_PAREN
+    | L_PAREN SIZE L_PAREN NUM TO NUM R_PAREN R_PAREN;
 
 ENUMERATE_MEMBERS :
     ENUMERATE_MEMBER {
@@ -508,7 +509,7 @@ BITS_VALUE :
     | /* empty */;
 BIT_NAMES :
     IDENTIFIER
-    | IDENTIFIER COMMA BIT_NAMES;  
+    | IDENTIFIER COMMA BIT_NAMES;
 
 UNITS : UNITS_SPECIFIER STRING
     | /* empty */;
@@ -529,7 +530,6 @@ MOUNT :
 // Epilogue
 extern YYSTYPE yylval;
 void yyerror(char const *s) {
-    fprintf(stderr, "Error occur during parsing %s at line %d: %s\n", 
+    fprintf(stderr, "Error occur during parsing %s at line %d: %s\n",
         SW_CUR_FILE_NAME(&swState), yylineno, yytext);
-}    
-
+}

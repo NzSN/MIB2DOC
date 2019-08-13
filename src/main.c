@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
     ret = yyparse();
     if (ret == ABORT) abortWithMsg("yyparse error\n");
 
-    documentGen(&trees, texPath);
+    //documentGen(&trees, texPath);
 
     if (optMngIsOptSet(optionsManager, OPT_KEY_TREE_PRINT))
         showTree(&trees);

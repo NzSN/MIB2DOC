@@ -116,7 +116,7 @@ DESCRIPTION                         { return DESC_SPECIFIER; }
 
 SMI                                 { BEGIN(SMI_FIELD); return SMI_SPECIFIER; }
 
-([a-zA-Z0-9]|"-")+    { yylval.str = strdup(yytext); return IDENTIFIER; }
+([a-zA-Z0-9]|"-"|"_")+    { yylval.str = strdup(yytext); return IDENTIFIER; }
 
 <SMI_FIELD>([0-9a-zA-Z]|"-")+       { BEGIN(INITIAL); yylval.str = strdup(yytext); return SMI_VAL; }
 
