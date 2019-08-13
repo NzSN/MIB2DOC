@@ -1,6 +1,7 @@
 %token OBJ_SPECIFIER
 %token SYNTAX_SPECIFIER
 %token ACCESS_SPECIFIER
+%token ACCESS_SPECIFIER_SHORT
 %token STATUS_SPECIFIER STATUS_VALUE
 %token DESC_SPECIFIER
 %token MOUNT_POINT ASSIGNED
@@ -235,7 +236,11 @@ TYPE :
 /* OBJECT-IDENTITY */
 OBJ_IDENTITY_DEFINED :
     IDENTIFIER OBJ_IDENTITY_SPECIFIER OBJ_IDENTITY MOUNT {
-        PARAM_FLUSH();
+        dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
+        disParamStore(param, disParamConstruct($IDENTIFIER));
+        dispatch(DISPATCH_PARAM_STAGE, param);
+
+        dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT));
     };
 OBJ_IDENTITY :
     STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER STRING REF_PART;
@@ -270,6 +275,7 @@ END :
             //       <<EOF>> of flex.
         } else if (SW_STATE(pState) == DISPATCH_MODE_DOC_GENERATING) {
             // In mibTreeGen context we should merge seperate trees into one.
+            showTree(MIB_TREE_R);
             mibTreeHeadMerge(MIB_TREE_R);
             mibTreeHeadComplete(MIB_TREE_R, SYMBOL_TBL_R);
             mibTreeHeadOidComplete(MIB_TREE_R);
@@ -334,7 +340,7 @@ SEQ_ITEM :
         newItem->type = $TYPE;
         seqItemAppend(&$$, newItem);
     }
-	| IDENTIFIER TYPE {
+	| IDENTIFIER TYPE TYPE_SPECIFIER {
         sequence_item *newItem = seqItemConst();
         newItem->ident = $IDENTIFIER;
         newItem->type = $TYPE;
@@ -471,11 +477,14 @@ RANGE:
     NUM TO NUM
 
 ACCESS :
-	ACCESS_SPECIFIER ACCESS_VALUE {
+	ACCESS_FIELD ACCESS_VALUE {
 		dispatchParam *param = disParamConstruct(SLICE_PERMISSION);
 		disParamStore(param, disParamConstruct($ACCESS_VALUE));
 		dispatch(DISPATCH_PARAM_STAGE, param);
 	};
+
+ACCESS_FIELD :
+    ACCESS_SPECIFIER | ACCESS_SPECIFIER_SHORT;
 
 STATUS :
 	STATUS_SPECIFIER STATUS_VALUE;

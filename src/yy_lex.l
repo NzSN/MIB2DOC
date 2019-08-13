@@ -28,7 +28,8 @@
 
 <STATUS_FIELD>current |
 <STATUS_FIELD>deprecated |
-<STATUS_FIELD>obsolete              { BEGIN(INITIAL); return STATUS_VALUE; }
+<STATUS_FIELD>obsolete |
+<STATUS_FIELD>mandatory              { BEGIN(INITIAL); return STATUS_VALUE; }
 
 <SEQUENCE_FIELD>OBJECT[ \T]+IDENTIFIER { yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
 <SEQUENCE_FIELD>\}                  { BEGIN(INITIAL); return R_BRACE; }
@@ -65,6 +66,7 @@ SEQUENCE[ \t]+OF[ \t]*[a-zA-Z0-9]*         { yylval.str = strdup(yytext); return
 SEQUENCE                            { BEGIN(SEQUENCE_FIELD); return SEQ; }
 
 INDEX                               { return INDEX_; }
+ACCESS                              { return ACCESS_SPECIFIER_SHORT; }
 MAX-ACCESS                          { return ACCESS_SPECIFIER; }
 MIN-ACCESS                          { return MIN_ACCESS_SPECIFIER; }
 DEFINITIONS                         { return DEF; }
