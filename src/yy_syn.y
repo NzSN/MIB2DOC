@@ -10,6 +10,8 @@
 %token OBJ_IDEN_ L_BRACE R_BRACE OBJECTS_
 %token FROM_ IMPORTS_
 
+%token ENTERPRISE_SPECIFIER TRAP_TYPE_SPECIFIER
+
 %token L_PAREN R_PAREN
 
 %token HEX_STRING
@@ -120,6 +122,7 @@ MIB :
     | COMPLIANCE_DEFINED    MIB
     | OBJ_IDENTITY_DEFINED  MIB
     | NOTIFY_TYPE_DEFINED   MIB
+    | TRAP_TYPE             MIB
     | /* empty */ ;
 
 DEFINITION :
@@ -133,6 +136,12 @@ IMPORT :
 
 REF_PART :
     REFERENCE STRING | /* empty */ ;
+
+/* TRAP-TYPE */
+TRAP_TYPE :
+    IDENTIFIER TRAP_TYPE_SPECIFIER ENTERPRISE_PART DESC_SPECIFIER STRING ASSIGNED NUM
+ENTERPRISE_PART :
+    ENTERPRISE_SPECIFIER IDENTIFIER
 
 /* OBJECT-GROUP */
 OBJ_GRP_DEFINED :
@@ -177,7 +186,8 @@ MODULE_NAME :
     IDENTIFIER
     | /* empty */;
 MANDATORY_PART :
-    MANDATORY_SPECIFIER L_BRACE GROUPS R_BRACE;
+    MANDATORY_SPECIFIER L_BRACE GROUPS R_BRACE
+    | /* empty */;
 GROUPS:
     Group
     | Group COMMA GROUPS;
@@ -258,7 +268,7 @@ NOTIFY_TYPE_OBJ_PART :
 
 
 TYPE_DEFINED :
-    IDENTIFIER ASSIGNED TYPE {
+    IDENTIFIER ASSIGNED TYPE TYPE_SPECIFIER {
         _Bool isExists = typeTableIsTypeExists(MIB_TYPE_TBL_R, $IDENTIFIER);
         if (!isExists) {
             typeTableAdd(MIB_TYPE_TBL_R, $IDENTIFIER, CATE_CUSTOM, NULL);
@@ -275,10 +285,11 @@ END :
             //       <<EOF>> of flex.
         } else if (SW_STATE(pState) == DISPATCH_MODE_DOC_GENERATING) {
             // In mibTreeGen context we should merge seperate trees into one.
-            showTree(MIB_TREE_R);
-            mibTreeHeadMerge(MIB_TREE_R);
-            mibTreeHeadComplete(MIB_TREE_R, SYMBOL_TBL_R);
-            mibTreeHeadOidComplete(MIB_TREE_R);
+            if (MIB_TREE_R->numOfTree > 0) {
+                mibTreeHeadMerge(MIB_TREE_R);
+                mibTreeHeadComplete(MIB_TREE_R, SYMBOL_TBL_R);
+                mibTreeHeadOidComplete(MIB_TREE_R);
+            }
         }
     }
 
@@ -340,12 +351,15 @@ SEQ_ITEM :
         newItem->type = $TYPE;
         seqItemAppend(&$$, newItem);
     }
-	| IDENTIFIER TYPE TYPE_SPECIFIER {
+	| IDENTIFIER TYPE TYPE_SPECIFIER MAYBE_COMMA {
         sequence_item *newItem = seqItemConst();
         newItem->ident = $IDENTIFIER;
         newItem->type = $TYPE;
         seqItemAppend(&$$, newItem);
-    };
+    }
+
+MAYBE_COMMA :
+    COMMA | /* empty */;
 
 SMI :
     SMI_SPECIFIER SMI_VAL {};
@@ -431,7 +445,11 @@ SYNTAX :
 
 SYNTAX_VALUE :
 	TYPE TYPE_SPECIFIER {
-
+        if (SW_STATE(getCurSwInfo()) == DISPATCH_MODE_DOC_GENERATING) {
+            dispatchParam *param = disParamConstruct(SLICE_TYPE);
+            disParamStore(param, disParamConstruct($TYPE));
+            dispatch(DISPATCH_PARAM_STAGE, param);
+        }
     }
     | OBJ_IDEN_;
 

@@ -812,8 +812,6 @@ int mibTreeHeadOidComplete(mibTreeHead *treeHead) {
     if (isNullPtr(treeHead))
         return ERROR;
 
-    // Oid completment should be run after mibTree merge
-    // there should only one mibTree exists in the tree list.
     assert(treeHead->numOfTree == 1);
 
     tree = mibTreeHeadFirstTree(treeHead);

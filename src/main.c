@@ -26,8 +26,6 @@ int main(int argc, char *argv[]) {
     FILE *writeTo;
     mibObjectTreeNode *node;
 
-    beginFrom = "org";
-
     // Option Manager Initialization
     // It will read option you provide in command line
     // and applie options to modules.
@@ -70,7 +68,7 @@ int main(int argc, char *argv[]) {
     ret = yyparse();
     if (ret == ABORT) abortWithMsg("yyparse error\n");
 
-    //documentGen(&trees, texPath);
+    documentGen(&trees, texPath);
 
     if (optMngIsOptSet(optionsManager, OPT_KEY_TREE_PRINT))
         showTree(&trees);

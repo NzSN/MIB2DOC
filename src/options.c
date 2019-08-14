@@ -126,6 +126,13 @@ static int optionProcessing(optPieces optArray) {
         case TreePrint:
             optMngAddOpt(optionsManager, OPT_KEY_TREE_PRINT);
             break;
+        case ShowTypeDefined:
+            optMngAddOpt(optionsManager, OPT_KEY_SHOW_T_DEF);
+            break;
+        case BeginFrom:
+            optMngAddOpt(optionsManager, OPT_KEY_BEGIN_FROM);
+            optMngAppendOptVal(optionsManager, OPT_KEY_BEGIN_FROM, optPiecesNext(iter_opt));
+            break;
         }
     }
 

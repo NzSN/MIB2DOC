@@ -15,8 +15,9 @@ struct optAttr_t;
 typedef _Bool (*optCheck_t)(int argc, int *current, char *argv[], struct optAttr_t *attr);
 
 typedef struct optAttr_t {
-    int withArgs; 
-    char *type; // String or Number
+    int withArgs;
+    // String orNumber
+    char *type;
     int index;
     optCheck_t check;
 } optAttr_t;
@@ -32,6 +33,8 @@ typedef enum optionNumber {
     TargetPdfFile,
     IncludePath,
     TreePrint,
+    ShowTypeDefined,
+    BeginFrom,
     NumOfOptions
 } optionNumber;
 
@@ -155,6 +158,7 @@ typedef struct optPiecesIter {
  * in to registerTable */
 #include "optRegister_procedures.h"
 
+// fixme: should replace trivial checking procedures with real.
 static optRegister_t registerTable[] = {
     /* Source mib file */
     { "-s", { TRUE, "String", SourceMibFile, pathArgumentCheck } },
@@ -164,6 +168,10 @@ static optRegister_t registerTable[] = {
     { "-I", { TRUE, "String", IncludePath,   pathArgumentCheck } },
     /* Tree print   */
     { "-p", { FALSE, "N/A", TreePrint, trivialArgumentCheck } },
+    /* Type defined print */
+    { "--show-type-defined", { FALSE, "N/A", ShowTypeDefined, trivialArgumentCheck } },
+    /* Begin from */
+    { "--from", { TRUE, "String", BeginFrom, trivialOneArgumentCheck } },
     /* End */
     { "N/A", { FALSE, "Number", NumOfOptions, NULL } }
 };

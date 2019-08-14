@@ -51,11 +51,16 @@ _Bool typeTableInit() {
     typeTableAdd(&mibTypeTbl, "Gauge32", CATE_BUILD_IN, NULL);
     typeTableAdd(&mibTypeTbl, "Integer32", CATE_BUILD_IN, NULL);
     typeTableAdd(&mibTypeTbl, "IpAddress", CATE_BUILD_IN, NULL);
-    typeTableAdd(&mibTypeTbl, "Opaque", CATE_BUILD_IN, NULL);
     typeTableAdd(&mibTypeTbl, "TimeTicks", CATE_BUILD_IN, NULL);
     typeTableAdd(&mibTypeTbl, "BITS", CATE_BUILD_IN, NULL);
     typeTableAdd(&mibTypeTbl, "Unsigned32", CATE_BUILD_IN, NULL);
     typeTableAdd(&mibTypeTbl, "INTEGER", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "NetworkAddress", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "IpAddress", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Gauge", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Counter", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "TimeTicks", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "Opaque", CATE_BUILD_IN, NULL);
 
     return OK;
 }
@@ -353,6 +358,10 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
     parentIdent = sliceRetriVal(&symCollectSlice, SLICE_PARENT);
     symbolIdent = sliceRetriVal(&symCollectSlice, SLICE_IDENTIFIER);
     suffix = sliceRetriVal(&symCollectSlice, SLICE_OID_SUFFIX);
+
+    if (isStringEqual(symbolIdent, "hosts")) {
+        printf("hosts\n");
+    }
 
     // Is the symbol exists in symbol table ?
     if (symbolTableSearch(&symTable, symbolIdent)) {

@@ -95,7 +95,7 @@ typedef struct {
 
 typedef struct {
     int size;
-    hashFunction hashFunc;    
+    hashFunction hashFunc;
     hashElem *space;
 } hashMap;
 
@@ -115,4 +115,3 @@ void hash__HASH_BASIC(void **state);
 #endif /* MIB2DOC_UNIT_TESTING */
 
 #endif /* _MIB2DOC_HASHMAP_H_ */
-

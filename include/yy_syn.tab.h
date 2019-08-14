@@ -69,43 +69,45 @@ extern int yydebug;
     OBJECTS_ = 279,
     FROM_ = 280,
     IMPORTS_ = 281,
-    L_PAREN = 282,
-    R_PAREN = 283,
-    HEX_STRING = 284,
-    UNITS_SPECIFIER = 285,
-    DEFVAL_SPECIFIER = 286,
-    DISPLAY_HINT = 287,
-    REFERENCE = 288,
-    TC_SPECIFIER = 289,
-    COMPLIANCE_SPECIFIER = 290,
-    MIN_ACCESS_SPECIFIER = 291,
-    OBJECT_ = 292,
-    NOTIFY_SPECIFIER = 293,
-    NOTIFY_GRP_SPECIFIER = 294,
-    MODULE_SPECIFIER = 295,
-    MANDATORY_SPECIFIER = 296,
-    GROUP_SPECIFIER = 297,
-    OBJECT_SPECIFIER = 298,
-    WRITE_SPECIFIER = 299,
-    OBJ_GRP_SPECIFIER = 300,
-    TO = 301,
-    OR = 302,
-    SIZE = 303,
-    OBJ_IDENTITY_SPECIFIER = 304,
-    NOTIFY_TYPE_SPECIFIER = 305,
-    SMI_SPECIFIER = 306,
-    SMI_VAL = 307,
-    MOD_SPECIFIER = 308,
-    LAST_UPDATED = 309,
-    ORGANIZATION = 310,
-    REVISION = 311,
-    CONTACT_INFO = 312,
-    REVISION_DATE = 313,
-    IDENTIFIER = 314,
-    NUM = 315,
-    TYPE_BUILT_IN = 316,
-    ACCESS_VALUE = 317,
-    STRING = 318
+    ENTERPRISE_SPECIFIER = 282,
+    TRAP_TYPE_SPECIFIER = 283,
+    L_PAREN = 284,
+    R_PAREN = 285,
+    HEX_STRING = 286,
+    UNITS_SPECIFIER = 287,
+    DEFVAL_SPECIFIER = 288,
+    DISPLAY_HINT = 289,
+    REFERENCE = 290,
+    TC_SPECIFIER = 291,
+    COMPLIANCE_SPECIFIER = 292,
+    MIN_ACCESS_SPECIFIER = 293,
+    OBJECT_ = 294,
+    NOTIFY_SPECIFIER = 295,
+    NOTIFY_GRP_SPECIFIER = 296,
+    MODULE_SPECIFIER = 297,
+    MANDATORY_SPECIFIER = 298,
+    GROUP_SPECIFIER = 299,
+    OBJECT_SPECIFIER = 300,
+    WRITE_SPECIFIER = 301,
+    OBJ_GRP_SPECIFIER = 302,
+    TO = 303,
+    OR = 304,
+    SIZE = 305,
+    OBJ_IDENTITY_SPECIFIER = 306,
+    NOTIFY_TYPE_SPECIFIER = 307,
+    SMI_SPECIFIER = 308,
+    SMI_VAL = 309,
+    MOD_SPECIFIER = 310,
+    LAST_UPDATED = 311,
+    ORGANIZATION = 312,
+    REVISION = 313,
+    CONTACT_INFO = 314,
+    REVISION_DATE = 315,
+    IDENTIFIER = 316,
+    NUM = 317,
+    TYPE_BUILT_IN = 318,
+    ACCESS_VALUE = 319,
+    STRING = 320
   };
 #endif
 
@@ -114,16 +116,16 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 45 "./src/yy_syn.y" /* yacc.c:1909  */
+#line 47 "./src/yy_syn.y" /* yacc.c:1909  */
 
     char *str;
-#line 63 "./src/yy_syn.y" /* yacc.c:1909  */
+#line 65 "./src/yy_syn.y" /* yacc.c:1909  */
 
     // SEQUENCE
     struct sequence_item si;
     struct sequence sq;
 
-#line 127 "./src/yy_syn.tab.h" /* yacc.c:1909  */
+#line 129 "./src/yy_syn.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

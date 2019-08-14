@@ -15,6 +15,8 @@
 #include "mibTreeGen.h"
 #include "typeTable.h"
 
+#include "options.h"
+
 /* Defines */
 #define SIZE_OF_LATEX_BUFFER 256
 
@@ -24,10 +26,10 @@ int beginOid;
 int isInitilized;
 
 /* Local */
-typedef int (*docGenInFormat)(mibObjectTreeNode *, FILE *file, formatInfo *info); 
-static docGenInFormat docGenRoutine[] = { 
+typedef int (*docGenInFormat)(mibObjectTreeNode *, FILE *file, formatInfo *info);
+static docGenInFormat docGenRoutine[] = {
     // Latex format
-    docGenInLatex 
+    docGenInLatex
 };
 
 int documentGen(mibTreeHead *treeHead, char *filePath) {
@@ -37,17 +39,22 @@ int documentGen(mibTreeHead *treeHead, char *filePath) {
     if (isNullPtr(treeHead) || isNullPtr(filePath))
         return ERROR;
 
-    // Check that is only one tree here
-    assert(treeHead->numOfTree == 1);
+    if (treeHead->numOfTree == 0) return OK;
 
     tree = mibTreeHeadFirstTree(treeHead);
 
-    // Get begin node
+    /* Get begin node
+     * If user not specified a begin node default to the root
+     * of tree */
+    beginFrom = optMngGetOptVal(optionsManager, OPT_KEY_BEGIN_FROM);
+    if (isNullPtr(beginFrom))
+        beginFrom = tree->rootName;
+
     mibObjectTreeNode *beginNode = search_MibTree(tree->root, beginFrom);
     if (isNullPtr(beginNode)) {
-        errorMsg("Cant' find begin node: %s\n", beginFrom);
-        abort();
+        abortWithMsg("Can't find begin node: %s\n", beginFrom);
     }
+
     beginOid = strlen(getOidFromInfo(beginNode));
 
     FILE *file = fopen(filePath, "w+");

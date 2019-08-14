@@ -16,6 +16,7 @@
 #include "dispatcher.h"
 #include "symbolTbl.h"
 #include "typeTable.h"
+#include "options.h"
 
 enum {
     SYM_TRAVEL_CONTINUE = 10,
@@ -478,7 +479,7 @@ char * sliceGetVal(slice *sliHead, int sliKey) {
 char *sliceRetriVal(slice *sliHead, int sliKey) {
     slice *sli;
     char *val;
- 
+
     if (sli = sliceGet(sliHead, sliKey)) {
         val = sli->sliVal;
         sli->sliVal = NULL;
@@ -1097,9 +1098,20 @@ int typeItemIsEqual(const typeItem *first, const typeItem *sec) {
     return isStringEqual(first->type, sec->type);
 }
 
+/* Should check that is a type already be added to type table
+ *
+ * fixme: This function's time complexity is O^2, should be optimized */
 int typeItemAppend(typeItem *items, char *typeName, typeCate cate, const void *ref) {
     if (isNullPtr(items) || isNullPtr(typeName))
         return ERROR;
+
+    // The type is already exist
+    if (typeItemSearch(items, typeName))
+        return OK;
+    else {
+        if (optMngIsOptSet(optionsManager, OPT_KEY_SHOW_T_DEF))
+            printf("ADD %s at %s : %d\n", typeName, SW_CUR_FILE_NAME(&swState), yylineno);
+    }
 
     typeItem *lastItem = typeItemTail(items);
     typeItem *newItem = typeItemConst();

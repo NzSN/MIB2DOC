@@ -52,7 +52,7 @@ hashMap * hashMapDup(hashMap *origin) {
 
     copy = hashMapConstruct(origin->size, origin->hashFunc);
 
-    memcpy(copy->space, origin->space, origin->size * sizeof(hashElem)); 
+    memcpy(copy->space, origin->space, origin->size * sizeof(hashElem));
 
     idx = 0;
     size = origin->size;
@@ -60,11 +60,11 @@ hashMap * hashMapDup(hashMap *origin) {
     while (idx < size) {
         pElem_copy = HASH_MAP_ELEM_SELECT(copy, idx);
         pElem_orig = HASH_MAP_ELEM_SELECT(origin, idx);
-        
+
         if (pElem_orig->key)
             pElem_copy->key = pElem_orig->key->copy(pElem_orig->key);
         if (pElem_orig->val)
-            pElem_copy->val = pElem_orig->val->copy(pElem_orig->val); 
+            pElem_copy->val = pElem_orig->val->copy(pElem_orig->val);
 
         copyFrom = &(HASH_MAP_ELEM_SELECT(origin, idx)->chain);
         copyFrom = hashChainNext(copyFrom);
@@ -184,7 +184,7 @@ int hashMapDelete(hashMap *map, pair_key_base *key) {
     if (isNullPtr(map) || isNullPtr(key))
         return FALSE;
 
-    pElem = HASH_MAP_HASH_GET(map, key); 
+    pElem = HASH_MAP_HASH_GET(map, key);
 
     // Try to matching with the key outside of chain.
     if (key->isEqual && key->isEqual(key, pElem->key)) {
@@ -265,8 +265,10 @@ static int hashChainDelete(hashChain *chain, pair_key_base *key) {
         return FALSE;
     found = hashChainSearch(chain, key);
     if (found) {
-        listNodeDelete(HASH_CHAIN_NODE_R(chain));
-        RELEASE_MEM(chain);
+        listNodeDelete(&found->node);
+        // fixme: Memory leak may happend cause of the
+        // shallow free
+        RELEASE_MEM(found);
         return TRUE;
     }
     return FALSE;
@@ -565,5 +567,3 @@ void hash__HASH_BASIC(void **state) {
         fail();
 }
 #endif /* MIB2DOC_UNIT_TESTING */
-
-

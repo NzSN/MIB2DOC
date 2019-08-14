@@ -9,6 +9,9 @@
 #define OPT_KEY_TARGET_PDF   "TARGET_PDF"
 #define OPT_KEY_INCLUDE_PATH "INCLUDE_PATH"
 #define OPT_KEY_TREE_PRINT   "TREE_PRINT"
+#define OPT_KEY_SHOW_T_DEF   "SHOW_TYPE_DEFINED"
+#define OPT_KEY_BEGIN_FROM   "BEGIN_FROM"
+
 
 typedef struct optionVal {
     char *val;

@@ -34,6 +34,8 @@
 <SEQUENCE_FIELD>OBJECT[ \T]+IDENTIFIER { yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
 <SEQUENCE_FIELD>\}                  { BEGIN(INITIAL); return R_BRACE; }
 
+ENTERPRISE                          { return ENTERPRISE_SPECIFIER; }
+
 "--".*                              { /* empty */ }
 [\n ]+                              { /* empty */ }
 [\t ]+                              { /* empty */ }
@@ -42,6 +44,7 @@ OBJECT-TYPE                         { return OBJ_SPECIFIER; }
 OBJECTS                             { return OBJECTS_; }
 OBJECT                              { return OBJECT_; }
 NOTIFICATION-TYPE                   { return NOTIFY_TYPE_SPECIFIER; }
+TRAP-TYPE                           { return TRAP_TYPE_SPECIFIER; }
 SYNTAX                              { return SYNTAX_SPECIFIER; }
 
 DEFVAL                              { return DEFVAL_SPECIFIER; }
@@ -57,10 +60,10 @@ SIZE                                { return SIZE; }
 
 \'[a-fA-F]*\'H                      { return HEX_STRING; }
 
-INTEGER                                 | 
+INTEGER                                 |
 Integer32                               |
-IpAddress                               | 
-OCTET[ \t]+STRING[ \t]*([ \t]*\(.*\))*  | 
+IpAddress                               |
+OCTET[ \t]+STRING[ \t]*([ \t]*\(.*\))*  |
 SEQUENCE[ \t]+OF[ \t]*[a-zA-Z0-9]*         { yylval.str = strdup(yytext); return TYPE_BUILT_IN; }
 
 SEQUENCE                            { BEGIN(SEQUENCE_FIELD); return SEQ; }
@@ -128,16 +131,19 @@ SMI                                 { BEGIN(SMI_FIELD); return SMI_SPECIFIER; }
                                         int isValid;
                                         char *typeName;
                                         dispatchParam *current = pendingTypes;
-                                        breakNode(); 
+                                        breakNode();
                                         while (current = dispatchParamNext(current)) {
                                             typeName = (char *)disParamGet(current);
-                                            isValid = typeCheck_isValid(MIB_TYPE_TBL_R, typeName); 
-                                        
+                                            isValid = typeCheck_isValid(MIB_TYPE_TBL_R, typeName);
+
                                             if (isValid == FALSE) {
-                                                abortWithMsg("Unknow type: %s\n", typeName); 
+                                                abortWithMsg("Unknow type: %s at %s : %d\n",
+                                                             typeName,
+                                                             SW_CUR_FILE_NAME(&swState),
+                                                             yylineno);
                                             }
                                         }
-                                         
+
                                         if (switchToPrevModule(getCurSwInfo()) == -1) {
                                             yyterminate();
                                         }

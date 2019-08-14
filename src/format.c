@@ -123,10 +123,13 @@ static int latexHeader(FILE *file) {
     if (isNullPtr(file))
        return ERROR;
 
-    fprintf(file, "\\documentclass{ctexart}\n"
-                  "\\usepackage{float}\n"
-                  "\\usepackage{longtable}\n"
-                  "\\begin{document}\n");
+    fprintf(file,
+            "\\documentclass[6pt,landscape]{ctexart}\n"
+            "\\usepackage{float}\n"
+            "\\usepackage{longtable}\n"
+            "\\usepackage{geometry}"
+            "\\geometry{left=1cm, right=1cm}"
+            "\\begin{document}\n");
     fprintf(file, "\n\n\n");
 
     return OK;

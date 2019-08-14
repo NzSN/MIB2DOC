@@ -3,7 +3,7 @@
 #include "type.h"
 #include "re.h"
 
-/* optBufferIter(obj) ::= 
+/* optBufferIter(obj) ::=
  *   Iterator(obi) &&
  *   range_check: obi -> _Bool */
 typedef struct optBufferIter {
@@ -61,8 +61,8 @@ static _Bool argConflictCheck(char martix[][NumOfOptions], int optIdx) {
 
 static int argInUsedStatusSet(char martix[][NumOfOptions], int optIdx) {
     int i = 0, info, offset = 10;
-    if (optIdx < 0) return ERROR; 
-    
+    if (optIdx < 0) return ERROR;
+
     while (i < NumOfOptions) {
         info = martix[i][optIdx];
         martix[i++][optIdx] = info * REL_CONFLICT_IN;
@@ -77,25 +77,25 @@ static int argInUsedStatusSet(char martix[][NumOfOptions], int optIdx) {
  *   argumentSplit: argc * argv
  *     (argc, argv) -- withArgs(argc, argv) */
 static optPieces argumentSplit(int argc, char *argv[]) {
-    if (argc < 2 || isNullPtr(argv)) 
+    if (argc < 2 || isNullPtr(argv))
         return FALSE;
-    
+
     optPieces pieces = optPiecesConst(argc- 1);
-    
-    char *opt, *optVal; 
+
+    char *opt, *optVal;
     optAttr_t *attr;
-    int numOfOptions = 0; 
-    
-    optBufferIter *iter = optBufferIterConst(argc, argv); 
-    
+    int numOfOptions = 0;
+
+    optBufferIter *iter = optBufferIterConst(argc, argv);
+
     while (opt = optBufferNext(iter)) {
-        attr = optAttr(opt); 
+        attr = optAttr(opt);
         pieces[numOfOptions][0] = opt;
-        
+
         if (optAttr_withArgs(attr)) {
-            optVal = optBufferNext(iter); 
+            optVal = optBufferNext(iter);
             pieces[numOfOptions][1] = optVal;
-        } 
+        }
 
         ++numOfOptions;
     }
@@ -105,7 +105,7 @@ static optPieces argumentSplit(int argc, char *argv[]) {
 
 /* Property(argc: int, argv: char **) ::=
  *     argumentChecking: argc * current * argv * attr
- *       (argc, argv) -- withArgs(argc, argv) */ 
+ *       (argc, argv) -- withArgs(argc, argv) */
 static _Bool argumentChecking(int argc, char *argv[]) {
     if (argc < 2 || isNullPtr(argv))
         return FALSE;
@@ -125,17 +125,17 @@ static _Bool argumentChecking(int argc, char *argv[]) {
 }
 
 /* Property(path: const char *, pattern: re_t) ::=
- *   isPathString: path * pattern 
+ *   isPathString: path * pattern
  *       (path, pattern) -- (pattern == NULL || pattern != NULL) &&
- *                          (pattern != NULL && pattern(str) == TRUE) 
+ *                          (pattern != NULL && pattern(str) == TRUE)
  *                          => (str is belong to subset of pathStr);
  */
 static _Bool isPathString(const char *path, re_t pattern) {
-    if (isNullPtr(path)) return FALSE; 
-    
-    re_t pattern_ = pattern; 
-    if (isNullPtr(pattern_)) 
-        pattern_ = re_compile(VALID_PATH_PATTERN); 
+    if (isNullPtr(path)) return FALSE;
+
+    re_t pattern_ = pattern;
+    if (isNullPtr(pattern_))
+        pattern_ = re_compile(VALID_PATH_PATTERN);
 
     if (re_matchp(pattern_, path) == ERROR) {
         return FALSE;
@@ -151,25 +151,25 @@ static _Bool pathArgumentCheck(int argc, int *current, char *argv[], optAttr_t *
     // Precondition: weak_validity
     if (isNullPtr(current) || isNullPtr(argv))
         return FALSE;
-    
-    char *optVal;  
+
+    char *optVal;
     optBufferIter *iter = optBufferIterConst(argc, argv);
     iter = optBufferMoveForward(iter, *current);
 
-    /* Argument checking via regex */ 
+    /* Argument checking via regex */
     if (optAttr_withArgs(attr)) {
-        optVal = optBufferNext(iter); 
+        optVal = optBufferNext(iter);
         if (isNullPtr(optVal)) {
             ret = FALSE;
             goto EXIT;
-        } 
-        
+        }
+
         if (!isPathString(optVal, NULL)) {
-            ret = FALSE; 
+            ret = FALSE;
             goto EXIT;
         }
     }
-     
+
 
     /* Conflict check */
     int index = attr->index;
@@ -177,7 +177,7 @@ static _Bool pathArgumentCheck(int argc, int *current, char *argv[], optAttr_t *
     if (argConflictCheck(optionRelation, index) == FALSE) {
         ret = FALSE;
     }
-    
+
 EXIT:
 
     *current = iter->current;
@@ -186,8 +186,16 @@ EXIT:
     return ret;
 }
 
+
+
 /* Concept(optCheck) */
 static _Bool trivialArgumentCheck(int argc, int *current, char *argv[], optAttr_t *attr) {
     ++(*current);
+    return TRUE;
+}
+
+/* Concept(optCheck) */
+static _Bool trivialOneArgumentCheck(int argc, int *current, char *argv[], optAttr_t *attr) {
+    *current = *current + 2;
     return TRUE;
 }
