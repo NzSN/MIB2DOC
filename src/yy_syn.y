@@ -72,6 +72,8 @@
 %type <str> TYPE
 %type <si> SEQ_ITEM
 %type <sq> SEQUENCE
+%type <str> OID_ATTACH
+%type <str> OID_CHAIN
 
 // Prologue
 %code top {
@@ -86,10 +88,15 @@
     #include "pair.h"
     #include "util.h"
 
+    #include "moduleAlias.h"
+
     extern typeTable mibTypeTbl;
     extern symbolTable symTable;
     dispatchParam importParam;
     genericStack importInfoStack;
+
+    // Use to keep track of OID_CHAIN processing position
+    static char *lastProcessed = NULL;
 
     int syntaxParserInit(void) {
         memset(&importParam, 0, sizeof(dispatchParam));
@@ -302,8 +309,10 @@ MODULES_CONTENT :
         dispatchParam *current;
         current = &importParam;
 
+        char *moduleName = moduleAliasTrans($IDENTIFIER);
+
         int ret = TRUE;
-        collectInfo *importInfo = collectInfoConst($IDENTIFIER);
+        collectInfo *importInfo = collectInfoConst(moduleName);
 
         // Store symbols that should be included.
         while (current = dispatchParamNext(current)) {
@@ -463,10 +472,10 @@ TYPE_SPECIFIER_ :
 
     }
     | L_PAREN ONE_OR_MORE_VAL R_PAREN
-    | L_PAREN SIZE L_PAREN NUM TO NUM R_PAREN R_PAREN;
+    | L_PAREN SIZE L_PAREN ONE_OR_MORE_VAL R_PAREN R_PAREN;
 
 ENUMERATE_MEMBERS :
-    ENUMERATE_MEMBER {
+    ENUMERATE_MEMBER MAYBE_COMMA {
 
     }
     | ENUMERATE_MEMBER COMMA ENUMERATE_MEMBERS {
@@ -492,7 +501,10 @@ VAL :
     | RANGE;
 
 RANGE:
-    NUM TO NUM
+    NUM_ TO NUM_
+
+NUM_ :
+    NUM | HEX_STRING
 
 ACCESS :
 	ACCESS_FIELD ACCESS_VALUE {
@@ -550,7 +562,45 @@ MOUNT :
 		param = disParamConstruct(SLICE_OID_SUFFIX);
 	    disParamStore(param, disParamConstruct($NUM));
 		dispatch(DISPATCH_PARAM_STAGE, param);
-	};
+	}
+    | ASSIGNED L_BRACE OID_CHAIN NUM R_BRACE {
+        lastProcessed = NULL;
+
+        dispatchParam *param = disParamConstruct(SLICE_PARENT);
+        disParamStore(param, disParamConstruct($OID_CHAIN));
+        dispatch(DISPATCH_PARAM_STAGE, param);
+
+        param = disParamConstruct(SLICE_OID_SUFFIX);
+        disParamStore(param, disParamConstruct($NUM));
+        dispatch(DISPATCH_PARAM_STAGE, param);
+    };
+
+OID_CHAIN :
+    OID_CHAIN IDENTIFIER OID_ATTACH {
+        $$ = $IDENTIFIER;
+        if (!symbolTableSearch(&symTable, $IDENTIFIER))
+            symbolTableAdd(&symTable, symbolNodeConst($IDENTIFIER, lastProcessed, $OID_ATTACH));
+        lastProcessed = $IDENTIFIER;
+    }
+    | IDENTIFIER[left] OID_ATTACH[left_oid] IDENTIFIER[right] OID_ATTACH[right_oid] {
+        if (!symbolTableSearch(&symTable, $left))
+            symbolTableAdd(&symTable, symbolNodeConst($left, lastProcessed, $left_oid));
+
+        lastProcessed = $left;
+
+        if (!symbolTableSearch(&symTable, $right))
+            symbolTableAdd(&symTable, symbolNodeConst($right, lastProcessed, $right_oid));
+
+        lastProcessed = $right;
+    };
+
+OID_ATTACH :
+    L_PAREN NUM R_PAREN {
+        $$ = $NUM;
+    }
+    | /* empty */ {
+        $$ = strdup("-1");
+    };
 
 %%
 

@@ -61,6 +61,10 @@ _Bool typeTableInit() {
     typeTableAdd(&mibTypeTbl, "Counter", CATE_BUILD_IN, NULL);
     typeTableAdd(&mibTypeTbl, "TimeTicks", CATE_BUILD_IN, NULL);
     typeTableAdd(&mibTypeTbl, "Opaque", CATE_BUILD_IN, NULL);
+    typeTableAdd(&mibTypeTbl, "ICounter32", CATE_BUILD_IN, NULL);
+
+    // Test
+    typeTableAdd(&mibTypeTbl, "InetAddressIPv6", CATE_BUILD_IN, NULL);
 
     return OK;
 }
@@ -358,10 +362,6 @@ static int symbolCollect_BUILD_INNER_NODE(dispatchParam *param) {
     parentIdent = sliceRetriVal(&symCollectSlice, SLICE_PARENT);
     symbolIdent = sliceRetriVal(&symCollectSlice, SLICE_IDENTIFIER);
     suffix = sliceRetriVal(&symCollectSlice, SLICE_OID_SUFFIX);
-
-    if (isStringEqual(symbolIdent, "hosts")) {
-        printf("hosts\n");
-    }
 
     // Is the symbol exists in symbol table ?
     if (symbolTableSearch(&symTable, symbolIdent)) {

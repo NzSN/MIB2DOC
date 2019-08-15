@@ -58,7 +58,7 @@ AUGMENTS                            { return AUGMENTS_; }
 \.\.                                { return TO; }
 SIZE                                { return SIZE; }
 
-\'[a-fA-F]*\'H                      { return HEX_STRING; }
+\'[a-fA-F0-9]+\'(h|H)               { return HEX_STRING; }
 
 INTEGER                                 |
 Integer32                               |
@@ -103,6 +103,8 @@ MODULE                              { return MODULE_SPECIFIER; }
 
 OBJECT-IDENTITY                     { return OBJ_IDENTITY_SPECIFIER; }
 
+IMPLED                              { return IMPLED; }
+
 read-only               |
 read-write              |
 read-create             |
@@ -118,7 +120,6 @@ DESCRIPTION                         { return DESC_SPECIFIER; }
 \}                                  { return R_BRACE; }
 
 (-?)[0-9]+                          { yylval.str = strdup(yytext); return NUM; }
-
 SMI                                 { BEGIN(SMI_FIELD); return SMI_SPECIFIER; }
 
 ([a-zA-Z0-9]|"-"|"_")+    { yylval.str = strdup(yytext); return IDENTIFIER; }

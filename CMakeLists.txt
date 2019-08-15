@@ -17,7 +17,7 @@ set(SOURCE_FILES
     ${SRC_DIR}/options.c ${SRC_DIR}/util.c ${SRC_DIR}/dispatcher.c
     ${SRC_DIR}/docGenerate.c ${SRC_DIR}/misc.c ${SRC_DIR}/hash.c
     ${SRC_DIR}/yy_syn.def.c ${SRC_DIR}/typeCheck.c
-    ${SRC_DIR}/re.c ${SRC_DIR}/format.c ${DATASTRUCTURES_SRC}/pair.c)
+    ${SRC_DIR}/re.c ${SRC_DIR}/format.c ${SRC_DIR}/moduleAlias.c ${DATASTRUCTURES_SRC}/pair.c)
 add_executable(Mib2Doc ${SOURCE_FILES})
 
 project(UNIT_TEST)
@@ -30,7 +30,7 @@ set(UNIT_TEST_SRC ${UTEST_DIR}/basicDataStruct_Test.c
     ${SRC_DIR}/lexDeal.c ${SRC_DIR}/misc.c
     ${SRC_DIR}/util.c ${SRC_DIR}/options.c
     ${SRC_DIR}/hash.c ${SRC_DIR}/yy_syn.def.c
-    ${SRC_DIR}/typeCheck.c ${SRC_DIR}/re.c ${DATASTRUCTURES_SRC}/pair.c)
+    ${SRC_DIR}/typeCheck.c ${SRC_DIR}/re.c ${SRC_DIR}/moduleAlias.c ${DATASTRUCTURES_SRC}/pair.c)
 link_libraries(cmocka)
 add_executable(UNIT_TEST ${UNIT_TEST_SRC})
 target_compile_definitions(UNIT_TEST PUBLIC MIB2DOC_UNIT_TESTING)

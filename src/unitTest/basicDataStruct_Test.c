@@ -18,6 +18,7 @@
 #include "yy_syn.def.h"
 #include "options.h"
 #include "typeTable.h"
+#include "moduleAlias.h"
 
 
 mibObjectTreeNode mibObjectTreeRoot;
