@@ -12,6 +12,7 @@ extern int yylex(void);
 extern FILE *yyin;
 extern int yyparse (void);
 extern char *beginFrom;
+extern int yydebug;
 
 slice sliceContainer;
 char currentTable[SIZE_OF_CURRENT_TABLE];
@@ -25,6 +26,8 @@ int main(int argc, char *argv[]) {
     char *srcMib, *texPath;
     FILE *writeTo;
     mibObjectTreeNode *node;
+
+    yydebug = 1;
 
     // Option Manager Initialization
     // It will read option you provide in command line

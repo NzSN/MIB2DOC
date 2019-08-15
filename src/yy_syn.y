@@ -17,6 +17,7 @@
 %token HEX_STRING
 %token UNITS_SPECIFIER
 
+%token IMPLED
 %token DEFVAL_SPECIFIER
 %token DISPLAY_HINT
 %token REFERENCE
@@ -89,6 +90,8 @@
     #include "util.h"
 
     #include "moduleAlias.h"
+
+    #define YYDEBUG 1
 
     extern typeTable mibTypeTbl;
     extern symbolTable symTable;
@@ -472,7 +475,7 @@ TYPE_SPECIFIER_ :
 
     }
     | L_PAREN ONE_OR_MORE_VAL R_PAREN
-    | L_PAREN SIZE L_PAREN ONE_OR_MORE_VAL R_PAREN R_PAREN;
+    | L_PAREN SIZE L_PAREN ONE_OR_MORE_VAL R_PAREN R_PAREN
 
 ENUMERATE_MEMBERS :
     ENUMERATE_MEMBER MAYBE_COMMA {
@@ -483,14 +486,7 @@ ENUMERATE_MEMBERS :
     };
 ENUMERATE_MEMBER:
     IDENTIFIER L_PAREN NUM R_PAREN {
-        pair *p = pairConstWithContent($IDENTIFIER, $NUM);
-        pairSetCopyMethod(p, strdup);
-        pairSetEqualMethod(p, isStringEqual);
-        pairSetReleaseMethod(p, free);
 
-        dispatchParam *param = disParamConstruct(SLICE_BIT_NAME);
-        disParamStore(param, disParamConstruct(p));
-        dispatch(DISPATCH_PARAM_STAGE, param);
     };
 
 ONE_OR_MORE_VAL :
