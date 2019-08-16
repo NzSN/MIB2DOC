@@ -75,6 +75,11 @@
 %type <sq> SEQUENCE
 %type <str> OID_ATTACH
 %type <str> OID_CHAIN
+%type <str> ENUMERATE_MEMBER
+
+%printer { fprintf(yyoutput, "%s", $$); } ENUMERATE_MEMBER;
+%printer { fprintf(yyoutput, "%s", $$); } NUM;
+%printer { fprintf(yyoutput, "%s", $$); } IDENTIFIER;
 
 // Prologue
 %code top {
