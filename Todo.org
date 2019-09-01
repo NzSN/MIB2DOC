@@ -1,0 +1,7 @@
+* Project MIB2DOC
+
+** Todo Features [0/3]
+- [ ] Optimize the process of mib tree generation
+- [ ] Txt, Excel output format.
+- [ ] Type inferring.
+- [ ] Generate relation among tables.
