@@ -10,6 +10,7 @@
 %token OBJ_IDEN_ L_BRACE R_BRACE OBJECTS_
 %token FROM_ IMPORTS_
 
+
 %token ENTERPRISE_SPECIFIER TRAP_TYPE_SPECIFIER
 
 %token L_PAREN R_PAREN
@@ -77,6 +78,7 @@
 %type <str> OID_CHAIN
 %type <str> ENUMERATE_MEMBER
 
+/* Debugging purposes */
 %printer { fprintf(yyoutput, "%s", $$); } ENUMERATE_MEMBER;
 %printer { fprintf(yyoutput, "%s", $$); } NUM;
 %printer { fprintf(yyoutput, "%s", $$); } IDENTIFIER;
@@ -123,7 +125,7 @@
 
 MIB :
 	  OBJ_DEAL      MIB
-	| OBJ           MIB
+	| OBJ_TYPE      MIB
 	| SEQUENCE      MIB
     | SMI           MIB
 	| END           MIB
@@ -149,16 +151,60 @@ IMPORT :
         importWorks(&importInfoStack);
     };
 
+MODULES :
+	MODULES_CONTENT MODULES
+    | /* empty */  ;
+
+MODULES_CONTENT :
+    ITEMS FROM_ IDENTIFIER {
+        dispatchParam *current;
+        current = &importParam;
+
+        char *moduleName = moduleAliasTrans($IDENTIFIER);
+
+        int ret = TRUE;
+        collectInfo *importInfo = collectInfoConst(moduleName);
+
+        // Store symbols that should be included.
+        while (current = dispatchParamNext(current)) {
+            ret = collectInfo_add(importInfo, current->param);
+            if (ret == FALSE) {
+                errorMsg("IMPORT: Symbol conflict.\n");
+                exit(1);
+            }
+        }
+        disParamRelease_Static(&importParam, NULL);
+
+        push(&importInfoStack, &importInfo);
+    }
+
+ITEMS :
+	IDENTIFIER {
+        dispatchParam *symbol = disParamConstruct($IDENTIFIER);
+        if (disParamStore(&importParam, symbol) == NULL) {
+            exit(1);
+        }
+    }
+	| IDENTIFIER COMMA ITEMS {
+        dispatchParam *symbol = disParamConstruct($IDENTIFIER);
+        if (disParamStore(&importParam, symbol) == NULL) {
+            exit(1);
+        }
+    }
+	| /* empty */ ;
+
+
+
 REF_PART :
     REFERENCE STRING | /* empty */ ;
 
-/* TRAP-TYPE */
+/* TRAP-TYPE : RFC1215 */
 TRAP_TYPE :
     IDENTIFIER TRAP_TYPE_SPECIFIER ENTERPRISE_PART DESC_SPECIFIER STRING ASSIGNED NUM
 ENTERPRISE_PART :
     ENTERPRISE_SPECIFIER IDENTIFIER
 
-/* OBJECT-GROUP */
+/* OBJECT-GROUP : SNMPv2-CONF*/
 OBJ_GRP_DEFINED :
     IDENTIFIER OBJ_GRP_SPECIFIER OBJ_GRP MOUNT {
         PARAM_FLUSH();
@@ -171,7 +217,7 @@ OBJS :
     IDENTIFIER
     | IDENTIFIER COMMA OBJS;
 
-/* NOTIFICATION-GROUP */
+/* NOTIFICATION-GROUP : SNMPv2-CONF */
 NOTIFY_GRP_DEFINED :
     IDENTIFIER NOTIFY_GRP_SPECIFIER NOTIFY_GRP MOUNT {
         PARAM_FLUSH();
@@ -184,7 +230,7 @@ NOTIFICATIONS :
     IDENTIFIER
     | IDENTIFIER COMMA NOTIFICATIONS;
 
-/* MODULE_COMPILANCE */
+/* MODULE-COMPLIANCE : SNMPv2-CONF */
 COMPLIANCE_DEFINED :
     IDENTIFIER COMPLIANCE_SPECIFIER COMPLIANCE_BODY MOUNT {
        PARAM_FLUSH();
@@ -232,7 +278,7 @@ COMPLIANCE_ACCESS :
     | /* empty */;
 
 
-/* TEXTUAL-CONVENTION */
+/* TEXTUAL-CONVENTION : SNMPv2-TC*/
 TC_DEFINED :
     IDENTIFIER ASSIGNED TC_SPECIFIER TC {
         typeTableAdd(MIB_TYPE_TBL_R, strdup($IDENTIFIER), CATE_CUSTOM, NULL);
@@ -258,7 +304,7 @@ TYPE :
         }
     }
 
-/* OBJECT-IDENTITY */
+/* OBJECT-IDENTITY : SNMPv2-SMI */
 OBJ_IDENTITY_DEFINED :
     IDENTIFIER OBJ_IDENTITY_SPECIFIER OBJ_IDENTITY MOUNT {
         dispatchParam *param = disParamConstruct(SLICE_IDENTIFIER);
@@ -270,7 +316,7 @@ OBJ_IDENTITY_DEFINED :
 OBJ_IDENTITY :
     STATUS_SPECIFIER STATUS_VALUE DESC_SPECIFIER STRING REF_PART;
 
-/* NOTIFICATION-TYPE */
+/* NOTIFICATION-TYPE : SNMPv2-SMI */
 NOTIFY_TYPE_DEFINED :
     IDENTIFIER NOTIFY_TYPE_SPECIFIER NOTIFY_TYPE MOUNT {
         PARAM_FLUSH();
@@ -307,48 +353,6 @@ END :
             }
         }
     }
-
-MODULES :
-	MODULES_CONTENT MODULES
-    | /* empty */  ;
-
-MODULES_CONTENT :
-    ITEMS FROM_ IDENTIFIER {
-        dispatchParam *current;
-        current = &importParam;
-
-        char *moduleName = moduleAliasTrans($IDENTIFIER);
-
-        int ret = TRUE;
-        collectInfo *importInfo = collectInfoConst(moduleName);
-
-        // Store symbols that should be included.
-        while (current = dispatchParamNext(current)) {
-            ret = collectInfo_add(importInfo, current->param);
-            if (ret == FALSE) {
-                errorMsg("IMPORT: Symbol conflict.\n");
-                exit(1);
-            }
-        }
-        disParamRelease_Static(&importParam, NULL);
-
-        push(&importInfoStack, &importInfo);
-    }
-
-ITEMS :
-	IDENTIFIER {
-        dispatchParam *symbol = disParamConstruct($IDENTIFIER);
-        if (disParamStore(&importParam, symbol) == NULL) {
-            exit(1);
-        }
-    }
-	| IDENTIFIER COMMA ITEMS {
-        dispatchParam *symbol = disParamConstruct($IDENTIFIER);
-        if (disParamStore(&importParam, symbol) == NULL) {
-            exit(1);
-        }
-    }
-	| /* empty */ ;
 
 SEQUENCE :
 	IDENTIFIER ASSIGNED SEQ L_BRACE SEQ_ITEM R_BRACE {
@@ -424,7 +428,8 @@ OBJ_IDENTIFIER :
 		dispatch(DISPATCH_PARAM_STAGE, param);
 };
 
-OBJ :
+/* OBJECT-TYPE : SNMPv2-SMI */
+OBJ_TYPE :
 	HEAD BODY { dispatch(MIBTREE_GENERATION, disParamConstruct(OBJECT)); };
 
 HEAD :

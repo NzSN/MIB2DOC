@@ -117,10 +117,10 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 48 "./src/yy_syn.y" /* yacc.c:1909  */
+#line 49 "./src/yy_syn.y" /* yacc.c:1909  */
 
     char *str;
-#line 66 "./src/yy_syn.y" /* yacc.c:1909  */
+#line 67 "./src/yy_syn.y" /* yacc.c:1909  */
 
     // SEQUENCE
     struct sequence_item si;

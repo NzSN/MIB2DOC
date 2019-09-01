@@ -67,8 +67,7 @@ optionMng *optionsManager;
  * 3.Deal with every [2] array.
  */
 int optionsInit(int argc, char *argv[]) {
-    int i=0, NumOfOptions;
-    optPieces optArray;   // optArray[][]
+    optPieces optArray;
 
     if (isNullPtr(argv)) {
         return ERROR_NULL_REF;

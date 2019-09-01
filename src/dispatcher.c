@@ -559,6 +559,111 @@ switchingState * getCurSwInfo() {
     return &swState;
 }
 
+/*******************************************
+ * dispatchParam Operation function define *
+ *******************************************/
+
+/*
+ * append sliNode to tail of list
+ */
+dispatchParam * disParamConstruct(void *param) {
+    dispatchParam *ret;
+
+    if (isNullPtr(param)) {
+        return NULL;
+    }
+
+    ret  = (dispatchParam *)Malloc(sizeof(dispatchParam));
+    memset(ret, 0, sizeof(dispatchParam));
+    ret->param = param;
+
+    return ret;
+}
+
+dispatchParam * dispatchParamPrev(dispatchParam *disparam) {
+    listNode *prev = disparam->node.prev;
+    if (isNullPtr(prev) || isNullPtr(disparam))
+        return NULL;
+    return containerOf(prev, dispatchParam, node);
+}
+
+dispatchParam * dispatchParamNext(dispatchParam *disparam) {
+    if (isNullPtr(disparam) || isNullPtr(disparam->node.next))
+        return NULL;
+    return containerOf(disparam->node.next, dispatchParam, node);
+}
+
+dispatchParam * disParamStore(dispatchParam *head, dispatchParam *new) {
+
+    if (head == NULL || new == NULL) {
+        mib2docError = ERROR_NULL_REF;
+        return NULL;
+    }
+
+    listNodeInsert(listNodeTail(&head->node), &new->node);
+    return new;
+}
+
+void * disParamGet(dispatchParam *disparam) {
+    if (disparam == NULL)
+        return NULL;
+    return disparam->param;
+}
+
+// fixme: should provide a version of release function that
+//        allow customer to provide destruction function for
+//        <dispatchParam->param>
+int disParamRelease(dispatchParam *disParam, int (*destruct)(void *)) {
+    dispatchParam *current, *released;
+
+    if (isNullPtr(disParam))
+        return FALSE;
+
+    released = disParam;
+    current = dispatchParamNext(disParam);
+
+    do {
+        if (!isNullPtr(destruct))
+            destruct(released->param);
+        RELEASE_MEM(released);
+        released = current;
+    } while (current = dispatchParamNext(current));
+
+    return TRUE;
+}
+
+int disParamRelease_Static(dispatchParam *disParam, int (*destruct)(void *)) {
+    int ret;
+
+    if (isNullPtr(disParam))
+        return FALSE;
+
+    ret = disParamRelease(dispatchParamNext(disParam), destruct);
+    memset(disParam, 0, sizeof(dispatchParam));
+
+    return ret;
+}
+
+/*
+ * Get sliNode from the head from the list
+ * after that the head will be
+ * removed from list.
+ */
+dispatchParam * disParamRetrive(dispatchParam **head) {
+    dispatchParam *ret;
+
+    if (!isNullPtr(head) && isNullPtr(*head)) {
+        mib2docError = ERROR_NULL_REF;
+        return NULL;
+    }
+
+    ret = *head;
+    *head = dispatchParamNext(*head);
+
+    return ret;
+}
+
+
 #ifdef MIB2DOC_UNIT_TESTING
 
 #include "test.h"

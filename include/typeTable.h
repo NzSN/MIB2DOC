@@ -14,7 +14,7 @@ typedef enum {
 
 typedef struct typeItem {
     char *type;
-    typeCate cate; 
+    typeCate cate;
     const void *ref;
     listNode node;
 } typeItem;
@@ -39,7 +39,7 @@ extern typeCate typeTableTypeCate(const typeTable *tbl, const char *type);
 
 void list__TYPE_TABLE(void **state);
 
-#endif 
+#endif
 
 #endif /* _TYPE_TABLE_ */
 

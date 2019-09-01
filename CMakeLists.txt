@@ -8,11 +8,12 @@ set(HOME_DIR .)
 set(SRC_DIR ${HOME_DIR}/src)
 set(DATASTRUCTURES_SRC ${SRC_DIR}/datastructures)
 set(CMAKE_C_STANDARD 11)
-set(SOURCE_FILES 
-    ${SRC_DIR}/main.c 
+set(SOURCE_FILES
+    ${SRC_DIR}/main.c
     ${SRC_DIR}/mibTreeGen.c
+    ${SRC_DIR}/symbolTbl.c ${SRC_DIR}/typeTable.c
     ${SRC_DIR}/lexer.c ${SRC_DIR}/yy_syn.tab.c
-    ${SRC_DIR}/queue.c ${SRC_DIR}/mibTreeObjTree.c 
+    ${SRC_DIR}/queue.c ${SRC_DIR}/mibTreeObjTree.c
     ${SRC_DIR}/stack.c ${SRC_DIR}/list.c ${SRC_DIR}/lexDeal.c
     ${SRC_DIR}/options.c ${SRC_DIR}/util.c ${SRC_DIR}/dispatcher.c
     ${SRC_DIR}/docGenerate.c ${SRC_DIR}/misc.c ${SRC_DIR}/hash.c
@@ -24,13 +25,16 @@ project(UNIT_TEST)
 set(UTEST_DIR ${SRC_DIR}/unitTest)
 set(UNIT_TEST_SRC ${UTEST_DIR}/basicDataStruct_Test.c
     ${SRC_DIR}/mibTreeGen.c ${SRC_DIR}/lexer.c
-    ${SRC_DIR}/yy_syn.tab.c ${SRC_DIR}/queue.c 
-    ${SRC_DIR}/mibTreeObjTree.c ${SRC_DIR}/stack.c 
+    ${SRC_DIR}/yy_syn.tab.c ${SRC_DIR}/queue.c
+    ${SRC_DIR}/mibTreeObjTree.c ${SRC_DIR}/stack.c
     ${SRC_DIR}/list.c ${SRC_DIR}/dispatcher.c
     ${SRC_DIR}/lexDeal.c ${SRC_DIR}/misc.c
     ${SRC_DIR}/util.c ${SRC_DIR}/options.c
     ${SRC_DIR}/hash.c ${SRC_DIR}/yy_syn.def.c
-    ${SRC_DIR}/typeCheck.c ${SRC_DIR}/re.c ${SRC_DIR}/moduleAlias.c ${DATASTRUCTURES_SRC}/pair.c)
+    ${SRC_DIR}/typeCheck.c ${SRC_DIR}/re.c
+    ${SRC_DIR}/moduleAlias.c ${DATASTRUCTURES_SRC}/pair.c
+    ${SRC_DIR}/symbolTbl.c ${SRC_DIR}/typeTable.c)
+
 link_libraries(cmocka)
 add_executable(UNIT_TEST ${UNIT_TEST_SRC})
 target_compile_definitions(UNIT_TEST PUBLIC MIB2DOC_UNIT_TESTING)
@@ -47,7 +51,5 @@ add_custom_command(TARGET lexBison PRE_BUILD
     COMMAND bison -o ${SRC_DIR}/yy_syn.tab.c ${SRC_DIR}/yy_syn.y)
 add_custom_command(TARGET lexBison_H PRE_BUILD
     COMMAND bison -d -o ${SRC_DIR}/yy_syn.tab.c ${SRC_DIR}/yy_syn.y)
-add_custom_command(TARGET lexBison_H PRE_BUILD 
+add_custom_command(TARGET lexBison_H PRE_BUILD
     COMMAND mv ${SRC_DIR}/yy_syn.tab.h ${HEADER_DIR})
-
-
