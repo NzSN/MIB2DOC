@@ -43,9 +43,8 @@ int documentGen(mibTreeHead *treeHead, char *filePath) {
 
     tree = mibTreeHeadFirstTree(treeHead);
 
-    /* Get begin node
-     * If user not specified a begin node default to the root
-     * of tree */
+    /* Get begin node If user not specified
+     * a begin node default to the root of tree */
     beginFrom = optMngGetOptVal(optionsManager, OPT_KEY_BEGIN_FROM);
     if (isNullPtr(beginFrom))
         beginFrom = tree->rootName;

@@ -34,7 +34,6 @@ static int latexTail(FILE *file);
 static int latexSection(char *secName, char *oid, FILE *file, formatInfo *info);
 static int latexTable(mibNodeInfoQueue *queue, char *parent, FILE *file);
 static char * latexTableItem(tableInfo *info, int index);
-static char * long2Short(char *str);
 static int infoPacket(tableInfo *info, mibObjectTreeNode *node);
 static int latexGen(void *arg, mibObjectTreeNode *node);
 static int makeDecision(mibObjectTreeNode *node);
@@ -69,7 +68,7 @@ static int latexGen(void *arg, mibObjectTreeNode *node) {
         case TABLE:
             info = (tableInfo *)Malloc(sizeof(tableInfo));
             infoPacket(info, node);
-            
+
             parent = getIdentFromInfo(node->parent);
             if (isMibNodeType_ENTRY(node->parent))
                 parent = getIdentFromInfo(node->parent->parent);
@@ -89,7 +88,7 @@ static int latexGen(void *arg, mibObjectTreeNode *node) {
             latexSection(secName, oid, file, fInfo);
             break;
         default:
-            break; 
+            break;
     }
 
     return OK;
@@ -170,7 +169,7 @@ static int latexSection(char *secName, char *oid, FILE *file, formatInfo *info) 
             prefix = "subparagraph";
             break;
         default:
-            prefix = "subparagraph"; 
+            prefix = "subparagraph";
     }
     fprintf(file, "\\%s {%s (%s)}.\n", prefix, secName, oid);
 
@@ -271,25 +270,6 @@ static char * latexTableItem(tableInfo *info, int index) {
     return laTexStrBuffer;
 }
 
-static char * long2Short(char *str) {
-    if (isNullPtr(str))
-        return NULL;
-
-    if (strncmp(str, "INTEGER", strlen("INTEGER")) == 0) {
-        return "INT";
-    }
-
-    if (strncmp(str, "OCTET", strlen("OCTET")) == 0) {
-        return "OCT";
-    }
-
-    if (entryRecognize(str, strlen(str))) {
-        return "Entry";
-    }
-
-    return str;
-}
-
 static int infoPacket(tableInfo *info, mibObjectTreeNode *node) {
     if (isNullPtr(info) || isNullPtr(node))
         return ERROR;
@@ -306,7 +286,7 @@ static int infoPacket(tableInfo *info, mibObjectTreeNode *node) {
     if (info->desc)
         info->length += strlen(info->desc);
 
-    info->type = long2Short(((mibLeaveInfo *)(node->info))->type);
+    info->type = ((mibLeaveInfo *)(node->info))->type;
     info->length += strlen(info->type);
 
     info->rw = ((mibLeaveInfo *)(node->info))->rw;
@@ -316,4 +296,3 @@ static int infoPacket(tableInfo *info, mibObjectTreeNode *node) {
 }
 
 /* Plain text format */
-

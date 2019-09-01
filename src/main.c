@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     FILE *writeTo;
     mibObjectTreeNode *node;
 
-    yydebug = 1;
+    yydebug = 0;
 
     // Option Manager Initialization
     // It will read option you provide in command line
